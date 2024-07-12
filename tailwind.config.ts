@@ -20,7 +20,35 @@ const config = {
     extend: {
       colors: {
         background: 'var(--background)',
-        foreground: 'hsl(var(--foreground))',
+        foreground: 'var(--foreground)',
+        icon: {
+          bg: 'var(--icon-bg)',
+          normal: 'var(--icon-normal)',
+        },
+        btn: {
+          bg: 'var(--btn-bg)',
+          red: 'var(--btn-red)',
+        },
+        nav: {
+          bg: 'var(--nav-bg)',
+        },
+        heading: {
+          text: 'var(--heading-text)',
+        },
+        body: {
+          text: 'var(--body-text)',
+        },
+        accent: {
+          DEFAULT: 'var(--accent)',
+          normal: 'var(--accent-normal)',
+        },
+        border: 'var(--border)',
+        main: {
+          blue: 'var(--main-blue)',
+        },
+        white: {
+          active: 'var(--white-active)',
+        },
       },
     },
   },
