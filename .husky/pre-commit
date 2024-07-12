@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+current_user=$(git config user.name)
+
+if [ "$current_user" != "YuAhyeon" ]; then
+  echo '권한이 없습니다.'
+  exit 1
+fi
