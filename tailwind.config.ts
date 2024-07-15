@@ -1,6 +1,7 @@
 import type { Config } from 'tailwindcss'
+import tailwindcssAnimate from 'tailwindcss-animate'
 
-const config = {
+const config: Config = {
   darkMode: ['class'],
   content: [
     './pages/**/*.{ts,tsx}',
@@ -31,6 +32,7 @@ const config = {
         },
         nav: {
           bg: 'var(--nav-bg)',
+          border: 'var(--nav-border)',
         },
         heading: {
           text: 'var(--heading-text)',
@@ -50,8 +52,22 @@ const config = {
           active: 'var(--white-active)',
         },
       },
+      keyframes: {
+        shimmer: {
+          '0%': {
+            backgroundPosition: '100%',
+          },
+          '100%': {
+            backgroundPosition: '-200%',
+          },
+        },
+      },
+      animation: {
+        shimmer: 'shimmer 1s linear infinite',
+      },
     },
   },
-} satisfies Config
+  plugins: [tailwindcssAnimate],
+}
 
 export default config
