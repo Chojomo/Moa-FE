@@ -45,14 +45,5 @@ module.exports = {
     'no-nested-ternary': 'off',
     'react/require-default-props': 'off',
     'react/button-has-type': 'off',
-    // '@typescript-eslint/ban-types': [
-    //   'error',
-    //   {
-    //     extendDefaults: true,
-    //     types: {
-    //       '{}': false,
-    //     },
-    //   },
-    // ],
   },
 }
