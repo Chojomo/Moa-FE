@@ -1,9 +1,9 @@
 export default function Home() {
   return (
-    <>
-      <p>Home</p>
-      <p>Home</p>
-      <p>Home</p>
-    </>
+    <div className="bg-background">
+      <p>test </p>
+      <p> </p>
+      <p> </p>
+    </div>
   )
 }
