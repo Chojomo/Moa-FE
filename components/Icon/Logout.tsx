@@ -20,19 +20,3 @@ export default function Logout({ className, width, height, fill = '#A6A6A6' }: I
     </Svg>
   )
 }
-
-// const pathname = usePathname()
-
-// const tintcolor = (path: string) => {
-//   if (pathname === path) {
-//     return 'border-white-active text-white-active'
-//   }
-//   return 'border-nav-border text-icon-normal'
-// }
-
-// const tincolorIcon = (path: string) => {
-//   if (pathname === path) {
-//     return 'rgba(255, 255, 255, 0.85)'
-//   }
-//   return 'rgb(166,166,166)'
-// }
