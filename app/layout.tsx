@@ -1,8 +1,9 @@
 // import type { Metadata } from 'next'
 import ThemeProvider from '@/components/Themes/Theme-provider'
-import ThemeToggle from '@/components/Themes/Toggle'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import { Header } from '@/components/Layout'
+import LoginButton from '@/components/Button/Login'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,8 +26,9 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <Header />
           {children}
-          <ThemeToggle />
+          <LoginButton />
         </ThemeProvider>
       </body>
     </html>

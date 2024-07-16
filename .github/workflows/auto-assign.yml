@@ -1,7 +1,9 @@
-name: Auto-assign Issue to Creator
+name: Auto-assign Issue and PR to Creator
 
 on:
   issues:
+    types: [opened]
+  pull_request:
     types: [opened]
 
 jobs:
@@ -9,8 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       issues: write
+      pull-requests: write
     steps:
-      - name: "Auto-assign issue to creator"
+      - name: "Auto-assign issue or PR to creator"
         uses: pozil/auto-assign-issue@v1
         with:
           assignees: ${{ github.actor }}

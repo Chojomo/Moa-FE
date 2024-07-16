@@ -3,6 +3,7 @@
 import { useTheme } from 'next-themes'
 
 import { ThemeButton } from '../UI/ThemeButton'
+import { Icon } from '../Icon'
 
 export default function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme()
@@ -11,12 +12,16 @@ export default function ThemeToggle() {
 
   return (
     <ThemeButton
-      size="icon"
-      variant="outline"
-      className="fixed bottom-4 left-4 z-10"
+      className="min-w-[55px] nav-item border-nav-border text-icon-normal"
       onClick={() => (resolvedTheme === 'dark' ? setTheme('light') : setTheme('dark'))}
     >
-      <button type="button">sszzz</button>
+      <Icon
+        name="Themes"
+        width={20}
+        height={20}
+        skeletonClassName="rounded"
+        fill="rgb(166,166,166)"
+      />
     </ThemeButton>
   )
 }
