@@ -17,6 +17,7 @@
     --nav-border: rgba(238, 238, 238, 0.5);
 
     --heading-text: rgb(105, 94, 94);
+    --heading-bg: rgba(0, 0, 0, 0.7);
     --body-text: rgba(32, 32, 32, 0.8);
 
     --accent: rgb(128, 176, 162);
@@ -42,6 +43,7 @@
     --nav-border: rgba(238, 238, 238, 0.5);
 
     --heading-text: rgb(224, 224, 224);
+    --heading-bg: rgba(255, 255, 255, 0.3);
     --body-text: rgba(207, 207, 207, 0.8);
 
     --accent: rgb(128, 176, 162);
