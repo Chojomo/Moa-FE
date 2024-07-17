@@ -1,11 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import Link from 'next/link'
 import { Icon } from '@/components/Icon'
 import Button from '@/components/Button'
 import ThemeToggle from '@/components/Themes/Toggle'
-import { tintcolor, tincolorIcon } from '@/helper/constants/tintcolor'
+import { tincolorIcon } from '@/helper/constants/tintcolor'
 import { isLoginNav, notLoginNav } from '@/helper/constants/nav'
 import { useAuthStore } from '@/store/useAuth'
 
@@ -29,20 +29,31 @@ export default function Header() {
   const [activeIndex, setActiveIndex] = useState<number>(0)
   const { isLogin } = useAuthStore()
 
-  const handleClick = (index: number) => {
-    setActiveIndex(index)
+  const handleActive = (index: number) => {
+    if (activeIndex === index) {
+      return 'border-white-active text-white-active'
+    }
+    return 'border-nav-border text-icon-normal'
   }
-  const navList = isLogin ? isLoginNav(activeIndex) : notLoginNav(activeIndex)
+
+  const handleClick = useCallback((index: number) => {
+    setActiveIndex(index)
+  }, [])
+
+  const navList = useMemo(
+    () => (isLogin ? isLoginNav(activeIndex) : notLoginNav(activeIndex)),
+    [isLogin, activeIndex]
+  )
 
   return (
-    <header className="w-[100vw] h-[52px] flex-center relative top-[10px]">
+    <header className="w-[100vw] h-[52px] flex-center fixed top-[10px] z-10">
       <nav className="bg-nav-bg h-[100%] px-[10px] rounded-full flex-center">
         <ul className="flex-center gap-[10px]">
           {navList.map((item: NavItem) => (
             <li key={item.index}>
               {item.type === 'link' ? (
                 <Link
-                  className={`min-w-[${item.minW}] nav-item ${tintcolor(activeIndex, item.index)} ${item.styles}`}
+                  className={`min-w-[${item.minW}] nav-item gap-[28px] ${handleActive(item.index)}`}
                   href={item.href || ''}
                   onClick={() => handleClick(item.index)}
                 >
@@ -50,8 +61,9 @@ export default function Header() {
                 </Link>
               ) : (
                 <Button
-                  className={`min-w-[${item.minW}] nav-item  ${tintcolor(activeIndex, item.index)}`}
+                  className={`nav-item ${handleActive(item.index)}`}
                   onClick={() => handleClick(item.index)}
+                  style={{ minWidth: item.minW }}
                 >
                   {item.icon && (
                     <Icon
