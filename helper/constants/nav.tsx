@@ -8,7 +8,6 @@ export const isLoginNav = (activeIndex: number) => {
       type: 'link',
       href: '/',
       minW: '70px',
-      styles: 'gap-[28px]',
       script: (
         <>
           <Icon
@@ -60,7 +59,6 @@ export const notLoginNav = (activeIndex: number) => {
       type: 'link',
       href: '/',
       minW: '70px',
-      styles: 'gap-[28px]',
       script: (
         <>
           <Icon
