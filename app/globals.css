@@ -62,29 +62,6 @@
   .nav-item {
     @apply h-[39px] rounded-full flex-center border px-[12px] py-[10px];
   }
-
-  .tooltip::after {
-    content: '';
-    position: absolute;
-    border-width: 5px;
-    border-style: solid;
-  }
-
-  .tooltip-top::after {
-    border-color: transparent transparent var(--light-ui-09, #333) transparent;
-  }
-
-  .tooltip-bottom::after {
-    border-color: var(--light-ui-09, #333) transparent transparent transparent;
-  }
-
-  .tooltip-left::after {
-    border-color: transparent var(--light-ui-09, #333) transparent transparent;
-  }
-
-  .tooltip-right::after {
-    border-color: transparent transparent transparent var(--light-ui-09, #333);
-  }
 }
 
 @layer base {
