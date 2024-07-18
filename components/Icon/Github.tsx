@@ -4,7 +4,7 @@ import { useTheme } from 'next-themes'
 import { IconProps } from '@/types'
 import { Svg } from './index'
 
-export default function Github({ className, width, height, fill = '#202020' }: IconProps) {
+export default function Github({ className, width, height }: IconProps) {
   const { resolvedTheme } = useTheme()
 
   return (
