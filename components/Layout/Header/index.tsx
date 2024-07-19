@@ -46,7 +46,7 @@ export default function Header() {
   )
 
   return (
-    <header className="w-[100vw] h-[52px] flex-center fixed top-[10px] z-10">
+    <header className="w-[100vw] h-[52px] flex-center fixed top-[10px] z-20">
       <nav className="bg-nav-bg h-[100%] px-[10px] rounded-full flex-center">
         <ul className="flex-center gap-[10px]">
           {navList.map((item: NavItem) => (
@@ -64,6 +64,8 @@ export default function Header() {
                   className={`nav-item ${handleActive(item.index)}`}
                   onClick={() => handleClick(item.index)}
                   style={{ minWidth: item.minW }}
+                  type="button"
+                  aria-label={item.icon?.name}
                 >
                   {item.icon && (
                     <Icon
