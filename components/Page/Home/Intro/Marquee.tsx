@@ -4,7 +4,7 @@ export default function Marquee() {
       <div className="text-heading-bg inline-block text-[200px] font-bold">
         &nbsp;JOIN US MOA! JOIN US MOA!&nbsp;JOIN US MOA! JOIN US MOA!&nbsp;JOIN US MOA! JOIN US
         MOA!&nbsp;JOIN US MOA! JOIN US MOA!&nbsp;JOIN US MOA! JOIN US MOA!&nbsp;JOIN US MOA! JOIN US
-        MOA!
+        MOA!&nbsp;JOIN US MOA! JOIN US MOA!
       </div>
     </div>
   )
