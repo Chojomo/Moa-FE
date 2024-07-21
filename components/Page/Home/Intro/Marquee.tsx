@@ -1,12 +1,11 @@
 export default function Marquee() {
   return (
-    <div className="absolute flex whitespace-nowrap animate-marquee">
-      <p className="text-heading-bg text-[200px] font-bold">
-        JOIN US MOA! JOIN US MOA! JOIN US MOA! JOIN US MOA! JOIN US MOA!&nbsp;
-      </p>
-      <p className="text-heading-bg text-[200px] font-bold">
-        JOIN US MOA! JOIN US MOA! JOIN US MOA! JOIN US MOA! JOIN US MOA!&nbsp;
-      </p>
+    <div className="absolute flex whitespace-nowrap animate-marquee will-change-transform">
+      <div className="text-heading-bg inline-block text-[200px] font-bold">
+        &nbsp;JOIN US MOA! JOIN US MOA!&nbsp;JOIN US MOA! JOIN US MOA!&nbsp;JOIN US MOA! JOIN US
+        MOA!&nbsp;JOIN US MOA! JOIN US MOA!&nbsp;JOIN US MOA! JOIN US MOA!&nbsp;JOIN US MOA! JOIN US
+        MOA!
+      </div>
     </div>
   )
 }

@@ -63,22 +63,28 @@ const config: Config = {
           },
         },
         marquee: {
-          '0%': {
-            transform: 'translateX(0%)',
-          },
-          '100%': {
-            transform: 'translateX(-100%)',
-          },
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
         },
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-10px)' },
         },
+        floatTop: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(5px)' },
+        },
+        floatBottom: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(10px)' },
+        },
       },
       animation: {
         shimmer: 'shimmer 1s linear infinite',
-        marquee: 'marquee 200s linear infinite',
-        float: 'float 3s ease-in-out infinite',
+        marquee: 'marquee 300s linear infinite',
+        float: 'float 2.5s ease-in-out infinite',
+        floatTop: 'floatTop 2s ease-in-out infinite',
+        floatBottom: 'floatBottom 3s ease-in-out infinite',
       },
       boxShadow: {
         tooltip: '2px 6px 12px 0px rgba(0, 0, 0, 0.12), 0px 0px 4px 0px rgba(0, 0, 0, 0.12)',
