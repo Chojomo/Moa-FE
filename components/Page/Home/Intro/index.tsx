@@ -2,21 +2,13 @@ import Image from 'next/image'
 import IntroTip from '@/components/Tooltip/IntroTip'
 import { shapes } from '@/helper/constants/shapes'
 import Button from '@/components/Button'
+import { animation } from '@/helper/constants/animation'
 import Marquee from './Marquee'
 import IntroImage from './IntroImage'
 
 export default function Intro() {
-  const animation = [
-    'animate-float1',
-    'animate-float2',
-    'animate-float3',
-    'animate-float4',
-    'animate-float5',
-    'animate-float6',
-  ]
-
   return (
-    <>
+    <div className="w-[100vw] h-[100vh] lg:flex-center lg:flex-row flex flex-col justify-center items-center lg:gap-[50px] px-[30px]">
       <div className="relative flex lg:flex-col lg:items-end lg:justify-center justify-between items-center flex-1 w-[100%] h-[100%] z-10 lg:px-[0%] px-[10%]">
         {shapes.left.map(({ color, src, alt }, index: number) => (
           <Image
@@ -55,6 +47,6 @@ export default function Intro() {
         ))}
       </div>
       <Marquee />
-    </>
+    </div>
   )
 }
