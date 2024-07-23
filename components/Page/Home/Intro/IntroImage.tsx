@@ -10,7 +10,7 @@ export default function IntroImage() {
 
   return (
     <Image
-      className="w-[260px] h-[263px] z-20 mb-[60px]"
+      className="w-[260px] h-[263px] z-10 mb-[60px]"
       width={0}
       height={0}
       src={resolvedTheme === 'light' ? light : dark}

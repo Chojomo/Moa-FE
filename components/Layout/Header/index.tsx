@@ -46,7 +46,7 @@ export default function Header() {
   )
 
   return (
-    <header className="w-[100vw] h-[52px] flex-center fixed top-[10px] z-20">
+    <header className="w-[100vw] h-[52px] flex-center fixed top-[10px] z-30">
       <nav className="bg-nav-bg h-[100%] px-[10px] rounded-full flex-center">
         <ul className="flex-center gap-[10px]">
           {navList.map((item: NavItem) => (
@@ -72,7 +72,6 @@ export default function Header() {
                       name={item.icon.name}
                       width={item.icon.width}
                       height={item.icon?.height}
-                      skeletonClassName="rounded"
                       fill={tincolorIcon(activeIndex, item.index)}
                     />
                   )}

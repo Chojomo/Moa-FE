@@ -1,7 +1,7 @@
 import { IconProps } from '@/types'
 import { Svg } from './index'
 
-export default function Arrow({ className, width, height, fill = '#A6A6A6' }: IconProps) {
+export default function Next({ className, width, height, fill = '#A6A6A6' }: IconProps) {
   return (
     <Svg
       width={width || 53}
