@@ -13,7 +13,7 @@ export default function Survey() {
       <Button
         type="button"
         ariaLabel="start button"
-        className="z-10 bg-accent-normal text-[#fff]  font-bold px-[63px] py-[15px] rounded-[50px] shadow-lg transform hover:scale-[1.1] transition-transform duration-200"
+        className="bg-accent-normal text-[#fff]  font-bold px-[63px] py-[15px] rounded-[50px] shadow-lg transform hover:scale-[1.1] transition-transform duration-200"
       >
         REPLY IT!
       </Button>

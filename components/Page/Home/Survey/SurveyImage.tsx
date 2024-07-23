@@ -10,7 +10,7 @@ export default function SurveyImage() {
 
   return (
     <Image
-      className="max-w-[300px] w-auto max-h-[330px] h-[50%] z-20"
+      className="max-w-[300px] w-auto max-h-[330px] h-[50%] z-0"
       width={0}
       height={0}
       src={resolvedTheme === 'light' ? light : dark}
