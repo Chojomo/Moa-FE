@@ -15,13 +15,7 @@ export default function ThemeToggle() {
       className="min-w-[55px] nav-item border-nav-border text-icon-normal"
       onClick={() => (resolvedTheme === 'dark' ? setTheme('light') : setTheme('dark'))}
     >
-      <Icon
-        name="Themes"
-        width={20}
-        height={20}
-        skeletonClassName="rounded"
-        fill="rgb(166,166,166)"
-      />
+      <Icon name="Themes" width={20} height={20} fill="rgb(166,166,166)" />
     </ThemeButton>
   )
 }

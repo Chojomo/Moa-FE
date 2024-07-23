@@ -1,9 +1,8 @@
 'use client'
 
-import { lazy, useMemo, Suspense, memo } from 'react'
+import { useState, useEffect, memo } from 'react'
 import { pipe, join } from '@fxts/core'
 import { ClassName, Child, Size } from '@/types'
-import Skeleton from '../UI/Skeleton'
 
 type SvgProps = {
   width: number
@@ -30,19 +29,32 @@ function Svg(props: SvgProps) {
 
 type IconProps = {
   name: string
-  skeletonClassName?: string
   fill?: string
 } & Size &
   ClassName
 
 function LazyIconComponent(props: IconProps) {
-  const { name, width, height, skeletonClassName } = props
-  const Component = useMemo(() => lazy(() => import(`./${name}`)), [name])
-  return (
-    <Suspense fallback={<Skeleton width={width} height={height} className={skeletonClassName} />}>
-      <Component {...props} />
-    </Suspense>
-  )
+  const { name } = props
+  const [Component, setComponent] = useState<React.ElementType | null>(null)
+
+  useEffect(() => {
+    const loadComponent = async () => {
+      try {
+        const { default: ImportedComponent } = await import(`./${name}`)
+        setComponent(() => ImportedComponent)
+      } catch (error) {
+        console.error(`Error loading icon: ${name}`, error)
+        setComponent(() => null)
+      }
+    }
+    loadComponent()
+  }, [name])
+
+  if (!Component) {
+    return null
+  }
+
+  return <Component {...props} />
 }
 
 LazyIconComponent.displayName = 'LazyIconComponent'

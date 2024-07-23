@@ -10,20 +10,13 @@ export const isLoginNav = (activeIndex: number) => {
       minW: '70px',
       script: (
         <>
-          <Icon
-            name="Logo"
-            width={35}
-            height={35}
-            className="mb-[10px]"
-            skeletonClassName="rounded"
-          />
+          <Icon name="Logo" width={35} height={35} className="mb-[10px]" />
           <p className="text-[20px] font-bold">Moa</p>
           <Icon
             name="Home"
             width={20}
             height={20}
             className="flex-center"
-            skeletonClassName="rounded"
             fill={tincolorIcon(activeIndex, 0)}
           />
         </>
@@ -37,15 +30,7 @@ export const isLoginNav = (activeIndex: number) => {
       type: 'link',
       href: '/user',
       minW: '55px',
-      script: (
-        <Icon
-          name="User"
-          width={18}
-          height={20}
-          skeletonClassName="rounded"
-          fill={tincolorIcon(activeIndex, 4)}
-        />
-      ),
+      script: <Icon name="User" width={18} height={20} fill={tincolorIcon(activeIndex, 4)} />,
     },
     { index: 5, type: 'button', minW: '55px', icon: { name: 'Bell', width: 18, height: 18 } },
     { index: 6, type: 'button', minW: '55px', icon: { name: 'Logout', width: 20, height: 18 } },
@@ -61,20 +46,13 @@ export const notLoginNav = (activeIndex: number) => {
       minW: '70px',
       script: (
         <>
-          <Icon
-            name="Logo"
-            width={35}
-            height={35}
-            className="mb-[10px]"
-            skeletonClassName="rounded"
-          />
+          <Icon name="Logo" width={35} height={35} className="mb-[10px]" />
           <p className="text-[20px] font-bold">Moa</p>
           <Icon
             name="Home"
             width={20}
             height={20}
             className="flex-center"
-            skeletonClassName="rounded"
             fill={tincolorIcon(activeIndex, 0)}
           />
         </>
