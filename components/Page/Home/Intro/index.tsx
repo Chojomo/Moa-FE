@@ -2,7 +2,7 @@ import Image from 'next/image'
 import IntroTip from '@/components/Tooltip/IntroTip'
 import { shapes } from '@/helper/constants/shapes'
 import Button from '@/components/Button'
-import { animation } from '@/helper/constants/animation'
+import { left, right } from '@/helper/constants/animation'
 import Marquee from './Marquee'
 import IntroImage from './IntroImage'
 
@@ -13,7 +13,7 @@ export default function Intro() {
         {shapes.left.map(({ color, src, alt }, index: number) => (
           <Image
             key={color}
-            className={`lg:w-[51%] md:w-[25%] w-[30%] relative ${color === 'green' ? 'lg:right-[90px]' : 'lg:left-[40px] lg:top-[0px] top-[30px]'} ${animation[index]}`}
+            className={`lg:w-[51%] md:w-[25%] w-[30%] relative ${color === 'green' ? 'lg:right-[90px]' : 'lg:left-[40px] lg:top-[0px] top-[30px]'} ${left[index]}`}
             width={0}
             height={0}
             src={src}
@@ -37,7 +37,7 @@ export default function Intro() {
         {shapes.right.map(({ color, src, alt }, index: number) => (
           <Image
             key={color}
-            className={`lg:w-[51%] md:w-[25%] w-[30%] animate-float relative ${color === 'red' ? 'lg:left-[90px]' : 'lg:right-[40px] lg:bottom-[0px] bottom-[40px]'} ${animation[index + 3]}`}
+            className={`lg:w-[51%] md:w-[25%] w-[30%] animate-float relative ${color === 'red' ? 'lg:left-[90px]' : 'lg:right-[40px] lg:bottom-[0px] bottom-[40px]'} ${right[index]}`}
             width={0}
             height={0}
             src={src}

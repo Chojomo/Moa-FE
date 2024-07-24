@@ -70,41 +70,21 @@ const config: Config = {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-10px)' },
         },
-        float1: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-10px)' },
-        },
         float2: {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(10px)' },
-        },
-        float3: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-5px)' },
-        },
-        float4: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(5px)' },
-        },
-        float5: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-15px)' },
-        },
-        float6: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(15px)' },
         },
       },
       animation: {
         shimmer: 'shimmer 1s linear infinite',
         marquee: 'marquee 200s linear infinite',
         float: 'float 2.5s ease-in-out infinite',
-        float1: 'float1 2.5s ease-in-out infinite',
-        float2: 'float2 3s ease-in-out infinite',
-        float3: 'float3 2s ease-in-out infinite',
-        float4: 'float4 2.8s ease-in-out infinite',
-        float5: 'float5 3.5s ease-in-out infinite',
-        float6: 'float6 2.2s ease-in-out infinite',
+        floatL1: 'float2 2.3s ease-in-out infinite',
+        floatL2: 'float2 2.2s ease-in-out infinite',
+        floatL3: 'float2 2.4s ease-in-out infinite',
+        floatR1: 'float2 2.7s ease-in-out infinite',
+        floatR2: 'float2 2.1s ease-in-out infinite',
+        floatR3: 'float2 2.5s ease-in-out infinite',
       },
       boxShadow: {
         tooltip: '2px 6px 12px 0px rgba(0, 0, 0, 0.12), 0px 0px 4px 0px rgba(0, 0, 0, 0.12)',
