@@ -2,11 +2,13 @@ import Image from 'next/image'
 import IntroTip from '@/components/Tooltip/IntroTip'
 import { shapes } from '@/helper/constants/shapes'
 import Button from '@/components/Button'
-import { left, right } from '@/helper/constants/animation'
 import Marquee from './Marquee'
 import IntroImage from './IntroImage'
 
 export default function Intro() {
+  const left = ['animate-floatL1', 'animate-floatL2', 'animate-floatL3']
+  const right = ['animate-floatR1', 'animate-floatR2', 'animate-floatR3']
+
   return (
     <div className="w-[100vw] h-[100vh] lg:flex-center lg:flex-row flex flex-col justify-center items-center lg:gap-[50px] px-[30px]">
       <div className="relative flex lg:flex-col lg:items-end lg:justify-center justify-between items-center flex-1 w-[100%] h-[100%] z-10 lg:px-[0%] px-[10%]">
