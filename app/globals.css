@@ -64,7 +64,7 @@
   }
 
   .tooltip {
-    @apply z-10 w-max px-[6px] py-[8px] leading-[18px] shadow-tooltip cursor-pointer pointer-events-auto;
+    @apply z-20 w-max px-[6px] py-[8px] leading-[18px] shadow-tooltip cursor-pointer pointer-events-auto;
   }
 
   .tooltip-arrow::after {
@@ -72,9 +72,9 @@
     position: absolute;
     border-width: 5px;
     border-style: solid;
-    right: 8px;
-    bottom: 100%;
-    border-color: transparent transparent #333 transparent;
+    right: 34px;
+    top: 100%;
+    border-color: #333 transparent transparent transparent;
   }
 
   .tooltip-intro::after {

@@ -1,35 +1,53 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Icon } from '../Icon'
 import { ArrowTip } from '../Tooltip'
 
 export default function Arrow() {
+  const lastY = useRef<number>(0)
+  const isWheeling = useRef<boolean>(false)
   const [arrow, setArrow] = useState<string>('Next')
+
+  const COOLDOWN = 800
 
   useEffect(() => {
     const ele = document.querySelector('#scroller') as HTMLElement | null
 
-    const handleScroll = () => {
-      if (ele) {
-        const { scrollTop, clientHeight } = ele
+    if (!ele) {
+      return undefined
+    }
 
-        if (scrollTop < clientHeight) {
-          setArrow('Next')
-        } else {
-          setArrow('Prev')
-        }
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault()
+
+      if (isWheeling.current) {
+        return
       }
+
+      isWheeling.current = true
+
+      const { clientHeight, scrollTop } = ele
+      const direction = e.deltaY > 0 ? 1 : -1
+      lastY.current = scrollTop
+
+      if (direction > 0) {
+        ele.scrollTop = clientHeight
+        setArrow('Prev')
+      } else {
+        ele.scrollTop = 0
+        setArrow('Next')
+      }
+
+      setTimeout(() => {
+        isWheeling.current = false
+      }, COOLDOWN)
     }
 
-    if (ele) {
-      ele.addEventListener('scroll', handleScroll)
-    }
+    ele.addEventListener('wheel', handleWheel, { passive: false })
 
     return () => {
-      if (ele) {
-        ele.removeEventListener('scroll', handleScroll)
-      }
+      ele.removeEventListener('wheel', handleWheel as EventListener)
     }
   }, [])
 
@@ -40,8 +58,10 @@ export default function Arrow() {
       const { clientHeight, scrollTop } = ele
       if (scrollTop < clientHeight) {
         ele.scrollTop = clientHeight
+        setArrow('Prev')
       } else {
         ele.scrollTop = 0
+        setArrow('Next')
       }
     }
   }
