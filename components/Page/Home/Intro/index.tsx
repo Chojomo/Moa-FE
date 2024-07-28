@@ -11,11 +11,11 @@ export default function Intro() {
 
   return (
     <div className="w-[100vw] h-[100vh] lg:flex-center lg:flex-row flex flex-col justify-center items-center lg:gap-[50px] px-[30px]">
-      <div className="relative flex lg:flex-col lg:items-end lg:justify-center justify-between items-center flex-1 w-[100%] h-[100%] z-10 lg:px-[0%] px-[10%]">
+      <div className="relative flex lg:flex-col lg:items-end lg:justify-center justify-between items-center flex-1 w-[100%] h-[100%] lg:px-[0%] px-[10%]">
         {shapes.left.map(({ color, src, alt }, index: number) => (
           <Image
             key={color}
-            className={`lg:w-[51%] md:w-[25%] w-[30%] relative ${color === 'green' ? 'lg:right-[90px]' : 'lg:left-[40px] lg:top-[0px] top-[30px]'} ${left[index]}`}
+            className={`lg:w-[51%] md:w-[25%] w-[30%] relative ${color === 'green' ? 'lg:right-[90px]' : 'lg:left-[40px] lg:top-[0px] top-[30px]'} ${left[index]}  ${index === 1 ? 'z-10' : ''}`}
             width={0}
             height={0}
             src={src}
@@ -30,16 +30,16 @@ export default function Intro() {
         <Button
           type="button"
           ariaLabel="start button"
-          className="z-10 bg-accent-normal text-[#fff] font-bold px-[63px] py-[15px] rounded-[50px] shadow-lg transform hover:scale-[1.1] transition-transform duration-200"
+          className="bg-accent-normal text-[#fff] font-bold px-[63px] py-[15px] rounded-[50px] shadow-lg transform hover:scale-[1.1] transition-transform duration-200"
         >
           Gather it!
         </Button>
       </div>
-      <div className="flex lg:flex-col lg:items-start lg:justify-center justify-between items-center flex-1 w-[100%] h-[100%] z-10 lg:px-[0%] px-[10%]">
+      <div className="flex lg:flex-col lg:items-start lg:justify-center justify-between items-center flex-1 w-[100%] h-[100%] lg:px-[0%] px-[10%]">
         {shapes.right.map(({ color, src, alt }, index: number) => (
           <Image
             key={color}
-            className={`lg:w-[51%] md:w-[25%] w-[30%] animate-float relative ${color === 'red' ? 'lg:left-[90px]' : 'lg:right-[40px] lg:bottom-[0px] bottom-[40px]'} ${right[index]}`}
+            className={`lg:w-[51%] md:w-[25%] w-[30%] animate-float relative ${color === 'red' ? 'lg:left-[90px]' : 'lg:right-[40px] lg:bottom-[0px] bottom-[40px]'} ${right[index]} ${index === 1 ? 'z-10' : ''}`}
             width={0}
             height={0}
             src={src}

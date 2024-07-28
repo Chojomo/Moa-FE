@@ -64,7 +64,7 @@
   }
 
   .tooltip {
-    @apply z-20 w-max px-[6px] py-[8px] leading-[18px] shadow-tooltip cursor-pointer pointer-events-auto;
+    @apply w-max px-[6px] py-[8px] leading-[18px] shadow-tooltip cursor-pointer pointer-events-auto;
   }
 
   .tooltip-arrow::after {

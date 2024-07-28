@@ -67,12 +67,12 @@ export default function Arrow() {
   }
 
   return (
-    <div className="fixed left-1/2 bottom-[10px] transform -translate-x-1/2">
+    <div className="z-30 fixed left-1/2 bottom-[10px] transform -translate-x-1/2">
       <ArrowTip>더 탐색하기</ArrowTip>
       <button
         type="button"
         aria-label="next"
-        className="relative animate-float p-[20px] z-30"
+        className="relative animate-float p-[20px]"
         onClick={handleClick}
       >
         <Icon name={arrow} width={53} height={26} />
