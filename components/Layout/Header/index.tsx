@@ -31,6 +31,26 @@ export default function Header() {
     return classNormal
   }
 
+  const handleActiveHome = (href: string, type: 'border' | 'icon') => {
+    const isMobile = window.matchMedia(`(max-width: 768px)`).matches
+
+    const classActive =
+      type === 'border' ? 'border-white-active text-white-active' : 'rgba(255, 255, 255, 0.85)'
+
+    const classNormal =
+      type === 'border' ? 'border-nav-border text-icon-normal' : 'rgb(166,166,166)'
+
+    if (isMobile) {
+      return classActive
+    }
+
+    if (pathname === href) {
+      return classActive
+    }
+
+    return classNormal
+  }
+
   type NavItem = {
     href: string
     label: string
@@ -86,7 +106,7 @@ export default function Header() {
         <ul className="flex-center gap-[10px] flex-col md:flex-row mt-[8px] md:mt-[0px] mb-[8px] md:mb-[0px]">
           <li>
             <Link
-              className={`min-w-[188px] nav-item gap-[28px] ${handleActive('/', 'border')}`}
+              className={`min-w-[188px] nav-item gap-[28px] ${handleActiveHome('/', 'border')}`}
               href="/"
               onClick={handleClick}
             >
@@ -97,7 +117,7 @@ export default function Header() {
                 width={20}
                 height={20}
                 className="flex-center hidden md:block"
-                fill={handleActive('/', 'icon')}
+                fill={handleActiveHome('/', 'icon')}
               />
               <Icon
                 className="mt-[6px] block md:hidden"
