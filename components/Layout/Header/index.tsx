@@ -100,7 +100,7 @@ export default function Header() {
 
   return (
     <header
-      className={`w-full ${isActive ? 'h-[55px]' : isLogin ? 'h-[450px]' : 'h-[350px]'} md:h-[52px] flex-center fixed top-[10px] z-30 transition-height duration-500 ease-in-out overflow-hidden md:transition-none`}
+      className={`w-full ${!isActive ? 'h-[55px]' : isLogin ? 'h-[450px]' : 'h-[350px]'} md:h-[52px] flex-center fixed top-[10px] z-30 transition-height duration-500 ease-in-out overflow-hidden md:transition-none`}
     >
       <nav className="bg-nav-bg h-[100%] px-[10px] rounded-[28px] md:rounded-full md:flex-center">
         <ul className="flex-center gap-[10px] flex-col md:flex-row mt-[8px] md:mt-[0px] mb-[8px] md:mb-[0px]">
