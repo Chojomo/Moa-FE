@@ -1,9 +1,9 @@
-type InputProps = {
-  value: string
-  changeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
-}
+// type InputProps = {
+//   value: string
+//   changeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void
+// }
 
-export default function Input({ value, changeHandler }: InputProps) {
+export default function Input() {
   return (
     <>
       <div className="max-w-[350px] w-[80%] md:w-[50%] flex-center rounded-full border border-border focus:border-accent shadow-sm hover:shadow-md overflow-hidden text-[14px] px-[10px] gap-[10px] mb-[40px]">
