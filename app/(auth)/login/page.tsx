@@ -3,6 +3,7 @@
 import { useState } from 'react'
 // import Input from '@/components/Page/Auth/Input'
 import Button from '@/components/Button'
+import Link from 'next/link'
 
 export default function Login() {
   const [isChecked, setIsChecked] = useState(false)
@@ -30,6 +31,8 @@ export default function Login() {
       >
         회원가입
       </Button>
+      <p>아이디 찾기</p>
+      <p>비밀번호 찾기</p>
     </form>
   )
 }
