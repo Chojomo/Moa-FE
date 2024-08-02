@@ -1,16 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-// import Input from '@/components/Page/Auth/Input'
 import Button from '@/components/Button'
 import Link from 'next/link'
 
 export default function Login() {
   const [isChecked, setIsChecked] = useState(false)
-
-  /* input 따로따로 할 건지 고민,,, */
-  /* <Input /> */
-  /* 체크박스 아이콘으로 변경, submit 함수 추가할것... */
 
   return (
     <form>
