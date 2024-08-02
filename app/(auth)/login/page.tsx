@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Input from '@/components/Page/Auth/Input'
+// import Input from '@/components/Page/Auth/Input'
 import Button from '@/components/Button'
 
 export default function Login() {
@@ -26,7 +26,7 @@ export default function Login() {
       <Button
         type="submit"
         ariaLabel="submit button"
-        className="bg-main-blue px-[130px] py-[10px] rounded-full font-bold text-[18px]"
+        className="bg-main-blue px-[130px] py-[10px] rounded-full font-bold text-[18px] text-[#eeeeeeda]"
       >
         회원가입
       </Button>
