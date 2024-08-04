@@ -2,13 +2,37 @@
 
 import { useState } from 'react'
 import Button from '@/components/Button'
-import Link from 'next/link'
+import Input from '@/components/Page/Auth/Input'
 
 export default function Login() {
-  const [isChecked, setIsChecked] = useState(false)
+  const [emailValue, setEmailValue] = useState<string>('')
+  const [passwordValue, setPasswordValue] = useState<string>('')
+  const [isChecked, setIsChecked] = useState<boolean>(false)
+
+  const changeEmailHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmailValue(e.target.value)
+  }
+
+  const changePasswordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPasswordValue(e.target.value)
+  }
 
   return (
-    <form>
+    <form className="w-[100vw] flex-center flex-col">
+      <Input
+        label="이메일"
+        type="email"
+        placeholder="이메일을 입력해 주세요"
+        value={emailValue}
+        changeHandler={changeEmailHandler}
+      />
+      <Input
+        label="비밀번호"
+        type="password"
+        placeholder="비밀번호를 입력해 주세요"
+        value={passwordValue}
+        changeHandler={changePasswordHandler}
+      />
       <label className="flex items-center gap-[20px]">
         <input
           type="checkbox"
