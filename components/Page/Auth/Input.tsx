@@ -10,7 +10,7 @@ export default function Input(props: InputProps) {
   const { label, type, placeholder, value, changeHandler } = props
 
   return (
-    <div className="max-w-[350px] w-[80%] md:w-[50%] flex-center rounded-full border border-border focus:border-accent shadow-sm hover:shadow-md overflow-hidden text-[14px] px-[10px] gap-[10px] mb-[40px]">
+    <div className="max-w-[350px] w-[80%] md:w-[50%] flex-center rounded-full border border-border focus:border-accent shadow-sm hover:shadow-md overflow-hidden text-[14px] px-[10px] gap-[10px]">
       <label
         htmlFor={type}
         className="inline-block text-heading-text font-bold pl-[30px] py-[18px]"
