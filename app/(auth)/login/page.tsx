@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Button from '@/components/Button'
 import Input from '@/components/Page/Auth/Input'
 import { Icon } from '@/components/Icon'
-import { validateEmail } from '@/helper/validate'
+import { validateEmail, validatePassword } from '@/helper/validate'
 
 export default function Login() {
   const [emailValue, setEmailValue] = useState<string>('')
@@ -43,7 +43,9 @@ export default function Login() {
           <Icon name="Cancel" width={15} height={15} />
         </Button>
       </Input>
-      <p className="relative bottom-[20px] right-[90px] text-[12px] font-bold text-accent">
+      <p
+        className={`relative bottom-[20px] right-[90px] text-[12px] font-bold text-accent ${!emailValue.length || validateEmail(emailValue) ? 'opacity-0' : 'opacity-100'}`}
+      >
         유효하지 않은 이메일입니다.
       </p>
       <Input
@@ -70,8 +72,10 @@ export default function Login() {
           <Icon name={showPassword ? 'EyeOn' : 'EyeOff'} width={23} height={23} />
         </Button>
       </Input>
-      <p className="relative bottom-[20px] left-[5px] text-[12px] font-bold text-accent">
-        영어 대문자, 소문자, 특수문자를 포함한 8글자 이상을 입력해 주세요.
+      <p
+        className={`relative bottom-[20px] left-[5px] text-[12px] font-bold text-accent ${!passwordValue.length || validatePassword(passwordValue) ? 'opacity-0' : 'opacity-100'}`}
+      >
+        영어 대소문자, 숫자, 특수문자를 포함한 8글자 이상을 입력해 주세요.
       </p>
       <div className="flex-center gap-[20px] mt-[30px]">
         <Button type="button" ariaLabel="check button" onClick={() => setIsChecked(!isChecked)}>
@@ -93,10 +97,11 @@ export default function Login() {
       <Button
         type="submit"
         ariaLabel="submit button"
-        className="bg-main-blue mt-[47px] px-[130px] py-[10px] rounded-full font-bold text-[18px] text-[#eeeeeeda]"
+        className="bg-main-blue mt-[47px] px-[130px] py-[10px] rounded-full font-bold text-[18px] text-[#fff]"
       >
-        회원가입
+        로그인
       </Button>
+      {/* 아이디, 비밀번호 찾기 */}
     </form>
   )
 }
