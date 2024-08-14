@@ -74,6 +74,30 @@ const config: Config = {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(10px)' },
         },
+        resetL: {
+          '0%': {
+            transform: 'rotate(var(--tw-rotate))',
+            top: '40px',
+            left: '100px',
+          },
+          '100%': {
+            transform: 'rotate(0deg)',
+            top: '0px',
+            left: '0px',
+          },
+        },
+        resetR: {
+          '0%': {
+            transform: 'rotate(var(--tw-rotate))',
+            top: '40px',
+            right: '100px',
+          },
+          '100%': {
+            transform: 'rotate(0deg)',
+            top: '0px',
+            right: '0px',
+          },
+        },
       },
       animation: {
         shimmer: 'shimmer 1s linear infinite',
@@ -85,9 +109,15 @@ const config: Config = {
         floatR1: 'float2 2.7s ease-in-out infinite',
         floatR2: 'float2 2.1s ease-in-out infinite',
         floatR3: 'float2 2.5s ease-in-out infinite',
+        resetL: 'resetL 1s 0.2s ease-out forwards',
+        resetR: 'resetR 1s 0.2s ease-out forwards',
       },
       boxShadow: {
         tooltip: '2px 6px 12px 0px rgba(0, 0, 0, 0.12), 0px 0px 4px 0px rgba(0, 0, 0, 0.12)',
+      },
+      rotate: {
+        '-8': '-8deg',
+        '8': '8deg',
       },
     },
   },
