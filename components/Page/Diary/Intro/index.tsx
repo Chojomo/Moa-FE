@@ -63,16 +63,6 @@ export default function Intro({ setCurrentPage }: IntroProps) {
           <PopularCard key={post.index} post={post} />
         ))}
       </div>
-      <div className="w-[100%] flex-center md:flex-row flex-col md:gap-[50px] gap-[10px]">
-        {posts.map((post) => (
-          <PopularCard key={post.index} post={post} />
-        ))}
-      </div>
-      <div className="w-[100%] flex-center md:flex-row flex-col md:gap-[50px] gap-[10px]">
-        {posts.map((post) => (
-          <PopularCard key={post.index} post={post} />
-        ))}
-      </div>
     </div>
   )
 }
