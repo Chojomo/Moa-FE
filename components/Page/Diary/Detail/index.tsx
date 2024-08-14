@@ -1,6 +1,8 @@
 'use client'
 
+import { posts } from '@/helper/constants/posts'
 import { useEffect, useState, Dispatch, SetStateAction } from 'react'
+import Post from './Post'
 
 type DetailProps = {
   setCurrentPage: Dispatch<SetStateAction<number>>
@@ -44,10 +46,13 @@ export default function Detail({ setCurrentPage }: DetailProps) {
   }, [isTop, setCurrentPage])
 
   return (
-    <div id="detail" className="w-[100vw] h-[100vh] flex flex-col overflow-scroll">
-      <p>Detail</p>
-      <p>Detail</p>
-      <p>Detail</p>
+    <div
+      id="detail"
+      className="w-[100vw] h-[100vh] flex flex-col overflow-scroll sm:p-[10%] px-[10%] py-[30%] sm:gap-[0px] gap-[40px]"
+    >
+      {posts.map((post) => (
+        <Post key={post.index} post={post} />
+      ))}
     </div>
   )
 }
