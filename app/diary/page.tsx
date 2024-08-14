@@ -1,17 +1,26 @@
+'use client'
+
+import { useState } from 'react'
 import Pages from '@/components/Page/Diary'
-import Arrow from '@/components/Arrow'
+import ScrollArrow from '@/components/Arrow/ScrollArrow'
 
 export default function Diary() {
+  const [currentPage, setCurrentPage] = useState<number>(1)
+
   return (
     <div
-      id="scroller"
-      className="relative bg-background w-[100vw] h-[100vh] overflow-x-hidden scroll-smooth"
+      id="diary-scroller"
+      className="relative bg-background w-[100vw] h-[100vh] overflow-hidden scroll-smooth"
     >
       <div className="h-[200vh]">
         {Pages.map(({ name, Component }) => (
-          <Component key={name} />
+          <Component key={name} setCurrentPage={setCurrentPage} />
         ))}
-        <Arrow />
+        <ScrollArrow
+          selector="#diary-scroller"
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
       </div>
     </div>
   )
