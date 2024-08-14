@@ -12,7 +12,7 @@ export default function Home() {
         {Pages.map(({ name, Component }) => (
           <Component key={name} />
         ))}
-        <Arrow />
+        <Arrow selector="#scroller" />
       </div>
     </div>
   )
