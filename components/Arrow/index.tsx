@@ -72,7 +72,7 @@ export default function Arrow({ selector }: ArrowProps) {
 
   return (
     <div className="z-30 fixed left-1/2 bottom-[10px] transform -translate-x-1/2">
-      <ArrowTip>더 탐색하기</ArrowTip>
+      {/* <ArrowTip>더 탐색하기</ArrowTip> */}
       <button
         type="button"
         aria-label="next"
