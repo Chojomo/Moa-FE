@@ -1,0 +1,51 @@
+export const posts = [
+  {
+    index: 0,
+    src: '/images/ewtq.jpeg',
+    writer: 'ichubtou',
+    title: '핫도그 언제 마지막으로 먹었는지 기억이 안 나..',
+    description: '망망곰곰엉덩일흔드러바흔들흔들',
+  },
+  {
+    index: 1,
+    src: '/images/dfsfs.jpeg',
+    writer: 'yuajjang',
+    title: '집 나가면 개고생..',
+    description: '망망곰곰엉덩일흔드러바흔들흔들',
+  },
+  {
+    index: 2,
+    src: '/images/ewtq.jpeg',
+    writer: 'ichubtou',
+    title: '핫도그 언제 마지막으로 먹었는지 기억이 안 나..',
+    description: '망망곰곰엉덩일흔드러바흔들흔들',
+  },
+  {
+    index: 3,
+    src: '/images/ewtq.jpeg',
+    writer: 'yuajjang',
+    title: '집 나가면 개고생..',
+    description: '망망곰곰엉덩일흔드러바흔들흔들',
+  },
+  {
+    index: 4,
+    src: '/images/ewtq.jpeg',
+    writer: 'ichubtou',
+    title: '핫도그 언제 마지막으로 먹었는지 기억이 안 나..',
+    description: '망망곰곰엉덩일흔드러바흔들흔들',
+  },
+  {
+    index: 5,
+    src: '/images/ewtq.jpeg',
+    writer: 'yuajjang',
+    title: '집 나가면 개고생..',
+    description: '망망곰곰엉덩일흔드러바흔들흔들',
+  },
+  {
+    index: 6,
+    src: '/images/ewtq.jpeg',
+    writer: 'ichubtou',
+    title: '핫도그 언제 마지막으로 먹었는지 기억이 안 나..',
+    description: '망망곰곰엉덩일흔드러바흔들흔들',
+  },
+]
