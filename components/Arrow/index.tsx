@@ -4,7 +4,11 @@ import { useState, useEffect, useRef } from 'react'
 import { Icon } from '../Icon'
 import { ArrowTip } from '../Tooltip'
 
-export default function Arrow() {
+type ArrowProps = {
+  selector: string
+}
+
+export default function Arrow({ selector }: ArrowProps) {
   const lastY = useRef<number>(0)
   const isWheeling = useRef<boolean>(false)
   const [arrow, setArrow] = useState<string>('Next')
@@ -12,7 +16,7 @@ export default function Arrow() {
   const COOLDOWN = 800
 
   useEffect(() => {
-    const ele = document.querySelector('#scroller') as HTMLElement | null
+    const ele = document.querySelector(selector) as HTMLElement | null
 
     if (!ele) {
       return undefined
