@@ -18,11 +18,11 @@ export default function PopularCard({ post }: PopularCardProps) {
   const addClass = () => {
     switch (index) {
       case 0:
-        return 'relative -rotate-8 top-[40px] left-[100px] animate-resetL'
+        return 'relative sm:-rotate-8 top-[100px] left-[0px] sm:top-[40px] sm:left-[100px] animate-resetT sm:animate-resetL'
       case 1:
         return 'z-10'
       case 2:
-        return 'relative rotate-8 top-[40px] right-[100px] animate-resetR'
+        return 'relative sm:rotate-8  bottom-[100px] right-[0px] sm:top-[40px] sm:bottom-[0px] animate-resetB sm:right-[100px] sm:animate-resetR'
       default:
         return ''
     }
@@ -36,9 +36,9 @@ export default function PopularCard({ post }: PopularCardProps) {
         height={0}
         alt={alt || 'popular post image'}
         sizes="100vw"
-        className="md:w-[200px] md:h-[215px] w-[90px] h-[95px] rounded-lg md:mb-[20px] mb-[10px] border border-border"
+        className="sm:w-[300px] sm:h-[315px] w-[90px] h-[95px] rounded-lg sm:mb-[20px] mb-[10px] border border-border"
       />
-      <h3 className="md:text-[18px] text-[15px] text-heading-text md:mb-[13px] mb-[7px]">
+      <h3 className="sm:text-[18px] text-[15px] text-heading-text sm:mb-[13px] mb-[7px]">
         {title}
       </h3>
       <p className="text-[12px] text-body-text">{description}</p>

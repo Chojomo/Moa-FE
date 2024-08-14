@@ -50,15 +50,15 @@ export default function Intro({ setCurrentPage }: IntroProps) {
   return (
     <div
       id="intro"
-      className="w-[100vw] h-[100vh] flex flex-col md:gap-[50px] gap-[20px] overflow-scroll py-[130px]"
+      className="w-[100vw] h-[100vh] flex-center flex-col sm:gap-[50px] gap-[20px] overflow-scroll py-[100px] px-[20px]"
     >
-      <div className="flex-center flex-col md:gap-[20px] gap-[10px]">
+      <div className="flex-center flex-col sm:gap-[20px] gap-[10px]">
         <i className="w-[70px] h-[70px] flex-center rounded-full bg-icon-bg">
           <Icon name="Crown" width={36} height={34} />
         </i>
-        <h1 className="md:text-[24px] text-[18px] text-heading-text font-bold">most popular</h1>
+        <h1 className="sm:text-[24px] text-[18px] text-heading-text font-bold">most popular</h1>
       </div>
-      <div className="w-[100%] flex-center md:flex-row flex-col md:gap-[50px] gap-[10px]">
+      <div className="w-[100%] flex-center sm:flex-row flex-col gap-[20px] sm:gap-[40px]">
         {posts.map((post) => (
           <PopularCard key={post.index} post={post} />
         ))}
