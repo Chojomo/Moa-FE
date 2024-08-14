@@ -7,7 +7,7 @@ export default function Tap() {
   const pathname = usePathname()
 
   return (
-    <div className="h-auto text-[16px] font-bold border border-border rounded-full shadow-sm mb-[70px]">
+    <div className="h-auto text-[16px] font-bold border border-border rounded-full shadow-sm mb-[50px]">
       <Link
         href="/login"
         className={`inline-block ${pathname === '/login' && 'text-accent'} px-[50px] py-[10px] border-r border-r-border`}
