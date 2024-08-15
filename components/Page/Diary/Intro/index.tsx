@@ -52,7 +52,7 @@ export default function Intro({ setCurrentPage }: IntroProps) {
       id="intro"
       className="w-[100vw] h-[100vh] flex-center flex-col sm:gap-[50px] gap-[20px] overflow-scroll py-[100px] px-[20px]"
     >
-      <div className="flex-center flex-col sm:gap-[20px] gap-[10px]">
+      <div className="flex-center flex-col sm:gap-[20px] gap-[10px] animate-fadeIn">
         <i className="w-[70px] h-[70px] flex-center rounded-full bg-icon-bg">
           <Icon name="Crown" width={36} height={34} />
         </i>
