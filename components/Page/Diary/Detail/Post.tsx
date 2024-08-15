@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Entry from '@/components/Entry'
 
 type PostItem = {
   index: number
@@ -28,14 +29,17 @@ export default function Post({ post }: PostProps) {
   }
 
   return (
-    <div className={`flex-center gap-[45px] ${addClass()}`}>
-      <Image
-        src={src}
-        alt="post image"
-        width={100}
-        height={100}
-        className="border border-border rounded-lg"
-      />
+    <div className={`flex-center gap-[45px] animate-fadeIn ${addClass()}`}>
+      <div className="relative flex-center group">
+        <Entry size="small" />
+        <Image
+          src={src}
+          alt="post image"
+          width={100}
+          height={100}
+          className="border border-border rounded-lg"
+        />
+      </div>
       <div className={`flex flex-col flex-1 gap-[5px] ${index % 2 === 0 ? '' : 'sm:items-end'}`}>
         <p className="text-[16px] text-accent">{writer}</p>
         <p className="text-[16px] text-heading-text font-bold">{title}</p>

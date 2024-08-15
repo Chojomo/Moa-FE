@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Entry from '@/components/Entry'
 
 type Post = {
   index: number
@@ -30,14 +31,17 @@ export default function PopularCard({ post }: PopularCardProps) {
 
   return (
     <div className={`flex-center flex-col ${addClass()}`}>
-      <Image
-        src={src || '/images/moon.jpeg'}
-        width={0}
-        height={0}
-        alt={alt || 'popular post image'}
-        sizes="100vw"
-        className="sm:w-[300px] sm:h-[315px] w-[90px] h-[95px] rounded-lg sm:mb-[20px] mb-[10px] border border-border"
-      />
+      <div className="group flex-center">
+        <Entry size="large" />
+        <Image
+          src={src || '/images/moon.jpeg'}
+          width={0}
+          height={0}
+          alt={alt || 'popular post image'}
+          sizes="100vw"
+          className="sm:w-[300px] sm:h-[315px] w-[90px] h-[95px] rounded-lg sm:mb-[20px] mb-[10px] border border-border"
+        />
+      </div>
       <h3 className="sm:text-[18px] text-[15px] text-heading-text sm:mb-[13px] mb-[7px]">
         {title}
       </h3>
