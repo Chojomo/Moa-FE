@@ -98,6 +98,42 @@ const config: Config = {
             right: '0px',
           },
         },
+        resetT: {
+          '0%': {
+            top: '100px',
+          },
+          '100%': {
+            top: '0px',
+          },
+        },
+        resetB: {
+          '0%': {
+            bottom: '100px',
+          },
+          '100%': {
+            bottom: '0px',
+          },
+        },
+        fadeIn: {
+          '0%': {
+            opacity: '0.7',
+            transform: 'translateY(5px)',
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)',
+          },
+        },
+        fade: {
+          '0%': {
+            opacity: '0.7',
+            zIndex: '10',
+          },
+          '100%': {
+            opacity: '1',
+            zIndex: '10',
+          },
+        },
       },
       animation: {
         shimmer: 'shimmer 1s linear infinite',
@@ -111,6 +147,10 @@ const config: Config = {
         floatR3: 'float2 2.5s ease-in-out infinite',
         resetL: 'resetL 1s 0.2s ease-out forwards',
         resetR: 'resetR 1s 0.2s ease-out forwards',
+        resetT: 'resetT 1s 0.2s ease-out forwards',
+        resetB: 'resetB 1s 0.2s ease-out forwards',
+        fade: 'fade 0.5s ease-in-out',
+        fadeIn: 'fadeIn 0.5s ease-in-out',
       },
       boxShadow: {
         tooltip: '2px 6px 12px 0px rgba(0, 0, 0, 0.12), 0px 0px 4px 0px rgba(0, 0, 0, 0.12)',
