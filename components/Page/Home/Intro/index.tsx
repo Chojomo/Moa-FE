@@ -11,7 +11,7 @@ export default function Intro() {
 
   return (
     <div className="w-[100vw] h-[100vh] lg:flex-center lg:flex-row flex flex-col justify-center items-center lg:gap-[50px] px-[30px]">
-      <div className="relative flex lg:flex-col lg:items-end lg:justify-center justify-between items-center flex-1 w-[100%] h-[100%] lg:px-[0%] px-[10%]">
+      <div className="relative flex lg:flex-col lg:items-end lg:justify-center justify-between items-center flex-1 w-[100%] h-[100%] lg:px-[0%] px-[10%] animate-fade">
         {shapes.left.map(({ color, src, alt }, index: number) => (
           <Image
             key={color}
@@ -35,7 +35,7 @@ export default function Intro() {
           Gather it!
         </Button>
       </div>
-      <div className="flex lg:flex-col lg:items-start lg:justify-center justify-between items-center flex-1 w-[100%] h-[100%] lg:px-[0%] px-[10%]">
+      <div className="flex lg:flex-col lg:items-start lg:justify-center justify-between items-center flex-1 w-[100%] h-[100%] lg:px-[0%] px-[10%] animate-fade">
         {shapes.right.map(({ color, src, alt }, index: number) => (
           <Image
             key={color}
