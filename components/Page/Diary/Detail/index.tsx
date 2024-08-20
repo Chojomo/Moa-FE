@@ -3,6 +3,7 @@
 import { posts } from '@/helper/constants/posts'
 import { useEffect, useState, Dispatch, SetStateAction } from 'react'
 import Button from '@/components/Button'
+import { Icon } from '@/components/Icon'
 import Post from './Post'
 
 type DetailProps = {
@@ -56,16 +57,19 @@ export default function Detail({ setCurrentPage }: DetailProps) {
       id="detail"
       className="w-[100vw] h-[100vh] flex flex-col overflow-scroll sm:p-[10%] px-[10%] py-[30%] sm:gap-[0px] gap-[40px]"
     >
-      <div>
-        <Button type="button" ariaLabel="sort-latest">
+      <div className="w-[120px] h-[50px] flex-center rounded-full border border-border text-accent font-bold">
+        {/* <Icon
+          name=''
+        /> */}
+        <Button type="button" ariaLabel="sort-latest" className="p-[20px]">
           최신순
         </Button>
-        <Button type="button" ariaLabel="sort-popular">
+        {/* <Button type="button" ariaLabel="sort-popular" className="p-[20px]">
           최신순
         </Button>
-        <Button type="button" ariaLabel="sort-comments">
+        <Button type="button" ariaLabel="sort-comments" className="p-[20px]">
           최신순
-        </Button>
+        </Button> */}
       </div>
       <label htmlFor="sort" className="sr-only">
         정렬 기준
