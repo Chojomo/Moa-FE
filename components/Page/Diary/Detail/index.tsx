@@ -12,6 +12,7 @@ type DetailProps = {
 
 export default function Detail({ setCurrentPage }: DetailProps) {
   const [sort, setSort] = useState<string>('latest')
+  const [sortIsOpen, setSortIsOpen] = useState<boolean>(false)
   const [isTop, setIsTop] = useState<boolean>(false)
   const COOLDOWN = 800
 
@@ -48,28 +49,47 @@ export default function Detail({ setCurrentPage }: DetailProps) {
     }
   }, [isTop, setCurrentPage])
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSort(e.target.value)
+  const handleClick = (sortKey: string) => {
+    setSort(sortKey)
+    setSortIsOpen(false)
   }
+
+  const buttons = [
+    { sort: 'latest', label: 'sort-latest', innerText: '최신순' },
+    { sort: 'popular', label: 'sort-popular', innerText: '인기순' },
+    { sort: 'comments', label: 'sort-comments', innerText: '댓글순' },
+  ]
 
   return (
     <div
       id="detail"
       className="w-[100vw] h-[100vh] flex flex-col overflow-scroll sm:p-[10%] px-[10%] py-[30%] sm:gap-[0px] gap-[40px]"
     >
-      <div className="w-[120px] h-[50px] flex-center rounded-full border border-border text-accent font-bold">
-        {/* <Icon
-          name=''
-        /> */}
-        <Button type="button" ariaLabel="sort-latest" className="p-[20px]">
-          최신순
+      <div
+        className={`self-end ${sortIsOpen ? 'w-[400px] gap-[35px]' : 'w-[150px] gap-[10px]'} h-[50px] flex-center rounded-full border border-border text-accent font-bold`}
+      >
+        <Button
+          type="button"
+          ariaLabel="sort button"
+          className="p-[10px]"
+          onClick={() => setSortIsOpen(!sortIsOpen)}
+        >
+          <Icon name={`${sortIsOpen ? 'SortClose' : 'SortOpen'}`} width={8} height={14} />
         </Button>
-        {/* <Button type="button" ariaLabel="sort-popular" className="p-[20px]">
-          최신순
-        </Button>
-        <Button type="button" ariaLabel="sort-comments" className="p-[20px]">
-          최신순
-        </Button> */}
+        {buttons.map(
+          (button) =>
+            (sortIsOpen || sort === button.sort) && (
+              <Button
+                key={button.sort}
+                type="button"
+                ariaLabel={button.label}
+                className="px-[10px] py-[20px]"
+                onClick={() => handleClick(button.sort)}
+              >
+                {button.innerText}
+              </Button>
+            )
+        )}
       </div>
       <label htmlFor="sort" className="sr-only">
         정렬 기준
