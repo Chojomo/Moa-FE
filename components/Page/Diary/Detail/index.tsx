@@ -69,7 +69,7 @@ export default function Detail({ setCurrentPage }: DetailProps) {
     >
       <div className="self-center md:self-end flex-center gap-[26px]">
         <div
-          className={`transition-width duration-1000 ease-in-out ${sortIsOpen ? 'w-[300px] md:w-[400px] gap-[15px] md:gap-[30px]' : 'w-[150px] gap-[10px]'} h-[50px] flex-center rounded-full border border-border text-accent font-bold`}
+          className={`overflow-hidden transition-width duration-1000 ease-in-out ${sortIsOpen ? 'w-[300px] md:w-[400px] gap-[15px] md:gap-[30px]' : 'w-[150px] gap-[10px]'} h-[50px] flex-center rounded-full border border-border text-accent font-bold`}
         >
           <Button
             type="button"
@@ -86,7 +86,7 @@ export default function Detail({ setCurrentPage }: DetailProps) {
                   key={button.sort}
                   type="button"
                   ariaLabel={button.label}
-                  className="px-[10px] py-[20px] "
+                  className="min-w-[70px] px-[10px] py-[20px]"
                   onClick={() => handleClick(button.sort)}
                 >
                   {button.innerText}
