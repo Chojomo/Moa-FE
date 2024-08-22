@@ -94,9 +94,11 @@ export default function Detail({ setCurrentPage }: DetailProps) {
               )
           )}
         </div>
-        <Button type="button" ariaLabel="post button" className="p-[10px]">
-          <Icon name="Post" width={27} height={33} />
-        </Button>
+        {isLogin && (
+          <Button type="button" ariaLabel="post button" className="p-[10px]">
+            <Icon name="Post" width={27} height={33} />
+          </Button>
+        )}
       </div>
       <label htmlFor="sort" className="sr-only">
         정렬 기준
