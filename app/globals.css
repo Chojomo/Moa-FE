@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.ProseMirror {
+  @apply prose prose-lg;
+}
+
 @layer base {
   :root {
     --background: rgb(255, 255, 255);

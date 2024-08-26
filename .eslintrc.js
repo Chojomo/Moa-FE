@@ -46,5 +46,6 @@ module.exports = {
     'react/require-default-props': 'off',
     'react/button-has-type': 'off',
     'jsx-a11y/label-has-associated-control': 'off',
+    'react/prop-types': 'off',
   },
 }
