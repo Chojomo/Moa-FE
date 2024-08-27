@@ -5,6 +5,7 @@ import { useEffect, useState, Dispatch, SetStateAction } from 'react'
 import { useAuthStore } from '@/store/useAuth'
 import Button from '@/components/Button'
 import { Icon } from '@/components/Icon'
+import Link from 'next/link'
 import Post from './Post'
 
 type DetailProps = {
@@ -95,9 +96,11 @@ export default function Detail({ setCurrentPage }: DetailProps) {
           )}
         </div>
         {isLogin && (
-          <Button type="button" ariaLabel="post button" className="p-[10px]">
+          // <Button type="button" ariaLabel="post button" className="p-[10px]" onClick={}>
+          <Link href="/diary/post">
             <Icon name="Post" width={27} height={33} />
-          </Button>
+          </Link>
+          // </Button>
         )}
       </div>
       <label htmlFor="sort" className="sr-only">
