@@ -4,6 +4,12 @@
 
 .ProseMirror {
   @apply prose prose-lg;
+  color: var(--body-text);
+}
+
+.ProseMirror:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 @layer base {
