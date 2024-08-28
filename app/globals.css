@@ -5,6 +5,16 @@
 .ProseMirror {
   @apply prose prose-lg;
   color: var(--body-text);
+  line-height: 0.7;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: inherit;
+  }
 }
 
 .ProseMirror:focus {
