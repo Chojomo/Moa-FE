@@ -60,7 +60,7 @@ export default function Tiptap() {
         </div>
         <EditorContent
           editor={editor}
-          className="bg-nav-bg w-[100%] focus:outline-none focus:ring-0 flex-grow px-[0px] py-[10px] overflow-y-auto"
+          className="bg-preview-bg w-[100%] focus:outline-none focus:ring-0 flex-grow px-[20px] py-[30px] overflow-y-auto"
           onClick={() => editor?.commands.focus()}
         />
       </form>
