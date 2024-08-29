@@ -23,14 +23,19 @@ export default function Tiptap() {
     ],
     content,
     onUpdate({ editor: updatedEditor }) {
-      setContent(updatedEditor.getHTML())
+      const htmlContent = updatedEditor.getHTML()
+      if (htmlContent !== content) {
+        setContent(htmlContent)
+      }
     },
   })
 
   useEffect(() => {
     if (editor) {
       console.log(content)
-      editor.commands.setContent(content)
+      if (content === '') {
+        editor.commands.setContent(content)
+      }
     }
   }, [editor, content])
 
