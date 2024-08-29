@@ -13,9 +13,37 @@
   h4,
   h5,
   h6 {
-    color: var(--heading-text);
+    color: var(--preview-heading);
     margin-top: 0.67em;
     margin-bottom: 0.67em;
+  }
+
+  strong,
+  blockquote {
+    color: inherit;
+  }
+
+  blockquote p::before,
+  blockquote p::after {
+    content: none !important;
+  }
+
+  blockquote {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    min-height: 25px;
+    padding: 15px 20px;
+
+    background-color: var(--preview-blockquote);
+    border-inline-start-color: var(--accent);
+  }
+
+  p {
+    margin: 0;
+    padding: 0;
+    line-height: 1.3;
   }
 }
 
@@ -49,6 +77,10 @@
 
     --main-blue: rgb(44, 114, 220);
     --white-active: rgb(255, 255, 255);
+
+    --preview-bg: rgb(247, 247, 247);
+    --preview-heading: rgb(46, 46, 46);
+    --preview-blockquote: rgb(234, 234, 234);
   }
 
   .dark {
@@ -75,6 +107,10 @@
 
     --main-blue: rgb(44, 114, 220);
     --white-active: rgb(255, 255, 255);
+
+    --preview-bg: rgb(26, 26, 26);
+    --preview-heading: rgb(242, 242, 242);
+    --preview-blockquote: rgb(36, 36, 36);
   }
 
   .flex-center {
@@ -93,7 +129,7 @@
     h5,
     h6 {
       display: block;
-      color: var(--heading-text);
+      color: var(--preview-heading);
       margin-top: 0.67em;
       margin-bottom: 0.67em;
     }
@@ -111,6 +147,24 @@
     h3 {
       font-size: 1.3333333em;
       font-weight: 600;
+    }
+
+    blockquote {
+      margin-top: 1.6666667em;
+      margin-bottom: 1.6666667em;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      min-height: 25px;
+      padding: 15px 20px;
+
+      font-weight: 500;
+      font-style: italic;
+
+      border-inline-start-width: 0.25em;
+      border-inline-start-color: var(--accent);
+      background-color: var(--preview-blockquote);
     }
   }
 

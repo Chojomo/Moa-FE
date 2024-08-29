@@ -53,6 +53,11 @@ const config: Config = {
         white: {
           active: 'var(--white-active)',
         },
+        preview: {
+          bg: 'var(--preview-bg)',
+          heading: 'var(--preview-heading)',
+          blockquote: 'var(--preview-blockquote)',
+        },
       },
       keyframes: {
         shimmer: {
