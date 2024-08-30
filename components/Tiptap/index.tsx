@@ -23,8 +23,9 @@ export default function Tiptap() {
     ],
     content,
     onUpdate({ editor: updatedEditor }) {
-      const htmlContent = updatedEditor.getHTML()
+      let htmlContent = updatedEditor.getHTML()
       if (htmlContent !== content) {
+        htmlContent = htmlContent.replaceAll(/<p><\/p>/g, '<br>')
         setContent(htmlContent)
       }
     },
@@ -32,7 +33,6 @@ export default function Tiptap() {
 
   useEffect(() => {
     if (editor) {
-      console.log(content)
       if (content === '') {
         editor.commands.setContent(content)
       }
