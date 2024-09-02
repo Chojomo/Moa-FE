@@ -8,13 +8,15 @@ import codeSyntaxHighlight from '@toast-ui/editor-plugin-code-syntax-highlight'
 import Prism from 'prismjs'
 
 import { Editor } from '@toast-ui/react-editor'
+import { PreviwMode } from '@/types'
 
 type EditorProps = {
   content: string
   editorRef: React.MutableRefObject<Editor | null>
+  preview: PreviwMode
 }
 
-export default function PostEditor({ content = '', editorRef }: EditorProps) {
+export default function PostEditor({ content = '', editorRef, preview }: EditorProps) {
   const toolbarItems = [
     ['heading', 'bold', 'italic', 'strike'],
     ['hr'],
@@ -32,7 +34,7 @@ export default function PostEditor({ content = '', editorRef }: EditorProps) {
           ref={editorRef}
           initialValue={content || ' '}
           initialEditType="markdown"
-          previewStyle={window.innerWidth > 1000 ? 'vertical' : 'tab'}
+          previewStyle={preview}
           previewHighlight={false}
           hideModeSwitch
           height="calc(100vh - 380px)"
