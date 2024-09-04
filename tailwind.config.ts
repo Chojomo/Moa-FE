@@ -55,6 +55,7 @@ const config: Config = {
         },
         preview: {
           bg: 'var(--preview-bg)',
+          nav: 'var(--preview-nav)',
           heading: 'var(--preview-heading)',
           blockquote: 'var(--preview-blockquote)',
         },
