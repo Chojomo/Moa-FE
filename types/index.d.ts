@@ -15,3 +15,5 @@ export type IconProps = {
   fill?: string
 } & ClassName &
   Size
+
+export type PreviwMode = 'vertical' | 'tab'
