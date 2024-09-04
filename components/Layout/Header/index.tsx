@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
 import { useAuthStore } from '@/store/useAuth'
 import { Icon } from '@/components/Icon'
@@ -10,8 +10,16 @@ import ThemeToggle from '@/components/Themes/Toggle'
 
 export default function Header() {
   const [isActive, setIsActive] = useState<boolean>(false)
+  const [isVisible, setIsVisible] = useState<boolean>(true)
   const { isLogin } = useAuthStore()
   const pathname = usePathname()
+
+  useEffect(() => {
+    if (pathname === '/diary/post') {
+      setIsVisible(false)
+    }
+    console.log(pathname)
+  }, [pathname])
 
   const handleActive = (href: string, type: 'border' | 'icon') => {
     const classActive =
@@ -99,96 +107,100 @@ export default function Header() {
   }
 
   return (
-    <header
-      className={`w-full ${!isActive ? 'h-[55px]' : isLogin ? 'h-[450px]' : 'h-[350px]'} md:h-[52px] flex-center fixed top-[10px] z-30 transition-height duration-500 ease-in-out overflow-hidden md:transition-none`}
-    >
-      <nav className="bg-nav-bg h-[100%] px-[10px] rounded-[28px] md:rounded-full md:flex-center">
-        <ul className="flex-center gap-[10px] flex-col md:flex-row mt-[8px] md:mt-[0px] mb-[8px] md:mb-[0px]">
-          <li>
-            <Link
-              className={`min-w-[188px] nav-item gap-[28px] ${handleActiveHome('/', 'border')}`}
-              href="/"
-              onClick={handleClick}
-            >
-              <Icon name="Logo" width={35} height={35} className="mb-[10px]" />
-              <p className="text-[18px] font-bold">Moa</p>
-              <Icon
-                name="Home"
-                width={20}
-                height={20}
-                className="flex-center hidden md:block"
-                fill={handleActiveHome('/', 'icon')}
-              />
-              <Icon
-                className="mt-[6px] block md:hidden"
-                name={isActive ? 'NavArrowTop' : 'NavArrowBottom'}
-                width={20}
-                height={13}
-              />
-            </Link>
-          </li>
-          <li className="block md:hidden">
-            <Link
-              href="/"
-              className={`min-w-[188px] nav-item gap-[28px] ${handleActive('/', 'border')}`}
-            >
-              <p className="text-[14px]">Home</p>
-            </Link>
-          </li>
-          {navItems.map((item) => (
-            <li key={item.href} className="min-w-[188px] md:min-w-[55px]">
-              {item.href ? (
-                <Link
-                  href={item.href}
-                  className={`${item.href === '/user' ? 'min-w-[55px]' : 'min-w-[70px]'} nav-item gap-[28px] ${handleActive(item.href, 'border')}`}
-                >
-                  {item.icon}
-                  {item.label && (
-                    <p className={`${item.href === '/' ? 'text-[18px] font-bold' : 'text-[14px]'}`}>
-                      {item.label}
-                    </p>
-                  )}
-                  {item.additionalIcon}
-                </Link>
-              ) : (
-                item.icon
-              )}
+    isVisible && (
+      <header
+        className={`w-full ${!isActive ? 'h-[55px]' : isLogin ? 'h-[450px]' : 'h-[350px]'} md:h-[52px] flex-center fixed top-[10px] z-30 transition-height duration-500 ease-in-out overflow-hidden md:transition-none`}
+      >
+        <nav className="bg-nav-bg h-[100%] px-[10px] rounded-[28px] md:rounded-full md:flex-center">
+          <ul className="flex-center gap-[10px] flex-col md:flex-row mt-[8px] md:mt-[0px] mb-[8px] md:mb-[0px]">
+            <li>
+              <Link
+                className={`min-w-[188px] nav-item gap-[28px] ${handleActiveHome('/', 'border')}`}
+                href="/"
+                onClick={handleClick}
+              >
+                <Icon name="Logo" width={35} height={35} className="mb-[10px]" />
+                <p className="text-[18px] font-bold">Moa</p>
+                <Icon
+                  name="Home"
+                  width={20}
+                  height={20}
+                  className="flex-center hidden md:block"
+                  fill={handleActiveHome('/', 'icon')}
+                />
+                <Icon
+                  className="mt-[6px] block md:hidden"
+                  name={isActive ? 'NavArrowTop' : 'NavArrowBottom'}
+                  width={20}
+                  height={13}
+                />
+              </Link>
             </li>
-          ))}
-          <li>
-            <Button
-              className="min-w-[188px] md:min-w-[55px] nav-item border-nav-border"
-              type="button"
-              aria-label="search button"
-            >
-              <Icon name="Search" width={18} height={18} />
-            </Button>
-          </li>
-          {isLogin ? (
+            <li className="block md:hidden">
+              <Link
+                href="/"
+                className={`min-w-[188px] nav-item gap-[28px] ${handleActive('/', 'border')}`}
+              >
+                <p className="text-[14px]">Home</p>
+              </Link>
+            </li>
+            {navItems.map((item) => (
+              <li key={item.href} className="min-w-[188px] md:min-w-[55px]">
+                {item.href ? (
+                  <Link
+                    href={item.href}
+                    className={`${item.href === '/user' ? 'min-w-[55px]' : 'min-w-[70px]'} nav-item gap-[28px] ${handleActive(item.href, 'border')}`}
+                  >
+                    {item.icon}
+                    {item.label && (
+                      <p
+                        className={`${item.href === '/' ? 'text-[18px] font-bold' : 'text-[14px]'}`}
+                      >
+                        {item.label}
+                      </p>
+                    )}
+                    {item.additionalIcon}
+                  </Link>
+                ) : (
+                  item.icon
+                )}
+              </li>
+            ))}
             <li>
               <Button
                 className="min-w-[188px] md:min-w-[55px] nav-item border-nav-border"
                 type="button"
-                aria-label="logout button"
+                aria-label="search button"
               >
-                <Icon name="Logout" width={20} height={18} />
+                <Icon name="Search" width={18} height={18} />
               </Button>
             </li>
-          ) : (
+            {isLogin ? (
+              <li>
+                <Button
+                  className="min-w-[188px] md:min-w-[55px] nav-item border-nav-border"
+                  type="button"
+                  aria-label="logout button"
+                >
+                  <Icon name="Logout" width={20} height={18} />
+                </Button>
+              </li>
+            ) : (
+              <li>
+                <Link
+                  href="/login"
+                  className={`min-w-[188px] md:min-w-[55px] nav-item gap-[28px] ${handleActive('/login', 'border')}`}
+                >
+                  <Icon name="Login" width={20} height={18} fill={handleActive('/login', 'icon')} />
+                </Link>
+              </li>
+            )}
             <li>
-              <Link
-                href="/login"
-                className={`min-w-[188px] md:min-w-[55px] nav-item gap-[28px] ${handleActive('/login', 'border')}`}
-              >
-                <Icon name="Login" width={20} height={18} fill={handleActive('/login', 'icon')} />
-              </Link>
+              <ThemeToggle />
             </li>
-          )}
-          <li>
-            <ThemeToggle />
-          </li>
-        </ul>
-      </nav>
-    </header>
+          </ul>
+        </nav>
+      </header>
+    )
   )
 }
