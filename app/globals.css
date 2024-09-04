@@ -2,10 +2,88 @@
 @tailwind components;
 @tailwind utilities;
 
-.ProseMirror {
+.toastui-editor-contents h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  border-bottom: none !important;
+  text-decoration: none !important;
+  color: var(--heading-text) !important;
+}
+
+.toastui-editor-defaultUI {
+  border: none !important;
+}
+
+.toastui-editor-defaultUI-toolbar button {
+  color: red !important;
+}
+
+.toastui-editor-main-container {
+  background-color: var(--preview-bg);
+}
+
+.toastui-editor-main .toastui-editor-md-splitter {
+  background-color: var(--border) !important;
+}
+
+.toastui-editor-defaultUI .toastui-editor-md-tab-container,
+.toastui-editor-defaultUI-toolbar {
+  background-color: var(--preview-bg) !important;
+}
+
+.toastui-editor-defaultUI .toastui-editor-md-tab-container,
+.toastui-editor-defaultUI-toolbar {
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.toastui-editor-defaultUI-toolbar button {
+  border: none !important;
+}
+
+.toastui-editor-toolbar-divider {
+  background-color: var(--preview-blockquote) !important;
+}
+
+.toastui-editor-md-tab-container .tab-item.active {
+  background-color: var(--preview-bg) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.toastui-editor-defaultUI .ProseMirror div,
+.toastui-editor-contents p {
+  color: var(--body-text) !important;
+}
+
+.toastui-editor-md-heading,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  border-bottom: none !important;
+  text-decoration: none !important;
+  color: var(--heading-text) !important;
+}
+
+.toastui-editor-md-tab-container .tab-item {
+  height: 32px !important;
+}
+
+.toastui-editor-md-tab-container .tab-item.active {
+  background-color: var(--preview-bg) !important;
+  border-bottom: none !important;
+  color: var(--preview-heading) !important;
+}
+
+/* .ProseMirror {
   @apply prose prose-lg;
+  max-width: none !important;
   color: var(--body-text);
-  line-height: 0.7;
+  line-height: 1.6;
+  width: 100%;
 
   h1,
   h2,
@@ -16,6 +94,8 @@
     color: var(--preview-heading);
     margin-top: 0.67em;
     margin-bottom: 0.67em;
+    border-bottom: none;
+    text-decoration: none;
   }
 
   strong,
@@ -45,12 +125,12 @@
     padding: 0;
     line-height: 1.3;
   }
-}
+} */
 
-.ProseMirror:focus {
+/* .ProseMirror:focus {
   outline: none;
   box-shadow: none;
-}
+} */
 
 @layer base {
   :root {
@@ -79,6 +159,7 @@
     --white-active: rgb(255, 255, 255);
 
     --preview-bg: rgb(247, 247, 247);
+    --preview-nav: rgb(238, 238, 238);
     --preview-heading: rgb(46, 46, 46);
     --preview-blockquote: rgb(234, 234, 234);
   }
@@ -108,7 +189,8 @@
     --main-blue: rgb(44, 114, 220);
     --white-active: rgb(255, 255, 255);
 
-    --preview-bg: rgb(26, 26, 26);
+    --preview-bg: rgb(18, 18, 18);
+    --preview-nav: rgb(236, 236, 236);
     --preview-heading: rgb(242, 242, 242);
     --preview-blockquote: rgb(36, 36, 36);
   }
@@ -121,7 +203,9 @@
     @apply h-[39px] rounded-full flex-center border px-[12px] py-[10px];
   }
 
-  .editor-preview {
+  /* .editor-preview {
+    white-space: pre-wrap;
+
     h1,
     h2,
     h3,
@@ -166,7 +250,7 @@
       border-inline-start-color: var(--accent);
       background-color: var(--preview-blockquote);
     }
-  }
+  } */
 
   .tooltip {
     @apply w-max px-[6px] py-[8px] leading-[18px] shadow-tooltip cursor-pointer pointer-events-auto;
