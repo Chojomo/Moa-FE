@@ -1,9 +1,9 @@
 import Intro from './Intro'
-import Survey from './Survey'
+import About from './About'
 
 const Pages = [
   { name: 'intro', Component: Intro },
-  { name: 'survey', Component: Survey },
+  { name: 'about', Component: About },
 ]
 
 export default Pages
