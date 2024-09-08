@@ -59,6 +59,9 @@ const config: Config = {
           heading: 'var(--preview-heading)',
           blockquote: 'var(--preview-blockquote)',
         },
+        container: {
+          bg: 'var(--container-bg)',
+        },
       },
       keyframes: {
         shimmer: {
@@ -69,17 +72,9 @@ const config: Config = {
             backgroundPosition: '-200%',
           },
         },
-        marquee: {
-          '0%': { transform: 'translateX(0)' },
-          '100%': { transform: 'translateX(-50%)' },
-        },
         float: {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-10px)' },
-        },
-        float2: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(10px)' },
         },
         resetL: {
           '0%': {
@@ -133,7 +128,7 @@ const config: Config = {
         },
         fade: {
           '0%': {
-            opacity: '0.7',
+            opacity: '0.3',
             zIndex: '10',
           },
           '100%': {
@@ -141,23 +136,27 @@ const config: Config = {
             zIndex: '10',
           },
         },
+        customBounce: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-20px)' },
+        },
+        slideLeft: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
       },
       animation: {
         shimmer: 'shimmer 1s linear infinite',
-        marquee: 'marquee 200s linear infinite',
+        slideLeft: 'slideLeft 20s linear infinite',
         float: 'float 2.5s ease-in-out infinite',
         floatL1: 'float2 2.3s ease-in-out infinite',
-        floatL2: 'float2 2.2s ease-in-out infinite',
-        floatL3: 'float2 2.4s ease-in-out infinite',
-        floatR1: 'float2 2.7s ease-in-out infinite',
-        floatR2: 'float2 2.1s ease-in-out infinite',
-        floatR3: 'float2 2.5s ease-in-out infinite',
         resetL: 'resetL 1s 0.2s ease-out forwards',
         resetR: 'resetR 1s 0.2s ease-out forwards',
         resetT: 'resetT 1s 0.2s ease-out forwards',
         resetB: 'resetB 1s 0.2s ease-out forwards',
-        fade: 'fade 0.5s ease-in-out',
+        fade: 'fade 1s ease-in-out',
         fadeIn: 'fadeIn 0.5s ease-in-out',
+        customBounce: 'customBounce 0.8s ease',
       },
       boxShadow: {
         tooltip: '2px 6px 12px 0px rgba(0, 0, 0, 0.12), 0px 0px 4px 0px rgba(0, 0, 0, 0.12)',
