@@ -129,11 +129,19 @@ const config: Config = {
         fade: {
           '0%': {
             opacity: '0.3',
-            zIndex: '10',
           },
           '100%': {
             opacity: '1',
-            zIndex: '10',
+          },
+        },
+        fadeUp: {
+          '0%': {
+            opacity: '0.3',
+            transform: 'translateY(30px)',
+          },
+          '100%': {
+            opacity: '1',
+            transform: 'translateY(0)',
           },
         },
         customBounce: {
@@ -143,6 +151,11 @@ const config: Config = {
         slideLeft: {
           '0%': { transform: 'translateX(0)' },
           '100%': { transform: 'translateX(-50%)' },
+        },
+        shake: {
+          '0%': { transform: 'rotate(0deg)' },
+          '50%': { transform: 'rotate(60deg)' },
+          '100%': { transform: 'rotate(0deg)' },
         },
       },
       animation: {
@@ -156,7 +169,9 @@ const config: Config = {
         resetB: 'resetB 1s 0.2s ease-out forwards',
         fade: 'fade 1s ease-in-out',
         fadeIn: 'fadeIn 0.5s ease-in-out',
+        fadeUp: 'fadeUp 1s ease-in-out',
         customBounce: 'customBounce 0.8s ease',
+        shake: 'shake 1.5s ease-in-out infinite',
       },
       boxShadow: {
         tooltip: '2px 6px 12px 0px rgba(0, 0, 0, 0.12), 0px 0px 4px 0px rgba(0, 0, 0, 0.12)',
