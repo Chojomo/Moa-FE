@@ -7,7 +7,7 @@ type FavoriteProps = {
 
 export default function Favorite({ src, name }: FavoriteProps) {
   return (
-    <div className="z-10 first-line:animate-fade flex-center flex-col gap-[40px] group">
+    <div className="z-10 animate-fade flex-center flex-col gap-[40px] group">
       <Image
         src={src}
         alt={`${name} icon image`}
