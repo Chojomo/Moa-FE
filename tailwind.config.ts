@@ -62,6 +62,9 @@ const config: Config = {
         container: {
           bg: 'var(--container-bg)',
         },
+        nonActive: {
+          text: 'var(--nonActive-text)',
+        },
       },
       keyframes: {
         shimmer: {
