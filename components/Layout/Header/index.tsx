@@ -66,10 +66,7 @@ export default function Header() {
     additionalIcon: JSX.Element | null
   }
 
-  const navItems: NavItem[] = [
-    { href: '/diary', label: 'Diary', icon: null, additionalIcon: null },
-    { href: '/zip', label: 'ZIP', icon: null, additionalIcon: null },
-  ]
+  const navItems: NavItem[] = [{ href: '/zip', label: 'ZIP', icon: null, additionalIcon: null }]
 
   if (isLogin) {
     navItems.push(
