@@ -2,10 +2,9 @@
 
 import { posts } from '@/helper/constants/posts'
 import { useEffect, useState, Dispatch, SetStateAction } from 'react'
-import { useAuthStore } from '@/store/useAuth'
 import Button from '@/components/Button'
 import { Icon } from '@/components/Icon'
-import Link from 'next/link'
+import PostIcon from '../PostIcon'
 import Post from './Post'
 
 type DetailProps = {
@@ -16,7 +15,6 @@ export default function Detail({ setCurrentPage }: DetailProps) {
   const [sort, setSort] = useState<string>('latest')
   const [sortIsOpen, setSortIsOpen] = useState<boolean>(false)
   const [isTop, setIsTop] = useState<boolean>(false)
-  const { isLogin } = useAuthStore()
   const COOLDOWN = 800
 
   useEffect(() => {
@@ -70,7 +68,7 @@ export default function Detail({ setCurrentPage }: DetailProps) {
     >
       <div className="self-center md:self-end flex-center gap-[26px]">
         <div
-          className={`overflow-hidden transition-width duration-1000 ease-in-out ${sortIsOpen ? 'w-[300px] md:w-[400px] gap-[15px] md:gap-[30px]' : 'w-[150px] gap-[10px]'} h-[50px] flex-center rounded-full border border-border text-accent font-bold`}
+          className={`overflow-hidden transition-width duration-1000 ease-in-out ${sortIsOpen ? 'w-[300px] md:w-[400px] gap-[15px] md:gap-[30px]' : 'w-[150px] gap-[10px]'} h-[50px] flex-center rounded-full border border-border text-heading-text font-bold`}
         >
           <Button
             type="button"
@@ -95,13 +93,7 @@ export default function Detail({ setCurrentPage }: DetailProps) {
               )
           )}
         </div>
-        {isLogin && (
-          // <Button type="button" ariaLabel="post button" className="p-[10px]" onClick={}>
-          <Link href="/diary/post">
-            <Icon name="Post" width={27} height={33} />
-          </Link>
-          // </Button>
-        )}
+        <PostIcon />
       </div>
       <label htmlFor="sort" className="sr-only">
         정렬 기준
