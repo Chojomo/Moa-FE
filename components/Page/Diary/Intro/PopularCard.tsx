@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Entry from '@/components/Entry'
+import PostIcon from '../PostIcon'
 
 type Post = {
   index: number
@@ -38,11 +39,14 @@ export default function PopularCard({ post }: PopularCardProps) {
           width={0}
           height={0}
           alt={alt || 'popular post image'}
+          quality={75}
           sizes="100vw"
+          loading="lazy"
+          draggable="false"
           className="sm:w-[300px] sm:h-[315px] w-[90px] h-[95px] rounded-lg sm:mb-[20px] mb-[10px] border border-border"
         />
       </div>
-      <h3 className="sm:text-[18px] text-[15px] text-heading-text sm:mb-[13px] mb-[7px]">
+      <h3 className="sm:text-[18px] text-[15px] text-heading-text font-bold sm:mb-[13px] mb-[7px]">
         {title}
       </h3>
       <p className="text-[12px] text-body-text">{description}</p>

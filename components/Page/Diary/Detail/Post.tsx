@@ -37,11 +37,14 @@ export default function Post({ post }: PostProps) {
           alt="post image"
           width={100}
           height={100}
+          quality={75}
+          loading="lazy"
+          draggable="false"
           className="border border-border rounded-lg"
         />
       </div>
       <div className={`flex flex-col flex-1 gap-[5px] ${index % 2 === 0 ? '' : 'sm:items-end'}`}>
-        <p className="text-[16px] text-accent">{writer}</p>
+        <p className="text-[16px] text-main-blue">{writer}</p>
         <p className="text-[16px] text-heading-text font-bold">{title}</p>
         <p className="text-[12px] text-body-text">{description}</p>
       </div>
