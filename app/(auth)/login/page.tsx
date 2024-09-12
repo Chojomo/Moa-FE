@@ -45,7 +45,7 @@ export default function Login() {
         </Button>
       </Input>
       <p
-        className={`relative bottom-[20px] right-[90px] text-[12px] font-bold text-accent ${!emailValue.length || validateEmail(emailValue) ? 'opacity-0' : 'opacity-100'}`}
+        className={`relative bottom-[20px] right-[90px] text-[12px] font-bold text-main-blue ${!emailValue.length || validateEmail(emailValue) ? 'opacity-0' : 'opacity-100'}`}
       >
         유효하지 않은 이메일입니다.
       </p>
@@ -74,13 +74,13 @@ export default function Login() {
         </Button>
       </Input>
       <p
-        className={`relative bottom-[20px] left-[5px] text-[12px] font-bold text-accent ${!passwordValue.length || validatePassword(passwordValue) ? 'opacity-0' : 'opacity-100'}`}
+        className={`relative bottom-[20px] left-[5px] text-[12px] font-bold text-main-blue ${!passwordValue.length || validatePassword(passwordValue) ? 'opacity-0' : 'opacity-100'}`}
       >
         영어 대소문자, 숫자, 특수문자를 포함한 8글자 이상을 입력해 주세요.
       </p>
       <div className="flex-center gap-[20px] mt-[10px] mb-[40px]">
         <Button type="button" ariaLabel="check button" onClick={() => setIsChecked(!isChecked)}>
-          <Icon name="Check" width={25} height={25} fill={isChecked ? '#80B0A2' : '#A6A6A6'} />
+          <Icon name="Check" width={25} height={25} fill={isChecked ? '#2C72DC' : '#A6A6A6'} />
         </Button>
         <span className="text-heading-text text-[14px]">로그인 상태 유지하기</span>
       </div>

@@ -58,7 +58,7 @@ export default function Signup() {
         </Button>
       </Input>
       <p
-        className={`relative bottom-[20px] right-[90px] text-[12px] font-bold text-accent ${!emailValue.length || validateEmail(emailValue) ? 'opacity-0' : 'opacity-100'}`}
+        className={`relative bottom-[20px] right-[90px] text-[12px] font-bold text-main-blue ${!emailValue.length || validateEmail(emailValue) ? 'opacity-0' : 'opacity-100'}`}
       >
         유효하지 않은 이메일입니다.
       </p>
@@ -87,7 +87,7 @@ export default function Signup() {
         </Button>
       </Input>
       <p
-        className={`relative bottom-[20px] left-[5px] text-[12px] font-bold text-accent ${!passwordValue.length || validatePassword(passwordValue) ? 'opacity-0' : 'opacity-100'}`}
+        className={`relative bottom-[20px] left-[5px] text-[12px] font-bold text-main-blue ${!passwordValue.length || validatePassword(passwordValue) ? 'opacity-0' : 'opacity-100'}`}
       >
         영어 대소문자, 숫자, 특수문자를 포함한 8글자 이상을 입력해 주세요.
       </p>

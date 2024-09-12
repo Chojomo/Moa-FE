@@ -1,7 +1,7 @@
 import { IconProps } from '@/types'
 import { Svg } from './index'
 
-export default function Post({ className, width, height, fill = '#80B0A2' }: IconProps) {
+export default function Post({ className, width, height, fill = '#2C72DC' }: IconProps) {
   return (
     <Svg
       width={width || 30}
