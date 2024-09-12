@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from 'react'
 
 import dynamic from 'next/dynamic'
-import { Editor as ToastEditor } from '@toast-ui/react-editor'
+// import { Editor as ToastEditor } from '@toast-ui/react-editor'
 import { PreviwMode } from '@/types'
 
 const Editor = dynamic(() => import('../../../components/Editor/index'), {
@@ -11,7 +11,7 @@ const Editor = dynamic(() => import('../../../components/Editor/index'), {
 })
 
 export default function Post() {
-  const ref = useRef<ToastEditor | null>(null)
+  // const ref = useRef<ToastEditor | null>(null)
   const [title, setTitle] = useState<string>('')
   const [preview, setPriview] = useState<PreviwMode>(window.innerWidth > 1000 ? 'vertical' : 'tab')
 
@@ -37,7 +37,7 @@ export default function Post() {
           onChange={(e) => setTitle(e.target.value)}
           className="w-[100%] text-[28px] px-[38px] pt-[60px] pb-[30px] rounded focus:outline-none focus:ring-0"
         />
-        <Editor content="" editorRef={ref} preview={preview} />
+        <Editor />
       </form>
     </div>
   )
