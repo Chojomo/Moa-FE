@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react'
 export default function Left() {
   const { resolvedTheme } = useTheme()
   const { isVisible, elementRef } = useFadeIn<HTMLImageElement>(0.1)
-  const [isMobile, setIsMobile] = useState(false)
+  const [isMobile, setIsMobile] = useState(window.matchMedia(`(max-width: 768px)`).matches)
 
   useEffect(() => {
     const handleResize = () => {
