@@ -1,8 +1,8 @@
 'use client'
 
-import { Icon } from '@/components/Icon'
 import { posts } from '@/helper/constants/popular'
 import { useEffect, Dispatch, SetStateAction, useState } from 'react'
+import Image from 'next/image'
 import PopularCard from './PopularCard'
 
 type IntroProps = {
@@ -54,9 +54,17 @@ export default function Intro({ setCurrentPage }: IntroProps) {
     >
       <div className="flex-center flex-col sm:gap-[20px] gap-[10px] animate-fadeIn">
         <i className="w-[70px] h-[70px] flex-center rounded-full bg-icon-bg">
-          <Icon name="Crown" width={36} height={34} />
+          <Image
+            src="/images/trophy.png"
+            alt="trophy image"
+            width={50}
+            height={57}
+            quality={75}
+            loading="lazy"
+            draggable="false"
+          />
         </i>
-        <h1 className="sm:text-[24px] text-[18px] text-heading-text font-bold">most popular</h1>
+        <h1 className="sm:text-[24px] text-[18px] text-heading-text font-bold">최고 인기!</h1>
       </div>
       <div className="w-[100%] flex-center sm:flex-row flex-col gap-[20px] sm:gap-[40px]">
         {posts.map((post) => (
