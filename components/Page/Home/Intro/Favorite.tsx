@@ -1,13 +1,15 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 type FavoriteProps = {
   src: string
   name: string
+  href: string
 }
 
-export default function Favorite({ src, name }: FavoriteProps) {
+export default function Favorite({ src, name, href }: FavoriteProps) {
   return (
-    <div className="z-10 animate-fade flex-center flex-col gap-[40px] group">
+    <Link href={href} className="z-10 animate-fade flex-center flex-col gap-[40px] group">
       <Image
         src={src}
         alt={`${name} icon image`}
@@ -19,6 +21,6 @@ export default function Favorite({ src, name }: FavoriteProps) {
         className="transition-transform duration-300 ease-in-out group-hover:animate-customBounce"
       />
       <p className="text-[18px] font-bold cursor-default">{name}</p>
-    </div>
+    </Link>
   )
 }
