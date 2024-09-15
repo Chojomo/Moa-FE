@@ -3,14 +3,8 @@
 @tailwind utilities;
 
 .w-md-editor-toolbar-child .undefined {
-  border: none !important;
   background-color: var(--icon-bg) !important;
   padding: 10px 20px !important;
-}
-
-.w-md-editor-toolbar-child .undefined ul > *:nth-child(6) {
-  margin-top: 0px !important;
-  margin-left: 4px !important;
 }
 
 .w-md-editor {
@@ -35,6 +29,11 @@
   height: 20px !important;
 }
 
+.w-md-editor-preview,
+.w-md-editor-input {
+  padding: 30px 30px !important;
+}
+
 .w-md-editor-toolbar > ul {
   display: flex;
   justify-content: center;
@@ -42,13 +41,10 @@
   gap: 10px !important;
 }
 
-.w-md-editor-toolbar li.active > button {
-  background-color: none !important;
-}
-
 .custom-editor .w-md-editor-toolbar-divider {
   margin: 5px 20px 0 !important;
   border: none !important;
+  background: var(--border) !important;
 }
 
 .w-md-editor-preview {
@@ -57,10 +53,16 @@
 
 .custom-editor * {
   border: none !important;
+  background: none !important;
+  background-color: none !important;
 }
 
-.custom-editor * {
-  background: none !important;
+.custom-editor *::selection {
+  background: var(--border) !important;
+}
+
+.wmde-markdown table {
+  all: unset !important;
 }
 
 @layer base {

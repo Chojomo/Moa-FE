@@ -28,14 +28,14 @@ export default function Post() {
   }, [])
 
   return (
-    <div className="w-[100vw] h-[100vh]">
-      <form className="w-[100%] h-[100%]">
+    <div className="w-[100vw] h-[100vh] overflow-hidden">
+      <form className="w-[100vw] h-[100vh] flex flex-col">
         <input
           type="text"
           placeholder="제목을 입력하세요"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="w-[100%] text-[28px] px-[38px] pt-[60px] pb-[30px] rounded focus:outline-none focus:ring-0"
+          className="w-[100%] h-[15%] text-[28px] px-[38px] pt-[60px] pb-[30px] rounded focus:outline-none focus:ring-0"
         />
         <Editor />
       </form>

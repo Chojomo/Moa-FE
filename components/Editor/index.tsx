@@ -14,7 +14,7 @@ export default function PostEditor() {
   }
 
   return (
-    <div>
+    <div className="h-[100%] flex-1">
       <MDEditor
         value={content}
         onChange={handleChange}
@@ -22,6 +22,8 @@ export default function PostEditor() {
           rehypePlugins: [[rehypeSanitize]],
         }}
         className="custom-editor"
+        style={{ whiteSpace: 'pre-wrap' }}
+        height="100%"
       />
     </div>
   )
