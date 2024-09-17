@@ -14,6 +14,8 @@
     "@fxts/core": "^1.0.1",
     "@radix-ui/react-slot": "^1.1.0",
     "@tailwindcss/typography": "^0.5.15",
+    "@tanstack/react-query": "^5.56.2",
+    "@tanstack/react-query-devtools": "^5.56.2",
     "@uiw/react-markdown-preview": "^5.1.2",
     "@uiw/react-md-editor": "^4.0.4",
     "class-variance-authority": "^0.7.0",
