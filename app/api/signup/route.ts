@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     } else {
       // ! 응답 바뀌면 수정
       //   const data = await response.json()
-      return new Response(JSON.stringify({ massage: '성공' }), {
+      return new Response(JSON.stringify({ message: '성공' }), {
         status: 200,
         headers: {
           'Content-Type': 'application/json',
