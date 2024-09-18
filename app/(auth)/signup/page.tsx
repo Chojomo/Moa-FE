@@ -3,6 +3,7 @@
 import { useState, useCallback, FormEvent } from 'react'
 import { validateEmail, validatePassword } from '@/helper/validate'
 import { useMutation } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
 import { signup } from '@/lib/api/auth'
 
 import EmailInput from '@/components/Page/Auth/EmailInput'
@@ -12,6 +13,7 @@ import SubmitButton from '@/components/Page/Auth/SubmitButton'
 import OAuth from '@/components/Page/Auth/OAuth'
 
 export default function Signup() {
+  const router = useRouter()
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [confirmPassword, setConfirmPassword] = useState<string>('')
@@ -34,7 +36,7 @@ export default function Signup() {
   const handlePasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
     const isValid = validatePassword(value)
-    console.log(isValid)
+
     setPassword(value)
     setIsValidPassword(isValid)
   }, [])
@@ -49,6 +51,7 @@ export default function Signup() {
     mutationFn: () => signup(email, password),
     onSuccess: (data) => {
       console.log('회원가입 성공:', data)
+      router.push('/login')
     },
     onError: (error: unknown) => {
       if (error instanceof Error) {
@@ -84,6 +87,7 @@ export default function Signup() {
       />
       <OAuth />
       <SubmitButton
+        type="회원가입"
         isValidEmail={isValidEmail}
         isValidPassword={isValidPassword}
         isMatched={isPasswordMatched}
