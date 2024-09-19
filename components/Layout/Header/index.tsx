@@ -11,7 +11,7 @@ import ThemeToggle from '@/components/Themes/Toggle'
 export default function Header() {
   const [isActive, setIsActive] = useState<boolean>(false)
   const [isVisible, setIsVisible] = useState<boolean>(true)
-  const { isLogin } = useAuthStore()
+  const { isLogin, logout } = useAuthStore()
   const pathname = usePathname()
   const headerRef = useRef<HTMLDivElement>(null)
 
@@ -199,6 +199,7 @@ export default function Header() {
                   className="min-w-[188px] md:min-w-[55px] nav-item border-nav-border"
                   type="button"
                   aria-label="logout button"
+                  onClick={logout}
                 >
                   <Icon name="Logout" width={20} height={18} />
                 </Button>
