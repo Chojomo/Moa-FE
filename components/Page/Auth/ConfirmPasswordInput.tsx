@@ -22,8 +22,9 @@ export default function ConfirmPasswordInput({
   return (
     <>
       <Input
+        id="confirm-password"
         label="비밀번호 확인"
-        type={isVisible ? 'text' : 'confirm password'}
+        type={isVisible ? 'text' : 'password'}
         placeholder="비밀번호를 입력해 주세요"
         value={confirmPassword}
         handleChange={handleChange}

@@ -13,6 +13,7 @@ export default function EmailInput({ email, handleChange, handleReset }: EmailIn
   return (
     <>
       <Input
+        id="email"
         label="이메일"
         type="email"
         placeholder="이메일을 입력해 주세요"
