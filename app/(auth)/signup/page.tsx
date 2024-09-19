@@ -68,7 +68,7 @@ export default function Signup() {
   }
 
   return (
-    <form className="w-[100vw] flex-center flex-col" onSubmit={handleSignup}>
+    <form className="animate-fadeIn w-[100vw] flex-center flex-col" onSubmit={handleSignup}>
       <EmailInput email={email} handleChange={handleEmailChange} handleReset={() => setEmail('')} />
       <PasswordInput
         password={password}
