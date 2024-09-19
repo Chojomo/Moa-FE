@@ -1,7 +1,7 @@
 'use client'
 
 import { useFadeIn } from '@/hooks/useInViewFade'
-import Form from './Form'
+import Survey from './Survey'
 
 export default function Right() {
   const { isVisible, elementRef } = useFadeIn<HTMLDivElement>(0.1)
@@ -30,7 +30,7 @@ export default function Right() {
           </p>
         </div>
       </article>
-      <Form />
+      <Survey />
     </section>
   )
 }
