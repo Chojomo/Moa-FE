@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import { useAuthStore } from '@/store/useAuth'
 import { Icon } from '@/components/Icon'
@@ -13,6 +13,7 @@ export default function Header() {
   const [isVisible, setIsVisible] = useState<boolean>(true)
   const { isLogin } = useAuthStore()
   const pathname = usePathname()
+  const headerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (pathname === '/diary/post') {
@@ -20,6 +21,20 @@ export default function Header() {
     }
     console.log(pathname)
   }, [pathname])
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (headerRef.current && !headerRef.current.contains(event.target as Node)) {
+        setIsActive(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
 
   const handleActive = (href: string, type: 'border' | 'icon') => {
     const classActive =
@@ -108,7 +123,10 @@ export default function Header() {
       <header
         className={`w-full ${!isActive ? 'h-[55px]' : isLogin ? 'h-[450px]' : 'h-[350px]'} md:h-[52px] flex-center fixed top-[10px] z-30 transition-height duration-500 ease-in-out overflow-hidden md:transition-none`}
       >
-        <nav className="bg-nav-bg h-[100%] px-[10px] rounded-[28px] md:rounded-full md:flex-center">
+        <nav
+          ref={headerRef}
+          className="bg-nav-bg h-[100%] px-[10px] rounded-[28px] md:rounded-full md:flex-center"
+        >
           <ul className="flex-center gap-[10px] flex-col md:flex-row mt-[8px] md:mt-[0px] mb-[8px] md:mb-[0px]">
             <li>
               <Link
