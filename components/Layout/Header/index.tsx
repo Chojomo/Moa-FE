@@ -19,7 +19,6 @@ export default function Header() {
     if (pathname === '/diary/post') {
       setIsVisible(false)
     }
-    console.log(pathname)
   }, [pathname])
 
   useEffect(() => {
@@ -44,6 +43,10 @@ export default function Header() {
       type === 'border' ? 'border-nav-border text-icon-normal' : 'rgb(166,166,166)'
 
     if (pathname.includes(href) && href !== '/') {
+      return classActive
+    }
+
+    if (pathname === '/signup' && href === '/login') {
       return classActive
     }
 
