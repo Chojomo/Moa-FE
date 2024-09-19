@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import Entry from '@/components/Entry'
-import PostIcon from '../PostIcon'
 
 type Post = {
   index: number

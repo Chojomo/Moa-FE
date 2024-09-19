@@ -1,7 +1,7 @@
 import { IconProps } from '@/types'
 import { Svg } from './index'
 
-export default function NavArrowTop({ className, width, height, fill = '#A6A6A6' }: IconProps) {
+export default function NavArrowTop({ className, width, height }: IconProps) {
   return (
     <Svg
       width={width || 20}

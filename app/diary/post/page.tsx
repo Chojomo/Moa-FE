@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 import dynamic from 'next/dynamic'
 // import { Editor as ToastEditor } from '@toast-ui/react-editor'
@@ -11,7 +11,6 @@ const Editor = dynamic(() => import('../../../components/Editor/index'), {
 })
 
 export default function Post() {
-  // const ref = useRef<ToastEditor | null>(null)
   const [title, setTitle] = useState<string>('')
   const [preview, setPriview] = useState<PreviwMode>(window.innerWidth > 1000 ? 'vertical' : 'tab')
 
