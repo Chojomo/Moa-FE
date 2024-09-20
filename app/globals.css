@@ -15,6 +15,15 @@
     0px 1px 0px 0px var(--border) !important;
 }
 
+.w-md-editor-content,
+.wmde-markdown {
+  color: var(--body-text) !important;
+}
+
+.w-md-editor-content div {
+  color: var(--body-text) !important;
+}
+
 /* 툴팁바 */
 .w-md-editor-toolbar {
   padding: 0 25px !important;
