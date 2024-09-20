@@ -5,6 +5,7 @@ import { useState } from 'react'
 import rehypeSanitize from 'rehype-sanitize'
 import '@uiw/react-md-editor/markdown-editor.css'
 import '@uiw/react-markdown-preview/markdown.css'
+import { commands } from '@/helper/commands'
 
 export default function PostEditor() {
   const [content, setContent] = useState<string>('')
@@ -24,6 +25,7 @@ export default function PostEditor() {
         className="custom-editor"
         style={{ whiteSpace: 'pre-wrap' }}
         height="100%"
+        commands={commands}
       />
     </div>
   )
