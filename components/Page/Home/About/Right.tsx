@@ -9,12 +9,12 @@ export default function Right() {
   return (
     <section className="md:w-1/2 h-full flex flex-col items-start justify-center gap-[70px] md:pr-[13%] md:pr-[6%] py-[13%] md:py-[6%]">
       <article className={`text-start ${isVisible ? 'animate-fadeUp' : ''}`} ref={elementRef}>
-        <h2 className="text-heading-text text-[34px] font-bold mb-[40px]">About</h2>
-        <div className="text-body-text text-[18px] leading-[2]">
+        <h2 className="text-heading-text text-[34px] font-bold md:mb-[25px] mb-[20px]">About</h2>
+        <div className="text-body-text md:text-[16px] test-[12px] leading-[2]">
           <p>
             안녕하세요 🙋🏻 🙋🏻‍♀️ <span className="inline-block animate-shake mx-[10px]">👋🏻</span>
           </p>
-          <p className="mb-[40px]">
+          <p className="md:mb-[35px] mb-[20px]">
             <span className="bg-[#7e7e7e3f] text-[#eb5757] font-semibold px-[10px] py-[5px] rounded">
               MOA
             </span>{' '}
