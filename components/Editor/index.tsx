@@ -6,7 +6,7 @@ import rehypeSanitize from 'rehype-sanitize'
 import '@uiw/react-md-editor/markdown-editor.css'
 import '@uiw/react-markdown-preview/markdown.css'
 import { commands } from '@/helper/commands'
-import LinkModal from './Modal'
+import { LinkModal } from './Modal'
 
 export default function PostEditor() {
   const [content, setContent] = useState<string>('')
@@ -35,6 +35,13 @@ export default function PostEditor() {
     setLinkValue('')
   }
 
+  const imageUploadCommand: ICommand = {
+    ...commands.image,
+    execute: () => {
+      document.getElementById('fileInput')?.click()
+    },
+  }
+
   return (
     <div className="h-[100%] flex-1">
       <MDEditor
@@ -56,7 +63,7 @@ export default function PostEditor() {
           commands.divider,
           linkCommand,
           commands.quote,
-          commands.image,
+          imageUploadCommand,
           commands.code,
           commands.divider,
           commands.unorderedListCommand,
