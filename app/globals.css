@@ -109,6 +109,7 @@
     --nav-border: rgba(238, 238, 238, 0.5);
 
     --container-bg: rgba(224, 224, 224, 0.34);
+    --modal-bg: rgba(255, 255, 255, 0.921);
 
     --heading-text: rgba(0, 0, 0, 0.9);
     --heading-bg: rgba(0, 0, 0, 0.7);
@@ -143,6 +144,7 @@
     --nav-border: rgba(238, 238, 238, 0.5);
 
     --container-bg: rgba(224, 224, 224, 0.15);
+    --modal-bg: rgba(232, 232, 232, 0.15);
 
     --heading-text: rgb(255, 255, 255, 0.9);
     --heading-bg: rgba(255, 255, 255, 0.3);
@@ -169,6 +171,26 @@
 
   .nav-item {
     @apply h-[39px] rounded-full flex-center border px-[12px] py-[10px];
+  }
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.19); /* 반투명 배경 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-content {
+    position: relative;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    outline: none;
   }
 
   .tooltip {

@@ -62,6 +62,9 @@ const config: Config = {
         container: {
           bg: 'var(--container-bg)',
         },
+        modal: {
+          bg: 'var(--modal-bg)',
+        },
         nonActive: {
           text: 'var(--nonActive-text)',
         },
