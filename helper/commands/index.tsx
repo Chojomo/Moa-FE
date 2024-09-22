@@ -54,22 +54,23 @@ const title4 = {
   ),
 }
 
-const commands = [
+const commands = {
   title1,
   title2,
   title3,
   title4,
-  command.divider,
-  command.bold,
-  command.italic,
-  command.strikethrough,
-  command.divider,
-  command.quote,
-  command.image,
-  command.code,
-  command.divider,
-  command.unorderedListCommand,
-  command.orderedListCommand,
-]
+  divider: command.divider,
+  bold: command.bold,
+  italic: command.italic,
+  strikethrough: command.strikethrough,
+
+  link: command.link,
+  quote: command.quote,
+  image: command.image,
+  code: command.code,
+
+  unorderedListCommand: command.unorderedListCommand,
+  orderedListCommand: command.orderedListCommand,
+}
 
 export { commands }
