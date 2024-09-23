@@ -1,10 +1,12 @@
 'use client'
 
-import MDEditor, { ICommand } from '@uiw/react-md-editor'
-import { useState, useCallback } from 'react'
+import MDEditor, { ICommand, TextAreaTextApi } from '@uiw/react-md-editor'
+import { useState, useCallback, useEffect } from 'react'
+import { useMutation } from '@tanstack/react-query'
 import rehypeSanitize from 'rehype-sanitize'
 import '@uiw/react-md-editor/markdown-editor.css'
 import '@uiw/react-markdown-preview/markdown.css'
+import { initializePost } from '@/lib/api/diary'
 import { commands } from '@/helper/commands'
 import { LinkModal } from './Modal'
 
@@ -13,7 +15,25 @@ export default function PostEditor() {
   const [linkValue, setLinkValue] = useState<string>('')
   const [linkTextValue, setLinkTextValue] = useState<string>('')
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
-  const [textApi, setTextApi] = useState<any>(null)
+  const [textApi, setTextApi] = useState<TextAreaTextApi | null>(null)
+
+  const mutation = useMutation({
+    mutationFn: initializePost,
+    onSuccess: (data) => {
+      console.log(data)
+    },
+    onError: (error: unknown) => {
+      if (error instanceof Error) {
+        console.error('다이어리 초기화 실패:', error.message)
+      } else {
+        console.error('다이어리 초기화:', error)
+      }
+    },
+  })
+
+  useEffect(() => {
+    mutation.mutate()
+  }, [])
 
   const handleChange = (value?: string) => {
     setContent(value || '')
@@ -29,7 +49,7 @@ export default function PostEditor() {
 
   const handleInsertLink = () => {
     const markdownLink = `[${linkTextValue}](${linkValue})`
-    textApi.replaceSelection(markdownLink)
+    textApi?.replaceSelection(markdownLink)
     setModalIsOpen(false)
     setLinkTextValue('')
     setLinkValue('')
