@@ -41,9 +41,9 @@ export default function Login() {
   const mutation = useMutation({
     mutationFn: () => login(email, password),
     onSuccess: (data) => {
-      console.log('성공!: ', data)
       setLogin()
       router.push('/')
+      console.log(data)
     },
     onError: (error: unknown) => {
       if (error instanceof Error) {

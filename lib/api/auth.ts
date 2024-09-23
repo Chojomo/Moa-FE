@@ -35,9 +35,15 @@ export const login = async (userEmail: string, userPassword: string) => {
     const data = await response.json()
 
     if (!response.ok) {
-      throw new Error(data.error || '회원가입 실패')
+      throw new Error(data.error || '로그인 실패')
     } else {
-      return data.message
+      const token = response.headers.get('authorization')
+
+      if (token) {
+        localStorage.setItem('authToken', token)
+      }
+
+      return data
     }
   } catch (error) {
     throw new Error('next 서버 요청 중 에러 발생')
