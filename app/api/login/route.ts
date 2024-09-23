@@ -16,12 +16,21 @@ export async function POST(req: NextRequest) {
     if (!response.ok) {
       return new Response(JSON.stringify({ error: '서버 에러 발생' }), { status: 500 })
     }
-    //   const data = await response.json()
-    return new Response(JSON.stringify({ message: '성공' }), {
+    const data = await response.json()
+    const token = response.headers.get('authorization')
+
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'Access-Control-Expose-Headers': 'authorization',
+    })
+
+    if (token) {
+      headers.set('authorization', token)
+    }
+
+    return new Response(JSON.stringify(data), {
       status: 200,
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
     })
   } catch (error) {
     console.error('회원가입 에러:', error)

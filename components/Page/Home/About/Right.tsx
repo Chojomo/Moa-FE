@@ -7,7 +7,7 @@ export default function Right() {
   const { isVisible, elementRef } = useFadeIn<HTMLDivElement>(0.1)
 
   return (
-    <section className="md:w-1/2 h-full flex flex-col items-start justify-center gap-[70px] md:pr-[13%] md:pr-[6%] py-[13%] md:py-[6%]">
+    <section className="md:w-1/2 h-full flex flex-col items-start justify-center gap-[70px] md:pr-[13%] pr-[6%] py-[13%] md:py-[6%]">
       <article className={`text-start ${isVisible ? 'animate-fadeUp' : ''}`} ref={elementRef}>
         <h2 className="text-heading-text text-[34px] font-bold md:mb-[25px] mb-[20px]">About</h2>
         <div className="text-body-text md:text-[16px] test-[12px] leading-[2]">
