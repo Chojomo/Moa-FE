@@ -18,6 +18,8 @@ export default function Header() {
   useEffect(() => {
     if (pathname === '/diary/post') {
       setIsVisible(false)
+    } else {
+      setIsVisible(true)
     }
   }, [pathname])
 
