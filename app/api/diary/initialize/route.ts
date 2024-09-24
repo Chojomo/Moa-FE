@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest } from 'next/server'
 
 export async function POST(req: NextRequest) {
   const apiUrl = `${process.env.API_URL}/api/v1/diaries/initialize`
