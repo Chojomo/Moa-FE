@@ -4,10 +4,12 @@ import MDEditor, { ICommand, TextAreaTextApi } from '@uiw/react-md-editor'
 import { useState, useCallback, useEffect, useRef } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import rehypeSanitize from 'rehype-sanitize'
+import { defaultSchema } from 'hast-util-sanitize'
 import '@uiw/react-md-editor/markdown-editor.css'
 import '@uiw/react-markdown-preview/markdown.css'
 import { initializePost, uploadImage } from '@/lib/api/diary'
 import { commands } from '@/helper/commands'
+import rehypeRaw from 'rehype-raw'
 import { LinkModal } from './Modal'
 
 export default function PostEditor() {
@@ -64,33 +66,22 @@ export default function PostEditor() {
 
   const imageUploadCommand: ICommand = {
     ...commands.image,
-    execute: () => {
+    execute: (_, api) => {
+      setImgApi(api)
       fileInputRef.current?.click()
     },
   }
-
-  // const imageUploadMutation = useMutation(uploadImage, {
-  //   onSuccess: (data) => {
-  //     const imageUrl = data.url
-  //     const markdownImage = `![Image](${imageUrl})`
-  //     if (linkApi) {
-  //       linkApi.replaceSelection(markdownImage)
-  //     }
-  //     console.log('Image uploaded successfully:', imageUrl)
-  //   },
-  //   onError: (error: unknown) => {
-  //     if (error instanceof Error) {
-  //       console.error('이미지 업로드 실패:', error.message)
-  //     } else {
-  //       console.error('알 수 없는 에러 발생:', error)
-  //     }
-  //   },
-  // })
 
   const imageUploadMutation = useMutation({
     mutationFn: uploadImage,
     onSuccess: (data) => {
       console.log(data)
+      const url = data.data.imageUrl
+      const markdownImage = `![Image](${url})<!--rehype:style=width: 500px; height: auto;-->`
+
+      if (imgApi) {
+        imgApi.replaceSelection(markdownImage)
+      }
     },
     onError: (error: unknown) => {
       if (error instanceof Error) {
@@ -108,13 +99,22 @@ export default function PostEditor() {
     }
   }
 
+  const customSanitize = {
+    ...defaultSchema,
+    attributes: {
+      ...defaultSchema.attributes,
+      '*': [...(defaultSchema.attributes?.['*'] || []), 'style'],
+    },
+    tagNames: [...(defaultSchema.tagNames || []), 'img', 'div'],
+  }
+
   return (
     <div className="h-[100%] flex-1">
       <MDEditor
         value={content}
         onChange={handleChange}
         previewOptions={{
-          rehypePlugins: [[rehypeSanitize]],
+          rehypePlugins: [[rehypeRaw], [rehypeSanitize, customSanitize]],
         }}
         className="custom-editor"
         style={{ whiteSpace: 'pre-wrap' }}
