@@ -36,7 +36,7 @@ export default function Post() {
           onChange={(e) => setTitle(e.target.value)}
           className="w-[100%] h-[15%] text-[28px] px-[38px] pt-[60px] pb-[30px] rounded focus:outline-none focus:ring-0"
         />
-        <Editor />
+        <Editor title={title} />
       </form>
     </div>
   )

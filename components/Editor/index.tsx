@@ -7,20 +7,24 @@ import rehypeSanitize from 'rehype-sanitize'
 import { defaultSchema } from 'hast-util-sanitize'
 import '@uiw/react-md-editor/markdown-editor.css'
 import '@uiw/react-markdown-preview/markdown.css'
-import { initializePost, uploadImage } from '@/lib/api/diary'
+import { initializePost, uploadImage, putAutoSave } from '@/lib/api/diary'
 import { commands } from '@/helper/commands'
 import rehypeRaw from 'rehype-raw'
 import { LinkModal } from './Modal'
 
-export default function PostEditor() {
+type PostEditorProps = {
+  title: string
+}
+
+export default function PostEditor({ title }: PostEditorProps) {
   const [content, setContent] = useState<string>('')
   const [linkValue, setLinkValue] = useState<string>('')
   const [linkTextValue, setLinkTextValue] = useState<string>('')
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
-  const [linkApi, setLinkApi] = useState<TextAreaTextApi | null>(null)
   const isInitialized = useRef<boolean>(false)
-  const [imgApi, setImgApi] = useState<TextAreaTextApi | null>(null)
   const fileInputRef = useRef<HTMLInputElement | null>(null)
+  const [imgApi, setImgApi] = useState<TextAreaTextApi | null>(null)
+  const [linkApi, setLinkApi] = useState<TextAreaTextApi | null>(null)
 
   useEffect(() => {
     if (!isInitialized.current) {
@@ -29,6 +33,34 @@ export default function PostEditor() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const autoSaveMutation = useMutation({
+    mutationFn: putAutoSave,
+    onSuccess: (data) => {
+      console.log(data)
+    },
+    onError: (error: unknown) => {
+      if (error instanceof Error) {
+        console.error('다이어리 자동 저장 실패:', error.message)
+      } else {
+        console.error('다이어리 자동 저장:', error)
+      }
+    },
+  })
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      autoSaveMutation.mutate({
+        diaryTitle: title,
+        diaryContentse: content,
+        thumbnail: '',
+        isDiaryPublic: false,
+      })
+    }, 10000)
+
+    return () => clearInterval(intervalId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoSaveMutation])
 
   const mutation = useMutation({
     mutationFn: initializePost,
@@ -69,6 +101,14 @@ export default function PostEditor() {
     execute: (_, api) => {
       setImgApi(api)
       fileInputRef.current?.click()
+    },
+  }
+
+  const codeCommand: ICommand = {
+    ...commands.code,
+    execute: (state, api) => {
+      const modifyText = `\`\`\`\n${state.selectedText || ''}\n\`\`\``
+      api.replaceSelection(modifyText)
     },
   }
 
@@ -130,7 +170,7 @@ export default function PostEditor() {
           linkCommand,
           commands.quote,
           imageUploadCommand,
-          commands.code,
+          codeCommand,
           commands.divider,
           commands.unorderedListCommand,
           commands.orderedListCommand,
