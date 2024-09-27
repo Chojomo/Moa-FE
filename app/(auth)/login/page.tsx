@@ -20,6 +20,7 @@ export default function Login() {
   const [password, setPassword] = useState<string>('')
   const [isChecked, setIsChecked] = useState<boolean>(false)
   const [isValidEmail, setIsValidEmail] = useState<boolean>(false)
+  const [isValidPassword, setIsValidPassword] = useState<boolean>(false)
   const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false)
 
   const handleEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,7 +36,7 @@ export default function Login() {
     const isValid = validatePassword(value)
 
     setPassword(value)
-    setIsVisiblePassword(isValid)
+    setIsValidPassword(isValid)
   }, [])
 
   const mutation = useMutation({
@@ -71,7 +72,7 @@ export default function Login() {
       />
       <KeepSignedInCheckbox isChecked={isChecked} handleClick={() => setIsChecked(!isChecked)} />
       <OAuth />
-      <SubmitButton type="로그인" isValidEmail={isValidEmail} isValidPassword={isVisiblePassword} />
+      <SubmitButton type="로그인" isValidEmail={isValidEmail} isValidPassword={isValidPassword} />
       {/* 아이디, 비밀번호 찾기 */}
     </form>
   )
