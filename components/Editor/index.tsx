@@ -3,11 +3,12 @@
 import MDEditor, { ICommand, TextAreaTextApi } from '@uiw/react-md-editor'
 import { useState, useCallback, useEffect, useRef } from 'react'
 import { useMutation } from '@tanstack/react-query'
+import { useInitDiary, useAutoSaveDiary } from '@/hooks/editor'
 import rehypeSanitize from 'rehype-sanitize'
 import { defaultSchema } from 'hast-util-sanitize'
 import '@uiw/react-md-editor/markdown-editor.css'
 import '@uiw/react-markdown-preview/markdown.css'
-import { initializePost, uploadImage, putAutoSave } from '@/lib/api/diary'
+import { uploadImage } from '@/lib/api/diary'
 import { commands } from '@/helper/commands'
 import rehypeRaw from 'rehype-raw'
 import { LinkModal } from './Modal'
@@ -26,58 +27,42 @@ export default function PostEditor({ title }: PostEditorProps) {
   const [imgApi, setImgApi] = useState<TextAreaTextApi | null>(null)
   const [linkApi, setLinkApi] = useState<TextAreaTextApi | null>(null)
 
+  const { mutate: initDiary } = useInitDiary()
+  const { mutate: autoSaveDiary } = useAutoSaveDiary({
+    title,
+    content,
+    thumbnail: '',
+    isDiaryPublic: false,
+  })
+
+  //! 다이어리 초기화
   useEffect(() => {
     if (!isInitialized.current) {
-      mutation.mutate()
+      initDiary()
       isInitialized.current = true
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const autoSaveMutation = useMutation({
-    mutationFn: putAutoSave,
-    onSuccess: (data) => {
-      console.log(data)
-    },
-    onError: (error: unknown) => {
-      if (error instanceof Error) {
-        console.error('다이어리 자동 저장 실패:', error.message)
-      } else {
-        console.error('다이어리 자동 저장:', error)
-      }
-    },
-  })
+  //! 임시 저장
+  // useEffect(() => {
+  //   const intervalId = setInterval(() => {
+  //     autoSaveDiary()
+  //   }, 10000)
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      autoSaveMutation.mutate({
-        diaryTitle: title,
-        diaryContentse: content,
-        thumbnail: '',
-        isDiaryPublic: false,
-      })
-    }, 10000)
-
-    return () => clearInterval(intervalId)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autoSaveMutation])
-
-  const mutation = useMutation({
-    mutationFn: initializePost,
-    onSuccess: (data) => {
-      console.log(data)
-    },
-    onError: (error: unknown) => {
-      if (error instanceof Error) {
-        console.error('다이어리 초기화 실패:', error.message)
-      } else {
-        console.error('다이어리 초기화:', error)
-      }
-    },
-  })
+  //   return () => clearInterval(intervalId)
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [autoSaveDiary])
 
   const handleChange = (value?: string) => {
     setContent(value || '')
+  }
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (file) {
+      imageUploadMutation.mutate(file)
+    }
   }
 
   const linkCommand: ICommand = {
@@ -104,6 +89,7 @@ export default function PostEditor({ title }: PostEditorProps) {
     },
   }
 
+  //! 코드 커맨드
   const codeCommand: ICommand = {
     ...commands.code,
     execute: (state, api) => {
@@ -112,6 +98,7 @@ export default function PostEditor({ title }: PostEditorProps) {
     },
   }
 
+  //! 이미지 업로드
   const imageUploadMutation = useMutation({
     mutationFn: uploadImage,
     onSuccess: (data) => {
@@ -131,13 +118,6 @@ export default function PostEditor({ title }: PostEditorProps) {
       }
     },
   })
-
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
-    if (file) {
-      imageUploadMutation.mutate(file)
-    }
-  }
 
   const customSanitize = {
     ...defaultSchema,
