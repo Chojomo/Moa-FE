@@ -1,9 +1,7 @@
 'use client'
 
 import { useState, useCallback, useEffect, useRef } from 'react'
-import { useMutation } from '@tanstack/react-query'
-import { useInitDiary, useAutoSaveDiary } from '@/hooks/editor'
-import { uploadImage } from '@/lib/api/diary'
+import { useInitDiary, useAutoSaveDiary, useUploadImage } from '@/hooks/editor'
 
 import MDEditor, { ICommand, TextAreaTextApi } from '@uiw/react-md-editor'
 import rehypeRaw from 'rehype-raw'
@@ -36,6 +34,7 @@ export default function PostEditor({ title }: PostEditorProps) {
     thumbnail: '',
     isDiaryPublic: false,
   })
+  const { mutate: uploadImage, setOnSuccess: uploadImageOnSuccess } = useUploadImage()
 
   //! 다이어리 초기화
   useEffect(() => {
@@ -63,7 +62,15 @@ export default function PostEditor({ title }: PostEditorProps) {
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (file) {
-      imageUploadMutation.mutate(file)
+      uploadImage(file)
+      uploadImageOnSuccess((data) => {
+        const url = data.imageUrl
+        const markdownImage = `![Image](${url})<!--rehype:style=width: 500px; height: auto;-->`
+
+        if (imgApi) {
+          imgApi.replaceSelection(markdownImage)
+        }
+      })
     }
   }
 
@@ -100,27 +107,6 @@ export default function PostEditor({ title }: PostEditorProps) {
     },
   }
 
-  //! 이미지 업로드
-  const imageUploadMutation = useMutation({
-    mutationFn: uploadImage,
-    onSuccess: (data) => {
-      console.log(data)
-      const url = data.data.imageUrl
-      const markdownImage = `![Image](${url})<!--rehype:style=width: 500px; height: auto;-->`
-
-      if (imgApi) {
-        imgApi.replaceSelection(markdownImage)
-      }
-    },
-    onError: (error: unknown) => {
-      if (error instanceof Error) {
-        console.error('다이어리 초기화 실패:', error.message)
-      } else {
-        console.error('다이어리 초기화:', error)
-      }
-    },
-  })
-
   const customSanitize = {
     ...defaultSchema,
     attributes: {
@@ -144,6 +130,7 @@ export default function PostEditor({ title }: PostEditorProps) {
         commands={[
           commands.title1,
           commands.title2,
+          commands.title3,
           commands.divider,
           commands.bold,
           commands.italic,
