@@ -71,3 +71,52 @@ export const uploadImage = async (image: File) => {
     throw new Error('next 서버 요청 중 에러 발생')
   }
 }
+
+type AutoSave = {
+  diaryTitle: string
+  diaryContentse: string
+  thumbnail: string
+  isDiaryPublic: boolean
+}
+
+export const putAutoSave = async ({
+  diaryTitle = '',
+  diaryContentse = '',
+  thumbnail = '',
+  isDiaryPublic = false,
+}: AutoSave) => {
+  try {
+    const apiUrl = '/api/diary'
+    const token = localStorage.getItem('authToken')
+    const diaryId = localStorage.getItem('diaryId')
+
+    if (!token) {
+      throw new Error('로그인 상태를 확인하세요.')
+    }
+
+    const response = await fetch(apiUrl, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token,
+      },
+      body: JSON.stringify({
+        diaryId,
+        diaryTitle,
+        diaryContentse,
+        thumbnail,
+        isDiaryPublic,
+      }),
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      throw new Error(data.error || '다이어리 자동 저장 실패')
+    }
+
+    return data
+  } catch (error) {
+    throw new Error('next 서버 요청 중 에러 발생')
+  }
+}
