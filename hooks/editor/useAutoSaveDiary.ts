@@ -1,27 +1,9 @@
 import { useMutation } from '@tanstack/react-query'
 import { putAutoSave } from '@/lib/api/diary'
 
-type UseAutoSaveDiaryProps = {
-  title: string
-  content: string
-  thumbnail: string
-  isDiaryPublic: boolean
-}
-
-export default function useAutoSaveDiary({
-  title,
-  content,
-  thumbnail,
-  isDiaryPublic,
-}: UseAutoSaveDiaryProps) {
+export default function useAutoSaveDiary() {
   const { mutate } = useMutation({
-    mutationFn: () =>
-      putAutoSave({
-        diaryTitle: title,
-        diaryContentse: content,
-        thumbnail: '',
-        isDiaryPublic: false,
-      }),
+    mutationFn: putAutoSave,
     onSuccess: (data) => {
       console.log(data)
     },

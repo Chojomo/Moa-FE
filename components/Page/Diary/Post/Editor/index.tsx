@@ -104,7 +104,7 @@ export default function PostEditor({ value, onChange, preview }: PostEditorProps
   }
 
   return (
-    <div className="h-[100%] flex-1">
+    <div className="h-[75%] flex-1">
       <MDEditor
         value={value}
         onChange={onChange}

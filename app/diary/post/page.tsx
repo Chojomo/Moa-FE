@@ -1,11 +1,12 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
-
 import dynamic from 'next/dynamic'
-import { PreviwMode } from '@/types'
-import TitleInput from '@/components/Page/Diary/Post/TitleInput'
+import { useState, useEffect, useRef } from 'react'
 import { useInitDiary, useAutoSaveDiary } from '@/hooks/editor'
+
+import TitleInput from '@/components/Page/Diary/Post/TitleInput'
+import ActionBar from '@/components/Page/Diary/Post/ActionBar'
+import { PreviwMode } from '@/types'
 
 const Editor = dynamic(() => import('../../../components/Page/Diary/Post/Editor/index'), {
   ssr: false,
@@ -18,12 +19,7 @@ export default function Post() {
   const isInitialized = useRef<boolean>(false)
 
   const { mutate: initDiary } = useInitDiary()
-  const { mutate: autoSaveDiary } = useAutoSaveDiary({
-    title,
-    content,
-    thumbnail: '',
-    isDiaryPublic: false,
-  })
+  const { mutate: autoSaveDiary } = useAutoSaveDiary()
 
   const handleResize = () => {
     setPriview(window.innerWidth > 1000 ? 'live' : 'edit')
@@ -47,25 +43,35 @@ export default function Post() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const saveDiary = () => {
+    autoSaveDiary({
+      diaryTitle: title,
+      diaryContentse: content,
+      thumbnail: '',
+      isDiaryPublic: false,
+    })
+  }
+
   useEffect(() => {
     console.log(content)
   }, [content])
 
   //! 임시 저장
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     autoSaveDiary()
-  //   }, 10000)
-
-  //   return () => clearInterval(intervalId)
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [autoSaveDiary])
+  useEffect(() => {
+    // const intervalId = setInterval(() => {
+    //   saveDiary()
+    // }, 100000)
+    // return () => clearInterval(intervalId)
+    saveDiary()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className="w-[100vw] h-[100vh] overflow-hidden">
       <form className="w-[100vw] h-[100vh] flex flex-col">
         <TitleInput value={title} onChange={(e) => setTitle(e.target.value)} />
         <Editor value={content} onChange={(v) => setContent(v || '')} preview={preview} />
+        <ActionBar handleSave={saveDiary} />
       </form>
     </div>
   )
