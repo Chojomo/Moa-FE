@@ -1,71 +1,63 @@
 'use client'
 
-import { useState, useCallback, useEffect, useRef } from 'react'
-import { useAutoSaveDiary, useUploadImage } from '@/hooks/editor'
+import { useState, useCallback, useRef } from 'react'
+import { useMutation } from '@tanstack/react-query'
+import { uploadImage } from '@/lib/api/diary'
 import { PreviwMode } from '@/types'
 
 import MDEditor, { ICommand, TextAreaTextApi } from '@uiw/react-md-editor'
-import rehypeRaw from 'rehype-raw'
-import rehypeSanitize from 'rehype-sanitize'
 import { commands } from '@/helper/commands'
 import { defaultSchema } from 'hast-util-sanitize'
-
-import { LinkModal } from './Modal'
+import rehypeRaw from 'rehype-raw'
+import rehypeSanitize from 'rehype-sanitize'
 import '@uiw/react-md-editor/markdown-editor.css'
 import '@uiw/react-markdown-preview/markdown.css'
 
+import { LinkModal } from './Modal'
+
 type PostEditorProps = {
-  title: string
+  value: string
+  onChange: (value?: string) => void
   preview: PreviwMode
 }
 
-export default function PostEditor({ title, preview }: PostEditorProps) {
-  const [content, setContent] = useState<string>('')
+export default function PostEditor({ value, onChange, preview }: PostEditorProps) {
   const [linkValue, setLinkValue] = useState<string>('')
   const [linkTextValue, setLinkTextValue] = useState<string>('')
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
-  const isInitialized = useRef<boolean>(false)
-  const fileInputRef = useRef<HTMLInputElement | null>(null)
+
   const [imgApi, setImgApi] = useState<TextAreaTextApi | null>(null)
   const [linkApi, setLinkApi] = useState<TextAreaTextApi | null>(null)
 
-  const { mutate: autoSaveDiary } = useAutoSaveDiary({
-    title,
-    content,
-    thumbnail: '',
-    isDiaryPublic: false,
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
+
+  const { mutate: uploadImageMutate } = useMutation({
+    mutationFn: uploadImage,
+    onSuccess: (data) => {
+      const url = data.data.imageUrl
+      const markdownImage = `![Image](${url})<!--rehype:style=width: 500px; height: auto;-->`
+
+      if (imgApi) {
+        imgApi.replaceSelection(markdownImage)
+      }
+    },
+    onError: (error: unknown) => {
+      if (error instanceof Error) {
+        console.error('이미지 업로드 실패:', error.message)
+      } else {
+        console.error('이미지 업로드 실패:', error)
+      }
+    },
   })
-  const { mutate: uploadImage, setOnSuccess: uploadImageOnSuccess } = useUploadImage()
-
-  //! 임시 저장
-  // useEffect(() => {
-  //   const intervalId = setInterval(() => {
-  //     autoSaveDiary()
-  //   }, 10000)
-
-  //   return () => clearInterval(intervalId)
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [autoSaveDiary])
-
-  const handleChange = (value?: string) => {
-    setContent(value || '')
-  }
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
     if (file) {
-      uploadImage(file)
-      uploadImageOnSuccess((data) => {
-        const url = data.imageUrl
-        const markdownImage = `![Image](${url})<!--rehype:style=width: 500px; height: auto;-->`
-
-        if (imgApi) {
-          imgApi.replaceSelection(markdownImage)
-        }
-      })
+      uploadImageMutate(file)
     }
   }
 
+  // ! 링크 커맨드
   const linkCommand: ICommand = {
     ...commands.link,
     execute: (_, api) => {
@@ -74,6 +66,7 @@ export default function PostEditor({ title, preview }: PostEditorProps) {
     },
   }
 
+  // ! 링크 핸들러
   const handleInsertLink = () => {
     const markdownLink = `[${linkTextValue}](${linkValue})`
     linkApi?.replaceSelection(markdownLink)
@@ -82,6 +75,7 @@ export default function PostEditor({ title, preview }: PostEditorProps) {
     setLinkValue('')
   }
 
+  // ! 이미지 업로드 커맨드
   const imageUploadCommand: ICommand = {
     ...commands.image,
     execute: (_, api) => {
@@ -90,7 +84,7 @@ export default function PostEditor({ title, preview }: PostEditorProps) {
     },
   }
 
-  //! 코드 커맨드
+  // ! 코드 커맨드
   const codeCommand: ICommand = {
     ...commands.code,
     execute: (state, api) => {
@@ -99,6 +93,7 @@ export default function PostEditor({ title, preview }: PostEditorProps) {
     },
   }
 
+  // ? 이미지 스타일 속성 허용하려고..
   const customSanitize = {
     ...defaultSchema,
     attributes: {
@@ -111,8 +106,8 @@ export default function PostEditor({ title, preview }: PostEditorProps) {
   return (
     <div className="h-[100%] flex-1">
       <MDEditor
-        value={content}
-        onChange={handleChange}
+        value={value}
+        onChange={onChange}
         preview={preview}
         previewOptions={{
           rehypePlugins: [[rehypeRaw], [rehypeSanitize, customSanitize]],
