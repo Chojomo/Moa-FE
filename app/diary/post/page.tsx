@@ -1,21 +1,27 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 import dynamic from 'next/dynamic'
-// import { Editor as ToastEditor } from '@toast-ui/react-editor'
 import { PreviwMode } from '@/types'
+import TitleInput from '@/components/Page/Diary/Post/TitleInput'
+import { useInitDiary } from '@/hooks/editor'
 
-const Editor = dynamic(() => import('../../../components/Editor/index'), {
+const Editor = dynamic(() => import('../../../components/Page/Diary/Post/Editor/index'), {
   ssr: false,
 })
 
 export default function Post() {
   const [title, setTitle] = useState<string>('')
-  const [preview, setPriview] = useState<PreviwMode>(window.innerWidth > 1000 ? 'vertical' : 'tab')
+  const [content, setContent] = useState<string>('')
+  const [preview, setPriview] = useState<PreviwMode>(window.innerWidth > 1000 ? 'live' : 'edit')
+  const isInitialized = useRef<boolean>(false)
+
+  const { mutate: initDiary } = useInitDiary()
 
   const handleResize = () => {
-    setPriview(window.innerWidth > 1000 ? 'vertical' : 'tab')
+    setPriview(window.innerWidth > 1000 ? 'live' : 'edit')
+    console.log(window.innerWidth > 1000 ? 'live' : 'edit')
   }
 
   useEffect(() => {
@@ -26,17 +32,20 @@ export default function Post() {
     }
   }, [])
 
+  //! 다이어리 초기화
+  useEffect(() => {
+    if (!isInitialized.current) {
+      initDiary()
+      isInitialized.current = true
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <div className="w-[100vw] h-[100vh] overflow-hidden">
       <form className="w-[100vw] h-[100vh] flex flex-col">
-        <input
-          type="text"
-          placeholder="제목을 입력하세요"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="w-[100%] h-[15%] text-[28px] px-[38px] pt-[60px] pb-[30px] rounded focus:outline-none focus:ring-0"
-        />
-        <Editor title={title} />
+        <TitleInput value={title} onChange={(e) => setTitle(e.target.value)} />
+        <Editor title={title} preview={preview} />
       </form>
     </div>
   )

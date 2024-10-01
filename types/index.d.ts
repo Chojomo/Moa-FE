@@ -16,4 +16,4 @@ export type IconProps = {
 } & ClassName &
   Size
 
-export type PreviwMode = 'vertical' | 'tab'
+export type PreviwMode = 'live' | 'edit' | 'preview'
