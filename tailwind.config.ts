@@ -21,6 +21,7 @@ const config: Config = {
     },
     extend: {
       colors: {
+        black: 'var(--black)',
         background: 'var(--background)',
         foreground: 'var(--foreground)',
         icon: {
@@ -51,6 +52,7 @@ const config: Config = {
           blue: 'var(--main-blue)',
         },
         white: {
+          DEFAULT: 'var(--white)',
           active: 'var(--white-active)',
         },
         preview: {
@@ -64,6 +66,8 @@ const config: Config = {
         },
         modal: {
           bg: 'var(--modal-bg)',
+          input: 'var(--modal-input)',
+          button: 'var(--modal-button)',
         },
         nonActive: {
           text: 'var(--nonActive-text)',

@@ -59,7 +59,7 @@ export default function PublishModal({
           <Button
             type="button"
             ariaLabel="전체 공개 버튼"
-            className={`flex-center bg-[#fff] px-4 py-3 gap-3 rounded min-w-[130px] font-semibold ${isPublic ? 'border border-main-blue text-main-blue' : 'text-[#AFAFAF]'}`}
+            className={`flex-center bg-modal-button px-4 py-3 gap-3 rounded min-w-[130px] font-semibold ${isPublic ? 'border border-main-blue text-main-blue' : 'text-[#AFAFAF] border brder-border'}`}
             onClick={() => setIsPublic(true)}
           >
             <Icon name="Public" width={20} height={20} fill={!isPublic ? '#AFAFAF' : '#2C72DC'} />
@@ -68,7 +68,7 @@ export default function PublishModal({
           <Button
             type="button"
             ariaLabel="비공개 버튼"
-            className={`flex-center bg-[#fff] px-4 py-3 gap-3 rounded min-w-[130px] font-semibold ${!isPublic ? 'border border-main-blue text-main-blue' : 'text-[#AFAFAF]'}`}
+            className={`flex-center bg-modal-button px-4 py-3 gap-3 rounded min-w-[130px] font-semibold ${!isPublic ? 'border border-main-blue text-main-blue' : 'text-[#AFAFAF] border brder-border'}`}
             onClick={() => setIsPublic(false)}
           >
             <Icon name="Unpublic" width={22} height={22} fill={isPublic ? '#AFAFAF' : '#2C72DC'} />
@@ -77,11 +77,15 @@ export default function PublishModal({
         </div>
       </div>
       <div>
-        <div
-          className="relative max-w-[300px] h-[200px] rounded-lg flex-center cursor-pointer flex flex-col bg-[#eaeaea89]"
-          onClick={handleInputClick}
-        >
-          <Icon name="Image" width={40} height={40} className="absolute" />
+        <div className="relative max-w-[300px] h-[200px] rounded-lg flex-center cursor-pointer bg-modal-input">
+          <Button
+            type="button"
+            ariaLabel="썸네일 이미지 추가 버튼"
+            className="w-full h-full flex-center"
+            onClick={handleInputClick}
+          >
+            <Icon name="Image" width={40} height={40} />
+          </Button>
           {thumbnailPreview && (
             <Image
               src={thumbnailPreview}

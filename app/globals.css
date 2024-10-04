@@ -104,6 +104,9 @@
 
 @layer base {
   :root {
+    --white: rgb(255, 255, 255);
+    --black: rgb(0, 0, 0);
+
     --background: rgb(255, 255, 255);
     --foreground: rgb(8, 8, 8);
 
@@ -118,6 +121,8 @@
 
     --container-bg: rgba(224, 224, 224, 0.34);
     --modal-bg: rgba(255, 255, 255, 0.776);
+    --modal-input: rgb(234, 234, 234);
+    --modal-button: rgb(255, 255, 255);
 
     --heading-text: rgba(0, 0, 0, 0.9);
     --heading-bg: rgba(0, 0, 0, 0.7);
@@ -139,6 +144,9 @@
   }
 
   .dark {
+    --white: rgb(255, 255, 255);
+    --black: rgb(0, 0, 0);
+
     --background: rgb(0, 0, 0);
     --foreground: rgb(250, 250, 250);
 
@@ -152,7 +160,9 @@
     --nav-border: rgba(238, 238, 238, 0.5);
 
     --container-bg: rgba(224, 224, 224, 0.15);
-    --modal-bg: rgba(232, 232, 232, 0.15);
+    --modal-bg: rgba(41, 41, 41, 0.937);
+    --modal-input: rgba(0, 0, 0, 0.265);
+    --modal-button: rgba(224, 224, 224, 0);
 
     --heading-text: rgb(255, 255, 255, 0.9);
     --heading-bg: rgba(255, 255, 255, 0.3);
