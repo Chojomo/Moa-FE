@@ -7,6 +7,7 @@ import { useInitDiary, useAutoSaveDiary } from '@/hooks/editor'
 import TitleInput from '@/components/Page/Diary/Post/TitleInput'
 import ActionBar from '@/components/Page/Diary/Post/ActionBar'
 import { PreviwMode } from '@/types'
+import PublishModal from '@/components/Page/Diary/Post/Editor/Modal/PublishModal'
 
 const Editor = dynamic(() => import('../../../components/Page/Diary/Post/Editor/index'), {
   ssr: false,
@@ -17,6 +18,9 @@ export default function Post() {
   const [content, setContent] = useState<string>('')
   const [preview, setPriview] = useState<PreviwMode>(window.innerWidth > 1000 ? 'live' : 'edit')
   const isInitialized = useRef<boolean>(false)
+
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [isPublic, setIsPublic] = useState<boolean>(true)
 
   const { mutate: initDiary } = useInitDiary()
   const { mutate: autoSaveDiary } = useAutoSaveDiary()
@@ -71,7 +75,13 @@ export default function Post() {
       <form className="w-[100vw] h-[100vh] flex flex-col">
         <TitleInput value={title} onChange={(e) => setTitle(e.target.value)} />
         <Editor value={content} onChange={(v) => setContent(v || '')} preview={preview} />
-        <ActionBar handleSave={saveDiary} />
+        <ActionBar handleSave={saveDiary} handleOpenModal={() => setIsModalOpen(true)} />
+        <PublishModal
+          isOpen={isModalOpen}
+          handleClose={() => setIsModalOpen(false)}
+          isPublic={isPublic}
+          setIsPublic={setIsPublic}
+        />
       </form>
     </div>
   )

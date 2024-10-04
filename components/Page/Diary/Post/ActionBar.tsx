@@ -4,9 +4,10 @@ import { Icon } from '@/components/Icon'
 
 type ActionBarProps = {
   handleSave: () => void
+  handleOpenModal: () => void
 }
 
-export default function ActionBar({ handleSave }: ActionBarProps) {
+export default function ActionBar({ handleSave, handleOpenModal }: ActionBarProps) {
   const router = useRouter()
 
   return (
@@ -30,9 +31,10 @@ export default function ActionBar({ handleSave }: ActionBarProps) {
           임시저장
         </Button>
         <Button
-          type="submit"
-          ariaLabel="게시하기 버튼"
-          className="text-[#fff] font-semibold text-[15px] px-[20px] bg-main-blue rounded-full p-2"
+          type="button"
+          ariaLabel="작성 완료 버튼"
+          className="text-[#fff] font-semibold text-[15px] px-[20px] tracking-wider bg-main-blue rounded-full p-2"
+          onClick={handleOpenModal}
         >
           작성 완료
         </Button>

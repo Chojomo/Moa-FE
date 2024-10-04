@@ -24,7 +24,7 @@ type PostEditorProps = {
 export default function PostEditor({ value, onChange, preview }: PostEditorProps) {
   const [linkValue, setLinkValue] = useState<string>('')
   const [linkTextValue, setLinkTextValue] = useState<string>('')
-  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
   const [imgApi, setImgApi] = useState<TextAreaTextApi | null>(null)
   const [linkApi, setLinkApi] = useState<TextAreaTextApi | null>(null)
@@ -62,7 +62,7 @@ export default function PostEditor({ value, onChange, preview }: PostEditorProps
     ...commands.link,
     execute: (_, api) => {
       setLinkApi(api)
-      setModalIsOpen(true)
+      setIsModalOpen(true)
     },
   }
 
@@ -70,7 +70,7 @@ export default function PostEditor({ value, onChange, preview }: PostEditorProps
   const handleInsertLink = () => {
     const markdownLink = `[${linkTextValue}](${linkValue})`
     linkApi?.replaceSelection(markdownLink)
-    setModalIsOpen(false)
+    setIsModalOpen(false)
     setLinkTextValue('')
     setLinkValue('')
   }
@@ -134,8 +134,8 @@ export default function PostEditor({ value, onChange, preview }: PostEditorProps
         ]}
       />
       <LinkModal
-        isOpen={modalIsOpen}
-        handleClose={() => setModalIsOpen(false)}
+        isOpen={isModalOpen}
+        handleClose={() => setIsModalOpen(false)}
         textValue={linkTextValue}
         handleTextChange={useCallback((e) => setLinkTextValue(e.target.value), [])}
         linkValue={linkValue}

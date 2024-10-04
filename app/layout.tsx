@@ -30,7 +30,7 @@ export default function RootLayout({
           >
             <Header />
             {children}
-            <LoginButton />
+            {/* <LoginButton /> */}
           </ThemeProvider>
         </Providers>
       </body>
