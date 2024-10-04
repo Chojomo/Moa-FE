@@ -4,6 +4,7 @@ import Modal from 'react-modal'
 import { useEffect, useState, useRef } from 'react'
 import Button from '@/components/Button'
 import { Icon } from '@/components/Icon'
+import Image from 'next/image'
 
 type PublishModalProps = {
   isOpen: boolean
@@ -75,23 +76,41 @@ export default function PublishModal({
           </Button>
         </div>
       </div>
-      <div
-        className="w-full max-w-[300px] h-[200px] border-2 border-dashed border-gray-400 rounded-lg flex-center cursor-pointer"
-        onClick={handleInputClick}
-        style={{
-          backgroundImage: thumbnailPreview ? `url(${thumbnailPreview})` : 'none',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-        }}
-      ></div>
-      <input
-        ref={thumbnailInputRef}
-        type="file"
-        accept="image/*"
-        onChange={handleThumbnailChange}
-        className="hidden"
-        aria-label="썸네일 이미지 파일 업로드"
-      />
+      <div>
+        <div
+          className="relative max-w-[300px] h-[200px] rounded-lg flex-center cursor-pointer flex flex-col bg-[#eaeaea89]"
+          onClick={handleInputClick}
+        >
+          <Icon name="Image" width={40} height={40} className="absolute" />
+          {thumbnailPreview && (
+            <Image
+              src={thumbnailPreview}
+              alt="썸네일 미리보기"
+              fill
+              className="rounded-lg object-cover"
+              sizes="300px"
+            />
+          )}
+        </div>
+        <div className="flex-center">
+          <Button
+            type="button"
+            ariaLabel="썸네일 이미지 추가 버튼"
+            className="p-3 font-semibold text-[13px] text-nonActive-text underline"
+            onClick={handleInputClick}
+          >
+            썸네일 추가하기
+          </Button>
+        </div>
+        <input
+          ref={thumbnailInputRef}
+          type="file"
+          accept="image/*"
+          onChange={handleThumbnailChange}
+          className="hidden"
+          aria-label="썸네일 이미지 파일 업로드"
+        />
+      </div>
       <div className="flex-center gap-5">
         <Button
           type="button"
