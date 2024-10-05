@@ -27,19 +27,16 @@ export default function PublishModal({
     Modal.setAppElement('#__next')
   }, [])
 
-  // 인풋 필드를 클릭했을 때 파일 선택 창 열기
   const handleInputClick = () => {
     if (thumbnailInputRef.current) {
       thumbnailInputRef.current?.click()
     }
   }
 
-  // 썸네일 파일 변경 핸들러
   const handleThumbnailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0]
     if (file) {
       setThumbnail(file)
-      // 이미지 미리보기 URL 생성
       const fileURL = URL.createObjectURL(file)
       setThumbnailPreview(fileURL)
     }
@@ -103,8 +100,18 @@ export default function PublishModal({
             className="p-3 font-semibold text-[13px] text-nonActive-text underline"
             onClick={handleInputClick}
           >
-            썸네일 추가하기
+            {thumbnailPreview ? '재업로드' : '썸네일 추가하기'}
           </Button>
+          {thumbnailPreview && (
+            <Button
+              type="button"
+              ariaLabel="썸네일 이미지 추가 버튼"
+              className="p-3 font-semibold text-[13px] text-nonActive-text underline"
+              onClick={() => setThumbnailPreview(null)}
+            >
+              제거
+            </Button>
+          )}
         </div>
         <input
           ref={thumbnailInputRef}
@@ -125,9 +132,10 @@ export default function PublishModal({
           취소
         </Button>
         <Button
-          type="button"
+          type="submit"
           ariaLabel="게시하기 버튼"
           className="bg-main-blue px-4 py-2 rounded-full text-[#fff] font-semibold tracking-wider min-w-[95px]"
+          //! 함수 연결 필요
         >
           게시하기
         </Button>
