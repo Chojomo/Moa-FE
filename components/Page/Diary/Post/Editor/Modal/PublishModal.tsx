@@ -5,6 +5,7 @@ import { useEffect, useState, useRef } from 'react'
 import Button from '@/components/Button'
 import { Icon } from '@/components/Icon'
 import Image from 'next/image'
+import { usePostThumbnail } from '@/hooks/thumbnail'
 
 type PublishModalProps = {
   isOpen: boolean
@@ -23,6 +24,8 @@ export default function PublishModal({
   const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null)
   const thumbnailInputRef = useRef<HTMLInputElement | null>(null)
 
+  const { mutate: postThumbnail } = usePostThumbnail()
+
   useEffect(() => {
     Modal.setAppElement('#__next')
   }, [])
@@ -36,9 +39,10 @@ export default function PublishModal({
   const handleThumbnailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0]
     if (file) {
-      setThumbnail(file)
-      const fileURL = URL.createObjectURL(file)
-      setThumbnailPreview(fileURL)
+      const url = postThumbnail(file)
+      console.log(url)
+      // const fileURL = URL.createObjectURL(file)
+      // setThumbnailPreview(fileURL)
     }
   }
 
