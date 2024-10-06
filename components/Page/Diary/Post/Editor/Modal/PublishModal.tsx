@@ -5,7 +5,8 @@ import { useEffect, useState, useRef } from 'react'
 import Button from '@/components/Button'
 import { Icon } from '@/components/Icon'
 import Image from 'next/image'
-import { usePostThumbnail } from '@/hooks/thumbnail'
+import { useMutation } from '@tanstack/react-query'
+import { postThumbnail } from '@/lib/api/diary'
 
 type PublishModalProps = {
   isOpen: boolean
@@ -24,11 +25,25 @@ export default function PublishModal({
   const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null)
   const thumbnailInputRef = useRef<HTMLInputElement | null>(null)
 
-  const { mutate: postThumbnail } = usePostThumbnail()
-
   useEffect(() => {
     Modal.setAppElement('#__next')
   }, [])
+
+  const { mutate } = useMutation({
+    mutationFn: postThumbnail,
+    onSuccess: (data) => {
+      const { thumbnailUrl } = data
+      setThumbnail(thumbnailUrl)
+      setThumbnailPreview(thumbnailUrl)
+    },
+    onError: (error: unknown) => {
+      if (error instanceof Error) {
+        console.error('이미지 업로드 실패:', error.message)
+      } else {
+        console.error('이미지 업로드 실패:', error)
+      }
+    },
+  })
 
   const handleInputClick = () => {
     if (thumbnailInputRef.current) {
@@ -39,8 +54,8 @@ export default function PublishModal({
   const handleThumbnailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0]
     if (file) {
-      const url = postThumbnail(file)
-      console.log(url)
+      mutate(file)
+      // setThumbnailPreview(url)
       // const fileURL = URL.createObjectURL(file)
       // setThumbnailPreview(fileURL)
     }
