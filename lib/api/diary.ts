@@ -149,7 +149,7 @@ export const postThumbnail = async (image: File) => {
       throw new Error(data.error || '다이어리 썸네일 업로드 실패')
     }
 
-    return data
+    return data.data
   } catch (error) {
     throw new Error('next 서버 요청 중 에러 발생')
   }
