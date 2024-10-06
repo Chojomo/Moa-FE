@@ -74,13 +74,13 @@ export const uploadImage = async (image: File) => {
 
 type AutoSave = {
   diaryTitle: string
-  diaryContentse: string
+  diaryContents: string
   isDiaryPublic: boolean
 }
 
 export const putAutoSave = async ({
   diaryTitle = '',
-  diaryContentse = '',
+  diaryContents = '',
   isDiaryPublic = false,
 }: AutoSave) => {
   try {
@@ -101,7 +101,7 @@ export const putAutoSave = async ({
       body: JSON.stringify({
         diaryId,
         diaryTitle,
-        diaryContentse,
+        diaryContents,
         isDiaryPublic,
       }),
     })
@@ -150,6 +150,56 @@ export const postThumbnail = async (image: File) => {
     }
 
     return data.data
+  } catch (error) {
+    throw new Error('next 서버 요청 중 에러 발생')
+  }
+}
+
+type Diary = {
+  diaryThumbnail: string | null
+} & AutoSave
+
+export const postDiary = async ({
+  diaryTitle = '',
+  diaryContents = '',
+  diaryThumbnail = '',
+  isDiaryPublic = false,
+}: Diary) => {
+  const apiUrl = '/api/diary'
+  const token = localStorage.getItem('authToken')
+  const diaryId = localStorage.getItem('diaryId')
+
+  if (!token) {
+    throw new Error('로그인 상태를 확인하세요.')
+  }
+
+  if (!diaryId) {
+    throw new Error('다이어리 초기화가 되지 않았습니다.')
+  }
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token,
+      },
+      body: JSON.stringify({
+        diaryId,
+        diaryTitle,
+        diaryContents,
+        diaryThumbnail,
+        isDiaryPublic,
+      }),
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      throw new Error(data.error || '다이어리 게시 실패')
+    }
+
+    return data
   } catch (error) {
     throw new Error('next 서버 요청 중 에러 발생')
   }
