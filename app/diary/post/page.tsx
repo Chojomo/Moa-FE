@@ -20,6 +20,7 @@ export default function Post() {
   const isInitialized = useRef<boolean>(false)
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [thumbnail, setThumbnail] = useState<string | null>(null)
   const [isPublic, setIsPublic] = useState<boolean>(true)
 
   const { mutate: initDiary } = useInitDiary()
@@ -80,6 +81,8 @@ export default function Post() {
           handleClose={() => setIsModalOpen(false)}
           isPublic={isPublic}
           setIsPublic={setIsPublic}
+          thumbnail={thumbnail}
+          setThumbnail={setThumbnail}
         />
       </form>
     </div>

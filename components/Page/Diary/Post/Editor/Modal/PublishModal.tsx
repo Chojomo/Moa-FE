@@ -13,6 +13,8 @@ type PublishModalProps = {
   handleClose: () => void
   isPublic: boolean
   setIsPublic: (value: boolean) => void
+  thumbnail: string | null
+  setThumbnail: (url: string | null) => void
 }
 
 export default function PublishModal({
@@ -20,9 +22,9 @@ export default function PublishModal({
   handleClose,
   isPublic,
   setIsPublic,
+  thumbnail,
+  setThumbnail,
 }: PublishModalProps) {
-  const [thumbnail, setThumbnail] = useState<File | null>(null)
-  const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null)
   const thumbnailInputRef = useRef<HTMLInputElement | null>(null)
 
   useEffect(() => {
@@ -34,13 +36,12 @@ export default function PublishModal({
     onSuccess: (data) => {
       const { thumbnailUrl } = data
       setThumbnail(thumbnailUrl)
-      setThumbnailPreview(thumbnailUrl)
     },
     onError: (error: unknown) => {
       if (error instanceof Error) {
-        console.error('이미지 업로드 실패:', error.message)
+        console.error('썸네일 업로드 실패:', error.message)
       } else {
-        console.error('이미지 업로드 실패:', error)
+        console.error('썸네일 업로드 실패:', error)
       }
     },
   })
@@ -53,11 +54,9 @@ export default function PublishModal({
 
   const handleThumbnailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files && event.target.files[0]
+
     if (file) {
       mutate(file)
-      // setThumbnailPreview(url)
-      // const fileURL = URL.createObjectURL(file)
-      // setThumbnailPreview(fileURL)
     }
   }
 
@@ -102,9 +101,9 @@ export default function PublishModal({
           >
             <Icon name="Image" width={40} height={40} />
           </Button>
-          {thumbnailPreview && (
+          {thumbnail && (
             <Image
-              src={thumbnailPreview}
+              src={thumbnail}
               alt="썸네일 미리보기"
               fill
               className="rounded-lg object-cover"
@@ -119,14 +118,14 @@ export default function PublishModal({
             className="p-3 font-semibold text-[13px] text-nonActive-text underline"
             onClick={handleInputClick}
           >
-            {thumbnailPreview ? '재업로드' : '썸네일 추가하기'}
+            {thumbnail ? '재업로드' : '썸네일 추가하기'}
           </Button>
-          {thumbnailPreview && (
+          {thumbnail && (
             <Button
               type="button"
               ariaLabel="썸네일 이미지 추가 버튼"
               className="p-3 font-semibold text-[13px] text-nonActive-text underline"
-              onClick={() => setThumbnailPreview(null)}
+              onClick={() => setThumbnail(null)}
             >
               제거
             </Button>
