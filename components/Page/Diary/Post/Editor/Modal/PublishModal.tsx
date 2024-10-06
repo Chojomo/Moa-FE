@@ -1,16 +1,21 @@
 'use client'
 
 import Modal from 'react-modal'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import Button from '@/components/Button'
 import { Icon } from '@/components/Icon'
 import Image from 'next/image'
+import { useMutation } from '@tanstack/react-query'
+import { postThumbnail } from '@/lib/api/diary'
 
 type PublishModalProps = {
   isOpen: boolean
   handleClose: () => void
   isPublic: boolean
   setIsPublic: (value: boolean) => void
+  thumbnail: string | null
+  setThumbnail: (url: string | null) => void
+  handleSubmit: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
 export default function PublishModal({
@@ -18,14 +23,30 @@ export default function PublishModal({
   handleClose,
   isPublic,
   setIsPublic,
+  thumbnail,
+  setThumbnail,
+  handleSubmit,
 }: PublishModalProps) {
-  const [thumbnail, setThumbnail] = useState<File | null>(null)
-  const [thumbnailPreview, setThumbnailPreview] = useState<string | null>(null)
   const thumbnailInputRef = useRef<HTMLInputElement | null>(null)
 
   useEffect(() => {
     Modal.setAppElement('#__next')
   }, [])
+
+  const { mutate } = useMutation({
+    mutationFn: postThumbnail,
+    onSuccess: (data) => {
+      const { thumbnailUrl } = data
+      setThumbnail(thumbnailUrl)
+    },
+    onError: (error: unknown) => {
+      if (error instanceof Error) {
+        console.error('썸네일 업로드 실패:', error.message)
+      } else {
+        console.error('썸네일 업로드 실패:', error)
+      }
+    },
+  })
 
   const handleInputClick = () => {
     if (thumbnailInputRef.current) {
@@ -33,12 +54,11 @@ export default function PublishModal({
     }
   }
 
-  const handleThumbnailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files && event.target.files[0]
+  const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0]
+
     if (file) {
-      setThumbnail(file)
-      const fileURL = URL.createObjectURL(file)
-      setThumbnailPreview(fileURL)
+      mutate(file)
     }
   }
 
@@ -83,9 +103,9 @@ export default function PublishModal({
           >
             <Icon name="Image" width={40} height={40} />
           </Button>
-          {thumbnailPreview && (
+          {thumbnail && (
             <Image
-              src={thumbnailPreview}
+              src={thumbnail}
               alt="썸네일 미리보기"
               fill
               className="rounded-lg object-cover"
@@ -100,14 +120,14 @@ export default function PublishModal({
             className="p-3 font-semibold text-[13px] text-nonActive-text underline"
             onClick={handleInputClick}
           >
-            {thumbnailPreview ? '재업로드' : '썸네일 추가하기'}
+            {thumbnail ? '재업로드' : '썸네일 추가하기'}
           </Button>
-          {thumbnailPreview && (
+          {thumbnail && (
             <Button
               type="button"
               ariaLabel="썸네일 이미지 추가 버튼"
               className="p-3 font-semibold text-[13px] text-nonActive-text underline"
-              onClick={() => setThumbnailPreview(null)}
+              onClick={() => setThumbnail(null)}
             >
               제거
             </Button>
@@ -135,7 +155,7 @@ export default function PublishModal({
           type="submit"
           ariaLabel="게시하기 버튼"
           className="bg-main-blue px-4 py-2 rounded-full text-[#fff] font-semibold tracking-wider min-w-[95px]"
-          //! 함수 연결 필요
+          onClick={handleSubmit}
         >
           게시하기
         </Button>
