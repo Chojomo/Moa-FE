@@ -75,14 +75,12 @@ export const uploadImage = async (image: File) => {
 type AutoSave = {
   diaryTitle: string
   diaryContentse: string
-  thumbnail: string
   isDiaryPublic: boolean
 }
 
 export const putAutoSave = async ({
   diaryTitle = '',
   diaryContentse = '',
-  thumbnail = '',
   isDiaryPublic = false,
 }: AutoSave) => {
   try {
@@ -104,7 +102,6 @@ export const putAutoSave = async ({
         diaryId,
         diaryTitle,
         diaryContentse,
-        thumbnail,
         isDiaryPublic,
       }),
     })

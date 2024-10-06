@@ -3,7 +3,7 @@ import { NextRequest } from 'next/server'
 export async function PUT(req: NextRequest) {
   const apiUrl = `${process.env.API_URL}/api/v1/diaries`
   const token = req.headers.get('authorization')
-  const { diaryId, diaryTitle, diaryContentse, thumbnail, isDiaryPublic } = await req.json()
+  const { diaryId, diaryTitle, diaryContentse, isDiaryPublic } = await req.json()
 
   if (!token) {
     throw new Error('인증 헤더가 없습니다.')
@@ -24,7 +24,6 @@ export async function PUT(req: NextRequest) {
         diaryId,
         diaryTitle,
         diaryContentse,
-        thumbnail,
         isDiaryPublic,
       }),
     })

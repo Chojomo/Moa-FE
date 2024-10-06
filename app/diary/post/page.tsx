@@ -51,7 +51,6 @@ export default function Post() {
     autoSaveDiary({
       diaryTitle: title,
       diaryContentse: content,
-      thumbnail: '',
       isDiaryPublic: false,
     })
   }
