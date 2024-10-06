@@ -1,7 +1,7 @@
 'use client'
 
 import Modal from 'react-modal'
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import Button from '@/components/Button'
 import { Icon } from '@/components/Icon'
 import Image from 'next/image'
@@ -15,6 +15,7 @@ type PublishModalProps = {
   setIsPublic: (value: boolean) => void
   thumbnail: string | null
   setThumbnail: (url: string | null) => void
+  handleSubmit: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
 export default function PublishModal({
@@ -24,6 +25,7 @@ export default function PublishModal({
   setIsPublic,
   thumbnail,
   setThumbnail,
+  handleSubmit,
 }: PublishModalProps) {
   const thumbnailInputRef = useRef<HTMLInputElement | null>(null)
 
@@ -52,8 +54,8 @@ export default function PublishModal({
     }
   }
 
-  const handleThumbnailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files && event.target.files[0]
+  const handleThumbnailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0]
 
     if (file) {
       mutate(file)
@@ -153,7 +155,7 @@ export default function PublishModal({
           type="submit"
           ariaLabel="게시하기 버튼"
           className="bg-main-blue px-4 py-2 rounded-full text-[#fff] font-semibold tracking-wider min-w-[95px]"
-          //! 함수 연결 필요
+          onClick={handleSubmit}
         >
           게시하기
         </Button>
