@@ -1,9 +1,11 @@
 'use client'
 
 import { posts } from '@/helper/constants/posts'
+import { useQuery } from '@tanstack/react-query'
 import { useEffect, useState, Dispatch, SetStateAction } from 'react'
 import Button from '@/components/Button'
 import { Icon } from '@/components/Icon'
+import { getDiarys } from '@/lib/api/diary'
 import PostIcon from '../PostIcon'
 import Post from './Post'
 
@@ -16,6 +18,11 @@ export default function Detail({ setCurrentPage }: DetailProps) {
   const [sortIsOpen, setSortIsOpen] = useState<boolean>(false)
   const [isTop, setIsTop] = useState<boolean>(false)
   const COOLDOWN = 800
+
+  const { data, error, isLoading, isError } = useQuery({
+    queryKey: ['diaries'],
+    queryFn: getDiarys,
+  })
 
   useEffect(() => {
     const container = document.querySelector('#detail')

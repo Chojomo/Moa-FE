@@ -204,3 +204,26 @@ export const postDiary = async ({
     throw new Error('next 서버 요청 중 에러 발생')
   }
 }
+
+export const getDiarys = async () => {
+  const apiUrl = '/api/diary'
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      throw new Error(data.error || '다이어리 게시물 가져오기 실패')
+    }
+
+    return data
+  } catch (error) {
+    throw new Error('next 서버 요청 중 에러 발생')
+  }
+}

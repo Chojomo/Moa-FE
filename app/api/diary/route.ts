@@ -1,5 +1,32 @@
 import { NextRequest } from 'next/server'
 
+export async function GET() {
+  const apiUrl = `${process.env.API_URL}/api/v1/diaries/list`
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    const data = await response.json()
+
+    console.log(response)
+
+    if (!response.ok) {
+      throw new Error(data.error || '다이어리 게시물 가져오기 실패')
+    }
+
+    return new Response(JSON.stringify(data), {
+      status: 200,
+    })
+  } catch (error) {
+    console.error('다이어리 가져오기 에러:', error)
+    return new Response(JSON.stringify({ error: '서버 에러 발생' }), { status: 500 })
+  }
+}
+
 export async function POST(req: NextRequest) {
   const apiUrl = `${process.env.API_URL}/api/v1/diaries/publish`
   const token = req.headers.get('authorization')
@@ -12,6 +39,7 @@ export async function POST(req: NextRequest) {
   if (!diaryId) {
     throw new Error('다이어리 초기화가 되지 않았습니다.')
   }
+
   try {
     const response = await fetch(apiUrl, {
       method: 'POST',
