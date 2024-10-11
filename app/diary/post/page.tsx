@@ -78,11 +78,13 @@ export default function Post() {
     e.preventDefault()
 
     if (!title.trim()) {
-      return toast.error('제목을 입력하세요!')
+      toast.error('제목을 입력하세요!')
+      return
     }
 
     if (!content.trim()) {
-      return toast.error('내용을 입력하세요!')
+      toast.error('내용을 입력하세요!')
+      return
     }
 
     postDiary({

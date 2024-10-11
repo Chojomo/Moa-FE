@@ -4,6 +4,8 @@ import { useState, useCallback, FormEvent } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { survey } from '@/lib/api/survey'
 import Button from '@/components/Button'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function Survey() {
   const [name, setName] = useState<string>('')
@@ -36,12 +38,12 @@ export default function Survey() {
     e.preventDefault()
 
     if (!name.trim()) {
-      alert('이름을 입력해 주세요.')
+      toast.error('이름을 입력해 주세요.')
       return
     }
 
     if (!message.trim()) {
-      alert('메시지를 입력해 주세요.')
+      toast.error('메시지를 입력해 주세요.')
       return
     }
 
@@ -86,6 +88,7 @@ export default function Survey() {
           onChange={handleChange(setMessage)}
         />
       </div>
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
     </form>
   )
 }

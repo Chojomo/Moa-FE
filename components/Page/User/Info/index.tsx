@@ -8,7 +8,7 @@ export default function UserInfo() {
     followers: 2,
   }
   return (
-    <div className="w-[70%]">
+    <div className="w-full">
       <Profile user={ghost} />
     </div>
   )
