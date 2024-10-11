@@ -1,8 +1,9 @@
 'use client'
 
 import { posts } from '@/helper/constants/posts'
-import { useQuery } from '@tanstack/react-query'
-import { useEffect, useState, Dispatch, SetStateAction } from 'react'
+import { useInView } from 'react-intersection-observer'
+import { useInfiniteQuery } from '@tanstack/react-query'
+import { useEffect, useState, Dispatch, SetStateAction, useCallback } from 'react'
 import Button from '@/components/Button'
 import { Icon } from '@/components/Icon'
 import { getDiarys } from '@/lib/api/diary'
@@ -19,10 +20,34 @@ export default function Detail({ setCurrentPage }: DetailProps) {
   const [isTop, setIsTop] = useState<boolean>(false)
   const COOLDOWN = 800
 
-  const { data, error, isLoading, isError } = useQuery({
+  const { ref, inView } = useInView({
+    rootMargin: '100px',
+    threshold: 0.1,
+  })
+
+  const { data, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
     queryKey: ['diaries'],
     queryFn: getDiarys,
+    getNextPageParam: (lastPage, pages) => {
+      const nextPage = pages.length + 1
+      return lastPage.pageInfo && !lastPage.pageInfo.isLast ? nextPage : undefined
+    },
+    initialPageParam: 1,
   })
+
+  console.log(data)
+
+  const handleFetchNextPage = useCallback(() => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage()
+    }
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage])
+
+  useEffect(() => {
+    if (inView) {
+      handleFetchNextPage()
+    }
+  }, [inView, handleFetchNextPage])
 
   useEffect(() => {
     const container = document.querySelector('#detail')
@@ -57,10 +82,10 @@ export default function Detail({ setCurrentPage }: DetailProps) {
     }
   }, [isTop, setCurrentPage])
 
-  const handleClick = (sortKey: string) => {
+  const handleClick = useCallback((sortKey: string) => {
     setSort(sortKey)
     setSortIsOpen(false)
-  }
+  }, [])
 
   const buttons = [
     { sort: 'latest', label: 'sort-latest', innerText: '최신순' },
@@ -108,6 +133,17 @@ export default function Detail({ setCurrentPage }: DetailProps) {
       {posts.map((post) => (
         <Post key={post.index} post={post} />
       ))}
+      {/* 
+      {data?.pages.map((page, pageIndex) => (
+        <div key={pageIndex}>
+          {page.data.diaryPreviewList.map((diary) => (
+            <Post key={diary.diaryId} post={diary} />
+          ))}
+        </div>
+      ))} */}
+      <div ref={ref} className="flex justify-center items-center p-4">
+        {isFetchingNextPage && <p>Loading more data...</p>}
+      </div>
     </div>
   )
 }
