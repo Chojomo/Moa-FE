@@ -69,29 +69,27 @@ export default function Nav({ isActive, setIsActive }: NavProps) {
       className="bg-nav-bg h-full px-[10px] rounded-[28px] md:rounded-full md:flex-center text-[#A6A6A6]"
     >
       <ul className="flex-center gap-[10px] flex-col md:flex-row mt-[8px] md:mt-0 mb-[8px] md:mb-0">
-        <li>
-          <Link
-            href="/"
-            className={`nav-li gap-[28px] ${getClassNames('border', '/')}`}
-            onClick={handleClick}
-          >
-            <Icon name="Logo" width={35} height={35} className="mb-[10px]" />
-            <p className="text-[18px] font-bold">Moa</p>
-            <Icon
-              name="Home"
-              width={20}
-              height={20}
-              className="flex-center hidden md:block"
-              fill={getClassNames('icon', '/')}
-            />
-            <Icon
-              className="mt-[6px] block md:hidden"
-              name={isActive ? 'NavArrowTop' : 'NavArrowBottom'}
-              width={20}
-              height={13}
-            />
-          </Link>
-        </li>
+        <NavLink
+          href="/"
+          className={`gap-[28px] ${getClassNames('border', '/')}`}
+          onClick={handleClick}
+        >
+          <Icon name="Logo" width={35} height={35} className="mb-[10px]" />
+          <p className="text-[18px] font-bold">Moa</p>
+          <Icon
+            name="Home"
+            width={20}
+            height={20}
+            className="flex-center hidden md:block"
+            fill={getClassNames('icon', '/')}
+          />
+          <Icon
+            className="mt-[6px] block md:hidden"
+            name={isActive ? 'NavArrowTop' : 'NavArrowBottom'}
+            width={20}
+            height={13}
+          />
+        </NavLink>
         <NavLink href="/" liClassName="block md:hidden" className={getClassNames('border', '/')}>
           <p>Home</p>
         </NavLink>

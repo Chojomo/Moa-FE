@@ -5,7 +5,7 @@ type NavButtonProps = {
   href: string
   liClassName?: string
   className?: string
-  onClick?: () => void
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void
   children: ReactNode
 }
 
