@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { Icon } from '@/components/Icon'
 import Button from '@/components/Button'
+import Link from 'next/link'
 
 type User = {
   profile: string
@@ -16,8 +17,8 @@ type ProfileProps = {
 export default function Profile({ user }: ProfileProps) {
   const { profile: src, nickName: name, follows, followers } = user
   return (
-    <div className="w-full flex-center gap-[5%] mt-[130px] mb-[10%]">
-      <div className="relative w-[90px] h-[90px] rounded-full border border-border overflow-hidden">
+    <div className="w-full h-full flex-center gap-[5%]">
+      <div className="relative w-[90px] h-full rounded-full border border-border overflow-hidden">
         <Image
           src={src}
           alt="유저 프로필 사진"
@@ -40,9 +41,14 @@ export default function Profile({ user }: ProfileProps) {
         </div>
       </div>
       {/* 팔로우 돼 있으면 Unfollow로 연결 */}
-      <Button type="button" ariaLabel="팔로우 추가 버튼" className="">
-        <Icon name="Follow" width={30} height={30} />
-      </Button>
+      <div className="flex-center gap-3">
+        {/* <Button type="button" ariaLabel="팔로우 추가 버튼" className="">
+          <Icon name="Follow" width={30} height={30} />
+        </Button> */}
+        <Link href="/user/setting" className="p-3">
+          <Icon name="Setting" width={30} height={30} />
+        </Link>
+      </div>
     </div>
   )
 }
