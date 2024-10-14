@@ -191,6 +191,10 @@
     @apply h-[39px] rounded-full flex-center border px-[12px] py-[10px];
   }
 
+  .nav-li {
+    @apply min-w-[188px] md:min-w-[55px] h-[39px] rounded-full flex-center border border-nav-border px-[12px] py-[10px];
+  }
+
   .modal-overlay {
     position: fixed;
     top: 0;

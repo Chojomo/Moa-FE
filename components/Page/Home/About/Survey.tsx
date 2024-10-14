@@ -81,7 +81,7 @@ export default function Survey() {
           id="message"
           name="message"
           rows={4}
-          className="w-full h-auto max-h-[150px] px-4 py-3 border-b-2 border-border rounded-md text-[14px] focus:outline-none"
+          className="w-full h-auto max-h-[150px] px-4 pt-3 border-b-2 border-border rounded-md text-[14px] focus:outline-none"
           placeholder="소중한 의견 ✉️"
           aria-label="소중한 의견 입력"
           value={message}
