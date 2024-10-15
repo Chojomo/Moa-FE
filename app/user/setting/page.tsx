@@ -74,32 +74,16 @@ export default function Setting() {
       alt: '회원 탈퇴',
       children: (
         <>
-          <textarea
-            id="about"
-            name="about"
-            rows={4}
-            className="w-full h-[200px] bg-container-bg p-5 rounded-md text-[14px] focus:outline-none resize-none"
-            placeholder="등록된 소개글이 없습니다."
-            aria-label="유저 소개글 입력 폼"
-            value={aboutText}
-            onChange={handleChange(setAboutText)}
-          />
-          <div className="w-full flex gap-4 justify-end mt-3">
-            <Button
-              type="button"
-              ariaLabel="유저 소개글 취소 버튼"
-              className="px-3 py-2 bg-btn-red text-white rounded-full text-[12px] font-semibold"
-            >
-              취소
-            </Button>
-            <Button
-              type="button"
-              ariaLabel="유저 소개글 등록 버튼"
-              className="px-3 py-2 bg-nav-bg text-white rounded-full text-[12px] font-semibold"
-            >
-              등록
-            </Button>
-          </div>
+          <Button
+            type="button"
+            ariaLabel="유저 소개글 취소 버튼"
+            className="max-w-[90px] px-5 py-2 bg-btn-red text-white rounded-full text-[12px] font-semibold mt-2 mb-4"
+          >
+            회원 탈퇴
+          </Button>
+          <p className="text-[12px] text-body-text mb-[50px]">
+            회원 탈퇴 시 작성하신 다이어리 포스트 및 댓글, 좋아요가 모두 삭제되며 복구되지 않습니다.
+          </p>
         </>
       ),
     },
