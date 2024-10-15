@@ -18,7 +18,7 @@ export default function Profile({ user }: ProfileProps) {
   const { profile: src, nickName: name, follows, followers } = user
   return (
     <div className="w-full h-full flex-center gap-[5%]">
-      <div className="relative w-[90px] h-[90px] rounded-full border border-border overflow-hidden">
+      <div className="relative w-[75px] h-[75px] md:w-[90px] md:h-[90px] rounded-full border border-border overflow-hidden">
         <Image
           src={src}
           alt="유저 프로필 사진"
@@ -30,7 +30,9 @@ export default function Profile({ user }: ProfileProps) {
         />
       </div>
       <div className="flex-grow flex flex-col gap-5">
-        <p className="font-semibold text-[20px] text-main-blue">{name}</p>
+        <Link href="/user/about" className="font-semibold text-[20px] text-main-blue">
+          {name}
+        </Link>
         <div className="flex gap-20">
           <p className="font-bold">
             팔로우 <span className="ml-3">{follows}</span>
@@ -45,7 +47,7 @@ export default function Profile({ user }: ProfileProps) {
         {/* <Button type="button" ariaLabel="팔로우 추가 버튼" className="">
           <Icon name="Follow" width={30} height={30} />
         </Button> */}
-        <Link href="/user/setting" className="p-3">
+        <Link href="/user/setting" className="p-3 relative bottom-8">
           <Icon name="Setting" width={30} height={30} />
         </Link>
       </div>

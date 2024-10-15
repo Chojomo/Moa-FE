@@ -9,7 +9,7 @@ type SectionProps = {
 
 export default function Section({ title, imageSrc, imageAlt, children }: SectionProps) {
   return (
-    <section className="w-full p-[5%] border-t border-border flex gap-10 mb-[30px]">
+    <section className="w-full p-[5%] border-t border-border flex gap-[50px] mb-[30px]">
       <div className="flex flex-col items-center gap-5">
         <Image
           src={imageSrc}
