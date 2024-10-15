@@ -18,7 +18,7 @@ export default function Profile({ user }: ProfileProps) {
   const { profile: src, nickName: name, follows, followers } = user
   return (
     <div className="w-full h-full flex-center gap-[5%]">
-      <div className="relative w-[90px] h-full rounded-full border border-border overflow-hidden">
+      <div className="relative w-[90px] h-[90px] rounded-full border border-border overflow-hidden">
         <Image
           src={src}
           alt="유저 프로필 사진"
