@@ -1,8 +1,9 @@
 'use client'
 
 import { useState, useCallback } from 'react'
-import Image from 'next/image'
 import Button from '@/components/Button'
+import Section from '@/components/Page/User/Setting/Section'
+import Toggle from '@/components/UI/Toggle'
 
 export default function Setting() {
   const [aboutText, setAboutText] = useState<string>('')
@@ -16,51 +17,101 @@ export default function Setting() {
     []
   )
 
-  return (
-    <div className="w-full border-t border-border p-[5%] flex-center flex-col">
-      <div className="w-full flex gap-5">
-        <div className="flex-center flex-col gap-2">
-          <Image
-            src="/images/pebble/red-pebble2.png"
-            alt="소개"
-            width={70}
-            height={70}
-            quality={75}
-            loading="lazy"
-            draggable="false"
-          />
-          <p className="font-bold">소개</p>
-        </div>
-        {/* <Button
-          type="button"
-          ariaLabel="유저 소개글 수정 버튼"
-          className="text-main-blue underline"
-        >
-          수정
-        </Button> */}
-        <div className="w-full">
+  const handleToggle = () => {
+    console.log('토글!')
+  }
+
+  const sections = [
+    {
+      title: '소개',
+      src: '/images/pebble/red-pebble2.png',
+      alt: '소개',
+      children: (
+        <>
           <textarea
             id="about"
             name="about"
             rows={4}
-            className="w-full max-h-[150px] bg-container-bg px-4 pt-3 border-b-2 border-border rounded-md text-[14px] focus:outline-none"
-            placeholder="나를 소개해 보세요."
+            className="w-full h-[200px] bg-container-bg p-5 rounded-md text-[14px] focus:outline-none resize-none"
+            placeholder="등록된 소개글이 없습니다."
             aria-label="유저 소개글 입력 폼"
             value={aboutText}
             onChange={handleChange(setAboutText)}
           />
-          <div>
-            <Button type="button" ariaLabel="유저 소개글 취소 버튼">
+          <div className="w-full flex gap-4 justify-end mt-3">
+            <Button
+              type="button"
+              ariaLabel="유저 소개글 취소 버튼"
+              className="px-3 py-2 bg-btn-red text-white rounded-full text-[12px] font-semibold"
+            >
               취소
             </Button>
-            <Button type="button" ariaLabel="유저 소개글 등록 버튼">
+            <Button
+              type="button"
+              ariaLabel="유저 소개글 등록 버튼"
+              className="px-3 py-2 bg-nav-bg text-white rounded-full text-[12px] font-semibold"
+            >
               등록
             </Button>
           </div>
+        </>
+      ),
+    },
+    {
+      title: '수신 설정',
+      src: '/images/pebble/blue-pebble2.png',
+      alt: '수신 설정',
+      children: (
+        <div className="flex items-center gap-4">
+          <span className="text-[14px] font-semibold">댓글 알림</span>
+          <Toggle initialState={false} callback={handleToggle} />
         </div>
-      </div>
-      <div>수신 설정</div>
-      <div>회원 탈퇴</div>
+      ),
+    },
+    {
+      title: '회원 탈퇴',
+      src: '/images/pebble/mint-pebble.png',
+      alt: '회원 탈퇴',
+      children: (
+        <>
+          <textarea
+            id="about"
+            name="about"
+            rows={4}
+            className="w-full h-[200px] bg-container-bg p-5 rounded-md text-[14px] focus:outline-none resize-none"
+            placeholder="등록된 소개글이 없습니다."
+            aria-label="유저 소개글 입력 폼"
+            value={aboutText}
+            onChange={handleChange(setAboutText)}
+          />
+          <div className="w-full flex gap-4 justify-end mt-3">
+            <Button
+              type="button"
+              ariaLabel="유저 소개글 취소 버튼"
+              className="px-3 py-2 bg-btn-red text-white rounded-full text-[12px] font-semibold"
+            >
+              취소
+            </Button>
+            <Button
+              type="button"
+              ariaLabel="유저 소개글 등록 버튼"
+              className="px-3 py-2 bg-nav-bg text-white rounded-full text-[12px] font-semibold"
+            >
+              등록
+            </Button>
+          </div>
+        </>
+      ),
+    },
+  ]
+
+  return (
+    <div className="w-full flex-center flex-col">
+      {sections.map(({ title, src, alt, children }) => (
+        <Section key={title} title={title} imageSrc={src} imageAlt={alt}>
+          {children}
+        </Section>
+      ))}
     </div>
   )
 }
