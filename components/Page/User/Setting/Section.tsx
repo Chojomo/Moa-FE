@@ -9,7 +9,7 @@ type SectionProps = {
 
 export default function Section({ title, imageSrc, imageAlt, children }: SectionProps) {
   return (
-    <section className="w-full p-[5%] border-t border-border flex gap-[50px] mb-[30px]">
+    <section className="w-full p-[5%] border-t border-border flex gap-[50px] mb-[30px] pt-10 animate-fadeIn">
       <div className="flex flex-col items-center gap-5">
         <Image
           src={imageSrc}
@@ -20,7 +20,7 @@ export default function Section({ title, imageSrc, imageAlt, children }: Section
           loading="lazy"
           draggable="false"
         />
-        <p className="font-bold text-heading-text text-[15px]">{title}</p>
+        <p className="font-bold text-heading-text text-[15px] ">{title}</p>
       </div>
       <div className="w-full">{children}</div>
     </section>

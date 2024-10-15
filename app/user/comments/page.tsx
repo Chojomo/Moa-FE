@@ -1,6 +1,6 @@
 export default function Comments() {
   return (
-    <div>
+    <div className="animate-fadeIn">
       <h2>Comments</h2>
     </div>
   )

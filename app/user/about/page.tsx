@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 export default function About() {
   return (
-    <div className="w-full flex-center flex-col flex-grow p-10 gap-3">
+    <div className="w-full flex-center flex-col flex-grow p-10 gap-3 animate-fadeIn">
       <Image
         src="/images/pebble/mint-pebble.png"
         alt="mint-pebble image"
