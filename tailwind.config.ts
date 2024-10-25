@@ -72,6 +72,9 @@ const config: Config = {
         nonActive: {
           text: 'var(--nonActive-text)',
         },
+        toggle: {
+          bg: 'var(--toggle-bg)',
+        },
       },
       keyframes: {
         shimmer: {

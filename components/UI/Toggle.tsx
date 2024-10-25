@@ -25,7 +25,7 @@ export default function Toggle({ initialState = false, callback }: ToggleProps) 
       onClick={handleToggle}
     >
       <div
-        className={`w-[25px] h-[25px] rounded-full bg-white transition-transform duration-300 ${
+        className={`w-[25px] h-[25px] rounded-full bg-white transition-transform duration-700 ${
           isToggled ? 'transform translate-x-[35px]' : ''
         }`}
       />
