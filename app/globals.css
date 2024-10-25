@@ -143,6 +143,7 @@
     --preview-blockquote: rgba(239, 239, 239, 0.339);
 
     --toggle-bg: rgb(205, 205, 205);
+    --banner-bg: rgb(0, 0, 0, 0.8);
   }
 
   .dark {
@@ -185,6 +186,7 @@
     --preview-blockquote: rgb(36, 36, 36);
 
     --toggle-bg: rgb(93, 93, 93);
+    --banner-bg: rgb(255, 255, 255, 0.1);
   }
 
   .flex-center {
