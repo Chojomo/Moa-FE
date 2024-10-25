@@ -7,6 +7,7 @@ export default function Banner() {
         <div>progress</div>
       </div>
       <div>diary post</div>
+      <div>arrow</div>
     </section>
   )
 }
