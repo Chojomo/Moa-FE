@@ -75,6 +75,9 @@ const config: Config = {
         toggle: {
           bg: 'var(--toggle-bg)',
         },
+        banner: {
+          bg: 'var(--banner-bg)',
+        },
       },
       keyframes: {
         shimmer: {
