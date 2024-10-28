@@ -1,4 +1,5 @@
 import Progress from './Progress'
+import PopularPost from '../Popular'
 
 export default function Banner() {
   return (
@@ -10,7 +11,7 @@ export default function Banner() {
         </div>
         <Progress />
       </div>
-      <div className="text-[#FFFFFFCC]">diary post</div>
+      <PopularPost />
       {/* <div>arrow</div> */}
     </section>
   )

@@ -1,25 +1,53 @@
+import { useState, useEffect } from 'react'
 import Button from '@/components/Button'
 import { Icon } from '@/components/Icon'
 
 export default function Progress() {
+  const [step, setStep] = useState(1)
+  const [progress, setProgress] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
+
+  useEffect(() => {
+    if (isPaused) return undefined
+
+    const handleProgress = () => {
+      if (progress >= 100) {
+        setProgress(100)
+
+        setTimeout(() => {
+          setStep((prevStep) => (prevStep >= 4 ? 1 : prevStep + 1))
+          setProgress(0)
+          setIsPaused(false)
+        }, 500)
+      } else {
+        setProgress((prev) => prev + 1)
+      }
+    }
+
+    const intervalId = setTimeout(handleProgress, 30)
+
+    return () => clearTimeout(intervalId)
+  }, [progress, isPaused])
+
+  const togglePause = () => setIsPaused((prev) => !prev)
+
   return (
-    <div className="w-full flex flex-col gap-[7px]">
+    <div className="w-full flex flex-col gap-2">
       <div className="w-full flex justify-between items-center">
-        <p className="text-[#FFFFFFCC] text-[10px]">
-          <span className="text-white">1</span> / 4
+        <p className="text-gray-200 text-xs">
+          <span className="text-white">{step}</span> / 4
         </p>
         <Button
           type="button"
-          ariaLabel="progress play button"
-          className="bg-[#FFFFFF33] rounded-full p-1"
+          ariaLabel="Toggle progress"
+          onClick={togglePause}
+          className="bg-gray-600 rounded-full p-1"
         >
-          <Icon name="Pause" width={10} height={10} />
+          <Icon name={isPaused ? 'Play' : 'Pause'} width={10} height={10} />
         </Button>
       </div>
-      <div className="w-full h-[2px]">
-        <div className="relative w-full h-full bg-[#B8B8B8]">
-          <div className="absolute top-0 left-0 w-1/2 h-full bg-white" />
-        </div>
+      <div className="w-full h-0.5 bg-gray-400 relative">
+        <div className="absolute top-0 left-0 h-full bg-white" style={{ width: `${progress}%` }} />
       </div>
     </div>
   )
