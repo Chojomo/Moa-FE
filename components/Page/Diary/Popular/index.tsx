@@ -14,7 +14,7 @@ export default function PopularPost() {
         draggable="false"
         objectFit="cover"
       />
-      <div className="absolute left-0 bottom-0 w-full h-[70%] bg-[#00000099] flex flex-col text-white pt-[13px] pb-[9px] px-[13px]">
+      <div className="absolute left-0 bottom-0 w-full h-[70%] hover:h-[100%] transition-height duration-500 ease-in-out bg-[#00000099] flex flex-col text-white pt-[13px] pb-[9px] px-[13px]">
         <div className="flex-grow flex flex-col">
           <p className="text-[14px] font-bold mb-[7px]">핫도그 언제 마지막으로...</p>
           <p className="text-[12px] text-[#FFFFFFB3] mb-[18px] flex-grow">
