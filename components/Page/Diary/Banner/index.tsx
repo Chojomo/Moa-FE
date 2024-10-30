@@ -1,8 +1,13 @@
+'use client'
+
+import { useState } from 'react'
 import Arrow from './Arrow'
 import Progress from './Progress'
 import PopularPost from '../Popular'
 
 export default function Banner() {
+  const [step, setStep] = useState(1)
+
   return (
     <section className="w-full h-[450px] md:h-[270px] flex-center flex-col-reverse md:flex-center md:flex-row gap-[10%] bg-banner-bg py-[20px] md:py-[40px]">
       <div className="md:max-w-[300px] md:h-full flex flex-col justify-between">
@@ -12,10 +17,10 @@ export default function Banner() {
             현재 최고 인기 있는 게시물을 살펴 보세요
           </p>
         </div>
-        <Progress />
+        <Progress step={step} setStep={setStep} />
       </div>
       <PopularPost />
-      <Arrow />
+      <Arrow setStep={setStep} />
     </section>
   )
 }

@@ -1,11 +1,19 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Dispatch, SetStateAction } from 'react'
 import Button from '@/components/Button'
 import { Icon } from '@/components/Icon'
 
-export default function Progress() {
-  const [step, setStep] = useState(1)
+type ProgressProps = {
+  step: number
+  setStep: Dispatch<SetStateAction<number>>
+}
+
+export default function Progress({ step, setStep }: ProgressProps) {
   const [progress, setProgress] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
+
+  useEffect(() => {
+    setProgress(0)
+  }, [step])
 
   useEffect(() => {
     if (isPaused) return undefined
