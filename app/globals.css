@@ -144,6 +144,7 @@
 
     --toggle-bg: rgb(205, 205, 205);
     --banner-bg: rgb(0, 0, 0, 0.8);
+    --sort-bg: rgb(69, 69, 69);
   }
 
   .dark {
@@ -187,6 +188,7 @@
 
     --toggle-bg: rgb(93, 93, 93);
     --banner-bg: rgb(255, 255, 255, 0.1);
+    --sort-bg: rgba(255, 255, 255, 0.1);
   }
 
   .flex-center {
