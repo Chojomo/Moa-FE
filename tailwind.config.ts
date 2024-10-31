@@ -78,6 +78,9 @@ const config: Config = {
         banner: {
           bg: 'var(--banner-bg)',
         },
+        sort: {
+          bg: 'var(--sort-bg)',
+        },
       },
       keyframes: {
         shimmer: {
