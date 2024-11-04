@@ -15,6 +15,12 @@ module.exports = {
         port: '9000',
         pathname: '/moa/diaries/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'image.ichubtou.com',
+        port: '',
+        pathname: '/moa/diaries/**',
+      },
     ],
   },
   webpack: (config, { isServer }) => {
