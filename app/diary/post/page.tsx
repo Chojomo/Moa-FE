@@ -1,6 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
 import { useInitDiary, useAutoSaveDiary, usePostDiary } from '@/hooks/editor'
 
@@ -29,6 +30,8 @@ export default function Post() {
   const { mutate: initDiary } = useInitDiary()
   const { mutate: postDiary } = usePostDiary()
   const { mutate: autoSaveDiary } = useAutoSaveDiary()
+
+  const router = useRouter()
 
   const handleResize = () => {
     setPriview(window.innerWidth > 1000 ? 'live' : 'edit')
@@ -93,6 +96,8 @@ export default function Post() {
       diaryThumbnail: thumbnail,
       isDiaryPublic: isPublic,
     })
+
+    router.back()
   }
 
   return (
