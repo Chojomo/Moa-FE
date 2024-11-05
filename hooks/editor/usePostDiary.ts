@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 import { postDiary } from '@/lib/api/diary'
 
 export default function usePostDiary() {
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn: postDiary,
     onSuccess: (data) => {
       console.log('게시 성공:', data)
@@ -16,5 +16,5 @@ export default function usePostDiary() {
     },
   })
 
-  return { mutate }
+  return { mutateAsync }
 }
