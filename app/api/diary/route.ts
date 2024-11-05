@@ -3,7 +3,7 @@ import { NextRequest } from 'next/server'
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const page = searchParams.get('pageNumber') || '1'
-  const pageSize = searchParams.get('pageSize') || '5'
+  const pageSize = searchParams.get('pageSize') || '4'
 
   const apiUrl = `${process.env.API_URL}/api/v1/diaries/list?pageNumber=${page}&pageSize=${pageSize}`
 
@@ -15,8 +15,6 @@ export async function GET(request: NextRequest) {
       },
     })
     const data = await response.json()
-
-    console.log(response)
 
     if (!response.ok) {
       throw new Error(data.error || '다이어리 게시물 가져오기 실패')
