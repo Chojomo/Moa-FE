@@ -1,21 +1,15 @@
+import { Icon } from '@/components/Icon'
+import { Diary } from '@/types/diary'
 import Image from 'next/image'
 import Entry from '@/components/Entry'
-import { Icon } from '@/components/Icon'
-
-type PostItem = {
-  index: number
-  src: string
-  writer: string
-  title: string
-  description: string
-}
 
 type PostProps = {
-  post: PostItem
+  post: Diary
+  index: number
 }
 
-export default function Post({ post }: PostProps) {
-  const { index, src, writer, title, description } = post
+export default function Post({ index, post }: PostProps) {
+  const { diaryAuthorNickname, diaryThumbnail, diaryTitle, diaryContents } = post
 
   const addClass = () => {
     if (index % 2 === 0) {
@@ -34,7 +28,7 @@ export default function Post({ post }: PostProps) {
       <div className="relative flex-center group">
         <Entry size="small" />
         <Image
-          src={src}
+          src={diaryThumbnail || '/images/dfsfs.jpeg'}
           alt="post image"
           width={120}
           height={120}
@@ -45,9 +39,9 @@ export default function Post({ post }: PostProps) {
         />
       </div>
       <div className={`flex flex-col flex-1 gap-[5px] ${index % 2 === 0 ? '' : 'sm:items-end'}`}>
-        <p className="text-[14px] text-main-blue">{writer}</p>
-        <p className="text-[16px] text-heading-text font-bold mb-[5px]">{title}</p>
-        <p className="flex-grow text-[12px] text-body-text mb-[15px]">{description}</p>
+        <p className="text-[14px] text-main-blue">{diaryAuthorNickname}</p>
+        <p className="text-[16px] text-heading-text font-bold mb-[5px]">{diaryTitle}</p>
+        <p className="flex-grow text-[12px] text-body-text mb-[15px]">{diaryContents}</p>
         <div className={`text-[10px] font-bold flex items-center gap-3`}>
           <div className="flex gap-2">
             <Icon name="Heart" width={15} height={15} />

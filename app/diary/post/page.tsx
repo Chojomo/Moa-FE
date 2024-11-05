@@ -1,6 +1,7 @@
 'use client'
 
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
 import { useInitDiary, useAutoSaveDiary, usePostDiary } from '@/hooks/editor'
 
@@ -27,8 +28,10 @@ export default function Post() {
   const [isPublic, setIsPublic] = useState<boolean>(true)
 
   const { mutate: initDiary } = useInitDiary()
-  const { mutate: postDiary } = usePostDiary()
+  const { mutateAsync: postDiary } = usePostDiary()
   const { mutate: autoSaveDiary } = useAutoSaveDiary()
+
+  const router = useRouter()
 
   const handleResize = () => {
     setPriview(window.innerWidth > 1000 ? 'live' : 'edit')
@@ -70,11 +73,11 @@ export default function Post() {
     //   saveDiary()
     // }, 100000)
     // return () => clearInterval(intervalId)
-    saveDiary()
+    // saveDiary()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
 
     if (!title.trim()) {
@@ -87,14 +90,22 @@ export default function Post() {
       return
     }
 
-    postDiary({
-      diaryTitle: title,
-      diaryContents: content,
-      diaryThumbnail: thumbnail,
-      isDiaryPublic: isPublic,
-    })
-  }
+    try {
+      await postDiary({
+        diaryTitle: title,
+        diaryContents: content,
+        diaryThumbnail: thumbnail,
+        isDiaryPublic: isPublic,
+      })
 
+      setTitle('')
+      setContent('')
+      router.push('/diary')
+    } catch (error) {
+      console.error('게시물 등록 중 오류:', error)
+      toast.error('게시물 등록 실패')
+    }
+  }
   return (
     <div className="w-[100vw] h-[100vh] overflow-hidden">
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />

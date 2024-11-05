@@ -206,7 +206,7 @@ export const postDiary = async ({
 }
 
 export const getDiarys = async ({ pageParam = 1 }) => {
-  const apiUrl = `/api/diary?pageNumber=${pageParam}&pageSize=5`
+  const apiUrl = `/api/diary?pageNumber=${pageParam}&pageSize=4`
 
   try {
     const response = await fetch(apiUrl, {
