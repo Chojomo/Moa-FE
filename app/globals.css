@@ -143,8 +143,9 @@
     --preview-blockquote: rgba(239, 239, 239, 0.339);
 
     --toggle-bg: rgb(205, 205, 205);
-    --banner-bg: rgb(0, 0, 0, 0.8);
+    --banner-bg: rgba(0, 0, 0, 0.8);
     --sort-bg: rgb(69, 69, 69);
+    --soft-bg: rgba(0, 0, 0, 0.75);
   }
 
   .dark {
@@ -168,10 +169,10 @@
     --modal-input: rgba(0, 0, 0, 0.265);
     --modal-button: rgba(224, 224, 224, 0);
 
-    --heading-text: rgb(255, 255, 255, 0.9);
+    --heading-text: rgba(255, 255, 255, 0.9);
     --heading-bg: rgba(255, 255, 255, 0.3);
     --body-text: rgba(255, 255, 255, 0.75);
-    --nonActive-text: rgb(255, 255, 255, 0.4);
+    --nonActive-text: rgba(255, 255, 255, 0.4);
 
     --accent: rgb(128, 176, 162);
     --accent-normal: rgb(67, 216, 170);
@@ -187,8 +188,9 @@
     --preview-blockquote: rgb(36, 36, 36);
 
     --toggle-bg: rgb(93, 93, 93);
-    --banner-bg: rgb(255, 255, 255, 0.1);
+    --banner-bg: rgba(255, 255, 255, 0.1);
     --sort-bg: rgba(255, 255, 255, 0.1);
+    --soft-bg: rgba(255, 255, 255, 0.2);
   }
 
   .flex-center {

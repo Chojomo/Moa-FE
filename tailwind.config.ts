@@ -81,6 +81,9 @@ const config: Config = {
         sort: {
           bg: 'var(--sort-bg)',
         },
+        soft: {
+          bg: 'var(--soft-bg)',
+        },
       },
       keyframes: {
         shimmer: {
