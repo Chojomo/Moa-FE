@@ -42,7 +42,7 @@ export default function Post({ index, post }: PostProps) {
         <p className="text-[14px] text-main-blue">{diaryAuthorNickname}</p>
         <p className="text-[16px] text-heading-text font-bold mb-[5px]">{diaryTitle}</p>
         <p className="flex-grow text-[12px] text-body-text mb-[15px]">{diaryContents}</p>
-        <div className={`text-[10px] font-bold flex items-center gap-3`}>
+        <div className="text-[10px] font-bold flex items-center gap-3">
           <div className="flex gap-2">
             <Icon name="Heart" width={15} height={15} />
             <span>3</span>
