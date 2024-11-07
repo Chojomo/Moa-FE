@@ -5,15 +5,15 @@ import { useRouter } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
 import { useInitDiary, useAutoSaveDiary, usePostDiary } from '@/hooks/editor'
 
-import TitleInput from '@/components/Page/Diary/Index/Post/TitleInput'
-import ActionBar from '@/components/Page/Diary/Index/Post/ActionBar'
+import TitleInput from '@/components/Page/Diary/Post/TitleInput'
+import ActionBar from '@/components/Page/Diary/Post/ActionBar'
 import { PreviwMode } from '@/types'
-import PublishModal from '@/components/Page/Diary/Index/Post/Editor/Modal/PublishModal'
+import PublishModal from '@/components/Page/Diary/Post/Editor/Modal/PublishModal'
 
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-const Editor = dynamic(() => import('../../../components/Page/Diary/Index/Post/Editor/index'), {
+const Editor = dynamic(() => import('../../../components/Page/Diary/Post/Editor/index'), {
   ssr: false,
 })
 
