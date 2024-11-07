@@ -1,6 +1,4 @@
-import Banner from '@/components/Page/Diary/Banner'
-import Posts from '@/components/Page/Diary/Posts'
-import PostButton from '@/components/Page/Diary/PostButton'
+import { Banner, Posts, PostButton } from '@/components/Page/Diary'
 
 export default function Diary() {
   return (
