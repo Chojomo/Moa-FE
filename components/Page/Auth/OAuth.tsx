@@ -1,38 +1,32 @@
-import Button from '@/components/Button'
+'use client'
+
 import { Icon } from '@/components/Icon'
-import { useMutation } from '@tanstack/react-query'
-import { oauth } from '@/lib/api/oauth'
+import Button from '@/components/Button'
 
 export default function OAuth() {
-  const { mutate } = useMutation({
-    mutationFn: (type: 'kakao' | 'naver' | 'google') => oauth(type),
-    onSuccess: (data) => {
-      console.log('OAuth 요청 성공:', data)
-    },
-    onError: (error) => {
-      console.error('OAuth 요청 실패:', error)
-    },
-  })
+  const types = [
+    { name: 'kakao', icon: 'Kakao' },
+    { name: 'naver', icon: 'Naver' },
+    { name: 'google', icon: 'Google' },
+  ]
 
-  const handleOAuthLogin = (type: 'kakao' | 'naver' | 'google') => {
-    mutate(type)
+  const handleClick = (name: string) => {
+    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/oauth2/authorization/${name}`
   }
 
   return (
     <div className="flex-center gap-[50px] mt-[10px]">
-      <Button type="button" ariaLabel="kakao auth button" onClick={() => handleOAuthLogin('kakao')}>
-        <Icon name="Kakao" width={60} height={60} />
-      </Button>
-      <Button type="button" ariaLabel="naver auth button" onClick={() => handleOAuthLogin('naver')}>
-        <Icon name="Naver" width={60} height={60} />
-      </Button>
-      <Button
-        type="button"
-        ariaLabel="google auth button"
-        onClick={() => handleOAuthLogin('google')}
-      >
-        <Icon name="Google" width={60} height={60} />
-      </Button>
+      {types.map(({ name, icon }) => (
+        <Button
+          key={name}
+          type="button"
+          ariaLabel={`${name} 로그인 버튼`}
+          className={name === 'google' ? 'border border-border rounded-full' : ''}
+          onClick={() => handleClick(name)}
+        >
+          <Icon name={icon} width={60} height={60} />
+        </Button>
+      ))}
     </div>
   )
 }
