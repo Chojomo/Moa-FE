@@ -205,7 +205,7 @@ export const postDiary = async ({
   }
 }
 
-export const getDiarys = async ({ pageParam = 1, sortType = 'viewCounts' }) => {
+export const getDiarys = async ({ pageParam = 0, sortType = 'viewCounts' }) => {
   const apiUrl = `/api/diary?pageNumber=${pageParam}&pageSize=4&sortType=${sortType}`
 
   try {

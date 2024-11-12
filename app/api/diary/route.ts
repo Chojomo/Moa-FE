@@ -2,12 +2,11 @@ import { NextRequest } from 'next/server'
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
-  const page = searchParams.get('pageNumber') || '1'
+  const page = searchParams.get('pageNumber') || '0'
   const pageSize = searchParams.get('pageSize') || '4'
-  // const sortType = searchParams.get('pageSize') || 'viewCounts'
+  const sortType = searchParams.get('sortType') || 'viewCounts'
 
-  // const apiUrl = `${process.env.API_URL}/api/v1/diaries/list?pageNumber=${page}&pageSize=${pageSize}&sortType=${sortType}`
-  const apiUrl = `${process.env.API_URL}/api/v1/diaries/list?pageNumber=${page}&pageSize=${pageSize}`
+  const apiUrl = `${process.env.API_URL}/api/v1/diaries/list?pageNumber=${page}&pageSize=${pageSize}&sortType=${sortType}`
 
   try {
     const response = await fetch(apiUrl, {
