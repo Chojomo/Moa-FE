@@ -103,6 +103,8 @@
 }
 
 .custom-editor .w-md-editor-toolbar {
+  display: flex;
+  flex-wrap: nowrap;
   overflow-x: auto;
   white-space: nowrap;
 }
