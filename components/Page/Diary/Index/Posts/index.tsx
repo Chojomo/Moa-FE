@@ -8,10 +8,11 @@ import Sort from '../Sort'
 import Post from './Post'
 
 export default function Posts() {
-  const [sort, setSort] = useState('popular')
+  const [sort, setSort] = useState('viewCounts')
+
   const { data, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
-    queryKey: ['diaries'],
-    queryFn: getDiarys,
+    queryKey: ['diaries', sort],
+    queryFn: ({ pageParam = 1 }) => getDiarys({ pageParam, sortType: sort }),
     getNextPageParam: (lastPage) => {
       const nextPage = lastPage?.pageInfo.isLast ? undefined : lastPage.pageInfo.page
       return nextPage
