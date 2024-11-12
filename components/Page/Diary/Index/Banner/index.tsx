@@ -30,7 +30,7 @@ export default function Banner() {
         </div>
         <Progress step={step} setStep={setStep} />
       </div>
-      {posts && <PopularPost post={posts[postIndex]} />}
+      {posts && <PopularPost key={postIndex} post={posts[postIndex]} />}
       <Arrow setStep={setStep} />
     </section>
   )

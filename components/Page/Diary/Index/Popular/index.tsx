@@ -28,7 +28,7 @@ export default function PopularPost({ post }: PopularPostProps) {
 
   return (
     <div className="relative w-[250px] h-[200px] rounded-[10px] overflow-hidden">
-      <div className="w-[250px] h-[200] transition-all animate-fadeIn">
+      <div className="w-[250px] h-[200]">
         <Image
           src={diaryThumbnail || '/images/ewtq.jpeg'}
           alt="popular post"
@@ -39,7 +39,7 @@ export default function PopularPost({ post }: PopularPostProps) {
           draggable="false"
         />
       </div>
-      <div className="absolute left-0 bottom-0 w-full h-[70%] hover:h-[100%] transition-height duration-500 ease-in-out bg-[#00000099] flex flex-col text-white pt-[13px] pb-[9px] px-[13px]">
+      <div className="absolute left-0 bottom-0 w-full h-[70%] hover:h-[100%] transition-height duration-500 ease-in-out bg-[#00000099] flex flex-col text-white pt-[13px] pb-[9px] px-[13px] animate-fadeSlow">
         <div className="flex-grow flex flex-col">
           <p className="text-[14px] font-bold mb-[7px]">{diaryTitle}</p>
           <p className="text-[12px] text-[#FFFFFFB3] mb-[18px] flex-grow">{content}</p>
