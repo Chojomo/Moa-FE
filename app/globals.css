@@ -102,6 +102,11 @@
   all: unset !important;
 }
 
+.custom-editor .w-md-editor-toolbar {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
 @layer base {
   :root {
     --white: rgb(255, 255, 255);
