@@ -205,8 +205,8 @@ export const postDiary = async ({
   }
 }
 
-export const getDiarys = async ({ pageParam = 1 }) => {
-  const apiUrl = `/api/diary?pageNumber=${pageParam}&pageSize=4`
+export const getDiarys = async ({ pageParam = 1, sortType = 'viewCounts' }) => {
+  const apiUrl = `/api/diary?pageNumber=${pageParam}&pageSize=4&sortType=${sortType}`
 
   try {
     const response = await fetch(apiUrl, {

@@ -1,20 +1,24 @@
 'use client'
 
-import { useState } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 import Button from '@/components/Button'
 
-export default function Sort() {
-  const [sort, setSort] = useState<string>('popular')
+type SortProps = {
+  sort: string
+  setSort: Dispatch<SetStateAction<string>>
+}
 
+export default function Sort({ sort, setSort }: SortProps) {
   const buttons = [
-    { type: 'latest', text: '최신' },
-    { type: 'popular', text: '인기' },
-    { type: 'comments', text: '댓글' },
+    { type: 'publishedAt', text: '최신' },
+    { type: 'viewCounts', text: '조회' },
+    { type: 'totalLikes', text: '인기' },
+    { type: 'totalcomments', text: '댓글' },
   ]
 
   return (
     <div className="w-full h-[50px] flex-center my-[45px]">
-      <div className="relative bg-sort-bg w-[250px] h-[50px] rounded-full flex justify-between px-2 text-black font-semibold">
+      <div className="relative bg-sort-bg w-[320px] h-[50px] rounded-full flex justify-between px-2 text-black font-semibold">
         {buttons.map(({ type, text }) => (
           <Button
             key={type}
@@ -27,8 +31,15 @@ export default function Sort() {
           </Button>
         ))}
         <div
-          className={`absolute top-[5px] bg-white w-[78px] h-[40px] rounded-full transition-all duration-700`}
-          style={{ left: `${sort === 'latest' ? 7 : sort === 'popular' ? 86 : 164}px` }}
+          className="absolute top-[5px] bg-white w-[78px] h-[40px] rounded-full transition-all duration-700"
+          style={{
+            left: (() => {
+              if (sort === 'publishedAt') return '7px'
+              if (sort === 'viewCounts') return '86px'
+              if (sort === 'totalLikes') return '164px'
+              return '235px'
+            })(),
+          }}
         />
       </div>
     </div>

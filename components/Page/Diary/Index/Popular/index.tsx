@@ -3,11 +3,11 @@ import { Icon } from '@/components/Icon'
 
 export default function PopularPost() {
   return (
-    <div className="relative w-[230px] h-[200px] rounded-[10px] overflow-hidden">
+    <div className="relative w-[250px] h-[200px] rounded-[10px] overflow-hidden">
       <Image
         src="/images/ewtq.jpeg"
         alt="popular post"
-        width={230}
+        width={250}
         height={200}
         quality={75}
         loading="lazy"
