@@ -1,6 +1,5 @@
 'use client'
 
-import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
 import { useState, useEffect, useRef } from 'react'
 import { useInitDiary, useAutoSaveDiary, usePostDiary } from '@/hooks/editor'
@@ -13,9 +12,7 @@ import PublishModal from '@/components/Page/Diary/Post/Editor/Modal/PublishModal
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-const Editor = dynamic(() => import('../../../components/Page/Diary/Post/Editor/index'), {
-  ssr: false,
-})
+import PostEditor from '../../../components/Page/Diary/Post/Editor/index'
 
 export default function Post() {
   const [title, setTitle] = useState<string>('')
@@ -111,7 +108,7 @@ export default function Post() {
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
       <form className="w-[100vw] h-[100vh] flex flex-col">
         <TitleInput value={title} onChange={(e) => setTitle(e.target.value)} />
-        <Editor value={content} onChange={(v) => setContent(v || '')} preview={preview} />
+        <PostEditor value={content} onChange={(v) => setContent(v || '')} preview={preview} />
         <ActionBar handleSave={saveDiary} handleOpenModal={() => setIsModalOpen(true)} />
         <PublishModal
           isOpen={isModalOpen}
