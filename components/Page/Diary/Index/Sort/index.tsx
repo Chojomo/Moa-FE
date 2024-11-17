@@ -31,13 +31,13 @@ export default function Sort({ sort, setSort }: SortProps) {
           </Button>
         ))}
         <div
-          className="absolute top-[5px] bg-white w-[78px] h-[40px] rounded-full transition-all duration-700"
+          className="absolute top-[5px] bg-white w-[74px] h-[40px] rounded-full transition-all duration-700"
           style={{
             left: (() => {
-              if (sort === 'publishedAt') return '7px'
+              if (sort === 'publishedAt') return '9px'
               if (sort === 'viewCounts') return '86px'
-              if (sort === 'totalLikes') return '164px'
-              return '235px'
+              if (sort === 'totalLikes') return '161px'
+              return '238px'
             })(),
           }}
         />
