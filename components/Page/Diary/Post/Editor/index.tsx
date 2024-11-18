@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useRef } from 'react'
+import { useEffect, useState, useCallback, useRef } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { uploadImage } from '@/lib/api/diary'
 import { PreviwMode } from '@/types'
@@ -30,6 +30,7 @@ export default function PostEditor({ value, onChange, preview }: PostEditorProps
   const [linkApi, setLinkApi] = useState<TextAreaTextApi | null>(null)
 
   const fileInputRef = useRef<HTMLInputElement | null>(null)
+  const editorRef = useRef<HTMLDivElement | null>(null)
 
   const { mutate: uploadImageMutate } = useMutation({
     mutationFn: uploadImage,
@@ -39,6 +40,9 @@ export default function PostEditor({ value, onChange, preview }: PostEditorProps
 
       if (imgApi) {
         imgApi.replaceSelection(markdownImage)
+      } else {
+        console.log(markdownImage)
+        onChange((value || '') + markdownImage)
       }
     },
     onError: (error: unknown) => {
@@ -103,8 +107,52 @@ export default function PostEditor({ value, onChange, preview }: PostEditorProps
     tagNames: [...(defaultSchema.tagNames || []), 'img', 'div'],
   }
 
+  const handlePaste = async () => {
+    try {
+      const clipboardItems = await navigator.clipboard.read()
+      const imageItem = clipboardItems.find(
+        (item) => item.types.includes('image/png') || item.types.includes('image/jpeg')
+      )
+
+      if (imageItem) {
+        const blob = await imageItem.getType(imageItem.types[0])
+        const file = new File([blob], 'pasted-image.png', { type: blob.type })
+        console.log(file)
+        console.log('File Name:', file.name)
+        console.log('File Type:', file.type)
+        console.log('File Size:', file.size)
+
+        if (file.type === 'text/html') {
+          const htmlText = await blob.text()
+
+          const parser = new DOMParser()
+          const doc = parser.parseFromString(htmlText, 'text/html')
+          const imgTag = doc.querySelector('img')
+
+          console.log(imgTag)
+
+          // 서버 업로드
+          // const response = await uploadImage(file)
+          // const url = response.data.imageUrl
+
+          // 콘텐츠 업데이트
+          // const markdownImage = `![Image](${url})<!--rehype:style=width: 500px; height: auto;-->`
+          // onChange((value || '') + markdownImage)
+        } else {
+          console.error('HTML에서 유효한 이미지 데이터를 찾을 수 없습니다.')
+        }
+
+        // uploadImageMutate(file)
+      } else {
+        console.log('클립보드에 이미지가 없습니다.')
+      }
+    } catch (error) {
+      console.error('클립보드에서 이미지를 읽는 중 오류 발생:', error)
+    }
+  }
+
   return (
-    <div className="h-[75%] flex-1">
+    <div ref={editorRef} className="h-[75%] flex-1">
       <MDEditor
         value={value}
         onChange={onChange}
@@ -132,6 +180,7 @@ export default function PostEditor({ value, onChange, preview }: PostEditorProps
           commands.unorderedListCommand,
           commands.orderedListCommand,
         ]}
+        onPaste={handlePaste}
       />
       <LinkModal
         isOpen={isModalOpen}
