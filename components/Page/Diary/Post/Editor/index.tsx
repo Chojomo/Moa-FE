@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import { uploadImage } from '@/lib/api/diary'
 import { PreviwMode } from '@/types'
@@ -12,6 +12,7 @@ import rehypeRaw from 'rehype-raw'
 import rehypeSanitize from 'rehype-sanitize'
 import '@uiw/react-md-editor/markdown-editor.css'
 import '@uiw/react-markdown-preview/markdown.css'
+import { clipboardToMarkdown } from '@/helper/clipboardToMarkdown'
 
 import { LinkModal } from './Modal'
 
@@ -107,47 +108,13 @@ export default function PostEditor({ value, onChange, preview }: PostEditorProps
     tagNames: [...(defaultSchema.tagNames || []), 'img', 'div'],
   }
 
+  // ? 이미지 복사 붙여 넣기
   const handlePaste = async () => {
     try {
-      const clipboardItems = await navigator.clipboard.read()
-      const imageItem = clipboardItems.find(
-        (item) => item.types.includes('image/png') || item.types.includes('image/jpeg')
-      )
-
-      if (imageItem) {
-        const blob = await imageItem.getType(imageItem.types[0])
-        const file = new File([blob], 'pasted-image.png', { type: blob.type })
-        console.log(file)
-        console.log('File Name:', file.name)
-        console.log('File Type:', file.type)
-        console.log('File Size:', file.size)
-
-        if (file.type === 'text/html') {
-          const htmlText = await blob.text()
-
-          const parser = new DOMParser()
-          const doc = parser.parseFromString(htmlText, 'text/html')
-          const imgTag = doc.querySelector('img')
-
-          console.log(imgTag)
-
-          // 서버 업로드
-          // const response = await uploadImage(file)
-          // const url = response.data.imageUrl
-
-          // 콘텐츠 업데이트
-          // const markdownImage = `![Image](${url})<!--rehype:style=width: 500px; height: auto;-->`
-          // onChange((value || '') + markdownImage)
-        } else {
-          console.error('HTML에서 유효한 이미지 데이터를 찾을 수 없습니다.')
-        }
-
-        // uploadImageMutate(file)
-      } else {
-        console.log('클립보드에 이미지가 없습니다.')
-      }
+      const markdown = await clipboardToMarkdown()
+      onChange((value || '') + markdown)
     } catch (error) {
-      console.error('클립보드에서 이미지를 읽는 중 오류 발생:', error)
+      console.error(error)
     }
   }
 
