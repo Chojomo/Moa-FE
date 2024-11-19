@@ -12,6 +12,7 @@ import rehypeRaw from 'rehype-raw'
 import rehypeSanitize from 'rehype-sanitize'
 import '@uiw/react-md-editor/markdown-editor.css'
 import '@uiw/react-markdown-preview/markdown.css'
+import { clipboardToMarkdown } from '@/helper/clipboardToMarkdown'
 
 import { LinkModal } from './Modal'
 
@@ -30,6 +31,7 @@ export default function PostEditor({ value, onChange, preview }: PostEditorProps
   const [linkApi, setLinkApi] = useState<TextAreaTextApi | null>(null)
 
   const fileInputRef = useRef<HTMLInputElement | null>(null)
+  const editorRef = useRef<HTMLDivElement | null>(null)
 
   const { mutate: uploadImageMutate } = useMutation({
     mutationFn: uploadImage,
@@ -39,6 +41,9 @@ export default function PostEditor({ value, onChange, preview }: PostEditorProps
 
       if (imgApi) {
         imgApi.replaceSelection(markdownImage)
+      } else {
+        console.log(markdownImage)
+        onChange((value || '') + markdownImage)
       }
     },
     onError: (error: unknown) => {
@@ -103,8 +108,18 @@ export default function PostEditor({ value, onChange, preview }: PostEditorProps
     tagNames: [...(defaultSchema.tagNames || []), 'img', 'div'],
   }
 
+  // ? 이미지 복사 붙여 넣기
+  const handlePaste = async () => {
+    try {
+      const markdown = await clipboardToMarkdown()
+      onChange((value || '') + markdown)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
-    <div className="h-[75%] flex-1">
+    <div ref={editorRef} className="h-[75%] flex-1">
       <MDEditor
         value={value}
         onChange={onChange}
@@ -132,6 +147,7 @@ export default function PostEditor({ value, onChange, preview }: PostEditorProps
           commands.unorderedListCommand,
           commands.orderedListCommand,
         ]}
+        onPaste={handlePaste}
       />
       <LinkModal
         isOpen={isModalOpen}
