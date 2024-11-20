@@ -1,4 +1,4 @@
-import { Head, Content, CommentPost, Comments } from '@/components/Page/Diary/Detail'
+import { Head, Content, CommentPost, Comments, Footer } from '@/components/Page/Diary/Detail'
 
 type Params = {
   id: string
@@ -11,7 +11,7 @@ export default function DiaryDetail({ params }: { params: Params }) {
       <Content />
       <CommentPost />
       <Comments />
-      <div className="fixed left-0 bottom-0 w-full h-[60px] bg-orange-500">하단 고정</div>
+      <Footer />
       {/* <p>{params.id}</p> */}
     </div>
   )
