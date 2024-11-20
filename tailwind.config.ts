@@ -198,6 +198,7 @@ const config: Config = {
       },
       boxShadow: {
         tooltip: '2px 6px 12px 0px rgba(0, 0, 0, 0.12), 0px 0px 4px 0px rgba(0, 0, 0, 0.12)',
+        button: '1px 2px 4px 0px rgba(0, 0, 0, 0.25)',
       },
       rotate: {
         '-8': '-8deg',

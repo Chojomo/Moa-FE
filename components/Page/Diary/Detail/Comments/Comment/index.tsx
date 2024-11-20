@@ -41,7 +41,7 @@ export default function Comment() {
       <Button
         type="button"
         ariaLabel="답글 버튼"
-        className="bg-soft-bg rounded-md text-[10px] text-white font-semibold w-[50px] h-[30px] self-end"
+        className="bg-soft-bg rounded-md text-[10px] text-white font-semibold w-[50px] h-[30px] self-end shadow-button hover:bg-[#2D2D2D]"
         onClick={handleButtonClick}
       >
         답글

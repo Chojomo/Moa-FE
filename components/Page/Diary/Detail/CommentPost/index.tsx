@@ -34,7 +34,7 @@ export default function CommentPost() {
       <Button
         type="button"
         ariaLabel="follow button"
-        className="bg-soft-bg rounded-md text-[12px] md:text-[13px] text-white font-semibold w-[50px] h-[40px]"
+        className="bg-soft-bg rounded-md text-[12px] md:text-[13px] text-white font-semibold w-[50px] h-[40px] shadow-button hover:bg-[#2D2D2D]"
         onClick={handleButtonClick}
       >
         등록
