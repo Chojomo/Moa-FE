@@ -52,7 +52,7 @@ export default function PopularPost({ post }: PopularPostProps) {
               <span>{totalLikes}</span>
             </div>
             <div className="flex gap-2">
-              <Icon name="Comment" width={17} height={17} />
+              <Icon name="Comment" width={17} height={17} className="text-[#43D8AA]" />
               <span>2</span>
             </div>
           </div>
