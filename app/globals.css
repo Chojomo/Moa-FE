@@ -115,6 +115,7 @@
 
 @layer base {
   :root {
+    --inverse: rgb(0, 0, 0);
     --white: rgb(255, 255, 255);
     --black: rgb(0, 0, 0);
 
@@ -160,6 +161,7 @@
   }
 
   .dark {
+    --inverse: rgb(255, 255, 255);
     --white: rgb(255, 255, 255);
     --black: rgb(0, 0, 0);
 
