@@ -21,6 +21,10 @@
   font-size: 1.125rem !important;
 }
 
+.w-md-editor-text {
+  min-height: 100% !important;
+}
+
 .wmde-markdown blockquote {
   color: var(--body-text) !important;
   background-color: var(--preview-blockquote) !important;
