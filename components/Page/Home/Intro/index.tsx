@@ -9,8 +9,8 @@ export default function Intro() {
     { index: 2, src: '/images/pebble/purple-pebble2.png', name: 'To-do', href: '/' },
   ]
   return (
-    <div className="w-[100vw] h-[100vh] flex-center">
-      <section className="z-10 relative w-[90%] h-[80%] bg-container-bg rounded-2xl px-[6%] py-[13%] md:py-[6%] overflow-hidden">
+    <div className="w-[100vw] h-[100vh] py-[74px] flex-center">
+      <section className="z-10 relative w-[90%] h-[100%] bg-container-bg rounded-2xl px-[6%] py-[13%] md:py-[6%] overflow-hidden">
         <div className="flex gap-[35px]  md:gap-[55px]">
           {favorites.map(({ index, src, name, href }) => (
             <Favorite key={index} src={src} name={name} href={href} />

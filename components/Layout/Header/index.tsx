@@ -15,7 +15,6 @@ export default function Header() {
   const { isLogin } = useAuthStore()
   const pathname = usePathname()
 
-  // isVisible을 pathname에 기반해 바로 결정
   if (pathname === '/diary/post') return null
 
   return (

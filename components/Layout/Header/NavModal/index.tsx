@@ -10,9 +10,9 @@ type NavModalProps = {
 }
 
 export default function NavModal({ isOpen, handleClose }: NavModalProps) {
-  // useEffect(() => {
-  //   Modal.setAppElement('#__next')
-  // }, [])
+  useEffect(() => {
+    Modal.setAppElement('#__next')
+  }, [])
 
   return (
     <Modal
@@ -20,6 +20,7 @@ export default function NavModal({ isOpen, handleClose }: NavModalProps) {
       onRequestClose={handleClose}
       contentLabel="카테고리 모달"
       className="fixed top-[74px] right-[5%] bg-inverse p-[20px] text-background z-30 rounded-lg gap-5"
+      overlayClassName="modal-overlay-transparent"
     >
       <IconLink href="/user/about" iconName="User" hoverColor="text-main-blue">
         <span>마이 페이지</span>
