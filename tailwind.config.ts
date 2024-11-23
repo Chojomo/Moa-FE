@@ -21,6 +21,7 @@ const config: Config = {
     },
     extend: {
       colors: {
+        inverse: 'var(--inverse)',
         black: 'var(--black)',
         background: 'var(--background)',
         foreground: 'var(--foreground)',
