@@ -33,7 +33,12 @@ export default function Comment() {
           <p className="text-[12px] text-[#999999]">2023.11.10. 18:32</p>
         </div>
         <div className="flex gap-[14px]">
-          <Icon name="Unlike" width={20} height={20} />
+          <Icon
+            name="Unlike"
+            width={20}
+            height={20}
+            className="text-[#A6A6A6] hover:text-red-500 transition-colors"
+          />
           <span className="text-[14px] text-[#A6A6A6] font-bold">32</span>
         </div>
       </div>
@@ -49,40 +54,41 @@ export default function Comment() {
         className="bg-soft-bg rounded-md text-[10px] text-white font-semibold w-[50px] h-[30px] self-end shadow-button hover:bg-[#2D2D2D]"
         onClick={handleButtonClick}
       >
-        답글
+        {isCommentOpen ? '숨기기' : '답글'}
       </Button>
-      {isCommentOpen && (
-        <div className="flex flex-col pl-[3%] mt-[30px] gap-[20px]">
-          <div className="flex gap-7">
-            <div className="w-[20px] h-[20px] border-l-2 border-b-2" />
-            <input
-              type="text"
-              placeholder="모두가 함께 보는 공간입니다. 타인을 존중하는 멋진 댓글을 작성해 보세요!"
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-              className="flex-grow h-[80px] text-[13px] rounded-[10px] focus:outline-none focus:ring-0 px-4 py-2 border"
-            />
-          </div>
-          <div className="flex justify-end gap-[20px]">
-            <Button
-              type="button"
-              ariaLabel="답글 버튼"
-              className="bg-main-blue rounded-md text-[10px] text-white font-semibold w-[50px] h-[30px] self-end shadow-button hover:bg-[#1666DE]"
-              onClick={handleButtonClick}
-            >
-              취소
-            </Button>
-            <Button
-              type="button"
-              ariaLabel="답글 버튼"
-              className="bg-soft-bg rounded-md text-[10px] text-white font-semibold w-[50px] h-[30px] self-end shadow-button hover:bg-[#2D2D2D]"
-              onClick={handleButtonClick}
-            >
-              답글
-            </Button>
-          </div>
+      <div
+        className={` flex flex-col pl-[3%] mt-[30px] gap-[20px] ${isCommentOpen ? 'animate-slideDown' : 'hidden'}`}
+      >
+        <div className="flex gap-7">
+          <div className="w-[20px] h-[20px] border-l-2 border-b-2" />
+          <input
+            type="text"
+            placeholder="모두가 함께 보는 공간입니다. 타인을 존중하는 멋진 댓글을 작성해 보세요!"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            className="flex-grow h-[80px] text-[13px] rounded-[10px] focus:outline-none focus:ring-0 px-4 py-2 border"
+          />
         </div>
-      )}
+        <div className="flex justify-end gap-[20px]">
+          <Button
+            type="button"
+            ariaLabel="답글 버튼"
+            className="bg-main-blue rounded-md text-[10px] text-white font-semibold w-[50px] h-[30px] self-end shadow-button hover:bg-[#1666DE]"
+            onClick={handleButtonClick}
+          >
+            취소
+          </Button>
+          <Button
+            type="button"
+            ariaLabel="답글 버튼"
+            className="bg-soft-bg rounded-md text-[10px] text-white font-semibold w-[50px] h-[30px] self-end shadow-button hover:bg-[#2D2D2D]"
+            onClick={handleButtonClick}
+          >
+            댓글 작성
+          </Button>
+        </div>
+      </div>
+      {/* )} */}
     </div>
   )
 }
