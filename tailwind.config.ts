@@ -179,6 +179,10 @@ const config: Config = {
           '50%': { transform: 'rotate(60deg)' },
           '100%': { transform: 'rotate(0deg)' },
         },
+        slideDown: {
+          '0%': { maxHeight: '0px', opacity: '0' },
+          '100%': { maxHeight: '500px', opacity: '1' },
+        },
       },
       animation: {
         shimmer: 'shimmer 1s linear infinite',
@@ -195,6 +199,7 @@ const config: Config = {
         fadeSlow: 'fadeUp 3s ease-in-out',
         customBounce: 'customBounce 0.8s ease',
         shake: 'shake 1.5s ease-in-out infinite',
+        slideDown: 'slideDown 0.3s ease-in-out',
       },
       boxShadow: {
         tooltip: '2px 6px 12px 0px rgba(0, 0, 0, 0.12), 0px 0px 4px 0px rgba(0, 0, 0, 0.12)',
