@@ -9,6 +9,7 @@ import Image from 'next/image'
 import Logo from './Logo'
 import NavModal from './NavModal'
 import IconLink from './IconLink'
+import ThemeToggle from '@/components/Themes/Toggle'
 
 export default function Header() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
@@ -44,7 +45,7 @@ export default function Header() {
           hoverColor="accent"
           iconSize={17}
         />
-
+        <ThemeToggle />
         {isLogin ? (
           <Button type="button" ariaLabel="zz" onClick={() => setIsModalOpen((prev) => !prev)}>
             <Image
