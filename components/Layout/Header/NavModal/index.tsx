@@ -1,5 +1,7 @@
 'use client'
 
+import { useAuthStore } from '@/store/useAuth'
+import { useCallback } from 'react'
 import Modal from 'react-modal'
 import IconLink from '../IconLink'
 import Button from '@/components/Button'
@@ -11,11 +13,13 @@ type NavModalProps = {
 }
 
 export default function NavModal({ isOpen, handleClose }: NavModalProps) {
-  Modal.setAppElement('#__next')
+  const { logout } = useAuthStore()
+  const handleLogout = useCallback(() => {
+    logout()
+    handleClose()
+  }, [logout])
 
-  const handleLogout = () => {
-    console.log('클릭')
-  }
+  Modal.setAppElement('#__next')
 
   return (
     <Modal
