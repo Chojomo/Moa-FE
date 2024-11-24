@@ -135,6 +135,7 @@
     --modal-bg: rgba(255, 255, 255, 0.776);
     --modal-input: rgb(234, 234, 234);
     --modal-button: rgb(255, 255, 255);
+    --modal-text: rgb(245, 245, 245);
 
     --heading-text: rgba(0, 0, 0, 0.9);
     --heading-bg: rgba(0, 0, 0, 0.7);
@@ -158,6 +159,7 @@
     --banner-bg: rgba(0, 0, 0, 0.8);
     --sort-bg: rgb(69, 69, 69);
     --soft-bg: rgba(0, 0, 0, 0.75);
+    --tooltip-bg: rgb(67, 67, 67);
   }
 
   .dark {
@@ -181,6 +183,7 @@
     --modal-bg: rgba(41, 41, 41, 0.937);
     --modal-input: rgba(0, 0, 0, 0.265);
     --modal-button: rgba(224, 224, 224, 0);
+    --modal-text: rgb(67, 67, 67);
 
     --heading-text: rgba(255, 255, 255, 0.9);
     --heading-bg: rgba(255, 255, 255, 0.3);
@@ -204,6 +207,7 @@
     --banner-bg: rgba(255, 255, 255, 0.1);
     --sort-bg: rgba(255, 255, 255, 0.1);
     --soft-bg: rgba(255, 255, 255, 0.2);
+    --tooltip-bg: rgb(245, 245, 245);
   }
 
   .flex-center {
@@ -224,10 +228,22 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.19); /* 반투명 배경 */
+    background-color: rgba(0, 0, 0, 0.19);
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .modal-overlay-transparent {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 30;
   }
 
   .modal-content {
@@ -250,6 +266,16 @@
     right: 34px;
     top: 100%;
     border-color: #333 transparent transparent transparent;
+  }
+
+  .tooltip-arrow-top::after {
+    content: '';
+    position: absolute;
+    border-width: 5px;
+    border-style: solid;
+    right: 15px;
+    bottom: 100%;
+    border-color: transparent transparent var(--tooltip-bg) transparent;
   }
 
   .tooltip-intro::after {

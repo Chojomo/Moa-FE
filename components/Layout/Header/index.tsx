@@ -9,23 +9,43 @@ import Image from 'next/image'
 import Logo from './Logo'
 import NavModal from './NavModal'
 import IconLink from './IconLink'
+import ThemeToggle from '@/components/Themes/Toggle'
 
 export default function Header() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const { isLogin } = useAuthStore()
   const pathname = usePathname()
 
-  // isVisible을 pathname에 기반해 바로 결정
   if (pathname === '/diary/post') return null
 
   return (
     <header className="z-30 fixed top-0 left-0 bg-background w-full py-[12px] px-[5%] flex items-center justify-between">
       <Logo />
       <div className="flex items-center gap-[7px]">
-        {isLogin && <IconLink href="/notifications" iconName="Bell" hoverColor="text-[#888888]" />}
-        <IconLink href="/search" iconName="Search" hoverColor="text-main-blue" />
-        <IconLink href="/zip" iconName="Zip" hoverColor="text-accent" />
-
+        {isLogin && (
+          <IconLink
+            href="/notifications"
+            iconName="Bell"
+            iconColor="inverse"
+            hoverColor="[#888888]"
+            iconSize={17}
+          />
+        )}
+        <IconLink
+          href="/search"
+          iconName="Search"
+          iconColor="inverse"
+          hoverColor="main-blue"
+          iconSize={17}
+        />
+        <IconLink
+          href="/zip"
+          iconName="Zip"
+          iconColor="inverse"
+          hoverColor="accent"
+          iconSize={17}
+        />
+        <ThemeToggle />
         {isLogin ? (
           <Button type="button" ariaLabel="zz" onClick={() => setIsModalOpen((prev) => !prev)}>
             <Image
@@ -43,7 +63,7 @@ export default function Header() {
         ) : (
           <Link
             href="/login"
-            className="bg-inverse px-[12px] py-[3px] rounded-full text-background text-[0.9rem] font-semibold ml-[7px]"
+            className="bg-inverse px-[14px] py-[5px] rounded-full text-background text-[0.9rem] font-semibold ml-[7px]"
           >
             로그인
           </Link>

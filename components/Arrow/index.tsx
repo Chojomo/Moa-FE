@@ -70,7 +70,7 @@ export default function Arrow({ selector }: ArrowProps) {
   }
 
   return (
-    <div className="z-30 fixed left-1/2 bottom-[10px] transform -translate-x-1/2">
+    <div className="z-30 fixed left-1/2 bottom-0 transform -translate-x-1/2">
       <button
         type="button"
         aria-label="next"

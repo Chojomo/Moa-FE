@@ -69,6 +69,7 @@ const config: Config = {
           bg: 'var(--modal-bg)',
           input: 'var(--modal-input)',
           button: 'var(--modal-button)',
+          text: 'var(--modal-text)',
         },
         nonActive: {
           text: 'var(--nonActive-text)',
@@ -84,6 +85,9 @@ const config: Config = {
         },
         soft: {
           bg: 'var(--soft-bg)',
+        },
+        tooltip: {
+          bg: 'var(--tooltip-bg)',
         },
       },
       keyframes: {
@@ -195,6 +199,7 @@ const config: Config = {
         resetT: 'resetT 1s 0.2s ease-out forwards',
         resetB: 'resetB 1s 0.2s ease-out forwards',
         fade: 'fade 1s ease-in-out',
+        fadeFast: 'fade 0.2s ease',
         fadeIn: 'fadeIn 0.5s ease-in-out',
         fadeUp: 'fadeUp 1s ease-in-out',
         fadeSlow: 'fadeUp 3s ease-in-out',
@@ -213,6 +218,7 @@ const config: Config = {
     },
   },
   plugins: [tailwindcssAnimate, typography],
+  safelist: ['ReactModal__Overlay', 'ReactModal__Content'],
 }
 
 export default config
