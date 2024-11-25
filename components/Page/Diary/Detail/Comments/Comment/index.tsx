@@ -32,15 +32,6 @@ export default function Comment() {
           <p className="text-[18px] text-main-blue font-bold">뭐라뤂</p>
           <p className="text-[12px] text-[#999999]">2023.11.10. 18:32</p>
         </div>
-        <div className="flex gap-[14px]">
-          <Icon
-            name="Unlike"
-            width={20}
-            height={20}
-            className="text-[#A6A6A6] hover:text-red-500 transition-colors"
-          />
-          <span className="text-[14px] text-[#A6A6A6] font-bold">32</span>
-        </div>
       </div>
       <p className="py-[5%] text-body-text">
         저쩌고 어쩌고? 어쩌고 저쩌고!저쩌고 어쩌고? 어쩌고 저쩌고!저쩌고 어쩌고? 어쩌고
