@@ -8,31 +8,38 @@ type Params = {
   id: string
 }
 
+type Post = {
+  diaryContents: string
+  diaryId: string
+  diaryStatus: number
+  diaryThumbnail: null | string
+  diaryTitle: string
+  isDiaryPublic: boolean
+}
+
 export default function DiaryDetail({ params }: { params: Params }) {
-  const [data, setData] = useState(null)
+  const [post, setPost] = useState<Post | null>(null)
 
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await getDiaryDetail({ diaryId: params.id })
-      console.log(result)
-      setData(result)
+    const getPopst = async () => {
+      const { data } = await getDiaryDetail({ diaryId: params.id })
+      setPost(data)
     }
 
-    fetchData()
+    getPopst()
   }, [params.id])
 
-  if (!data) {
+  if (!post) {
     return <div>Loading...</div>
   }
 
   return (
     <div className="relative w-[100vw] h-[100vh] flex flex-col pt-[100px] md:pt-[140px] overflow-auto px-[5%] md:px-[20%] pb-[60px]">
-      <Head />
-      <Content />
+      <Head title={post.diaryTitle} />
+      <Content content={post.diaryContents} />
       <CommentPost />
       <Comments />
       <Footer />
-      <p>{params.id}</p>
     </div>
   )
 }

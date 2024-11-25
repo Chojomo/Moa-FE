@@ -1,11 +1,15 @@
 import Image from 'next/image'
 import { FollowButton } from './Button'
 
-export default function Head() {
+type HeadProps = {
+  title: string
+}
+
+export default function Head({ title }: HeadProps) {
   return (
-    <div className="flex flex-col pb-[30px] border-b">
-      <h1 className="text-[24px] md:text-[32px] text-heading-text font-bold mb-[35px]">
-        아침 출근길,,, 그리고 회사에서
+    <div className="w-full flex flex-col pb-[30px] border-b">
+      <h1 className="w-full break-words text-[24px] md:text-[32px] text-heading-text font-bold mb-[35px]">
+        {title}
       </h1>
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-[15px]">
