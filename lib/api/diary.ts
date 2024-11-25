@@ -208,8 +208,6 @@ export const postDiary = async ({
 export const getDiarys = async ({ pageParam = 0, sortType = 'viewCount' }) => {
   const apiUrl = `${process.env.NEXT_PUBLIC_NEXT_API_URL}/api/diary?pageNumber=${pageParam}&pageSize=4&sortType=${sortType}`
 
-  console.log(`process.env.NEXT_API_URL: ${process.env.NEXT_PUBLIC_NEXT_API_URL}`)
-
   try {
     const response = await fetch(apiUrl, {
       method: 'GET',
@@ -219,6 +217,41 @@ export const getDiarys = async ({ pageParam = 0, sortType = 'viewCount' }) => {
     })
 
     const data = await response.json()
+
+    if (!response.ok) {
+      throw new Error(data.error || '다이어리 게시물 가져오기 실패')
+    }
+
+    return data
+  } catch (error) {
+    throw new Error('next 서버 요청 중 에러 발생')
+  }
+}
+
+export const getDiaryDetail = async ({ diaryId }: { diaryId: string }) => {
+  const token = localStorage.getItem('authToken')
+  const apiUrl = `${process.env.NEXT_PUBLIC_NEXT_API_URL}/api/diary/detail?diaryId=${diaryId}`
+
+  if (!token) {
+    throw new Error('로그인 상태를 확인하세요.')
+  }
+
+  if (!diaryId) {
+    throw new Error('다이어리가 되지 존재하지 않습니다.')
+  }
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token,
+      },
+    })
+
+    const data = await response.json()
+
+    console.log(data)
 
     if (!response.ok) {
       throw new Error(data.error || '다이어리 게시물 가져오기 실패')

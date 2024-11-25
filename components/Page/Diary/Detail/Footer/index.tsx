@@ -1,7 +1,12 @@
+'use client'
+
 import Button from '@/components/Button'
 import { Icon } from '@/components/Icon'
+import usePostLike from '@/hooks/like/usePostLike'
 
-export default function Footer() {
+export default function Footer({ diaryId }: { diaryId: string }) {
+  const { mutateAsync: postLike } = usePostLike()
+
   const buttons = [
     {
       name: 'Unlike',
@@ -9,8 +14,15 @@ export default function Footer() {
       addClass: 'flex items-center gap-3 text-[#A6A6A6] hover:text-red-500 transition-colors',
       width: 22,
       heignt: 22,
-      onCLick: () => {
-        console.log('Back')
+      onCLick: async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault()
+        try {
+          await postLike({
+            diaryId,
+          })
+        } catch (error) {
+          console.error('게시물 등록 중 오류:', error)
+        }
       },
       children: <span className="text-[#A6A6A6]">32</span>,
     },
@@ -69,6 +81,7 @@ export default function Footer() {
             type="button"
             ariaLabel={button.label}
             className={`${button.addClass ? button.addClass : ''}`}
+            onClick={button.onCLick}
           >
             <Icon name={button.name} width={button.width} height={button.heignt} />
             {button.children}

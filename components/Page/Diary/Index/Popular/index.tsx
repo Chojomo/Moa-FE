@@ -1,8 +1,7 @@
-'use client'
-
 import Image from 'next/image'
 import { Icon } from '@/components/Icon'
 import { Diary } from '@/types/diary'
+import Link from 'next/link'
 
 type PopularPostProps = {
   post: Diary
@@ -10,6 +9,7 @@ type PopularPostProps = {
 
 export default function PopularPost({ post }: PopularPostProps) {
   const {
+    diaryId,
     diaryAuthorNickname,
     diaryContents,
     diaryPublishedAt,
@@ -18,8 +18,6 @@ export default function PopularPost({ post }: PopularPostProps) {
     totalLikes,
   } = post
 
-  console.log(post)
-
   let content = diaryContents.replace(/!\[Image\][^]*?-->/, '')
 
   if (content.length > 100) {
@@ -27,7 +25,10 @@ export default function PopularPost({ post }: PopularPostProps) {
   }
 
   return (
-    <div className="relative w-[250px] h-[200px] rounded-[10px] overflow-hidden">
+    <Link
+      href={`/diary/${diaryId}`}
+      className="relative w-[250px] h-[200px] rounded-[10px] overflow-hidden"
+    >
       <div className="w-[250px] h-[200]">
         <Image
           src={diaryThumbnail || '/images/ewtq.jpeg'}
@@ -61,6 +62,6 @@ export default function PopularPost({ post }: PopularPostProps) {
           </span>
         </div>
       </div>
-    </div>
+    </Link>
   )
 }

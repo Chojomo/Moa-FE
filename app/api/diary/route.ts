@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server'
 
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url)
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url)
   const page = searchParams.get('pageNumber') || '0'
   const pageSize = searchParams.get('pageSize') || '4'
   const sortType = searchParams.get('sortType') || 'viewCount'
