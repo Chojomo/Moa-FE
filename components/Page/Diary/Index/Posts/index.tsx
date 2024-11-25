@@ -8,7 +8,7 @@ import Sort from '../Sort'
 import Post from './Post'
 
 export default function Posts() {
-  const [sort, setSort] = useState('viewCounts')
+  const [sort, setSort] = useState('viewCount')
 
   const { data, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
     queryKey: ['diaries', sort],

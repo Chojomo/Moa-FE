@@ -11,9 +11,9 @@ type SortProps = {
 export default function Sort({ sort, setSort }: SortProps) {
   const buttons = [
     { type: 'publishedAt', text: '최신' },
-    { type: 'viewCounts', text: '조회' },
-    { type: 'totalLikes', text: '인기' },
-    { type: 'totalcomments', text: '댓글' },
+    { type: 'viewCount', text: '조회' },
+    { type: 'likeCount', text: '인기' },
+    { type: 'commentCount', text: '댓글' },
   ]
 
   return (
@@ -35,8 +35,8 @@ export default function Sort({ sort, setSort }: SortProps) {
           style={{
             left: (() => {
               if (sort === 'publishedAt') return '9px'
-              if (sort === 'viewCounts') return '86px'
-              if (sort === 'totalLikes') return '161px'
+              if (sort === 'viewCount') return '86px'
+              if (sort === 'likeCount') return '161px'
               return '238px'
             })(),
           }}
