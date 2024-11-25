@@ -8,6 +8,7 @@ type IconLinkProps = {
   hoverColor: string
   iconSize: number
   children?: React.ReactNode
+  handleClick?: () => void
 }
 
 export default function IconLink({
@@ -17,11 +18,13 @@ export default function IconLink({
   hoverColor,
   iconSize,
   children,
+  handleClick,
 }: IconLinkProps) {
   return (
     <Link
       href={href}
       className={`flex items-center gap-[20px] group p-2 ${href === '/zip' && 'hidden sm:block'}`}
+      onClick={handleClick}
     >
       <Icon
         name={iconName}
