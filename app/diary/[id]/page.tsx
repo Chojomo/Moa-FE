@@ -37,7 +37,7 @@ export default function DiaryDetail({ params }: { params: Params }) {
     <div className="relative w-[100vw] h-[100vh] flex flex-col pt-[100px] md:pt-[140px] overflow-auto px-[5%] md:px-[20%] pb-[60px]">
       <Head title={post.diaryTitle} />
       <Content content={post.diaryContents} />
-      <CommentPost />
+      <CommentPost diaryId={params.id} />
       <Comments />
       <Footer />
     </div>

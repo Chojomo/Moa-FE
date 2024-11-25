@@ -3,12 +3,33 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Button from '@/components/Button'
+// import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
-export default function CommentPost() {
+import usePostComment from '@/hooks/comment/usePostComment'
+
+export default function CommentPost({ diaryId }: { diaryId: string }) {
   const [comment, setComment] = useState<string>('')
 
-  const handleButtonClick = () => {
-    console.log('클릭')
+  const { mutateAsync: postComment } = usePostComment()
+
+  const handleButtonClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault()
+
+    if (!comment.trim()) {
+      // toast.error('댓글을 입력하세요!')
+    }
+
+    try {
+      await postComment({
+        diaryId,
+        commentContents: comment,
+      })
+
+      setComment('')
+    } catch (error) {
+      console.error('게시물 등록 중 오류:', error)
+    }
   }
 
   return (
