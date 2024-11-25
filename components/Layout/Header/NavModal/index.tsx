@@ -3,9 +3,9 @@
 import { useAuthStore } from '@/store/useAuth'
 import { useCallback } from 'react'
 import Modal from 'react-modal'
-import IconLink from '../IconLink'
 import Button from '@/components/Button'
 import { Icon } from '@/components/Icon'
+import IconLink from '../IconLink'
 
 type NavModalProps = {
   isOpen: boolean
@@ -14,10 +14,11 @@ type NavModalProps = {
 
 export default function NavModal({ isOpen, handleClose }: NavModalProps) {
   const { logout } = useAuthStore()
+
   const handleLogout = useCallback(() => {
     logout()
     handleClose()
-  }, [logout])
+  }, [logout, handleClose])
 
   Modal.setAppElement('#__next')
 

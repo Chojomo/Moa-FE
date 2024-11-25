@@ -6,10 +6,10 @@ import { useAuthStore } from '@/store/useAuth'
 import Link from 'next/link'
 import Button from '@/components/Button'
 import Image from 'next/image'
+import ThemeToggle from '@/components/Themes/Toggle'
 import Logo from './Logo'
 import NavModal from './NavModal'
 import IconLink from './IconLink'
-import ThemeToggle from '@/components/Themes/Toggle'
 
 export default function Header() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)

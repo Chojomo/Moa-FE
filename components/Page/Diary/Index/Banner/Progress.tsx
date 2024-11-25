@@ -35,7 +35,7 @@ export default function Progress({ step, setStep }: ProgressProps) {
     const intervalId = setTimeout(handleProgress, 30)
 
     return () => clearTimeout(intervalId)
-  }, [progress, isPaused])
+  }, [progress, isPaused, setStep])
 
   const togglePause = () => setIsPaused((prev) => !prev)
 

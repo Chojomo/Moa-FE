@@ -4,7 +4,6 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Providers from '@/components/Providers'
 import { Header } from '@/components/Layout'
-import LoginButton from '@/components/Button/Login'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -30,7 +29,6 @@ export default function RootLayout({
           >
             <Header />
             {children}
-            {/* <LoginButton /> */}
           </ThemeProvider>
         </Providers>
       </body>

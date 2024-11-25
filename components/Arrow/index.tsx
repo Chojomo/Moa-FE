@@ -52,7 +52,7 @@ export default function Arrow({ selector }: ArrowProps) {
     return () => {
       ele.removeEventListener('wheel', handleWheel as EventListener)
     }
-  }, [])
+  }, [selector])
 
   const handleClick = () => {
     const ele = document.querySelector('#scroller') as HTMLElement | null

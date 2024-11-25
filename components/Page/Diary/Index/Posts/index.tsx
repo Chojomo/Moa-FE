@@ -10,7 +10,7 @@ import Post from './Post'
 export default function Posts() {
   const [sort, setSort] = useState('viewCount')
 
-  const { data, error, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
     queryKey: ['diaries', sort],
     queryFn: ({ pageParam = 1 }) => getDiarys({ pageParam, sortType: sort }),
     getNextPageParam: (lastPage) => {
@@ -49,7 +49,6 @@ export default function Posts() {
 
       <div className="flex justify-center items-center p-4">
         {isFetchingNextPage && <p>로드 중...</p>}
-        {/* {error && <p>Error loading data</p>} */}
       </div>
     </div>
   )

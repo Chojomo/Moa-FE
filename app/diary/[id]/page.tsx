@@ -12,7 +12,7 @@ export default function DiaryDetail({ params }: { params: Params }) {
       <CommentPost />
       <Comments />
       <Footer />
-      {/* <p>{params.id}</p> */}
+      <p>{params.id}</p>
     </div>
   )
 }
