@@ -36,6 +36,7 @@ export default function NavModal({ isOpen, handleClose }: NavModalProps) {
         iconColor="modal-text"
         hoverColor="background"
         iconSize={17}
+        handleClick={handleClose}
       >
         <span>마이 페이지</span>
       </IconLink>
@@ -45,6 +46,7 @@ export default function NavModal({ isOpen, handleClose }: NavModalProps) {
         iconColor="modal-text"
         hoverColor="background"
         iconSize={20}
+        handleClick={handleClose}
       >
         <span>새 글 작성</span>
       </IconLink>
@@ -54,6 +56,7 @@ export default function NavModal({ isOpen, handleClose }: NavModalProps) {
         iconColor="modal-text"
         hoverColor="background"
         iconSize={17}
+        handleClick={handleClose}
       >
         <span>설정</span>
       </IconLink>
