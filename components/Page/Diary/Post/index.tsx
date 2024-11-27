@@ -69,6 +69,12 @@ export default function Post({ diaryId }: { diaryId?: string }) {
       const getPopst = async () => {
         const { data } = await getDiaryDetail({ diaryId })
         console.log(data)
+        const { diaryTitle, diaryContents, isDiaryPublic, diaryThumbnail } = data
+
+        setTitle(diaryTitle)
+        setContent(diaryContents)
+        setThumbnail(diaryThumbnail)
+        setIsPublic(isDiaryPublic)
       }
 
       getPopst()
@@ -110,7 +116,7 @@ export default function Post({ diaryId }: { diaryId?: string }) {
 
       setTitle('')
       setContent('')
-      router.push('/diary')
+      router.push(isEditMode ? `/diary/${diaryId}` : '/diary')
     } catch (error) {
       console.error('게시물 등록 중 오류:', error)
       toast.error('게시물 등록 실패')
