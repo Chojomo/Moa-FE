@@ -27,7 +27,7 @@ export default function Post({ diaryId }: { diaryId?: string }) {
 
   const { mutate: initDiary } = useInitDiary()
   const { mutateAsync: postDiary } = usePostDiary()
-  const { mutate: autoSaveDiary } = useAutoSaveDiary()
+  const { mutateAsync: autoSaveDiary } = useAutoSaveDiary()
 
   const router = useRouter()
 
@@ -56,8 +56,9 @@ export default function Post({ diaryId }: { diaryId?: string }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const saveDiary = () => {
-    autoSaveDiary({
+  const saveDiary = async () => {
+    await autoSaveDiary({
+      diaryId,
       diaryTitle: title,
       diaryContents: content,
       isDiaryPublic: false,
@@ -112,6 +113,8 @@ export default function Post({ diaryId }: { diaryId?: string }) {
           diaryThumbnail: thumbnail,
           isDiaryPublic: isPublic,
         })
+      } else {
+        await saveDiary()
       }
 
       setTitle('')

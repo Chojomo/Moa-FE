@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 import { putAutoSave } from '@/lib/api/diary'
 
 export default function useAutoSaveDiary() {
-  const { mutate } = useMutation({
+  const { mutateAsync } = useMutation({
     mutationFn: putAutoSave,
     onSuccess: (data) => {
       console.log(data)
@@ -16,5 +16,5 @@ export default function useAutoSaveDiary() {
     },
   })
 
-  return { mutate }
+  return { mutateAsync }
 }
