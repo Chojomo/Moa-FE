@@ -27,7 +27,7 @@ export default function Post({ diaryId }: { diaryId?: string }) {
 
   const { mutate: initDiary } = useInitDiary()
   const { mutateAsync: postDiary } = usePostDiary()
-  const { mutate: autoSaveDiary } = useAutoSaveDiary()
+  const { mutateAsync: autoSaveDiary } = useAutoSaveDiary()
 
   const router = useRouter()
 
@@ -56,8 +56,9 @@ export default function Post({ diaryId }: { diaryId?: string }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const saveDiary = () => {
-    autoSaveDiary({
+  const saveDiary = async () => {
+    await autoSaveDiary({
+      diaryId,
       diaryTitle: title,
       diaryContents: content,
       isDiaryPublic: false,
@@ -69,6 +70,12 @@ export default function Post({ diaryId }: { diaryId?: string }) {
       const getPopst = async () => {
         const { data } = await getDiaryDetail({ diaryId })
         console.log(data)
+        const { diaryTitle, diaryContents, isDiaryPublic, diaryThumbnail } = data
+
+        setTitle(diaryTitle)
+        setContent(diaryContents)
+        setThumbnail(diaryThumbnail)
+        setIsPublic(isDiaryPublic)
       }
 
       getPopst()
@@ -106,11 +113,13 @@ export default function Post({ diaryId }: { diaryId?: string }) {
           diaryThumbnail: thumbnail,
           isDiaryPublic: isPublic,
         })
+      } else {
+        await saveDiary()
       }
 
       setTitle('')
       setContent('')
-      router.push('/diary')
+      router.push(isEditMode ? `/diary/${diaryId}` : '/diary')
     } catch (error) {
       console.error('게시물 등록 중 오류:', error)
       toast.error('게시물 등록 실패')

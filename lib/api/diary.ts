@@ -73,12 +73,14 @@ export const uploadImage = async (image: File) => {
 }
 
 type AutoSave = {
+  diaryId?: string
   diaryTitle: string
   diaryContents: string
   isDiaryPublic: boolean
 }
 
 export const putAutoSave = async ({
+  diaryId,
   diaryTitle = '',
   diaryContents = '',
   isDiaryPublic = false,
@@ -86,7 +88,7 @@ export const putAutoSave = async ({
   try {
     const apiUrl = '/api/diary'
     const token = localStorage.getItem('authToken')
-    const diaryId = localStorage.getItem('diaryId')
+    const id = diaryId || localStorage.getItem('diaryId')
 
     if (!token) {
       throw new Error('로그인 상태를 확인하세요.')
@@ -99,7 +101,7 @@ export const putAutoSave = async ({
         Authorization: token,
       },
       body: JSON.stringify({
-        diaryId,
+        diaryId: id,
         diaryTitle,
         diaryContents,
         isDiaryPublic,

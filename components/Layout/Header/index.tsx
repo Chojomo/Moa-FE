@@ -16,7 +16,7 @@ export default function Header() {
   const { isLogin } = useAuthStore()
   const pathname = usePathname()
 
-  if (pathname === '/diary/post') return null
+  if (pathname.includes('/diary/post')) return null
 
   return (
     <header className="z-30 fixed top-0 left-0 bg-background w-full py-[12px] px-[5%] flex items-center justify-between">
