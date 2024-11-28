@@ -1,4 +1,5 @@
 import { Icon } from '@/components/Icon'
+import MDEditor from '@uiw/react-md-editor'
 
 type ContentProps = {
   content: string
@@ -12,7 +13,7 @@ export default function Content({ content }: ContentProps) {
         <Icon name="Public" width={20} height={20} />
         {/* <Icon name="Unpublic" width={20} height={20} /> */}
       </p>
-      <div className="px-[25px] py-[10%]">{content}</div>
+      <MDEditor.Markdown className="px-[25px] py-[10%]" source={content} />
     </div>
   )
 }
