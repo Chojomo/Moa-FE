@@ -34,11 +34,15 @@ export default function Head({ diaryId, title }: HeadProps) {
             <p className="text-[11px] md:text-[13px]">2023.11.10 </p>
           </div>
         </div>
-        <div className="flex gap-3">
-          <Link href={`/diary/post/${diaryId}`} className="p-2">
+        <div className="flex items-center gap-1 md:gap-3">
+          <Link href={`/diary/post/${diaryId}`} className="p-2 text-[0.8rem] md:text-[1rem]">
             수정
           </Link>
-          <Button type="button" ariaLabel="삭제 버튼" className="mr-3 p-2">
+          <Button
+            type="button"
+            ariaLabel="삭제 버튼"
+            className="mr-1 md:mr-3 p-2 text-[0.8rem] md:text-[1rem]"
+          >
             삭제
           </Button>
           <FollowButton />
