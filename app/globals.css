@@ -17,8 +17,9 @@
 
 .w-md-editor-input,
 .wmde-markdown {
+  background-color: var(--background) !important;
   color: var(--body-text) !important;
-  font-size: 1.125rem !important;
+  font-size: 1rem !important;
 }
 
 .w-md-editor-text {
