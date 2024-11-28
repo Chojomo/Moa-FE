@@ -1,10 +1,13 @@
 'use client'
 
+import { useState } from 'react'
 import Button from '@/components/Button'
 import { Icon } from '@/components/Icon'
 import usePostLike from '@/hooks/like/usePostLike'
+import LikesModal from './LikesModal'
 
 export default function Like({ diaryId }: { diaryId: string }) {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const { mutateAsync: postLike } = usePostLike()
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -34,9 +37,11 @@ export default function Like({ diaryId }: { diaryId: string }) {
         type="button"
         ariaLabel="게시물 좋아요 한 유저 리스트"
         className="text-body-text text-[0.8rem]"
+        onClick={() => setIsModalOpen((prev) => !prev)}
       >
         이 포스트를 좋아하는 사람들 &#62;
       </Button>
+      <LikesModal isOpen={isModalOpen} handleClose={() => setIsModalOpen(false)} />
     </div>
   )
 }
