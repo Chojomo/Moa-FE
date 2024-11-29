@@ -21,6 +21,12 @@ module.exports = {
         port: '',
         pathname: '/moa/diaries/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'gjs-photoday-practice.s3.ap-northeast-2.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   webpack: (config, { isServer }) => {
