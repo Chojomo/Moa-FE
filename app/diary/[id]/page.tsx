@@ -29,6 +29,7 @@ export default function DiaryDetail({ params }: { params: Params }) {
   useEffect(() => {
     const getPopst = async () => {
       const { data } = await getDiaryDetail({ diaryId: params.id })
+      console.log(data)
       setPost(data)
     }
 
@@ -48,10 +49,10 @@ export default function DiaryDetail({ params }: { params: Params }) {
         publishedAt={post.diaryPublishedAt}
       />
       <Content content={post.diaryContents} />
-      <Like diaryId={params.id} />
-      <CommentPost diaryId={params.id} />
+      <Like diaryId={post.diaryId} isLiked={post.isLiked} />
+      <CommentPost diaryId={post.diaryId} />
       <Comments />
-      <Footer diaryId={params.id} />
+      <Footer diaryId={post.diaryId} />
     </div>
   )
 }
