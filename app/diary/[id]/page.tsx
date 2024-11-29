@@ -50,7 +50,7 @@ export default function DiaryDetail({ params }: { params: Params }) {
       />
       <Content content={post.diaryContents} />
       <Like diaryId={post.diaryId} isLiked={post.isLiked} />
-      <CommentPost diaryId={post.diaryId} />
+      <CommentPost diaryId={post.diaryId} profile={post.diaryAuthorProfileImage} />
       <Comments />
       <Footer diaryId={post.diaryId} />
     </div>
