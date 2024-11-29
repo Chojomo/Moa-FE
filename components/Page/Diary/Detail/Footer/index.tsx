@@ -1,15 +1,22 @@
 'use client'
 
-import Button from '@/components/Button'
+import { useState } from 'react'
 import { Icon } from '@/components/Icon'
+import Button from '@/components/Button'
 import usePostLike from '@/hooks/like/usePostLike'
 
-export default function Footer({ diaryId }: { diaryId: string }) {
+type FooterProps = {
+  diaryId: string
+  isLiked: boolean
+}
+
+export default function Footer({ diaryId, isLiked }: FooterProps) {
+  const [isLike, setIsLike] = useState<boolean>(isLiked)
   const { mutateAsync: postLike } = usePostLike()
 
   const buttons = [
     {
-      name: 'Unlike',
+      name: isLike ? 'Heart' : 'Unlike',
       label: '좋아요 버튼',
       addClass: 'flex items-center gap-3 text-[#A6A6A6] hover:text-red-500 transition-colors',
       width: 22,
@@ -20,6 +27,7 @@ export default function Footer({ diaryId }: { diaryId: string }) {
           await postLike({
             diaryId,
           })
+          setIsLike((prev) => !prev)
         } catch (error) {
           console.error('게시물 등록 중 오류:', error)
         }
