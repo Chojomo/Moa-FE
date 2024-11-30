@@ -9,12 +9,18 @@ type Params = {
 }
 
 type Post = {
+  diaryAuthorId: string
+  diaryAuthorNickname: string
+  diaryAuthorProfileImage: string
   diaryContents: string
   diaryId: string
-  diaryStatus: number
-  diaryThumbnail: null | string
+  diaryPublishedAt: string
+  diaryThumbnail: string
   diaryTitle: string
   isDiaryPublic: boolean
+  isLiked: boolean
+  likeCount: number
+  viewCount: number
 }
 
 export default function DiaryDetail({ params }: { params: Params }) {
@@ -35,12 +41,17 @@ export default function DiaryDetail({ params }: { params: Params }) {
 
   return (
     <div className="relative w-[100vw] h-[100vh] flex flex-col pt-[100px] md:pt-[140px] overflow-auto px-[5%] md:px-[20%] pb-[60px]">
-      <Head title={post.diaryTitle} />
+      <Head
+        diaryId={post.diaryId}
+        title={post.diaryTitle}
+        profile={post.diaryAuthorProfileImage}
+        publishedAt={post.diaryPublishedAt}
+      />
       <Content content={post.diaryContents} />
-      <Like diaryId={params.id} />
-      <CommentPost diaryId={params.id} />
+      <Like diaryId={post.diaryId} isLiked={post.isLiked} />
+      <CommentPost diaryId={post.diaryId} profile={post.diaryAuthorProfileImage} />
       <Comments />
-      <Footer diaryId={params.id} />
+      <Footer diaryId={post.diaryId} isLiked={post.isLiked} />
     </div>
   )
 }

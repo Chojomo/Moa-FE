@@ -8,7 +8,12 @@ import 'react-toastify/dist/ReactToastify.css'
 
 import usePostComment from '@/hooks/comment/usePostComment'
 
-export default function CommentPost({ diaryId }: { diaryId: string }) {
+type CommentPostProps = {
+  diaryId: string
+  profile: string
+}
+
+export default function CommentPost({ diaryId, profile }: CommentPostProps) {
   const [comment, setComment] = useState<string>('')
 
   const { mutateAsync: postComment } = usePostComment()
@@ -35,11 +40,11 @@ export default function CommentPost({ diaryId }: { diaryId: string }) {
   return (
     <div className="w-full flex-center border-y px-[16px] py-[50px] gap-[25px]">
       <Image
-        src="/images/dfsfs.jpeg"
+        src={profile}
         alt="user profile"
-        width={60}
+        width={55}
         height={60}
-        quality={75}
+        quality={55}
         loading="lazy"
         draggable="false"
         objectFit="cover"

@@ -4,11 +4,13 @@ import Button from '@/components/Button'
 import { FollowButton } from './Button'
 
 type HeadProps = {
-  diaryId?: string
+  diaryId: string
   title: string
+  profile: string
+  publishedAt: string
 }
 
-export default function Head({ diaryId, title }: HeadProps) {
+export default function Head({ diaryId, title, profile, publishedAt }: HeadProps) {
   return (
     <div className="w-full flex flex-col pb-[30px] border-b">
       <h1 className="w-full break-words text-[24px] md:text-[32px] text-heading-text font-bold mb-[35px]">
@@ -17,10 +19,10 @@ export default function Head({ diaryId, title }: HeadProps) {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-[15px]">
           <Image
-            src="/images/dfsfs.jpeg"
+            src={profile}
             alt="user profile"
-            width={60}
-            height={60}
+            width={55}
+            height={55}
             quality={75}
             loading="lazy"
             draggable="false"
@@ -31,7 +33,7 @@ export default function Head({ diaryId, title }: HeadProps) {
             <p className="text-main-blue text-[16px] md:text-[19px] font-semibold mb-[5px]">
               ichubtou
             </p>
-            <p className="text-[11px] md:text-[13px]">2023.11.10 </p>
+            <p className="text-[11px] md:text-[13px]">{publishedAt.split('T')[0]}</p>
           </div>
         </div>
         <div className="flex items-center gap-1 md:gap-3">
