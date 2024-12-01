@@ -8,7 +8,21 @@ type Params = {
   id: string
 }
 
+type Comment = {
+  commentAuthorId: string
+  commentContents: string
+  commentId: string
+  createdAt: string
+  diaryAuthorNickname: string
+  diaryAuthorProfileImage: string
+  isCommentOwner: boolean
+  isLiked: boolean
+  likeCount: number
+}
+
 type Post = {
+  comment: Comment[]
+  commentCount: number
   diaryAuthorId: string
   diaryAuthorNickname: string
   diaryAuthorProfileImage: string
@@ -17,6 +31,7 @@ type Post = {
   diaryPublishedAt: string
   diaryThumbnail: string
   diaryTitle: string
+  isDiaryOwner: boolean
   isDiaryPublic: boolean
   isLiked: boolean
   likeCount: number
@@ -30,6 +45,7 @@ export default function DiaryDetail({ params }: { params: Params }) {
     const getPopst = async () => {
       const { data } = await getDiaryDetail({ diaryId: params.id })
       setPost(data)
+      console.log(data)
     }
 
     getPopst()
@@ -50,7 +66,7 @@ export default function DiaryDetail({ params }: { params: Params }) {
       <Content content={post.diaryContents} />
       <Like diaryId={post.diaryId} isLiked={post.isLiked} />
       <CommentPost diaryId={post.diaryId} profile={post.diaryAuthorProfileImage} />
-      <Comments />
+      <Comments commentCount={post.commentCount} />
       <Footer diaryId={post.diaryId} isLiked={post.isLiked} />
     </div>
   )
