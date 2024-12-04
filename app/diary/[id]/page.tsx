@@ -6,6 +6,9 @@ import { Head, Content, Like, CommentPost, Comments, Footer } from '@/components
 import { getDiaryDetail } from '@/lib/api/diary'
 import { Post } from '@/types/diary'
 
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 type Params = {
   id: string
 }
@@ -28,15 +31,25 @@ export default function DiaryDetail({ params }: { params: Params }) {
     return <div>Loading...</div>
   }
 
+  const handleToast = (message: string) => {
+    toast.error(message)
+  }
+
   return (
     <div className="relative w-[100vw] h-[100vh] flex flex-col pt-[100px] md:pt-[140px] overflow-auto px-[5%] md:px-[20%] pb-[60px]">
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
       <Head post={post} isLogin={isLogin} />
       <Content
         content={post.diaryContents}
         isDiaryOwner={post.isDiaryOwner}
         isDiaryPublic={post.isDiaryPublic}
       />
-      <Like diaryId={post.diaryId} isLiked={post.isLiked} />
+      <Like
+        diaryId={post.diaryId}
+        isLiked={post.isLiked}
+        isLogin={isLogin}
+        handleToast={handleToast}
+      />
       <CommentPost diaryId={post.diaryId} profile={post.diaryAuthorProfileImage} />
       <Comments commentCount={post.commentCount} />
       <Footer diaryId={post.diaryId} isLiked={post.isLiked} />
