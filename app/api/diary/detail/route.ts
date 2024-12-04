@@ -4,12 +4,7 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
   const diaryId = searchParams.get('diaryId')
 
-  const token = req.headers.get('authorization')
   const apiUrl = `${process.env.API_URL}/api/v1/diaries/${diaryId}`
-
-  if (!token) {
-    throw new Error('인증 헤더가 없습니다.')
-  }
 
   if (!diaryId) {
     throw new Error('다이어리가 존재하지 않습니다.')
@@ -20,7 +15,6 @@ export async function GET(req: NextRequest) {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: token,
       },
     })
     const data = await response.json()
