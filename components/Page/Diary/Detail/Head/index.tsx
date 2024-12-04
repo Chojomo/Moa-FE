@@ -1,13 +1,16 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { Post } from '@/types/diary'
-import { useAuthStore } from '@/store/useAuth'
 
 import Button from '@/components/Button'
 import { FollowButton } from './Button'
 
-export default function Head({ post }: { post: Post }) {
-  const { isLogin } = useAuthStore()
+type HeadProps = {
+  post: Post
+  isLogin: boolean
+}
+
+export default function Head({ post, isLogin }: HeadProps) {
   const {
     diaryId,
     diaryTitle: title,
