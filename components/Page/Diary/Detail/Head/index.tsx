@@ -59,7 +59,7 @@ export default function Head({ post, isLogin }: HeadProps) {
               </Button>
             </>
           )}
-          {isLogin && <FollowButton />}
+          {isLogin && !isDiaryOwner && <FollowButton />}
         </div>
       </div>
     </div>
