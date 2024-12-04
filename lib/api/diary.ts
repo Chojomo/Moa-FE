@@ -231,18 +231,26 @@ export const getDiarys = async ({ pageParam = 0, sortType = 'viewCount' }) => {
 }
 
 export const getDiaryDetail = async ({ diaryId }: { diaryId: string }) => {
-  const apiUrl = `${process.env.NEXT_PUBLIC_NEXT_API_URL}/api/diary/detail?diaryId=${diaryId}`
-
   if (!diaryId) {
-    throw new Error('다이어리가 되지 존재하지 않습니다.')
+    throw new Error('다이어리가 존재하지 않습니다.')
   }
 
+  const token = localStorage.getItem('authToken')
+  const apiUrl = `${process.env.NEXT_PUBLIC_NEXT_API_URL}/api/diary/detail?diaryId=${diaryId}`
+
   try {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    }
+
+    // token 있는 경우만
+    if (token) {
+      headers.Authorization = token
+    }
+
     const response = await fetch(apiUrl, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
     })
 
     const data = await response.json()
