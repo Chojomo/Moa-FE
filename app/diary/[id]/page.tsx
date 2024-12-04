@@ -31,7 +31,11 @@ export default function DiaryDetail({ params }: { params: Params }) {
   return (
     <div className="relative w-[100vw] h-[100vh] flex flex-col pt-[100px] md:pt-[140px] overflow-auto px-[5%] md:px-[20%] pb-[60px]">
       <Head post={post} isLogin={isLogin} />
-      <Content content={post.diaryContents} />
+      <Content
+        content={post.diaryContents}
+        isDiaryOwner={post.isDiaryOwner}
+        isDiaryPublic={post.isDiaryPublic}
+      />
       <Like diaryId={post.diaryId} isLiked={post.isLiked} />
       <CommentPost diaryId={post.diaryId} profile={post.diaryAuthorProfileImage} />
       <Comments commentCount={post.commentCount} />
