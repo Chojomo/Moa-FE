@@ -1,23 +1,31 @@
 'use client'
 
 import { useState } from 'react'
-import Button from '@/components/Button'
 import { Icon } from '@/components/Icon'
+
+import Button from '@/components/Button'
 import usePostLike from '@/hooks/like/usePostLike'
 import LikesModal from './LikesModal'
 
 type LikeProps = {
   diaryId: string
   isLiked: boolean
+  isLogin: boolean
+  handleToast: (message: string) => void
 }
 
-export default function Like({ diaryId, isLiked }: LikeProps) {
+export default function Like({ diaryId, isLiked, isLogin, handleToast }: LikeProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [isLike, setIsLike] = useState<boolean>(isLiked)
   const { mutateAsync: postLike } = usePostLike()
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
+
+    if (!isLogin) {
+      handleToast('로그인 후 이용하실 수 있습니다.')
+      return
+    }
 
     try {
       await postLike({

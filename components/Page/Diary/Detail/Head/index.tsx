@@ -1,16 +1,24 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { Post } from '@/types/diary'
+
 import Button from '@/components/Button'
 import { FollowButton } from './Button'
 
 type HeadProps = {
-  diaryId: string
-  title: string
-  profile: string
-  publishedAt: string
+  post: Post
+  isLogin: boolean
 }
 
-export default function Head({ diaryId, title, profile, publishedAt }: HeadProps) {
+export default function Head({ post, isLogin }: HeadProps) {
+  const {
+    diaryId,
+    diaryTitle: title,
+    diaryAuthorProfileImage: profile,
+    diaryPublishedAt: publishedAt,
+    isDiaryOwner,
+  } = post
+
   return (
     <div className="w-full flex flex-col pb-[30px] border-b">
       <h1 className="w-full break-words text-[24px] md:text-[32px] text-heading-text font-bold mb-[35px]">
@@ -37,17 +45,21 @@ export default function Head({ diaryId, title, profile, publishedAt }: HeadProps
           </div>
         </div>
         <div className="flex items-center gap-1 md:gap-3">
-          <Link href={`/diary/post/${diaryId}`} className="p-2 text-[0.8rem] md:text-[1rem]">
-            수정
-          </Link>
-          <Button
-            type="button"
-            ariaLabel="삭제 버튼"
-            className="mr-1 md:mr-3 p-2 text-[0.8rem] md:text-[1rem]"
-          >
-            삭제
-          </Button>
-          <FollowButton />
+          {isDiaryOwner && (
+            <>
+              <Link href={`/diary/post/${diaryId}`} className="p-2 text-[0.8rem] md:text-[1rem]">
+                수정
+              </Link>
+              <Button
+                type="button"
+                ariaLabel="삭제 버튼"
+                className="mr-1 md:mr-3 p-2 text-[0.8rem] md:text-[1rem]"
+              >
+                삭제
+              </Button>
+            </>
+          )}
+          {isLogin && !isDiaryOwner && <FollowButton />}
         </div>
       </div>
     </div>

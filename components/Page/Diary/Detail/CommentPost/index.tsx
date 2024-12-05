@@ -3,26 +3,30 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Button from '@/components/Button'
-// import { ToastContainer, toast } from 'react-toastify'
-import 'react-toastify/dist/ReactToastify.css'
-
 import usePostComment from '@/hooks/comment/usePostComment'
 
 type CommentPostProps = {
+  isLogin: boolean
   diaryId: string
   profile: string
+  handleToast: (message: string) => void
 }
 
-export default function CommentPost({ diaryId, profile }: CommentPostProps) {
+export default function CommentPost({ isLogin, diaryId, profile, handleToast }: CommentPostProps) {
   const [comment, setComment] = useState<string>('')
-
   const { mutateAsync: postComment } = usePostComment()
 
   const handleButtonClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
 
+    if (!isLogin) {
+      handleToast('로그인 후 이용하실 수 있습니다.')
+      return
+    }
+
     if (!comment.trim()) {
-      // toast.error('댓글을 입력하세요!')
+      handleToast('댓글을 입력하세요!')
+      return
     }
 
     try {
@@ -55,6 +59,14 @@ export default function CommentPost({ diaryId, profile }: CommentPostProps) {
         placeholder="모두가 함께 보는 공간입니다. 타인을 존중하는 멋진 댓글을 작성해 보세요!"
         value={comment}
         onChange={(e) => setComment(e.target.value)}
+        onClick={(e) => {
+          e.stopPropagation()
+
+          if (!isLogin) {
+            handleToast('로그인 후 이용하실 수 있습니다.')
+          }
+        }}
+        disabled={!isLogin}
         className="flex-grow h-[80px] text-[13px] rounded-[10px] focus:outline-none focus:ring-0 px-4 py-2 border"
       />
       <Button

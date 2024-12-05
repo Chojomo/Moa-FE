@@ -3,26 +3,29 @@ import { NextRequest } from 'next/server'
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
   const diaryId = searchParams.get('diaryId')
-
-  const token = req.headers.get('authorization')
   const apiUrl = `${process.env.API_URL}/api/v1/diaries/${diaryId}`
-
-  if (!token) {
-    throw new Error('인증 헤더가 없습니다.')
-  }
 
   if (!diaryId) {
     throw new Error('다이어리가 존재하지 않습니다.')
   }
 
+  const token = req.headers.get('authorization')
+
   try {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    }
+
+    // token 있는 경우만
+    if (token) {
+      headers.Authorization = token
+    }
+
     const response = await fetch(apiUrl, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: token,
-      },
+      headers,
     })
+
     const data = await response.json()
 
     if (!response.ok) {
