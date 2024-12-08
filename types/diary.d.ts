@@ -19,13 +19,28 @@ export type Comment = {
   isCommentOwner: boolean
   isLiked: boolean
   likeCount: number
-  replies?: Comment[]
+  replies?: Reply[]
 }
 
-export type Replies = Comment[]
+export type Reply = {
+  createdAt: string
+  isLiked: boolean
+  isReplyOwner: boolean
+  likeCount: number
+  replyAuthorId: string
+  replyAuthorNickname: string
+  replyAuthorProfileImage: string
+  replyContents: string
+  replyId: string
+}
+
+export type Replies = Reply[]
+export type Comments = {
+  comments: Comment[]
+}
 
 export type Post = {
-  comments: Comment[]
+  comment: Comments
   commentCount: number
   diaryAuthorId: string
   diaryAuthorNickname: string

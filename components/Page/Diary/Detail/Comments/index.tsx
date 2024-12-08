@@ -1,16 +1,22 @@
+import { Comments as PostComment } from '@/types/diary'
 import Comment from './Comment'
 
 type CommentsProps = {
+  isLogin: boolean
   commentCount: number
+  comment: PostComment
 }
 
-export default function Comments({ commentCount }: CommentsProps) {
+export default function Comments({ isLogin, commentCount, comment }: CommentsProps) {
+  const { comments } = comment
   return (
     <div className="w-full pb-[10%]">
       <p className="text-[16px] font-bold py-[25px]">
         댓글 <span className="text-main-blue">{commentCount}</span>
       </p>
-      <Comment />
+      {comments.map((c) => (
+        <Comment key={c.commentId} isLogin={isLogin} comment={c} />
+      ))}
     </div>
   )
 }
