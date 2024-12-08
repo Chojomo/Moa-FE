@@ -6,13 +6,14 @@ export type Diary = {
   diaryTitle: string
   diaryContents: string
   diaryPublishedAt: string
-  totalLikes: number
+  likeCount: number
+  commentCount: number
 }
 
 export type Comment = {
   commentAuthorId: string
   commentContents: string
-  commentId: string
+  commentId: stringå
   createdAt: string
   diaryAuthorNickname: string
   diaryAuthorProfileImage: string
