@@ -56,7 +56,11 @@ export default function DiaryDetail({ params }: { params: Params }) {
         isLogin={isLogin}
         handleToast={handleToast}
       />
-      <Comments commentCount={post.commentCount} />
+      <Comments
+        isLogin={isLogin}
+        comments={post.comment.comments}
+        commentCount={post.commentCount}
+      />
       <Footer diaryId={post.diaryId} isLiked={post.isLiked} />
     </div>
   )

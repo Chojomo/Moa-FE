@@ -1,14 +1,13 @@
-import { Comments as PostComment } from '@/types/diary'
+import { Comment as PostComment } from '@/types/diary'
 import Comment from './Comment'
 
 type CommentsProps = {
   isLogin: boolean
   commentCount: number
-  comment: PostComment
+  comments: PostComment[]
 }
 
-export default function Comments({ isLogin, commentCount, comment }: CommentsProps) {
-  const { comments } = comment
+export default function Comments({ isLogin, commentCount, comments }: CommentsProps) {
   return (
     <div className="w-full pb-[10%]">
       <p className="text-[16px] font-bold py-[25px]">
