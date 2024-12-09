@@ -9,9 +9,10 @@ type FooterProps = {
   diaryId: string
   isLike: boolean
   setIsLike: Dispatch<SetStateAction<boolean>>
+  handleClick: () => void
 }
 
-export default function Footer({ diaryId, isLike, setIsLike }: FooterProps) {
+export default function Footer({ diaryId, isLike, setIsLike, handleClick }: FooterProps) {
   const { mutateAsync: postLike } = usePostLike()
 
   const buttons = [
@@ -40,9 +41,7 @@ export default function Footer({ diaryId, isLike, setIsLike }: FooterProps) {
       addClass: 'flex items-center gap-3 text-[#A6A6A6] hover:text-[#43D8AA] transition-colors',
       width: 21,
       heignt: 21,
-      onCLick: () => {
-        console.log('Comment')
-      },
+      onCLick: handleClick,
       children: <span className="text-[#A6A6A6]">32</span>,
     },
     {
