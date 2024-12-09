@@ -45,7 +45,7 @@ export default function Head({ post, isLogin }: HeadProps) {
           </div>
         </div>
         <div className="flex items-center gap-1 md:gap-3">
-          {isDiaryOwner && (
+          {isLogin && isDiaryOwner && (
             <>
               <Link href={`/diary/post/${diaryId}`} className="p-2 text-[0.8rem] md:text-[1rem]">
                 수정
