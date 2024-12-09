@@ -52,7 +52,6 @@ function Cmt({ isReply = false, profile, name, createdAt, content }: CmtProps) {
 }
 
 export default function Comment({ isLogin, comment }: CommentProps) {
-  console.log(comment)
   const [reply, setReply] = useState<string>('')
   const [isCommentOpen, setIsCommentOpen] = useState<boolean>(false)
 

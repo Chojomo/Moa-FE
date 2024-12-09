@@ -21,7 +21,6 @@ export default function DiaryDetail({ params }: { params: Params }) {
     const getPopst = async () => {
       const { data } = await getDiaryDetail({ diaryId: params.id })
       setPost(data)
-      console.log(data)
     }
 
     getPopst()
