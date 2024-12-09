@@ -1,17 +1,17 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Dispatch, SetStateAction } from 'react'
 import { Icon } from '@/components/Icon'
 import Button from '@/components/Button'
 import usePostLike from '@/hooks/like/usePostLike'
 
 type FooterProps = {
   diaryId: string
-  isLiked: boolean
+  isLike: boolean
+  setIsLike: Dispatch<SetStateAction<boolean>>
 }
 
-export default function Footer({ diaryId, isLiked }: FooterProps) {
-  const [isLike, setIsLike] = useState<boolean>(isLiked)
+export default function Footer({ diaryId, isLike, setIsLike }: FooterProps) {
   const { mutateAsync: postLike } = usePostLike()
 
   const buttons = [

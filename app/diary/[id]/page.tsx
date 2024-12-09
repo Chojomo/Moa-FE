@@ -16,11 +16,13 @@ type Params = {
 export default function DiaryDetail({ params }: { params: Params }) {
   const { isLogin } = useAuthStore()
   const [post, setPost] = useState<Post | null>(null)
+  const [isLike, setIsLike] = useState<boolean>(false)
 
   useEffect(() => {
     const getPopst = async () => {
       const { data } = await getDiaryDetail({ diaryId: params.id })
       setPost(data)
+      setIsLike(data.isLiked)
     }
 
     getPopst()
@@ -45,7 +47,8 @@ export default function DiaryDetail({ params }: { params: Params }) {
       />
       <Like
         diaryId={post.diaryId}
-        isLiked={post.isLiked}
+        isLike={isLike}
+        setIsLike={setIsLike}
         isLogin={isLogin}
         handleToast={handleToast}
       />
@@ -60,7 +63,7 @@ export default function DiaryDetail({ params }: { params: Params }) {
         comments={post.comment.comments}
         commentCount={post.commentCount}
       />
-      <Footer diaryId={post.diaryId} isLiked={post.isLiked} />
+      <Footer diaryId={post.diaryId} isLike={isLike} setIsLike={setIsLike} />
     </div>
   )
 }
