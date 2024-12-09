@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Dispatch, SetStateAction } from 'react'
 import { Icon } from '@/components/Icon'
 
 import Button from '@/components/Button'
@@ -9,14 +9,14 @@ import LikesModal from './LikesModal'
 
 type LikeProps = {
   diaryId: string
-  isLiked: boolean
+  isLike: boolean
+  setIsLike: Dispatch<SetStateAction<boolean>>
   isLogin: boolean
   handleToast: (message: string) => void
 }
 
-export default function Like({ diaryId, isLiked, isLogin, handleToast }: LikeProps) {
+export default function Like({ diaryId, isLike, setIsLike, isLogin, handleToast }: LikeProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-  const [isLike, setIsLike] = useState<boolean>(isLiked)
   const { mutateAsync: postLike } = usePostLike()
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {

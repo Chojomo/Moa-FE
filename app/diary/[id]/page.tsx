@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useAuthStore } from '@/store/useAuth'
 import { Head, Content, Like, CommentPost, Comments, Footer } from '@/components/Page/Diary/Detail'
 import { getDiaryDetail } from '@/lib/api/diary'
@@ -16,12 +16,14 @@ type Params = {
 export default function DiaryDetail({ params }: { params: Params }) {
   const { isLogin } = useAuthStore()
   const [post, setPost] = useState<Post | null>(null)
+  const [isLike, setIsLike] = useState<boolean>(false)
+  const commentPostRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const getPopst = async () => {
       const { data } = await getDiaryDetail({ diaryId: params.id })
       setPost(data)
-      console.log(data)
+      setIsLike(data.isLiked)
     }
 
     getPopst()
@@ -35,6 +37,12 @@ export default function DiaryDetail({ params }: { params: Params }) {
     toast.error(message)
   }
 
+  const scrollToCommentPost = () => {
+    if (commentPostRef.current) {
+      commentPostRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+  }
+
   return (
     <div className="relative w-[100vw] h-[100vh] flex flex-col pt-[100px] md:pt-[140px] overflow-auto px-[5%] md:px-[20%] pb-[60px]">
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
@@ -46,22 +54,30 @@ export default function DiaryDetail({ params }: { params: Params }) {
       />
       <Like
         diaryId={post.diaryId}
-        isLiked={post.isLiked}
+        isLike={isLike}
+        setIsLike={setIsLike}
         isLogin={isLogin}
         handleToast={handleToast}
       />
-      <CommentPost
-        diaryId={post.diaryId}
-        profile={post.diaryAuthorProfileImage}
-        isLogin={isLogin}
-        handleToast={handleToast}
-      />
+      <div ref={commentPostRef}>
+        <CommentPost
+          diaryId={post.diaryId}
+          profile={post.diaryAuthorProfileImage}
+          isLogin={isLogin}
+          handleToast={handleToast}
+        />
+      </div>
       <Comments
         isLogin={isLogin}
         comments={post.comment.comments}
         commentCount={post.commentCount}
       />
-      <Footer diaryId={post.diaryId} isLiked={post.isLiked} />
+      <Footer
+        diaryId={post.diaryId}
+        isLike={isLike}
+        setIsLike={setIsLike}
+        handleClick={scrollToCommentPost}
+      />
     </div>
   )
 }

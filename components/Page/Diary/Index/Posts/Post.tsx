@@ -19,9 +19,8 @@ export default function Post({ index, post }: PostProps) {
     likeCount,
     commentCount,
   } = post
-  let content = diaryContents.replace(/!\[Image\][^]*?-->/, '')
 
-  console.log(post)
+  let content = diaryContents.replace(/!\[Image\][^]*?-->/, '')
 
   if (content.length > 100) {
     content = content.substring(0, 30)
