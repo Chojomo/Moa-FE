@@ -10,8 +10,18 @@ type PostProps = {
 }
 
 export default function Post({ index, post }: PostProps) {
-  const { diaryId, diaryAuthorNickname, diaryThumbnail, diaryTitle, diaryContents } = post
+  const {
+    diaryId,
+    diaryAuthorNickname,
+    diaryThumbnail,
+    diaryTitle,
+    diaryContents,
+    likeCount,
+    commentCount,
+  } = post
   let content = diaryContents.replace(/!\[Image\][^]*?-->/, '')
+
+  console.log(post)
 
   if (content.length > 100) {
     content = content.substring(0, 30)
@@ -61,11 +71,11 @@ export default function Post({ index, post }: PostProps) {
         <div className="text-[10px] font-bold flex items-center gap-3 pointer-events-none">
           <div className="flex gap-2">
             <Icon name="Heart" width={15} height={15} />
-            <span>3</span>
+            <span>{likeCount}</span>
           </div>
           <div className="flex gap-2">
             <Icon name="Comment" width={17} height={17} />
-            <span>2</span>
+            <span>{commentCount}</span>
           </div>
         </div>
       </div>
