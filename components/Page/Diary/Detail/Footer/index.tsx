@@ -69,7 +69,9 @@ export default function Footer({
       addClass: 'text-[#A6A6A6] hover:text-main-blue transition-colors',
       width: 18,
       heignt: 18,
-      onCLick: () => {
+      onCLick: async () => {
+        const url = window.location.href
+        await navigator.clipboard.writeText(url)
         handleToast('링크가 복사되었습니다.')
 
         console.log(isTouchDevice())
