@@ -4,15 +4,24 @@ import { useState, Dispatch, SetStateAction } from 'react'
 import { Icon } from '@/components/Icon'
 import Button from '@/components/Button'
 import usePostLike from '@/hooks/like/usePostLike'
+import { isTouchDevice } from '@/utils'
 
 type FooterProps = {
   diaryId: string
   isLike: boolean
   setIsLike: Dispatch<SetStateAction<boolean>>
+  handleToast: (message: string) => void
   handleClick: () => void
 }
 
-export default function Footer({ diaryId, isLike, setIsLike, handleClick }: FooterProps) {
+export default function Footer({
+  diaryId,
+  isLike,
+  setIsLike,
+  handleToast,
+  handleClick,
+}: FooterProps) {
+  const [isBookmarked, setIsBookmarked] = useState<boolean>(false)
   const { mutateAsync: postLike } = usePostLike()
 
   const buttons = [
@@ -51,7 +60,7 @@ export default function Footer({ diaryId, isLike, setIsLike, handleClick }: Foot
       width: 20,
       heignt: 20,
       onCLick: () => {
-        console.log('Bookmark')
+        setIsBookmarked((prev) => !prev)
       },
     },
     {
@@ -61,7 +70,9 @@ export default function Footer({ diaryId, isLike, setIsLike, handleClick }: Foot
       width: 18,
       heignt: 18,
       onCLick: () => {
-        console.log('Share')
+        handleToast('링크가 복사되었습니다.')
+
+        console.log(isTouchDevice())
       },
     },
     {
@@ -81,7 +92,7 @@ export default function Footer({ diaryId, isLike, setIsLike, handleClick }: Foot
       <Button type="button" ariaLabel="뒤로가기 버튼" className="px-3 py-1">
         <Icon name="Back" width={20} height={20} />
       </Button>
-      <div className="flex items-center gap-[30px]">
+      <div className="relative flex items-center gap-[30px]">
         {buttons.map((button) => (
           <Button
             key={button.name}
