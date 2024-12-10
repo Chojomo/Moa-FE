@@ -306,6 +306,10 @@
   }
 }
 
+.placeholder-pre-line::placeholder {
+  white-space: pre-line;
+}
+
 @layer base {
   * {
     @apply border-border;
