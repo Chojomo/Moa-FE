@@ -47,13 +47,16 @@ export default function Head({ post, isLogin }: HeadProps) {
         <div className="flex items-center gap-1 md:gap-3">
           {isLogin && isDiaryOwner && (
             <>
-              <Link href={`/diary/post/${diaryId}`} className="p-2 text-[0.8rem] md:text-[1rem]">
+              <Link
+                href={`/diary/post/${diaryId}`}
+                className="p-2 text-[0.8rem] md:text-[1rem] hover:text-[#000000] dark:hover:text-[#f5f5f5]"
+              >
                 수정
               </Link>
               <Button
                 type="button"
                 ariaLabel="삭제 버튼"
-                className="mr-1 md:mr-3 p-2 text-[0.8rem] md:text-[1rem]"
+                className="mr-1 md:mr-3 p-2 text-[0.8rem] md:text-[1rem] hover:text-[#000000] dark:hover:text-[#f5f5f5]"
               >
                 삭제
               </Button>
