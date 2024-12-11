@@ -279,6 +279,16 @@
     border-color: transparent transparent var(--tooltip-bg) transparent;
   }
 
+  .tooltip-arrow-bottom::after {
+    content: '';
+    position: absolute;
+    border-width: 5px;
+    border-style: solid;
+    right: 10px;
+    top: 100%;
+    border-color: var(--tooltip-bg) transparent transparent transparent;
+  }
+
   .tooltip-intro::after {
     content: '';
     position: absolute;

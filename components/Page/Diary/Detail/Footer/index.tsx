@@ -5,22 +5,28 @@ import { Icon } from '@/components/Icon'
 import Button from '@/components/Button'
 import usePostLike from '@/hooks/like/usePostLike'
 import { isTouchDevice } from '@/utils'
+import EditModal from './EditModal'
 
 type FooterProps = {
+  isLogin: boolean
   diaryId: string
   isLike: boolean
   setIsLike: Dispatch<SetStateAction<boolean>>
   handleToast: (message: string) => void
   handleClick: () => void
+  isDiaryOwner: boolean
 }
 
 export default function Footer({
+  isLogin,
   diaryId,
   isLike,
   setIsLike,
   handleToast,
   handleClick,
+  isDiaryOwner,
 }: FooterProps) {
+  const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
   const [isBookmarked, setIsBookmarked] = useState<boolean>(false)
   const { mutateAsync: postLike } = usePostLike()
 
@@ -83,9 +89,7 @@ export default function Footer({
       addClass: 'px-2 py-2 text-[#A6A6A6] hover:text-[#FFFFFF] transition-colors',
       width: 4,
       heignt: 16,
-      onCLick: () => {
-        console.log('Kebab')
-      },
+      onCLick: () => setModalIsOpen(true),
     },
   ]
 
@@ -94,7 +98,7 @@ export default function Footer({
       <Button type="button" ariaLabel="뒤로가기 버튼" className="px-3 py-1">
         <Icon name="Back" width={20} height={20} />
       </Button>
-      <div className="relative flex items-center gap-[30px]">
+      <div className="flex items-center gap-[30px]">
         {buttons.map((button) => (
           <Button
             key={button.name}
@@ -107,6 +111,13 @@ export default function Footer({
             {button.children}
           </Button>
         ))}
+        <EditModal
+          isOpen={modalIsOpen}
+          handleClose={() => setModalIsOpen(false)}
+          isLogin={isLogin}
+          isDiaryOwner={isDiaryOwner}
+          diaryId={diaryId}
+        />
       </div>
     </footer>
   )
