@@ -17,6 +17,20 @@ type FooterProps = {
   isDiaryOwner: boolean
 }
 
+type FooterButton = {
+  name: string
+  label: string
+  addClass: string
+  width: number
+  height: number
+  onClick: (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => Promise<void> | void | (() => void)
+  children?: React.ReactNode
+}
+
+type Buttons = FooterButton[]
+
 export default function Footer({
   isLogin,
   diaryId,
@@ -30,14 +44,14 @@ export default function Footer({
   const [isBookmarked, setIsBookmarked] = useState<boolean>(false)
   const { mutateAsync: postLike } = usePostLike()
 
-  const buttons = [
+  const buttons: Buttons = [
     {
       name: isLike ? 'Heart' : 'Unlike',
       label: '좋아요 버튼',
       addClass: 'flex items-center gap-3 text-[#A6A6A6] hover:text-red-500 transition-colors',
       width: 22,
-      heignt: 22,
-      onCLick: async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+      height: 22,
+      onClick: async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         e.preventDefault()
         try {
           await postLike({
@@ -55,27 +69,17 @@ export default function Footer({
       label: '댓글 버튼',
       addClass: 'flex items-center gap-3 text-[#A6A6A6] hover:text-[#43D8AA] transition-colors',
       width: 21,
-      heignt: 21,
-      onCLick: handleClick,
+      height: 21,
+      onClick: handleClick,
       children: <span className="text-[#A6A6A6]">32</span>,
-    },
-    {
-      name: 'Bookmark',
-      label: '북마크 버튼',
-      addClass: 'text-[#A6A6A6] hover:text-[#43D8AA] transition-colors',
-      width: 20,
-      heignt: 20,
-      onCLick: () => {
-        setIsBookmarked((prev) => !prev)
-      },
     },
     {
       name: 'Share',
       label: '공유 버튼',
       addClass: 'text-[#A6A6A6] hover:text-main-blue transition-colors',
       width: 18,
-      heignt: 18,
-      onCLick: async () => {
+      height: 18,
+      onClick: async () => {
         const url = window.location.href
         await navigator.clipboard.writeText(url)
         handleToast('링크가 복사되었습니다.')
@@ -83,15 +87,31 @@ export default function Footer({
         console.log(isTouchDevice())
       },
     },
-    {
-      name: 'Kebab',
-      label: '공유 버튼',
-      addClass: 'px-2 py-2 text-[#A6A6A6] hover:text-[#FFFFFF] transition-colors',
-      width: 4,
-      heignt: 16,
-      onCLick: () => setModalIsOpen(true),
-    },
   ]
+
+  if (isLogin) {
+    buttons.push({
+      name: 'Bookmark',
+      label: '북마크 버튼',
+      addClass: 'text-[#A6A6A6] hover:text-[#43D8AA] transition-colors',
+      width: 20,
+      height: 20,
+      onClick: () => {
+        setIsBookmarked((prev) => !prev)
+      },
+    })
+
+    if (isDiaryOwner) {
+      buttons.push({
+        name: 'Kebab',
+        label: '공유 버튼',
+        addClass: 'px-2 py-2 text-[#A6A6A6] hover:text-[#FFFFFF] transition-colors',
+        width: 4,
+        height: 16,
+        onClick: () => setModalIsOpen(true),
+      })
+    }
+  }
 
   return (
     <footer className="fixed left-0 bottom-0 w-full h-[60px] bg-soft-bg backdrop-blur-sm flex items-center justify-between px-[20px]">
@@ -105,10 +125,10 @@ export default function Footer({
             type="button"
             ariaLabel={button.label}
             className={`${button.addClass ? button.addClass : ''}`}
-            onClick={button.onCLick}
+            onClick={button.onClick}
           >
-            <Icon name={button.name} width={button.width} height={button.heignt} />
-            {button.children}
+            <Icon name={button.name} width={button.width} height={button.height} />
+            {button.children ? button.children : null}
           </Button>
         ))}
         <EditModal
