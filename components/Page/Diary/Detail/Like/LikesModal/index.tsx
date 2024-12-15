@@ -5,12 +5,18 @@ import Button from '@/components/Button'
 import { Icon } from '@/components/Icon'
 import LikedUser from './LikedUser'
 
+type LikedUsers = {
+  userId: string
+  username: string
+}
+
 type LikesModalProps = {
   isOpen: boolean
   handleClose: () => void
+  likedUsers: LikedUsers[]
 }
 
-export default function LikesModal({ isOpen, handleClose }: LikesModalProps) {
+export default function LikesModal({ isOpen, handleClose, likedUsers }: LikesModalProps) {
   Modal.setAppElement('#__next')
 
   return (
@@ -33,7 +39,7 @@ export default function LikesModal({ isOpen, handleClose }: LikesModalProps) {
         이 포스트에 공감하고 있어요!
       </p>
       <div className="flex flex-col gap-[25px] overflow-y-auto scrollbar-none">
-        <LikedUser />
+        {likedUsers?.map(({ userId, username }) => <LikedUser key={userId} username={username} />)}
       </div>
     </Modal>
   )

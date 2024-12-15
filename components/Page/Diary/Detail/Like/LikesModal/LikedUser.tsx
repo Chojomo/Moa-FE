@@ -1,6 +1,11 @@
 import Image from 'next/image'
 
-export default function LikedUser() {
+type LikedUserProps = {
+  username: string
+}
+
+export default function LikedUser({ username }: LikedUserProps) {
+  console.log(username)
   return (
     <div className="flex items-center gap-5">
       <Image
@@ -14,7 +19,7 @@ export default function LikedUser() {
         objectFit="cover"
         className="w-[45px] h-[45px] rounded-full border border-border"
       />
-      <p className="text-[1rem] text-body-text">ichubtou</p>
+      <p className="text-[1rem] text-body-text">{username}</p>
     </div>
   )
 }
