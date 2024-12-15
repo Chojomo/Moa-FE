@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useAuthStore } from '@/store/useAuth'
 import { Head, Content, Like, CommentPost, Comments, Footer } from '@/components/Page/Diary/Detail'
 import { getDiaryDetail } from '@/lib/api/diary'
+import { isTouchDevice } from '@/utils'
 import { Post } from '@/types/diary'
 
 import { ToastContainer, toast } from 'react-toastify'
@@ -45,7 +46,14 @@ export default function DiaryDetail({ params }: { params: Params }) {
 
   return (
     <div className="relative w-[100vw] h-[100vh] flex flex-col pt-[100px] md:pt-[140px] overflow-auto px-[5%] md:px-[20%] pb-[60px]">
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
+      <ToastContainer
+        position={`${isTouchDevice() ? 'top-right' : 'top-right'}`}
+        autoClose={3000}
+        hideProgressBar={false}
+        style={{
+          top: isTouchDevice() ? 74 : 0,
+        }}
+      />
       <Head post={post} isLogin={isLogin} />
       <Content
         content={post.diaryContents}
@@ -73,10 +81,13 @@ export default function DiaryDetail({ params }: { params: Params }) {
         commentCount={post.commentCount}
       />
       <Footer
+        isLogin={isLogin}
         diaryId={post.diaryId}
         isLike={isLike}
         setIsLike={setIsLike}
+        handleToast={handleToast}
         handleClick={scrollToCommentPost}
+        isDiaryOwner={post.isDiaryOwner}
       />
     </div>
   )
