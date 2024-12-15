@@ -30,3 +30,30 @@ export const postLike = async ({ diaryId }: { diaryId: string }) => {
     throw new Error('next 서버 요청 중 에러 발생')
   }
 }
+
+export const getLikes = async ({ diaryId }: { diaryId: string }) => {
+  const apiUrl = `${process.env.NEXT_PUBLIC_NEXT_API_URL}/api/diary/like?diaryId=${diaryId}`
+
+  if (!diaryId) {
+    throw new Error('다이어리가 존재하지 않습니다.')
+  }
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      throw new Error(data.error || '다이어리 좋아요 목록 가져오기 실패')
+    }
+
+    return data
+  } catch (error) {
+    throw new Error('next 서버 요청 중 에러 발생')
+  }
+}
