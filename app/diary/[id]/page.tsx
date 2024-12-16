@@ -77,8 +77,10 @@ export default function DiaryDetail({ params }: { params: Params }) {
       </div>
       <Comments
         isLogin={isLogin}
+        diaryId={post.diaryId}
         comments={post.comment.comments}
         commentCount={post.commentCount}
+        handleToast={handleToast}
       />
       <Footer
         isLogin={isLogin}
