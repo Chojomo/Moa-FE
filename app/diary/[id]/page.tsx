@@ -51,7 +51,7 @@ export default function DiaryDetail({ params }: { params: Params }) {
         autoClose={3000}
         hideProgressBar={false}
         style={{
-          top: isTouchDevice() ? 74 : 0,
+          top: 74,
         }}
       />
       <Head post={post} isLogin={isLogin} />

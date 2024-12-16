@@ -3,6 +3,7 @@
 import { useState, Dispatch, SetStateAction } from 'react'
 import { Icon } from '@/components/Icon'
 
+import { getLikes } from '@/lib/api/like'
 import Button from '@/components/Button'
 import usePostLike from '@/hooks/like/usePostLike'
 import LikesModal from './LikesModal'
@@ -17,6 +18,7 @@ type LikeProps = {
 
 export default function Like({ diaryId, isLike, setIsLike, isLogin, handleToast }: LikeProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [likedUsers, setLikedUsers] = useState<[]>([])
   const { mutateAsync: postLike } = usePostLike()
 
   const handleClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -35,6 +37,13 @@ export default function Like({ diaryId, isLike, setIsLike, isLogin, handleToast 
     } catch (error) {
       console.error('게시물 등록 중 오류:', error)
     }
+  }
+
+  const handleLikesClick = async () => {
+    setIsModalOpen((prev) => !prev)
+    const { data } = await getLikes({ diaryId })
+
+    setLikedUsers(data.likedUsers)
   }
 
   return (
@@ -56,11 +65,15 @@ export default function Like({ diaryId, isLike, setIsLike, isLogin, handleToast 
         type="button"
         ariaLabel="게시물 좋아요 한 유저 리스트"
         className="text-body-text text-[0.8rem]"
-        onClick={() => setIsModalOpen((prev) => !prev)}
+        onClick={handleLikesClick}
       >
         이 포스트를 좋아하는 사람들 &#62;
       </Button>
-      <LikesModal isOpen={isModalOpen} handleClose={() => setIsModalOpen(false)} />
+      <LikesModal
+        isOpen={isModalOpen}
+        handleClose={() => setIsModalOpen(false)}
+        likedUsers={likedUsers}
+      />
     </div>
   )
 }
