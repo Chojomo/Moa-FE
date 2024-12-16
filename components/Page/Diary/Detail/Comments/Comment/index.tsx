@@ -1,9 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { Comment as PostComment } from '@/types/diary'
 import Image from 'next/image'
 import Button from '@/components/Button'
+import { Comment as PostComment } from '@/types/diary'
+import usePostReply from '@/hooks/comment/usePostReply'
 import CommentInput from '../../CommentInput'
 
 type CmtProps = {
@@ -16,7 +17,9 @@ type CmtProps = {
 
 type CommentProps = {
   isLogin: boolean
+  diaryId: string
   comment: PostComment
+  handleToast: (message: string) => void
 }
 
 function Cmt({ isReply = false, profile, name, createdAt, content }: CmtProps) {
@@ -54,9 +57,10 @@ function Cmt({ isReply = false, profile, name, createdAt, content }: CmtProps) {
   )
 }
 
-export default function Comment({ isLogin, comment }: CommentProps) {
+export default function Comment({ isLogin, diaryId, comment, handleToast }: CommentProps) {
   const [reply, setReply] = useState<string>('')
   const [isCommentOpen, setIsCommentOpen] = useState<boolean>(false)
+  const { mutateAsync: postReply } = usePostReply()
 
   const {
     diaryAuthorNickname,
@@ -67,9 +71,25 @@ export default function Comment({ isLogin, comment }: CommentProps) {
     replies,
   } = comment
 
-  const handleButtonClick = () => {
-    setIsCommentOpen((prev) => !prev)
-    console.log('클릭')
+  const handleButtonClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault()
+
+    if (!reply.trim()) {
+      handleToast('댓글을 입력하세요!')
+      return
+    }
+
+    try {
+      await postReply({
+        diaryId,
+        commentId: comment.commentId,
+        replyContents: reply,
+      })
+
+      setReply('')
+    } catch (error) {
+      console.error('대댓글 등록 중 오류:', error)
+    }
   }
 
   return (
@@ -80,7 +100,7 @@ export default function Comment({ isLogin, comment }: CommentProps) {
         createdAt={createdAt}
         content={commentContents}
       />
-      {isLogin && (
+      {(isLogin || (!isLogin && replies && replies.length > 0)) && (
         <div className="self-end flex items-center gap-5">
           {replies && replies.length > 0 && (
             <span className="text-[0.9rem] text-main-blue font-semibold">{replies.length}</span>
@@ -89,7 +109,7 @@ export default function Comment({ isLogin, comment }: CommentProps) {
             type="button"
             ariaLabel="답글 버튼"
             className="bg-soft-bg rounded-md text-[10px] text-white font-semibold w-[50px] h-[30px] shadow-button hover:bg-[#2D2D2D]"
-            onClick={handleButtonClick}
+            onClick={() => setIsCommentOpen((prev) => !prev)}
           >
             {isCommentOpen ? '숨기기' : '답글'}
           </Button>
@@ -109,27 +129,31 @@ export default function Comment({ isLogin, comment }: CommentProps) {
               content={re.replyContents}
             />
           ))}
-        <div className="flex gap-7">
-          <div className="w-[20px] h-[20px] border-l-2 border-b-2" />
-          <CommentInput isLogin={isLogin} comment={reply} setComment={setReply} />
-        </div>
+        {isLogin && (
+          <div className="flex gap-7">
+            <div className="w-[20px] h-[20px] border-l-2 border-b-2" />
+            <CommentInput isLogin={isLogin} comment={reply} setComment={setReply} />
+          </div>
+        )}
         <div className="flex justify-end gap-[20px]">
           <Button
             type="button"
             ariaLabel="답글 버튼"
             className="bg-main-blue rounded-md text-[10px] text-white font-semibold w-[50px] h-[30px] self-end shadow-button hover:bg-[#1666DE]"
-            onClick={handleButtonClick}
+            onClick={() => setIsCommentOpen(false)}
           >
-            취소
+            {isLogin ? '취소' : '닫기'}
           </Button>
-          <Button
-            type="button"
-            ariaLabel="답글 버튼"
-            className="bg-soft-bg rounded-md text-[10px] text-white font-semibold w-[50px] h-[30px] self-end shadow-button hover:bg-[#2D2D2D]"
-            onClick={handleButtonClick}
-          >
-            댓글 작성
-          </Button>
+          {isLogin && (
+            <Button
+              type="button"
+              ariaLabel="답글 버튼"
+              className="bg-soft-bg rounded-md text-[10px] text-white font-semibold w-[50px] h-[30px] self-end shadow-button hover:bg-[#2D2D2D]"
+              onClick={handleButtonClick}
+            >
+              댓글 작성
+            </Button>
+          )}
         </div>
       </div>
     </div>

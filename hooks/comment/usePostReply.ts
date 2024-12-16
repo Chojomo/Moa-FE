@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import { postReply } from '@/lib/api/comment'
 
-export default function usePostReplay() {
+export default function usePostReply() {
   const { mutateAsync } = useMutation({
     mutationFn: postReply,
     onSuccess: (data) => {
