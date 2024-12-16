@@ -1,10 +1,11 @@
 'use client'
 
 import { useState, Dispatch, SetStateAction } from 'react'
+import { useRouter } from 'next/navigation'
+import { isTouchDevice } from '@/utils'
 import { Icon } from '@/components/Icon'
 import Button from '@/components/Button'
-import usePostLike from '@/hooks/like/usePostLike'
-import { isTouchDevice } from '@/utils'
+
 import EditModal from './EditModal'
 
 type FooterProps = {
@@ -13,7 +14,8 @@ type FooterProps = {
   isLike: boolean
   setIsLike: Dispatch<SetStateAction<boolean>>
   handleToast: (message: string) => void
-  handleClick: () => void
+  handleLikeClick: () => void
+  handleCommentClick: () => void
   isDiaryOwner: boolean
 }
 
@@ -37,12 +39,13 @@ export default function Footer({
   isLike,
   setIsLike,
   handleToast,
-  handleClick,
+  handleLikeClick,
+  handleCommentClick,
   isDiaryOwner,
 }: FooterProps) {
+  const router = useRouter()
   const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
   const [isBookmarked, setIsBookmarked] = useState<boolean>(false)
-  const { mutateAsync: postLike } = usePostLike()
 
   const buttons: Buttons = [
     {
@@ -51,17 +54,7 @@ export default function Footer({
       addClass: 'flex items-center gap-3 text-[#A6A6A6] hover:text-red-500 transition-colors',
       width: 22,
       height: 22,
-      onClick: async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        e.preventDefault()
-        try {
-          await postLike({
-            diaryId,
-          })
-          setIsLike((prev) => !prev)
-        } catch (error) {
-          console.error('게시물 등록 중 오류:', error)
-        }
-      },
+      onClick: handleLikeClick,
       children: <span className="text-[#A6A6A6]">32</span>,
     },
     {
@@ -70,7 +63,7 @@ export default function Footer({
       addClass: 'flex items-center gap-3 text-[#A6A6A6] hover:text-[#43D8AA] transition-colors',
       width: 21,
       height: 21,
-      onClick: handleClick,
+      onClick: handleCommentClick,
       children: <span className="text-[#A6A6A6]">32</span>,
     },
     {
@@ -115,7 +108,12 @@ export default function Footer({
 
   return (
     <footer className="fixed left-0 bottom-0 w-full h-[60px] bg-soft-bg backdrop-blur-sm flex items-center justify-between px-[20px]">
-      <Button type="button" ariaLabel="뒤로가기 버튼" className="px-3 py-1">
+      <Button
+        type="button"
+        ariaLabel="뒤로가기 버튼"
+        className="px-3 py-1"
+        onClick={() => router.back()}
+      >
         <Icon name="Back" width={20} height={20} />
       </Button>
       <div className="flex items-center gap-[30px]">
