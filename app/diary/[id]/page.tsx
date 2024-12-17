@@ -19,6 +19,7 @@ export default function DiaryDetail({ params }: { params: Params }) {
   const [post, setPost] = useState<Post | null>(null)
   const [isLike, setIsLike] = useState<boolean>(false)
   const commentPostRef = useRef<HTMLDivElement>(null)
+  const likeRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const getPopst = async () => {
@@ -38,9 +39,15 @@ export default function DiaryDetail({ params }: { params: Params }) {
     toast.error(message)
   }
 
-  const scrollToCommentPost = () => {
+  const handleCommentClick = () => {
     if (commentPostRef.current) {
       commentPostRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+  }
+
+  const handleLikeClick = () => {
+    if (likeRef.current) {
+      likeRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }
   }
 
@@ -60,13 +67,15 @@ export default function DiaryDetail({ params }: { params: Params }) {
         isDiaryOwner={post.isDiaryOwner}
         isDiaryPublic={post.isDiaryPublic}
       />
-      <Like
-        diaryId={post.diaryId}
-        isLike={isLike}
-        setIsLike={setIsLike}
-        isLogin={isLogin}
-        handleToast={handleToast}
-      />
+      <div ref={likeRef}>
+        <Like
+          diaryId={post.diaryId}
+          isLike={isLike}
+          setIsLike={setIsLike}
+          isLogin={isLogin}
+          handleToast={handleToast}
+        />
+      </div>
       <div ref={commentPostRef}>
         <CommentPost
           diaryId={post.diaryId}
@@ -88,7 +97,8 @@ export default function DiaryDetail({ params }: { params: Params }) {
         isLike={isLike}
         setIsLike={setIsLike}
         handleToast={handleToast}
-        handleClick={scrollToCommentPost}
+        handleLikeClick={handleLikeClick}
+        handleCommentClick={handleCommentClick}
         isDiaryOwner={post.isDiaryOwner}
       />
     </div>
