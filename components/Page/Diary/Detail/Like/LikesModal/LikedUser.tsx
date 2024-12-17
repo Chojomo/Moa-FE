@@ -2,14 +2,14 @@ import Image from 'next/image'
 
 type LikedUserProps = {
   username: string
+  imgSrc: string
 }
 
-export default function LikedUser({ username }: LikedUserProps) {
-  console.log(username)
+export default function LikedUser({ username, imgSrc }: LikedUserProps) {
   return (
-    <div className="flex items-center gap-5">
+    <div className="flex items-center gap-5 animate-fadeIn">
       <Image
-        src="/images/dfsfs.jpeg"
+        src={imgSrc}
         alt="user profile"
         width={45}
         height={45}

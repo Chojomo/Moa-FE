@@ -40,10 +40,9 @@ export default function Like({ diaryId, isLike, setIsLike, isLogin, handleToast 
   }
 
   const handleLikesClick = async () => {
-    setIsModalOpen((prev) => !prev)
     const { data } = await getLikes({ diaryId })
-
     setLikedUsers(data.likedUsers)
+    setIsModalOpen((prev) => !prev)
   }
 
   return (
