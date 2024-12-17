@@ -7,7 +7,8 @@ import LikedUser from './LikedUser'
 
 type LikedUsers = {
   userId: string
-  username: string
+  userNickname: string
+  userProfileImage: string
 }
 
 type LikesModalProps = {
@@ -39,7 +40,9 @@ export default function LikesModal({ isOpen, handleClose, likedUsers }: LikesMod
         이 포스트에 공감하고 있어요!
       </p>
       <div className="flex flex-col gap-[25px] overflow-y-auto scrollbar-none">
-        {likedUsers?.map(({ userId, username }) => <LikedUser key={userId} username={username} />)}
+        {likedUsers?.map(({ userId, userNickname, userProfileImage }) => (
+          <LikedUser key={userId} username={userNickname} imgSrc={userProfileImage} />
+        ))}
       </div>
     </Modal>
   )
