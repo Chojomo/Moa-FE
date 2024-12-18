@@ -39,11 +39,8 @@ export async function POST(req: NextRequest) {
       throw new Error(data.error || '다이어리 게시 실패')
     }
 
-    return new Response(JSON.stringify({ message: '댓글이 게시되었습니다.' }), {
+    return new Response(JSON.stringify(data), {
       status: 200,
-      headers: {
-        'Content-Type': 'application/json',
-      },
     })
   } catch (error) {
     console.error('댓글 게시 에러:', error)
