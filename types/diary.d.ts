@@ -18,8 +18,8 @@ export type Comment = {
   diaryAuthorNickname: string
   diaryAuthorProfileImage: string
   isCommentOwner: boolean
-  isLiked: boolean
-  likeCount: number
+  isLiked?: boolean
+  likeCount?: number
   replies?: Reply[]
 }
 

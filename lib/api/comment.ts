@@ -34,7 +34,7 @@ export const postComment = async ({
       throw new Error(data.error || '댓글 게시 실패')
     }
 
-    return data
+    return data.data
   } catch (error) {
     throw new Error('next 서버 요청 중 에러 발생')
   }

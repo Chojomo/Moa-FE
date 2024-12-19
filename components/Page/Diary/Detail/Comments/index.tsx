@@ -5,7 +5,7 @@ type CommentsProps = {
   isLogin: boolean
   diaryId: string
   commentCount: number
-  comments: PostComment[]
+  comments: PostComment[] | null
   handleToast: (message: string) => void
 }
 
@@ -21,7 +21,7 @@ export default function Comments({
       <p className="text-[16px] font-bold py-[25px]">
         댓글 <span className="text-main-blue">{commentCount}</span>
       </p>
-      {comments.map((c) => (
+      {comments?.map((c) => (
         <Comment
           key={c.commentId}
           isLogin={isLogin}
