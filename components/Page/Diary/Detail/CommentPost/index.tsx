@@ -1,9 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Dispatch, SetStateAction } from 'react'
 import Image from 'next/image'
 import Button from '@/components/Button'
 import usePostComment from '@/hooks/comment/usePostComment'
+import { Comment } from '@/types/diary'
 import CommentInput from '../CommentInput'
 
 type CommentPostProps = {
@@ -11,9 +12,18 @@ type CommentPostProps = {
   diaryId: string
   profile: string
   handleToast: (message: string) => void
+  setComment: Dispatch<SetStateAction<Comment[] | null>>
+  handleCommentsUpdate: () => void
 }
 
-export default function CommentPost({ isLogin, diaryId, profile, handleToast }: CommentPostProps) {
+export default function CommentPost({
+  isLogin,
+  diaryId,
+  profile,
+  handleToast,
+  setComment: setComments,
+  handleCommentsUpdate,
+}: CommentPostProps) {
   const [comment, setComment] = useState<string>('')
   const { mutateAsync: postComment } = usePostComment()
 
@@ -31,12 +41,20 @@ export default function CommentPost({ isLogin, diaryId, profile, handleToast }: 
     }
 
     try {
-      await postComment({
+      const newComment: Comment = await postComment({
         diaryId,
         commentContents: comment,
       })
 
+      setComments((prev: Comment[] | null) => {
+        if (prev) {
+          return [...prev, newComment]
+        }
+        return [newComment]
+      })
+
       setComment('')
+      setTimeout(handleCommentsUpdate, 100)
     } catch (error) {
       console.error('게시물 등록 중 오류:', error)
     }
