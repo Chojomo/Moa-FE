@@ -6,10 +6,8 @@ import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { signup } from '@/lib/api/auth'
 
-import EmailInput from '@/components/Page/Auth/EmailInput'
-import PasswordInput from '@/components/Page/Auth/PasswordInput'
-import ConfirmPasswordInput from '@/components/Page/Auth/ConfirmPasswordInput'
-import SubmitButton from '@/components/Page/Auth/SubmitButton'
+import { EmailInput, PasswordInput, ConfirmPasswordInput } from '@/components/Page/Auth/Input'
+import SubmitButton from '@/components/Page/Auth/Button/SubmitButton'
 import OAuth from '@/components/Page/Auth/OAuth'
 
 export default function Signup() {
