@@ -7,12 +7,14 @@ import Link from 'next/link'
 import Button from '@/components/Button'
 import Image from 'next/image'
 import ThemeToggle from '@/components/Themes/Toggle'
+import { LoginModal } from '@/components/Page/Auth/Modal'
 import Logo from './Logo'
 import NavModal from './NavModal'
 import IconLink from './IconLink'
 
 export default function Header() {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [isNavModalOpen, setIsNavModalOpen] = useState<boolean>(false)
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false)
   const { isLogin } = useAuthStore()
   const pathname = usePathname()
 
@@ -47,7 +49,7 @@ export default function Header() {
         />
         <ThemeToggle />
         {isLogin ? (
-          <Button type="button" ariaLabel="zz" onClick={() => setIsModalOpen((prev) => !prev)}>
+          <Button type="button" ariaLabel="zz" onClick={() => setIsNavModalOpen((prev) => !prev)}>
             <Image
               src="/images/dfsfs.jpeg"
               alt="user profile"
@@ -61,15 +63,18 @@ export default function Header() {
             />
           </Button>
         ) : (
-          <Link
-            href="/login"
+          <Button
+            type="button"
+            ariaLabel="로그인 버튼"
             className="bg-inverse px-[14px] py-[5px] rounded-full text-background text-[0.9rem] font-semibold ml-[7px]"
+            onClick={() => setIsLoginModalOpen(true)}
           >
             로그인
-          </Link>
+          </Button>
         )}
       </div>
-      <NavModal isOpen={isModalOpen} handleClose={() => setIsModalOpen(false)} />
+      <NavModal isOpen={isNavModalOpen} handleClose={() => setIsNavModalOpen(false)} />
+      <LoginModal isOpen={isLoginModalOpen} handleClose={() => setIsLoginModalOpen(false)} />
     </header>
   )
 }
