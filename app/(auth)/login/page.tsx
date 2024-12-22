@@ -6,11 +6,8 @@ import { useMutation } from '@tanstack/react-query'
 import { validateEmail, validatePassword } from '@/helper/validate'
 import { login } from '@/lib/api/auth'
 import { useAuthStore } from '@/store/useAuth'
-
-import { EmailSentModal } from '@/components/Page/Auth/Modal'
 import { EmailInput, PasswordInput } from '@/components/Page/Auth/Input'
 
-import Button from '@/components/Button'
 import OAuth from '@/components/Page/Auth/OAuth'
 import SubmitButton from '@/components/Page/Auth/Button/SubmitButton'
 import KeepSignedInCheckbox from '@/components/Page/Auth/Checkbox'
@@ -24,7 +21,6 @@ export default function Login() {
   const [isValidEmail, setIsValidEmail] = useState<boolean>(false)
   const [isValidPassword, setIsValidPassword] = useState<boolean>(false)
   const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false)
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
   const handleEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
@@ -75,15 +71,14 @@ export default function Login() {
       <KeepSignedInCheckbox isChecked={isChecked} handleClick={() => setIsChecked(!isChecked)} />
       <OAuth />
       <SubmitButton type="로그인" isValidEmail={isValidEmail} isValidPassword={isValidPassword} />
-      <Button
+      {/* <Button
         type="button"
         ariaLabel="비밀번호 찾기 버튼"
         className="text-body-text text-[0.9rem] mt-5 hover:underline"
         onClick={() => setIsModalOpen(true)}
       >
         비밀번호 찾기
-      </Button>
-      <EmailSentModal isOpen={isModalOpen} handleClose={() => setIsModalOpen(false)} />
+      </Button> */}
     </form>
   )
 }
