@@ -15,7 +15,7 @@ export default function OAuth() {
   }
 
   return (
-    <div className="flex-center gap-[50px] mt-[10px]">
+    <div className="flex-center gap-[30px] mt-[10px]">
       {types.map(({ name, icon }) => (
         <Button
           key={name}
@@ -24,7 +24,7 @@ export default function OAuth() {
           className={name === 'google' ? 'border border-border rounded-full' : ''}
           onClick={() => handleClick(name)}
         >
-          <Icon name={icon} width={60} height={60} />
+          <Icon name={icon} width={50} height={50} />
         </Button>
       ))}
     </div>
