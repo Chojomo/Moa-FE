@@ -146,13 +146,23 @@ export default function LoginModal({ isOpen, handleClose }: LoginModalProps) {
           >
             로그인
           </Button>
-          <Link
-            href="/signin/find/password"
-            className="relative bottom-2 font-normal text-[0.8rem] text-[#A6A6A6] underline"
-            onClick={handleClose}
-          >
-            비밀번호 찾기
-          </Link>
+          <div className="flex items-center justify-center gap-3">
+            <Link
+              href="/signup"
+              className="font-normal text-[0.8rem] text-[#A6A6A6] underline"
+              onClick={handleClose}
+            >
+              회원가입
+            </Link>
+            <div className="h-[12px] border-r border-[#A6A6A6]" />
+            <Link
+              href="/signin/find/password"
+              className="font-normal text-[0.8rem] text-[#A6A6A6] underline"
+              onClick={handleClose}
+            >
+              비밀번호 찾기
+            </Link>
+          </div>
           <div className="w-full flex-center mt-5 mb-3">
             <div className="flex-1 border-t border-[#A6A6A6]" />
             <span className="text-[#A6A6A6] text-[0.9rem] font-normal px-3">간편 로그인</span>
