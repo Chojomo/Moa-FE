@@ -1,4 +1,4 @@
-import Tap from '@/components/Page/Auth/Tap'
+// import Tap from '@/components/Page/Auth/Tap'
 
 export default function RootLayout({
   children,
@@ -7,7 +7,7 @@ export default function RootLayout({
 }>) {
   return (
     <div className="w-[100vw] h-[100vh] flex-center flex-col">
-      <Tap />
+      {/* <Tap /> */}
       {children}
     </div>
   )

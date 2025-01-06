@@ -66,31 +66,37 @@ export default function Signup() {
   }
 
   return (
-    <form className="animate-fadeIn w-[100vw] flex-center flex-col" onSubmit={handleSignup}>
-      <EmailInput email={email} handleChange={handleEmailChange} handleReset={() => setEmail('')} />
-      <PasswordInput
-        password={password}
-        isVisible={isVisiblePassword}
-        handleChange={handlePasswordChange}
-        handleReset={() => setPassword('')}
-        handleVisible={() => setIsVisiblePassword(!isVisiblePassword)}
-      />
-      <ConfirmPasswordInput
-        confirmPassword={confirmPassword}
-        isVisible={isVisibleConfirmPassword}
-        isMatched={isPasswordMatched}
-        handleChange={handleConfirmPasswordChange}
-        handleReset={() => setConfirmPassword('')}
-        handleVisible={() => setIsVisibleConfirmPassword(!isVisibleConfirmPassword)}
-      />
-      <OAuth />
-      <SubmitButton
-        type="회원가입"
-        isValidEmail={isValidEmail}
-        isValidPassword={isValidPassword}
-        isMatched={isPasswordMatched}
-      />
-      {/* 아이디, 비밀번호 찾기 */}
-    </form>
+    <div className="w-full h-full pt-[30%] md:pt-[20%] flex flex-col justify-start items-center gap-[40px]">
+      <h1 className="text-main-blue text-[1.5rem] font-semibold">회원가입</h1>
+      <form className="animate-fadeIn w-[100vw] flex-center flex-col" onSubmit={handleSignup}>
+        <EmailInput
+          email={email}
+          handleChange={handleEmailChange}
+          handleReset={() => setEmail('')}
+        />
+        <PasswordInput
+          password={password}
+          isVisible={isVisiblePassword}
+          handleChange={handlePasswordChange}
+          handleReset={() => setPassword('')}
+          handleVisible={() => setIsVisiblePassword(!isVisiblePassword)}
+        />
+        <ConfirmPasswordInput
+          confirmPassword={confirmPassword}
+          isVisible={isVisibleConfirmPassword}
+          isMatched={isPasswordMatched}
+          handleChange={handleConfirmPasswordChange}
+          handleReset={() => setConfirmPassword('')}
+          handleVisible={() => setIsVisibleConfirmPassword(!isVisibleConfirmPassword)}
+        />
+        <OAuth />
+        <SubmitButton
+          type="회원가입"
+          isValidEmail={isValidEmail}
+          isValidPassword={isValidPassword}
+          isMatched={isPasswordMatched}
+        />
+      </form>
+    </div>
   )
 }

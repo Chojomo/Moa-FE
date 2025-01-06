@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
 import { useAuthStore } from '@/store/useAuth'
-import Link from 'next/link'
 import Button from '@/components/Button'
 import Image from 'next/image'
 import ThemeToggle from '@/components/Themes/Toggle'
