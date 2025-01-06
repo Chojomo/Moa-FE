@@ -1,13 +1,20 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, FormEvent } from 'react'
 import Link from 'next/link'
 import Modal from 'react-modal'
-import { Icon } from '@/components/Icon'
+
+import { useRouter } from 'next/navigation'
+import { useMutation } from '@tanstack/react-query'
+import { useAuthStore } from '@/store/useAuth'
+
+import { login } from '@/lib/api/auth'
 import { validateEmail, validatePassword } from '@/helper/validate'
+
+import OAuth from '../OAuth'
+import { Icon } from '@/components/Icon'
 import Button from '@/components/Button'
 import { ResetButton, VisibilityButton } from '../Button'
-import OAuth from '../OAuth'
 
 type LoginModalProps = {
   isOpen: boolean
@@ -15,10 +22,15 @@ type LoginModalProps = {
 }
 
 export default function LoginModal({ isOpen, handleClose }: LoginModalProps) {
+  const router = useRouter()
+  const { login: setLogin } = useAuthStore()
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [isValidEmail, setIsValidEmail] = useState<boolean>(false)
+  const [isValidPassword, setIsValidPassword] = useState<boolean>(false)
   const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false)
+
+  Modal.setAppElement('#__next')
 
   const handleEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
@@ -26,6 +38,7 @@ export default function LoginModal({ isOpen, handleClose }: LoginModalProps) {
 
     setEmail(value)
     setIsValidEmail(isValid)
+    console.log(isValid)
   }, [])
 
   const handlePasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,11 +46,33 @@ export default function LoginModal({ isOpen, handleClose }: LoginModalProps) {
     const isValid = validatePassword(value)
 
     setPassword(value)
-    setIsVisiblePassword(isValid)
+    setIsValidPassword(isValid)
+
+    console.log(isValid)
   }, [])
 
   const handleReset = () => {
     setEmail('')
+  }
+
+  const mutation = useMutation({
+    mutationFn: () => login(email, password),
+    onSuccess: () => {
+      setLogin()
+      router.back()
+    },
+    onError: (error: unknown) => {
+      if (error instanceof Error) {
+        console.error('로그인 실패:', error.message)
+      } else {
+        console.error('로그인 실패:', error)
+      }
+    },
+  })
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    mutation.mutate()
   }
 
   return (
@@ -58,7 +93,8 @@ export default function LoginModal({ isOpen, handleClose }: LoginModalProps) {
       </Button>
       <form
         className="w-[98%] flex flex-col justify-center items-center"
-        onSubmit={() => console.log('로그인 요청')}
+        onSubmit={handleSubmit}
+        autoComplete="on"
       >
         <div className="flex items-center gap-[10px] mb-8">
           <Icon name="Logo" width={35} height={35} className="mb-[10px]" />
@@ -67,13 +103,15 @@ export default function LoginModal({ isOpen, handleClose }: LoginModalProps) {
         <div className="w-full flex flex-col gap-5 justify-center items-center">
           <div className="relative w-full">
             <input
-              id="login"
-              type="login"
+              id="email"
+              type="email"
+              name="email"
               aria-label="이메일"
               placeholder="이메일"
+              autoComplete="username"
               value={email}
               onChange={handleEmailChange}
-              className="input-reset w-full rounded border border-[#7f7f7f] dark:border-[#c7c7c7] px-[15px] py-[18px] flex-1 placeholder:font-light placeholder:text-[0.8rem]"
+              className="input-reset w-full rounded border border-[#7f7f7f] dark:border-[#c7c7c7] px-[15px] py-[18px] flex-1 placeholder:font-light placeholder:text-[0.8rem] autofill:text-black autofill:shadow-none"
             />
           </div>
           <div className="relative w-full h-[60px]">
@@ -83,6 +121,8 @@ export default function LoginModal({ isOpen, handleClose }: LoginModalProps) {
               aria-label="비밀번호"
               placeholder="비밀번호"
               value={password}
+              name="password"
+              autoComplete="current-password"
               onChange={handlePasswordChange}
               className="input-reset w-full rounded border border-[#7f7f7f] dark:border-[#c7c7c7] pl-[15px] pr-[68px] py-[18px] flex-1 placeholder:font-light placeholder:text-[0.8rem]"
             />
@@ -101,13 +141,15 @@ export default function LoginModal({ isOpen, handleClose }: LoginModalProps) {
           <Button
             type="submit"
             ariaLabel="로그인 버튼"
-            className="bg-main-blue py-4 w-full max-h-[60px] rounded text-white"
+            disabled={!isValidEmail && !isValidPassword}
+            className={`py-4 w-full max-h-[60px] rounded text-white ${!isValidEmail || !isValidPassword ? 'bg-gray-400 cursor-not-allowed' : 'bg-main-blue'}`}
           >
             로그인
           </Button>
           <Link
             href="/signin/find/password"
             className="relative bottom-2 font-normal text-[0.8rem] text-[#A6A6A6] underline"
+            onClick={handleClose}
           >
             비밀번호 찾기
           </Link>
