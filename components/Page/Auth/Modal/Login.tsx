@@ -111,7 +111,7 @@ export default function LoginModal({ isOpen, handleClose }: LoginModalProps) {
               autoComplete="username"
               value={email}
               onChange={handleEmailChange}
-              className="input-reset w-full rounded border border-[#7f7f7f] dark:border-[#c7c7c7] px-[15px] py-[18px] flex-1 placeholder:font-light placeholder:text-[0.8rem] autofill:text-black autofill:shadow-none"
+              className="input-reset w-full autofull-text rounded border border-[#7f7f7f] dark:border-[#c7c7c7] px-[15px] py-[18px] flex-1 placeholder:font-light placeholder:text-[0.8rem] autofill:text-black autofill:shadow-none"
             />
           </div>
           <div className="relative w-full h-[60px]">
@@ -124,7 +124,7 @@ export default function LoginModal({ isOpen, handleClose }: LoginModalProps) {
               name="password"
               autoComplete="current-password"
               onChange={handlePasswordChange}
-              className="input-reset w-full rounded border border-[#7f7f7f] dark:border-[#c7c7c7] pl-[15px] pr-[68px] py-[18px] flex-1 placeholder:font-light placeholder:text-[0.8rem]"
+              className="input-reset w-full autofull-text rounded border border-[#7f7f7f] dark:border-[#c7c7c7] pl-[15px] pr-[68px] py-[18px] flex-1 placeholder:font-light placeholder:text-[0.8rem]"
             />
             <ResetButton
               password={password}
