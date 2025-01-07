@@ -53,7 +53,7 @@ export default function FindPassword() {
       />
       <form onSubmit={handleSubmit} className="w-full flex flex-col justify-center items-center">
         <h1 className="text-main-blue font-semibold text-[1.3rem] mb-10">비밀번호 찾기</h1>
-        <p className="text-[1rem] text-body-text text-center">
+        <p className="text-[1.1rem] text-body-text text-center">
           가입한 이메일을 입력해 주세요. <br />
           이메일을 통해 비밀번호 변경 링크가 전송됩니다.
         </p>
