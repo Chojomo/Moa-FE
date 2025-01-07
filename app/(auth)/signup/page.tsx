@@ -5,6 +5,7 @@ import { validateEmail, validatePassword } from '@/helper/validate'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { signup } from '@/lib/api/auth'
+import { Icon } from '@/components/Icon'
 
 import { EmailInput, PasswordInput, ConfirmPasswordInput } from '@/components/Page/Auth/Input'
 import SubmitButton from '@/components/Page/Auth/Button/SubmitButton'
@@ -66,21 +67,34 @@ export default function Signup() {
   }
 
   return (
-    <div className="w-full h-full pt-[30%] md:pt-[20%] flex flex-col justify-start items-center gap-[40px]">
+    <div className="w-full h-full flex flex-col justify-center items-center gap-[30px] overflow-y-auto pt-[190px] md:pt-[180px] pb-[50px]">
       <h1 className="text-main-blue text-[1.5rem] font-semibold">회원가입</h1>
-      <form className="animate-fadeIn w-[100vw] flex-center flex-col" onSubmit={handleSignup}>
+      <form
+        className="animate-fadeIn w-[100vw] flex-center flex-col gap-[40px]"
+        onSubmit={handleSignup}
+      >
         <EmailInput
           email={email}
           handleChange={handleEmailChange}
           handleReset={() => setEmail('')}
         />
-        <PasswordInput
-          password={password}
-          isVisible={isVisiblePassword}
-          handleChange={handlePasswordChange}
-          handleReset={() => setPassword('')}
-          handleVisible={() => setIsVisiblePassword(!isVisiblePassword)}
-        />
+        <div className="w-full flex flex-center flex-col gap-2">
+          <PasswordInput
+            password={password}
+            isVisible={isVisiblePassword}
+            handleChange={handlePasswordChange}
+            handleReset={() => setPassword('')}
+            handleVisible={() => setIsVisiblePassword(!isVisiblePassword)}
+          />
+          <span className="relative left-3 max-w-[380px] w-[80%] md:w-[50%] flex items-center gap-2 text-[0.8rem]">
+            <Icon name="Check2" width={24} height={24} />
+            영문 대소문자, 숫자, 특수문자 포함
+          </span>
+          <span className="relative left-3 max-w-[380px] w-[80%] md:w-[50%] flex items-center gap-2 text-[0.8rem]">
+            <Icon name="Check2" width={24} height={24} />
+            8자 이상 32자 이하 입력 (공백 제외)
+          </span>
+        </div>
         <ConfirmPasswordInput
           confirmPassword={confirmPassword}
           isVisible={isVisibleConfirmPassword}
@@ -89,13 +103,20 @@ export default function Signup() {
           handleReset={() => setConfirmPassword('')}
           handleVisible={() => setIsVisibleConfirmPassword(!isVisibleConfirmPassword)}
         />
-        <OAuth />
         <SubmitButton
           type="회원가입"
           isValidEmail={isValidEmail}
           isValidPassword={isValidPassword}
           isMatched={isPasswordMatched}
         />
+        <div className="w-full flex flex-col justify-start items-center gap-[10px]">
+          <div className="relative max-w-[380px] w-[80%] md:w-[50%] flex-center mb-3">
+            <div className="flex-1 border-t border-[#A6A6A6]" />
+            <span className="text-[#A6A6A6] text-[0.9rem] font-normal px-3">간편 회원가입</span>
+            <div className="flex-1 border-t border-[#A6A6A6]" />
+          </div>
+          <OAuth />
+        </div>
       </form>
     </div>
   )
