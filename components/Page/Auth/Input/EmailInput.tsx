@@ -12,14 +12,7 @@ type EmailInputProps = {
 export default function EmailInput({ email, handleChange, handleReset }: EmailInputProps) {
   return (
     <>
-      <Input
-        id="email"
-        label="이메일"
-        type="email"
-        placeholder="이메일을 입력해 주세요"
-        value={email}
-        handleChange={handleChange}
-      >
+      <Input id="email" type="email" placeholder="이메일" value={email} handleChange={handleChange}>
         <Button
           type="button"
           ariaLabel="Cancel email entry"
@@ -30,7 +23,7 @@ export default function EmailInput({ email, handleChange, handleReset }: EmailIn
         </Button>
       </Input>
       <p
-        className={`relative bottom-[20px] right-[90px] text-[12px] font-bold text-main-blue ${!email.length || validateEmail(email) ? 'opacity-0' : 'opacity-100'}`}
+        className={`relative bottom-[20px] right-[90px] text-[12px] font-bold text-main-blue ${!email.length || validateEmail(email) ? 'opacity-0 hidden' : 'opacity-100 block'} mt-2`}
       >
         유효하지 않은 이메일입니다.
       </p>

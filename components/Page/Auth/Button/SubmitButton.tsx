@@ -17,7 +17,7 @@ export default function SubmitButton({
     <Button
       type="submit"
       ariaLabel="submit button"
-      className={`mt-[47px] px-[130px] py-[10px] rounded-full font-bolㅋd text-[18px] text-[#fff] ${!isValidEmail || !isValidPassword || !isMatched ? 'bg-gray-400 cursor-not-allowed' : 'bg-main-blue'}`}
+      className={`mt-[20px] relative rounded max-w-[380px] w-[80%] md:w-[50%] flex-center text-[18px] text-[#fff] ${!isValidEmail || !isValidPassword || !isMatched ? 'bg-gray-400 cursor-not-allowed' : 'bg-main-blue'} px-[130px] py-[10px]`}
       disabled={!isValidEmail && !isValidPassword && isMatched}
     >
       {type}

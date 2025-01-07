@@ -23,7 +23,6 @@ export default function ConfirmPasswordInput({
     <>
       <Input
         id="confirm-password"
-        label="비밀번호 확인"
         type={isVisible ? 'text' : 'password'}
         placeholder="비밀번호를 입력해 주세요"
         value={confirmPassword}
@@ -32,7 +31,7 @@ export default function ConfirmPasswordInput({
         <Button
           type="button"
           ariaLabel="Cancel email entry"
-          onClick={() => handleReset}
+          onClick={handleReset}
           className={`absolute right-[50px] p-[5px] transition-opacity duration-300 ease-in-out ${confirmPassword ? 'opacity-100' : 'opacity-0'}`}
         >
           <Icon name="Cancel" width={15} height={15} />
@@ -46,11 +45,11 @@ export default function ConfirmPasswordInput({
           <Icon name={isVisible ? 'EyeOn' : 'EyeOff'} width={23} height={23} />
         </Button>
       </Input>
-      <p
-        className={`relative bottom-[20px] right-[85px] text-[12px] font-bold text-[#D44444] ${!confirmPassword.length || isMatched ? 'opacity-0' : 'opacity-100'}`}
+      <span
+        className={`relative bottom-[20px] right-[85px] flex items-center gap-2 text-[12px] font-bold text-[#D44444] ${!confirmPassword.length || isMatched ? 'opacity-0 hidden' : 'opacity-100 block'}`}
       >
-        비밀번호가 일치하지 않습니다.
-      </p>
+        <Icon name="Cancel2" width={24} height={24} /> 비밀번호가 일치하지 않습니다.
+      </span>
     </>
   )
 }
