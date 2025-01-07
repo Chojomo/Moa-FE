@@ -12,7 +12,7 @@ import 'react-toastify/dist/ReactToastify.css'
 export default function FindPassword() {
   const [email, setEmail] = useState<string>('')
   const [isVisible, setIsVisible] = useState<boolean>(false)
-  const [isValid, setIsValid] = useState<boolean>(false)
+  const [isValidEmail, setIsValidEmail] = useState<boolean>(false)
   const { mutateAsync: findPassword } = useFindPassword()
 
   const handleEmailChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,7 +20,7 @@ export default function FindPassword() {
     const isValid = validateEmail(value)
 
     setEmail(value)
-    setIsValid(isValid)
+    setIsValidEmail(isValid)
   }, [])
 
   // 임시로 Post 요청 연결
@@ -28,7 +28,7 @@ export default function FindPassword() {
     console.log('전송함')
     e.preventDefault()
 
-    if (!email || !isValid) {
+    if (!email || !isValidEmail) {
       toast.error('유효한 이메일이 아닙니다.')
       return
     }
@@ -36,8 +36,8 @@ export default function FindPassword() {
     try {
       await findPassword(email)
       setIsVisible((prev) => !prev)
-    } catch (e) {
-      console.error(e)
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -66,7 +66,7 @@ export default function FindPassword() {
           onChange={handleEmailChange}
           className="min-w-[300px] input-reset rounded border border-[#7f7f7f] dark:border-[#c7c7c7] px-[15px] py-[18px] flex-1 placeholder:font-light placeholder:text-[0.8rem] my-[20px] mb-[20px]"
         />
-        <p className={`${!email.length || !isValid ? 'opacity-0' : 'opacity-100'}`}>
+        <p className={`${!email.length || !isValidEmail ? 'opacity-0' : 'opacity-100'}`}>
           유효하지 않은 이메일입니다.
         </p>
         <Button

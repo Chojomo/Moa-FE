@@ -11,9 +11,9 @@ import { useAuthStore } from '@/store/useAuth'
 import { login } from '@/lib/api/auth'
 import { validateEmail, validatePassword } from '@/helper/validate'
 
-import OAuth from '../OAuth'
 import { Icon } from '@/components/Icon'
 import Button from '@/components/Button'
+import OAuth from '../OAuth'
 import { ResetButton, VisibilityButton } from '../Button'
 
 type LoginModalProps = {
