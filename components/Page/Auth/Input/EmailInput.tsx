@@ -25,7 +25,7 @@ export default function EmailInput({ email, handleChange, handleReset }: EmailIn
       <p
         className={`relative bottom-[5px] right-[110px] text-[0.8rem] font-bold text-main-blue ${!email.length || validateEmail(email) ? 'opacity-0 hidden' : 'opacity-100 block'} mt-2`}
       >
-        유효하지 않은 이메일입니다.
+        유효하지 않은 이메일 형식입니다.
       </p>
     </>
   )
