@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useCallback, FormEvent } from 'react'
-import { validateEmail, validatePassword } from '@/helper/validate'
+import { validateEmail, validateChars, validateLength } from '@/helper/validate'
 import { useMutation } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { signup } from '@/lib/api/auth'
@@ -10,7 +10,6 @@ import Button from '@/components/Button'
 import { EmailInput, PasswordInput, ConfirmPasswordInput } from '@/components/Page/Auth/Input'
 import SubmitButton from '@/components/Page/Auth/Button/SubmitButton'
 import OAuth from '@/components/Page/Auth/OAuth'
-import Link from 'next/link'
 
 export default function Signup() {
   const router = useRouter()
@@ -21,6 +20,8 @@ export default function Signup() {
 
   const [isValidEmail, setIsValidEmail] = useState<boolean>(false)
   const [isValidPassword, setIsValidPassword] = useState<boolean>(false)
+  const [isValidChars, setIsValidChars] = useState<boolean>(false)
+  const [isValidLength, setIsValidLength] = useState<boolean>(false)
   const [isPasswordMatched, setIsPasswordMatched] = useState(false)
 
   const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false)
@@ -34,16 +35,24 @@ export default function Signup() {
     setIsValidEmail(isValid)
   }, [])
 
-  const handlePasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target
-    const isValid = validatePassword(value)
+  const handlePasswordChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const { value } = e.target
+      const hasValidChars = validateChars(value)
+      const hasValidLength = validateLength(value)
 
-    setPassword(value)
-    setIsValidPassword(isValid)
-  }, [])
+      setPassword(value)
+      setIsValidChars(hasValidChars)
+      setIsValidLength(hasValidLength)
+      setIsValidPassword(hasValidChars && hasValidLength)
+      setIsPasswordMatched(value === confirmPassword)
+    },
+    [confirmPassword]
+  )
 
   const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
+    console.log(value)
     setConfirmPassword(value)
     setIsPasswordMatched(value === password)
   }
@@ -68,7 +77,13 @@ export default function Signup() {
     mutation.mutate()
   }
 
-  const stepMessage = ['이메일 인증을 진행해 주세요.', '비밀번호를 설정해 주세요.']
+  const handleResetPassword = () => {
+    setPassword('')
+    setIsValidChars(false)
+    setIsValidLength(false)
+    setIsValidPassword(false)
+    setIsPasswordMatched(false)
+  }
 
   return (
     <div className="w-full h-full flex flex-col justify-center items-center gap-[30px] overflow-y-auto pt-[70px] md:pt-[100px] pb-[50px]">
@@ -79,7 +94,17 @@ export default function Signup() {
       >
         <div className="text-[1.2rem] text-center">
           <p className="pb-2">{step + 1} / 2</p>
-          <p className="text-[1rem] font-bold">{stepMessage[step]}</p>
+          <p className="text-[1rem] font-bold whitespace-pre-wrap">
+            {step === 0 ? (
+              <>
+                유효한 이메일 주소를 입력해 주세요. <br /> 비밀번호 찾기 시, 해당 이메일 주소로
+                <br className="inline sm:hidden" /> 임시 비밀번호가 발급됩니다. <br /> 사용 중인
+                이메일 주소를 입력해 주세요.
+              </>
+            ) : (
+              '비밀번호를 설정해 주세요.'
+            )}
+          </p>
         </div>
         {step === 0 && (
           <div className="w-full flex flex-center flex-col gap-2">
@@ -91,11 +116,15 @@ export default function Signup() {
             <Button
               type="button"
               ariaLabel="이메일 인증 전송 버튼"
-              className={`mt-[20px] relative rounded max-w-[380px] w-[80%] md:w-[50%] flex-center text-[18px] text-[#fff] ${!isValidEmail ? 'bg-gray-400 cursor-not-allowed' : 'bg-main-blue'} px-[130px] py-[10px]`}
+              className={`mt-[20px] relative rounded max-w-[380px] w-[80%] md:w-[50%] flex-center text-[18px] text-[#fff] ${!isValidEmail ? 'bg-gray-400 cursor-not-allowed' : 'bg-main-blue'} py-[10px]`}
               onClick={() => setStep(1)}
             >
-              이메일 인증하기
+              비밀번호 설정하기
             </Button>
+            <p className="text-[0.8rem] text-body-text text-center">
+              활성화되지 않거나 사용하지 않는 이메일을 입력 시, <br />
+              비밀번호를 복구할 수 없습니다.
+            </p>
           </div>
         )}
         {step === 1 && (
@@ -105,16 +134,20 @@ export default function Signup() {
                 password={password}
                 isVisible={isVisiblePassword}
                 handleChange={handlePasswordChange}
-                handleReset={() => setPassword('')}
+                handleReset={handleResetPassword}
                 handleVisible={() => setIsVisiblePassword(!isVisiblePassword)}
               />
-              <span className="relative left-3 max-w-[380px] w-[80%] md:w-[50%] flex items-center gap-2 text-[0.8rem]">
+              <span
+                className={`relative left-3 max-w-[380px] w-[80%] md:w-[50%] flex items-center gap-2 text-[0.8rem] ${isValidChars ? 'text-green-500' : 'text-body-text'}`}
+              >
                 <Icon name="Check2" width={24} height={24} />
                 영문 대소문자, 숫자, 특수문자 포함
               </span>
-              <span className="relative left-3 max-w-[380px] w-[80%] md:w-[50%] flex items-center gap-2 text-[0.8rem]">
+              <span
+                className={`relative left-3 max-w-[380px] w-[80%] md:w-[50%] flex items-center gap-2 text-[0.8rem] ${isValidLength ? 'text-green-500' : 'text-body-text'}`}
+              >
                 <Icon name="Check2" width={24} height={24} />
-                8자 이상 32자 이하 입력 (공백 제외)
+                8자 이상 20자 이하 입력 (공백 제외)
               </span>
             </div>
             <ConfirmPasswordInput
