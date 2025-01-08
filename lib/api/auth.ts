@@ -23,7 +23,7 @@ export const signup = async (userEmail: string, userPassword: string) => {
 
 export const login = async (userEmail: string, userPassword: string) => {
   try {
-    const apiUrl = 'api/login'
+    const apiUrl = '/api/login'
     const response = await fetch(apiUrl, {
       method: 'POST',
       headers: {
