@@ -23,7 +23,7 @@ export default function EmailInput({ email, handleChange, handleReset }: EmailIn
         </Button>
       </Input>
       <p
-        className={`relative bottom-[20px] right-[90px] text-[12px] font-bold text-main-blue ${!email.length || validateEmail(email) ? 'opacity-0 hidden' : 'opacity-100 block'} mt-2`}
+        className={`relative bottom-[5px] right-[110px] text-[0.8rem] font-bold text-main-blue ${!email.length || validateEmail(email) ? 'opacity-0 hidden' : 'opacity-100 block'} mt-2`}
       >
         유효하지 않은 이메일입니다.
       </p>
