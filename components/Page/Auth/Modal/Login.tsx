@@ -58,6 +58,12 @@ export default function LoginModal({ isOpen, handleClose }: LoginModalProps) {
   const mutation = useMutation({
     mutationFn: () => login(email, password),
     onSuccess: () => {
+      const referrer = document.referrer
+
+      if (/sign(in|up)/.test(referrer)) {
+        router.push('/')
+      }
+
       setLogin()
       router.back()
     },
