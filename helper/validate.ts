@@ -8,6 +8,16 @@ export const validatePassword = (password: string) => {
   return regExp.test(password)
 }
 
+export const validateChars = (password: string) => {
+  const regExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#.~_-]).+$/
+  return regExp.test(password)
+}
+
+export const validateLength = (password: string) => {
+  const regExp = /^[^\s]{8,20}$/
+  return regExp.test(password)
+}
+
 export const validateNickname = (nickname: string) => {
   const regExp = /^([a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]).{2,10}$/
   return regExp.test(nickname)
