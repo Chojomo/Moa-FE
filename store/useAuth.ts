@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-interface AuthStore {
+type AuthStore = {
   isLogin: boolean
   login: () => void
   logout: () => void
