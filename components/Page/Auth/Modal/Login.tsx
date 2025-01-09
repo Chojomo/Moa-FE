@@ -58,14 +58,15 @@ export default function LoginModal({ isOpen, handleClose }: LoginModalProps) {
   const mutation = useMutation({
     mutationFn: () => login(email, password),
     onSuccess: () => {
-      const referrer = document.referrer
+      const { href } = window.location
 
-      if (/sign(in|up)/.test(referrer)) {
+      if (/sign(in|up)/.test(href)) {
         router.push('/')
       }
 
       setLogin()
-      router.back()
+      setEmail('')
+      setPassword('')
     },
     onError: (error: unknown) => {
       if (error instanceof Error) {
@@ -79,6 +80,7 @@ export default function LoginModal({ isOpen, handleClose }: LoginModalProps) {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     mutation.mutate()
+    handleClose()
   }
 
   return (
@@ -148,7 +150,7 @@ export default function LoginModal({ isOpen, handleClose }: LoginModalProps) {
             type="submit"
             ariaLabel="로그인 버튼"
             disabled={!isValidEmail && !isValidPassword}
-            className={`py-4 w-full max-h-[60px] rounded text-white ${!isValidEmail || !isValidPassword ? 'bg-gray-400 cursor-not-allowed' : 'bg-main-blue'}`}
+            className={`text-[1.1rem] py-4 w-full max-h-[60px] rounded text-white ${!isValidEmail || !isValidPassword ? 'bg-gray-400 cursor-not-allowed' : 'bg-main-blue'}`}
           >
             로그인
           </Button>
