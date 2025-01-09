@@ -121,7 +121,7 @@ export default function Signup() {
             <Button
               type="button"
               ariaLabel="이메일 인증 전송 버튼"
-              className={`mt-[20px] relative rounded max-w-[380px] w-[80%] md:w-[50%] flex-center text-[18px] text-[#fff] ${!isValidEmail ? 'bg-gray-400 cursor-not-allowed' : 'bg-main-blue'} py-[10px]`}
+              className={`mt-[20px] relative rounded max-w-[380px] w-[80%] md:w-[50%] flex-center text-[1.1rem] text-[#fff] ${!isValidEmail ? 'bg-gray-400 cursor-not-allowed' : 'bg-main-blue'} py-[10px]`}
               onClick={() => setStep(1)}
             >
               비밀번호 설정하기
