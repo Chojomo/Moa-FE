@@ -65,6 +65,8 @@ export default function LoginModal({ isOpen, handleClose }: LoginModalProps) {
       }
 
       setLogin()
+      setEmail('')
+      setPassword('')
     },
     onError: (error: unknown) => {
       if (error instanceof Error) {
