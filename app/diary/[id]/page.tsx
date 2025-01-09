@@ -32,7 +32,7 @@ export default function DiaryDetail({ params }: { params: Params }) {
     }
 
     getPopst()
-  }, [params.id])
+  }, [params.id, isLogin])
 
   if (!post) {
     return <div>Loading...</div>

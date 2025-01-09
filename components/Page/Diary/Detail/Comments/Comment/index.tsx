@@ -5,14 +5,22 @@ import Image from 'next/image'
 import Button from '@/components/Button'
 import { Comment as PostComment } from '@/types/diary'
 import usePostReply from '@/hooks/comment/usePostReply'
+import usePatchComment from '@/hooks/comment/usePatchComment'
 import CommentInput from '../../CommentInput'
+import CommentButton from '../Button'
 
 type CmtProps = {
   isReply?: boolean
+  diaryId: string
+  commentId: string
+  isOwner: boolean
   profile: string
   name: string
   createdAt: string
   content: string
+  isLogin: boolean
+  reply: string
+  setReply: React.Dispatch<React.SetStateAction<string>>
 }
 
 type CommentProps = {
@@ -22,7 +30,22 @@ type CommentProps = {
   handleToast: (message: string) => void
 }
 
-function Cmt({ isReply = false, profile, name, createdAt, content }: CmtProps) {
+function Cmt({
+  isReply = false,
+  diaryId,
+  commentId,
+  isOwner,
+  profile,
+  name,
+  createdAt,
+  content,
+  isLogin,
+  reply,
+  setReply,
+}: CmtProps) {
+  const [isEdit, setIsEdit] = useState(false)
+  const { mutateAsync: patchComment } = usePatchComment()
+
   return (
     <>
       <div className={`flex-center gap-[3%] ${isReply ? '' : ''}`}>
@@ -47,11 +70,57 @@ function Cmt({ isReply = false, profile, name, createdAt, content }: CmtProps) {
             {createdAt.split('T')[0]}
           </p>
         </div>
+        {isOwner && (
+          <div className="flex items-center gap-3">
+            <Button
+              type="button"
+              ariaLabel="댓글 수정 버튼"
+              className="p-2 text-[0.9rem] hover:text-main-blue hover:underline"
+              onClick={() => {
+                setIsEdit(true)
+                setReply(content)
+              }}
+            >
+              수정
+            </Button>
+            <Button
+              type="button"
+              ariaLabel="댓글 삭제 버튼"
+              className="p-2 text-[0.9rem] hover:text-main-blue hover:underline"
+            >
+              삭제
+            </Button>
+          </div>
+        )}
       </div>
       <p
         className={`text-body-tex px-[5px] ${isReply ? 'border-b pt-[3%] pb-[5%] mb-3 text-[0.9rem]' : 'py-[5%] text-[1rem]'}`}
       >
-        {content}
+        {!isEdit ? (
+          content
+        ) : (
+          <div className="flex flex-col gap-7">
+            <CommentInput isLogin={isLogin} comment={reply} setComment={setReply} />
+            <div className="flex justify-end gap-[20px]">
+              <CommentButton type="cancel" text="취소" handleClick={() => setIsEdit(false)} />
+              <CommentButton
+                type="edit"
+                text="댓글 수정"
+                handleClick={async () => {
+                  console.log(`diaryId : ${diaryId}`)
+                  console.log(`commentId : ${commentId}`)
+                  console.log(`reply : ${reply}`)
+                  try {
+                    await patchComment({ diaryId, commentId, commentContents: reply })
+                  } catch (error) {
+                    console.error('댓글 수정 중 오류:', error)
+                  }
+                }}
+              />
+            </div>
+            <div className="border w-full my-[20px]" />
+          </div>
+        )}
       </p>
     </>
   )
@@ -59,17 +128,21 @@ function Cmt({ isReply = false, profile, name, createdAt, content }: CmtProps) {
 
 export default function Comment({ isLogin, diaryId, comment, handleToast }: CommentProps) {
   const [reply, setReply] = useState<string>('')
+  const [subreply, setSubreply] = useState<string>('')
   const [isCommentOpen, setIsCommentOpen] = useState<boolean>(false)
   const { mutateAsync: postReply } = usePostReply()
 
   const {
     diaryAuthorNickname,
     commentContents,
+    commentId,
     createdAt,
     diaryAuthorProfileImage,
     isCommentOwner,
     replies,
   } = comment
+
+  console.log(replies)
 
   const handleButtonClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
@@ -82,7 +155,7 @@ export default function Comment({ isLogin, diaryId, comment, handleToast }: Comm
     try {
       await postReply({
         diaryId,
-        commentId: comment.commentId,
+        commentId,
         replyContents: reply,
       })
 
@@ -95,10 +168,16 @@ export default function Comment({ isLogin, diaryId, comment, handleToast }: Comm
   return (
     <div className="flex flex-col border-b py-[35px]">
       <Cmt
+        diaryId={diaryId}
+        commentId={commentId}
+        isOwner={isCommentOwner}
         profile={diaryAuthorProfileImage}
         name={diaryAuthorNickname}
         createdAt={createdAt}
         content={commentContents}
+        isLogin={isLogin}
+        reply={reply}
+        setReply={setReply}
       />
       {(isLogin || (!isLogin && replies && replies.length > 0)) && (
         <div className="self-end flex items-center gap-5">
@@ -123,36 +202,32 @@ export default function Comment({ isLogin, diaryId, comment, handleToast }: Comm
             <Cmt
               key={re.replyId}
               isReply
+              diaryId={diaryId}
+              commentId={re.replyId}
+              isOwner={re.isReplyOwner}
               profile={re.replyAuthorProfileImage}
               name={re.replyAuthorNickname}
               createdAt={re.createdAt}
               content={re.replyContents}
+              isLogin={isLogin}
+              reply={subreply}
+              setReply={setSubreply}
             />
           ))}
         {isLogin && (
           <div className="flex gap-7">
             <div className="w-[20px] h-[20px] border-l-2 border-b-2" />
-            <CommentInput isLogin={isLogin} comment={reply} setComment={setReply} />
+            <CommentInput isLogin={isLogin} comment={subreply} setComment={setSubreply} />
           </div>
         )}
         <div className="flex justify-end gap-[20px]">
-          <Button
-            type="button"
-            ariaLabel="답글 버튼"
-            className="bg-main-blue rounded-md text-[10px] text-white font-semibold w-[50px] h-[30px] self-end shadow-button hover:bg-[#1666DE]"
-            onClick={() => setIsCommentOpen(false)}
-          >
-            {isLogin ? '취소' : '닫기'}
-          </Button>
+          <CommentButton
+            type="cancel"
+            text={isLogin ? '취소' : '닫기'}
+            handleClick={() => setIsCommentOpen(false)}
+          />
           {isLogin && (
-            <Button
-              type="button"
-              ariaLabel="답글 버튼"
-              className="bg-soft-bg rounded-md text-[10px] text-white font-semibold w-[50px] h-[30px] self-end shadow-button hover:bg-[#2D2D2D]"
-              onClick={handleButtonClick}
-            >
-              댓글 작성
-            </Button>
+            <CommentButton type="edit" text="댓글 작성" handleClick={handleButtonClick} />
           )}
         </div>
       </div>
