@@ -7,10 +7,10 @@ import Button from '@/components/Button'
 import Image from 'next/image'
 import ThemeToggle from '@/components/Themes/Toggle'
 import { LoginModal } from '@/components/Page/Auth/Modal'
+import { useAppStore } from '@/store/useApp'
 import Logo from './Logo'
 import NavModal from './NavModal'
 import IconLink from './IconLink'
-import { useAppStore } from '@/store/useApp'
 
 export default function Header() {
   const { isLoginModalOpen, loginModalOpen, loginModalClose } = useAppStore()
@@ -73,7 +73,7 @@ export default function Header() {
           </Button>
         )}
       </div>
-      <NavModal isOpen={isNavModalOpen} handleClose={loginModalClose} />
+      <NavModal isOpen={isNavModalOpen} handleClose={() => setIsNavModalOpen(false)} />
       <LoginModal isOpen={isLoginModalOpen} handleClose={loginModalClose} />
     </header>
   )
