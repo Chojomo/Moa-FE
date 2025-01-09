@@ -52,10 +52,6 @@ export const patchComment = async ({
   const apiUrl = `${process.env.NEXT_PUBLIC_NEXT_API_URL}/api/diary/comment?diaryId=${diaryId}&commentId=${commentId}`
   const token = localStorage.getItem('authToken')
 
-  console.log(`diaryId : ${diaryId} xxx`)
-  console.log(`commentId : ${commentId} xxx`)
-  console.log(`commentContents : ${commentContents} xxx`)
-
   if (!token) {
     throw new Error('로그인 상태를 확인하세요.')
   }
@@ -83,7 +79,7 @@ export const patchComment = async ({
     const data = await response.json()
 
     if (!response.ok) {
-      throw new Error(data.error || '댓글 게시 실패')
+      throw new Error(data.error || '댓글 수정 실패')
     }
 
     return data.data
@@ -135,6 +131,54 @@ export const postReply = async ({
     }
 
     return data
+  } catch (error) {
+    throw new Error('next 서버 요청 중 에러 발생')
+  }
+}
+
+export const patchReply = async ({
+  diaryId,
+  replyId,
+  replyContents = '',
+}: {
+  diaryId: string
+  replyId: string
+  replyContents: string
+}) => {
+  const apiUrl = `${process.env.NEXT_PUBLIC_NEXT_API_URL}/api/diary/comment/replies?diaryId=${diaryId}&replyId=${replyId}`
+  const token = localStorage.getItem('authToken')
+
+  if (!token) {
+    throw new Error('로그인 상태를 확인하세요.')
+  }
+
+  if (!diaryId) {
+    throw new Error('다이어리가 존재하지 않습니다.')
+  }
+
+  if (!replyId) {
+    throw new Error('대댓글이 존재하지 않습니다.')
+  }
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token,
+      },
+      body: JSON.stringify({
+        replyContents,
+      }),
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      throw new Error(data.error || '대댓글 수정 실패')
+    }
+
+    return data.data
   } catch (error) {
     throw new Error('next 서버 요청 중 에러 발생')
   }
