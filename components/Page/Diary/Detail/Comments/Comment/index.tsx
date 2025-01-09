@@ -93,7 +93,7 @@ function Cmt({
           </div>
         )}
       </div>
-      <p
+      <div
         className={`text-body-tex px-[5px] ${isReply ? 'border-b pt-[3%] pb-[5%] mb-3 text-[0.9rem]' : 'py-[5%] text-[1rem]'}`}
       >
         {!isEdit ? (
@@ -121,7 +121,7 @@ function Cmt({
             <div className="border w-full my-[20px]" />
           </div>
         )}
-      </p>
+      </div>
     </>
   )
 }
