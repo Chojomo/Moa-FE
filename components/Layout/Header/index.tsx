@@ -10,10 +10,11 @@ import { LoginModal } from '@/components/Page/Auth/Modal'
 import Logo from './Logo'
 import NavModal from './NavModal'
 import IconLink from './IconLink'
+import { useAppStore } from '@/store/useApp'
 
 export default function Header() {
+  const { isLoginModalOpen, loginModalOpen, loginModalClose } = useAppStore()
   const [isNavModalOpen, setIsNavModalOpen] = useState<boolean>(false)
-  const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false)
   const { isLogin } = useAuthStore()
   const pathname = usePathname()
 
@@ -66,14 +67,14 @@ export default function Header() {
             type="button"
             ariaLabel="로그인 버튼"
             className="bg-inverse px-[14px] py-[5px] rounded-full text-background text-[0.9rem] font-semibold ml-[7px]"
-            onClick={() => setIsLoginModalOpen(true)}
+            onClick={loginModalOpen}
           >
             로그인
           </Button>
         )}
       </div>
-      <NavModal isOpen={isNavModalOpen} handleClose={() => setIsNavModalOpen(false)} />
-      <LoginModal isOpen={isLoginModalOpen} handleClose={() => setIsLoginModalOpen(false)} />
+      <NavModal isOpen={isNavModalOpen} handleClose={loginModalClose} />
+      <LoginModal isOpen={isLoginModalOpen} handleClose={loginModalClose} />
     </header>
   )
 }

@@ -1,18 +1,23 @@
 'use client'
 
 import { useState, useCallback, FormEvent } from 'react'
-import { validateEmail, validateChars, validateLength } from '@/helper/validate'
 import { useMutation } from '@tanstack/react-query'
+import { useAppStore } from '@/store/useApp'
 import { useRouter } from 'next/navigation'
+
 import { signup } from '@/lib/api/auth'
+import { validateEmail, validateChars, validateLength } from '@/helper/validate'
+
 import { Icon } from '@/components/Icon'
+
 import Button from '@/components/Button'
-import { EmailInput, PasswordInput, ConfirmPasswordInput } from '@/components/Page/Auth/Input'
-import SubmitButton from '@/components/Page/Auth/Button/SubmitButton'
 import OAuth from '@/components/Page/Auth/OAuth'
+import SubmitButton from '@/components/Page/Auth/Button/SubmitButton'
+import { EmailInput, PasswordInput, ConfirmPasswordInput } from '@/components/Page/Auth/Input'
 
 export default function Signup() {
   const router = useRouter()
+  const { loginModalOpen } = useAppStore()
   const [step, setStep] = useState<number>(0)
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -168,7 +173,14 @@ export default function Signup() {
         )}
         <p className="text-[0.9rem]">
           계정이 이미 있으신가요? &nbsp;
-          <span className="underline font-bold text-main-blue">로그인</span>
+          <Button
+            type="button"
+            ariaLabel="로그인으로 이동 버튼"
+            className="underline font-bold text-main-blue"
+            onClick={loginModalOpen}
+          >
+            로그인
+          </Button>
         </p>
         <div className="w-full flex flex-col justify-start items-center gap-[10px]">
           <div className="relative max-w-[380px] w-[80%] md:w-[50%] flex-center mb-3">
