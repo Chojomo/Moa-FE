@@ -8,6 +8,7 @@ import useFindPassword from '@/hooks/auth/useFindPassword'
 import { isTouchDevice } from '@/utils'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { EmailInput } from '@/components/Page/Auth/Input'
 
 export default function FindPassword() {
   const [email, setEmail] = useState<string>('')
@@ -53,26 +54,21 @@ export default function FindPassword() {
       />
       <form onSubmit={handleSubmit} className="w-full flex flex-col justify-center items-center">
         <h1 className="text-main-blue font-semibold text-[1.3rem] mb-10">비밀번호 찾기</h1>
-        <p className="text-[1.1rem] text-body-text text-center">
+        <p className="text-[1.1rem] text-body-text text-center mb-[20px]">
           가입한 이메일을 입력해 주세요. <br />
           이메일을 통해 비밀번호 변경 링크가 전송됩니다.
         </p>
-        <input
-          type="email"
-          id="email"
-          aria-label="이메일 입력 폼"
-          placeholder="이메일"
-          value={email}
-          onChange={handleEmailChange}
-          className="min-w-[300px] input-reset rounded border border-[#7f7f7f] dark:border-[#c7c7c7] px-[15px] py-[18px] flex-1 placeholder:font-light placeholder:text-[0.8rem] my-[20px] mb-[20px]"
-        />
-        <p className={`${!email.length || !isValidEmail ? 'opacity-0' : 'opacity-100'}`}>
-          유효하지 않은 이메일입니다.
-        </p>
+        <div className="w-full flex flex-center flex-col gap-2">
+          <EmailInput
+            email={email}
+            handleChange={handleEmailChange}
+            handleReset={() => setEmail('')}
+          />
+        </div>
         <Button
           type="submit"
           ariaLabel="임시 비밀번호 받기 버튼"
-          className="bg-main-blue min-w-[300px] p-[20px] rounded font-semibold mb-[10px]"
+          className="bg-main-blue max-w-[380px] w-[80%] md:w-[50%] py-[20px] rounded font-semibold mb-[10px] text-[1.1rem] mt-[40px]"
         >
           임시 비밀번호 발송
         </Button>
