@@ -80,6 +80,8 @@ export default function Signup() {
   const handleSignup = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     mutation.mutate()
+    router.push('/')
+    loginModalOpen()
   }
 
   const handleResetPassword = () => {
