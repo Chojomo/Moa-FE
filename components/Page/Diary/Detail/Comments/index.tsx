@@ -5,16 +5,16 @@ type CommentsProps = {
   isLogin: boolean
   diaryId: string
   commentCount: number
+  setCommentCount: React.Dispatch<React.SetStateAction<number>>
   comments: PostComment[] | null
-  handleToast: (message: string) => void
 }
 
 export default function Comments({
   isLogin,
   diaryId,
   commentCount,
+  setCommentCount,
   comments,
-  handleToast,
 }: CommentsProps) {
   return (
     <div className="w-full pb-[10%]">
@@ -27,7 +27,7 @@ export default function Comments({
           isLogin={isLogin}
           diaryId={diaryId}
           comment={c}
-          handleToast={handleToast}
+          setCommentCount={setCommentCount}
         />
       ))}
     </div>

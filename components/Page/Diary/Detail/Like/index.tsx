@@ -1,22 +1,24 @@
 'use client'
 
 import { useState, Dispatch, SetStateAction } from 'react'
+import { toast } from 'react-toastify'
 import { Icon } from '@/components/Icon'
 
 import { getLikes } from '@/lib/api/like'
 import Button from '@/components/Button'
 import usePostLike from '@/hooks/like/usePostLike'
+
 import LikesModal from './LikesModal'
 
 type LikeProps = {
+  setLikeCount: Dispatch<SetStateAction<number>>
   diaryId: string
   isLike: boolean
   setIsLike: Dispatch<SetStateAction<boolean>>
   isLogin: boolean
-  handleToast: (message: string) => void
 }
 
-export default function Like({ diaryId, isLike, setIsLike, isLogin, handleToast }: LikeProps) {
+export default function Like({ diaryId, setLikeCount, isLike, setIsLike, isLogin }: LikeProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [likedUsers, setLikedUsers] = useState<[]>([])
   const { mutateAsync: postLike } = usePostLike()
@@ -25,7 +27,7 @@ export default function Like({ diaryId, isLike, setIsLike, isLogin, handleToast 
     e.preventDefault()
 
     if (!isLogin) {
-      handleToast('로그인 후 이용하실 수 있습니다.')
+      toast.info('로그인 후 이용하실 수 있습니다.')
       return
     }
 
@@ -33,6 +35,13 @@ export default function Like({ diaryId, isLike, setIsLike, isLogin, handleToast 
       await postLike({
         diaryId,
       })
+
+      if (isLike) {
+        setLikeCount((prev: number) => prev - 1)
+      } else {
+        setLikeCount((prev: number) => prev + 1)
+      }
+
       setIsLike((prev) => !prev)
     } catch (error) {
       console.error('게시물 등록 중 오류:', error)

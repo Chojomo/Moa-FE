@@ -7,7 +7,7 @@ import { getDiaryDetail } from '@/lib/api/diary'
 import { isTouchDevice } from '@/utils'
 import { Post, Comment } from '@/types/diary'
 
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 type Params = {
@@ -18,7 +18,10 @@ export default function DiaryDetail({ params }: { params: Params }) {
   const { isLogin } = useAuthStore()
   const [post, setPost] = useState<Post | null>(null)
   const [comment, setComment] = useState<Comment[] | null>(null)
+  const [commentCount, setCommentCount] = useState<number>(0)
   const [isLike, setIsLike] = useState<boolean>(false)
+  const [likeCount, setLikeCount] = useState<number>(0)
+
   const commentPostRef = useRef<HTMLDivElement>(null)
   const likeRef = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -28,7 +31,12 @@ export default function DiaryDetail({ params }: { params: Params }) {
       const { data } = await getDiaryDetail({ diaryId: params.id })
       setPost(data)
       setComment(data.comment.comments)
-      setIsLike(data.isLiked)
+      setCommentCount(data.commentCount)
+
+      if (isLogin) {
+        setIsLike(data.isLiked)
+        setLikeCount(data.likeCount)
+      }
     }
 
     getPopst()
@@ -36,10 +44,6 @@ export default function DiaryDetail({ params }: { params: Params }) {
 
   if (!post) {
     return <div>Loading...</div>
-  }
-
-  const handleToast = (message: string) => {
-    toast.error(message)
   }
 
   const handleCommentClick = () => {
@@ -79,10 +83,10 @@ export default function DiaryDetail({ params }: { params: Params }) {
       <div ref={likeRef}>
         <Like
           diaryId={post.diaryId}
+          setLikeCount={setLikeCount}
           isLike={isLike}
           setIsLike={setIsLike}
           isLogin={isLogin}
-          handleToast={handleToast}
         />
       </div>
       <div ref={commentPostRef}>
@@ -90,8 +94,8 @@ export default function DiaryDetail({ params }: { params: Params }) {
           diaryId={post.diaryId}
           profile={post.diaryAuthorProfileImage}
           isLogin={isLogin}
-          handleToast={handleToast}
           setComment={setComment}
+          setCommentCount={setCommentCount}
           handleCommentsUpdate={handleCommentsUpdate}
         />
       </div>
@@ -100,15 +104,17 @@ export default function DiaryDetail({ params }: { params: Params }) {
         diaryId={post.diaryId}
         comments={comment}
         commentCount={post.commentCount}
-        handleToast={handleToast}
       />
       <div ref={scrollRef} />
       <Footer
         isLogin={isLogin}
         diaryId={post.diaryId}
+        likeCount={likeCount}
+        setLikeCount={setLikeCount}
         isLike={isLike}
         setIsLike={setIsLike}
-        handleToast={handleToast}
+        commentCount={commentCount}
+        setCommentCount={setCommentCount}
         handleLikeClick={handleLikeClick}
         handleCommentClick={handleCommentClick}
         isDiaryOwner={post.isDiaryOwner}

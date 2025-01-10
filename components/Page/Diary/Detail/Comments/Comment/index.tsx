@@ -9,6 +9,7 @@ import usePostReply from '@/hooks/comment/usePostReply'
 import usePatchReply from '@/hooks/comment/usePatchReply'
 import usePatchComment from '@/hooks/comment/usePatchComment'
 
+import { toast } from 'react-toastify'
 import CommentInput from '../../CommentInput'
 import CommentButton from '../Button'
 
@@ -24,13 +25,14 @@ type CmtProps = {
   isLogin: boolean
   reply: string
   setReply: React.Dispatch<React.SetStateAction<string>>
+  setCommentCount: React.Dispatch<React.SetStateAction<number>>
 }
 
 type CommentProps = {
   isLogin: boolean
   diaryId: string
   comment: PostComment
-  handleToast: (message: string) => void
+  setCommentCount: React.Dispatch<React.SetStateAction<number>>
 }
 
 function Cmt({
@@ -45,6 +47,7 @@ function Cmt({
   isLogin,
   reply,
   setReply,
+  setCommentCount,
 }: CmtProps) {
   const [isEdit, setIsEdit] = useState(false)
   const [comment, setComment] = useState(content)
@@ -91,6 +94,7 @@ function Cmt({
               type="button"
               ariaLabel="댓글 삭제 버튼"
               className="p-2 text-[0.9rem] hover:text-main-blue hover:underline"
+              onClick={() => setCommentCount((prev: number) => prev - 1)}
             >
               삭제
             </Button>
@@ -138,7 +142,7 @@ function Cmt({
   )
 }
 
-export default function Comment({ isLogin, diaryId, comment, handleToast }: CommentProps) {
+export default function Comment({ isLogin, diaryId, comment, setCommentCount }: CommentProps) {
   const [reply, setReply] = useState<string>('')
   const [subreply, setSubreply] = useState<string>('')
   const [isCommentOpen, setIsCommentOpen] = useState<boolean>(false)
@@ -154,13 +158,11 @@ export default function Comment({ isLogin, diaryId, comment, handleToast }: Comm
     replies,
   } = comment
 
-  console.log(replies)
-
   const handleButtonClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
 
     if (!reply.trim()) {
-      handleToast('댓글을 입력하세요!')
+      toast.error('댓글을 입력하세요!')
       return
     }
 
@@ -190,6 +192,7 @@ export default function Comment({ isLogin, diaryId, comment, handleToast }: Comm
         isLogin={isLogin}
         reply={reply}
         setReply={setReply}
+        setCommentCount={setCommentCount}
       />
       {(isLogin || (!isLogin && replies && replies.length > 0)) && (
         <div className="self-end flex items-center gap-5">
@@ -224,6 +227,7 @@ export default function Comment({ isLogin, diaryId, comment, handleToast }: Comm
               isLogin={isLogin}
               reply={subreply}
               setReply={setSubreply}
+              setCommentCount={setCommentCount}
             />
           ))}
         {isLogin && (

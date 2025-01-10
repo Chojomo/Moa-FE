@@ -1,20 +1,15 @@
 'use client'
 
 import { useState, useEffect, Dispatch, SetStateAction } from 'react'
+import { toast } from 'react-toastify'
 
 type CommentInputProps = {
   isLogin: boolean
   comment: string
   setComment: Dispatch<SetStateAction<string>>
-  handleToast?: (message: string) => void
 }
 
-export default function CommentInput({
-  isLogin,
-  comment,
-  setComment,
-  handleToast,
-}: CommentInputProps) {
+export default function CommentInput({ isLogin, comment, setComment }: CommentInputProps) {
   const [placeholder, setPlaceholder] = useState<string>(
     window.innerWidth < 400
       ? '댓글을 작성하세요'
@@ -44,8 +39,8 @@ export default function CommentInput({
       onClick={(e) => {
         e.stopPropagation()
 
-        if (!isLogin && handleToast) {
-          handleToast('로그인 후 이용하실 수 있습니다.')
+        if (!isLogin) {
+          toast.info('로그인 후 이용하실 수 있습니다.')
         }
       }}
       disabled={!isLogin}

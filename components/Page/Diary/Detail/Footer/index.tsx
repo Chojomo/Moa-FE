@@ -5,15 +5,18 @@ import { useRouter } from 'next/navigation'
 import { isTouchDevice } from '@/utils'
 import { Icon } from '@/components/Icon'
 import Button from '@/components/Button'
-
+import { toast } from 'react-toastify'
 import EditModal from './EditModal'
 
 type FooterProps = {
   isLogin: boolean
   diaryId: string
+  likeCount: number
+  setLikeCount: Dispatch<SetStateAction<number>>
   isLike: boolean
   setIsLike: Dispatch<SetStateAction<boolean>>
-  handleToast: (message: string) => void
+  commentCount: number
+  setCommentCount: Dispatch<SetStateAction<number>>
   handleLikeClick: () => void
   handleCommentClick: () => void
   isDiaryOwner: boolean
@@ -36,9 +39,12 @@ type Buttons = FooterButton[]
 export default function Footer({
   isLogin,
   diaryId,
+  likeCount,
+  setLikeCount,
   isLike,
   setIsLike,
-  handleToast,
+  commentCount,
+  setCommentCount,
   handleLikeClick,
   handleCommentClick,
   isDiaryOwner,
@@ -55,7 +61,7 @@ export default function Footer({
       width: 22,
       height: 22,
       onClick: handleLikeClick,
-      children: <span className="text-[#A6A6A6]">32</span>,
+      children: <span className="text-[#A6A6A6]">{likeCount}</span>,
     },
     {
       name: 'Comment',
@@ -64,7 +70,7 @@ export default function Footer({
       width: 21,
       height: 21,
       onClick: handleCommentClick,
-      children: <span className="text-[#A6A6A6]">32</span>,
+      children: <span className="text-[#A6A6A6]">{commentCount}</span>,
     },
     {
       name: 'Share',
@@ -75,7 +81,7 @@ export default function Footer({
       onClick: async () => {
         const url = window.location.href
         await navigator.clipboard.writeText(url)
-        handleToast('링크가 복사되었습니다.')
+        toast.success('링크가 복사되었습니다.')
 
         console.log(isTouchDevice())
       },
