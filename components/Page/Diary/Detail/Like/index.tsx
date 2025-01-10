@@ -1,11 +1,13 @@
 'use client'
 
 import { useState, Dispatch, SetStateAction } from 'react'
+import { toast } from 'react-toastify'
 import { Icon } from '@/components/Icon'
 
 import { getLikes } from '@/lib/api/like'
 import Button from '@/components/Button'
 import usePostLike from '@/hooks/like/usePostLike'
+
 import LikesModal from './LikesModal'
 
 type LikeProps = {
@@ -13,10 +15,9 @@ type LikeProps = {
   isLike: boolean
   setIsLike: Dispatch<SetStateAction<boolean>>
   isLogin: boolean
-  handleToast: (message: string) => void
 }
 
-export default function Like({ diaryId, isLike, setIsLike, isLogin, handleToast }: LikeProps) {
+export default function Like({ diaryId, isLike, setIsLike, isLogin }: LikeProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [likedUsers, setLikedUsers] = useState<[]>([])
   const { mutateAsync: postLike } = usePostLike()
@@ -25,7 +26,7 @@ export default function Like({ diaryId, isLike, setIsLike, isLogin, handleToast 
     e.preventDefault()
 
     if (!isLogin) {
-      handleToast('로그인 후 이용하실 수 있습니다.')
+      toast.info('로그인 후 이용하실 수 있습니다.')
       return
     }
 

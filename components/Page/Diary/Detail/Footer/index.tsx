@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { isTouchDevice } from '@/utils'
 import { Icon } from '@/components/Icon'
 import Button from '@/components/Button'
-
+import { toast } from 'react-toastify'
 import EditModal from './EditModal'
 
 type FooterProps = {
@@ -13,7 +13,6 @@ type FooterProps = {
   diaryId: string
   isLike: boolean
   setIsLike: Dispatch<SetStateAction<boolean>>
-  handleToast: (message: string) => void
   handleLikeClick: () => void
   handleCommentClick: () => void
   isDiaryOwner: boolean
@@ -38,7 +37,6 @@ export default function Footer({
   diaryId,
   isLike,
   setIsLike,
-  handleToast,
   handleLikeClick,
   handleCommentClick,
   isDiaryOwner,
@@ -75,7 +73,7 @@ export default function Footer({
       onClick: async () => {
         const url = window.location.href
         await navigator.clipboard.writeText(url)
-        handleToast('링크가 복사되었습니다.')
+        toast.success('링크가 복사되었습니다.')
 
         console.log(isTouchDevice())
       },

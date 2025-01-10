@@ -7,7 +7,7 @@ import { getDiaryDetail } from '@/lib/api/diary'
 import { isTouchDevice } from '@/utils'
 import { Post, Comment } from '@/types/diary'
 
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 type Params = {
@@ -36,10 +36,6 @@ export default function DiaryDetail({ params }: { params: Params }) {
 
   if (!post) {
     return <div>Loading...</div>
-  }
-
-  const handleToast = (message: string) => {
-    toast.error(message)
   }
 
   const handleCommentClick = () => {
@@ -77,20 +73,13 @@ export default function DiaryDetail({ params }: { params: Params }) {
         isDiaryPublic={post.isDiaryPublic}
       />
       <div ref={likeRef}>
-        <Like
-          diaryId={post.diaryId}
-          isLike={isLike}
-          setIsLike={setIsLike}
-          isLogin={isLogin}
-          handleToast={handleToast}
-        />
+        <Like diaryId={post.diaryId} isLike={isLike} setIsLike={setIsLike} isLogin={isLogin} />
       </div>
       <div ref={commentPostRef}>
         <CommentPost
           diaryId={post.diaryId}
           profile={post.diaryAuthorProfileImage}
           isLogin={isLogin}
-          handleToast={handleToast}
           setComment={setComment}
           handleCommentsUpdate={handleCommentsUpdate}
         />
@@ -100,7 +89,6 @@ export default function DiaryDetail({ params }: { params: Params }) {
         diaryId={post.diaryId}
         comments={comment}
         commentCount={post.commentCount}
-        handleToast={handleToast}
       />
       <div ref={scrollRef} />
       <Footer
@@ -108,7 +96,6 @@ export default function DiaryDetail({ params }: { params: Params }) {
         diaryId={post.diaryId}
         isLike={isLike}
         setIsLike={setIsLike}
-        handleToast={handleToast}
         handleLikeClick={handleLikeClick}
         handleCommentClick={handleCommentClick}
         isDiaryOwner={post.isDiaryOwner}

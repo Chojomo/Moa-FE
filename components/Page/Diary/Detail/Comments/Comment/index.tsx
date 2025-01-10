@@ -9,6 +9,7 @@ import usePostReply from '@/hooks/comment/usePostReply'
 import usePatchReply from '@/hooks/comment/usePatchReply'
 import usePatchComment from '@/hooks/comment/usePatchComment'
 
+import { toast } from 'react-toastify'
 import CommentInput from '../../CommentInput'
 import CommentButton from '../Button'
 
@@ -30,7 +31,6 @@ type CommentProps = {
   isLogin: boolean
   diaryId: string
   comment: PostComment
-  handleToast: (message: string) => void
 }
 
 function Cmt({
@@ -138,7 +138,7 @@ function Cmt({
   )
 }
 
-export default function Comment({ isLogin, diaryId, comment, handleToast }: CommentProps) {
+export default function Comment({ isLogin, diaryId, comment }: CommentProps) {
   const [reply, setReply] = useState<string>('')
   const [subreply, setSubreply] = useState<string>('')
   const [isCommentOpen, setIsCommentOpen] = useState<boolean>(false)
@@ -160,7 +160,7 @@ export default function Comment({ isLogin, diaryId, comment, handleToast }: Comm
     e.preventDefault()
 
     if (!reply.trim()) {
-      handleToast('댓글을 입력하세요!')
+      toast.error('댓글을 입력하세요!')
       return
     }
 

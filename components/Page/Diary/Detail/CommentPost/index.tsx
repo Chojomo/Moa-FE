@@ -5,13 +5,13 @@ import Image from 'next/image'
 import Button from '@/components/Button'
 import usePostComment from '@/hooks/comment/usePostComment'
 import { Comment } from '@/types/diary'
+import { toast } from 'react-toastify'
 import CommentInput from '../CommentInput'
 
 type CommentPostProps = {
   isLogin: boolean
   diaryId: string
   profile: string
-  handleToast: (message: string) => void
   setComment: Dispatch<SetStateAction<Comment[] | null>>
   handleCommentsUpdate: () => void
 }
@@ -20,7 +20,6 @@ export default function CommentPost({
   isLogin,
   diaryId,
   profile,
-  handleToast,
   setComment: setComments,
   handleCommentsUpdate,
 }: CommentPostProps) {
@@ -31,12 +30,12 @@ export default function CommentPost({
     e.preventDefault()
 
     if (!isLogin) {
-      handleToast('로그인 후 이용하실 수 있습니다.')
+      toast.info('로그인 후 이용하실 수 있습니다.')
       return
     }
 
     if (!comment.trim()) {
-      handleToast('댓글을 입력하세요!')
+      toast.error('댓글을 입력하세요!')
       return
     }
 
@@ -73,12 +72,7 @@ export default function CommentPost({
         objectFit="cover"
         className="w-[50px] h-[50px] md:w-[60px] md:h-[60px] rounded-full border border-border"
       />
-      <CommentInput
-        isLogin={isLogin}
-        comment={comment}
-        setComment={setComment}
-        handleToast={handleToast}
-      />
+      <CommentInput isLogin={isLogin} comment={comment} setComment={setComment} />
       <Button
         type="button"
         ariaLabel="follow button"
