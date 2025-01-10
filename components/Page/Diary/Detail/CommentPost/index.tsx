@@ -13,6 +13,7 @@ type CommentPostProps = {
   diaryId: string
   profile: string
   setComment: Dispatch<SetStateAction<Comment[] | null>>
+  setCommentCount: Dispatch<SetStateAction<number>>
   handleCommentsUpdate: () => void
 }
 
@@ -21,6 +22,7 @@ export default function CommentPost({
   diaryId,
   profile,
   setComment: setComments,
+  setCommentCount,
   handleCommentsUpdate,
 }: CommentPostProps) {
   const [comment, setComment] = useState<string>('')
@@ -54,6 +56,7 @@ export default function CommentPost({
 
       setComment('')
       setTimeout(handleCommentsUpdate, 100)
+      setCommentCount((prev: number) => prev + 1)
     } catch (error) {
       console.error('게시물 등록 중 오류:', error)
     }

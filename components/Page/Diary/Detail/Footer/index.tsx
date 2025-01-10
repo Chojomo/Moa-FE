@@ -15,6 +15,8 @@ type FooterProps = {
   setLikeCount: Dispatch<SetStateAction<number>>
   isLike: boolean
   setIsLike: Dispatch<SetStateAction<boolean>>
+  commentCount: number
+  setCommentCount: Dispatch<SetStateAction<number>>
   handleLikeClick: () => void
   handleCommentClick: () => void
   isDiaryOwner: boolean
@@ -41,6 +43,8 @@ export default function Footer({
   setLikeCount,
   isLike,
   setIsLike,
+  commentCount,
+  setCommentCount,
   handleLikeClick,
   handleCommentClick,
   isDiaryOwner,
@@ -66,7 +70,7 @@ export default function Footer({
       width: 21,
       height: 21,
       onClick: handleCommentClick,
-      children: <span className="text-[#A6A6A6]">32</span>,
+      children: <span className="text-[#A6A6A6]">{commentCount}</span>,
     },
     {
       name: 'Share',

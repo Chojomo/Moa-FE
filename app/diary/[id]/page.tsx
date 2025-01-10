@@ -18,8 +18,10 @@ export default function DiaryDetail({ params }: { params: Params }) {
   const { isLogin } = useAuthStore()
   const [post, setPost] = useState<Post | null>(null)
   const [comment, setComment] = useState<Comment[] | null>(null)
+  const [commentCount, setCommentCount] = useState<number>(0)
   const [isLike, setIsLike] = useState<boolean>(false)
   const [likeCount, setLikeCount] = useState<number>(0)
+
   const commentPostRef = useRef<HTMLDivElement>(null)
   const likeRef = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -29,6 +31,7 @@ export default function DiaryDetail({ params }: { params: Params }) {
       const { data } = await getDiaryDetail({ diaryId: params.id })
       setPost(data)
       setComment(data.comment.comments)
+      setCommentCount(data.commentCount)
 
       if (isLogin) {
         setIsLike(data.isLiked)
@@ -92,6 +95,7 @@ export default function DiaryDetail({ params }: { params: Params }) {
           profile={post.diaryAuthorProfileImage}
           isLogin={isLogin}
           setComment={setComment}
+          setCommentCount={setCommentCount}
           handleCommentsUpdate={handleCommentsUpdate}
         />
       </div>
@@ -109,6 +113,8 @@ export default function DiaryDetail({ params }: { params: Params }) {
         setLikeCount={setLikeCount}
         isLike={isLike}
         setIsLike={setIsLike}
+        commentCount={commentCount}
+        setCommentCount={setCommentCount}
         handleLikeClick={handleLikeClick}
         handleCommentClick={handleCommentClick}
         isDiaryOwner={post.isDiaryOwner}
