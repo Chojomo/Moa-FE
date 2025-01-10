@@ -104,6 +104,7 @@ export default function DiaryDetail({ params }: { params: Params }) {
         diaryId={post.diaryId}
         comments={comment}
         commentCount={post.commentCount}
+        setCommentCount={setCommentCount}
       />
       <div ref={scrollRef} />
       <Footer
