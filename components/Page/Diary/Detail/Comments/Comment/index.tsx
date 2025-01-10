@@ -154,8 +154,6 @@ export default function Comment({ isLogin, diaryId, comment }: CommentProps) {
     replies,
   } = comment
 
-  console.log(replies)
-
   const handleButtonClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
 

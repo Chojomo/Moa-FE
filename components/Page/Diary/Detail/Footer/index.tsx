@@ -11,6 +11,8 @@ import EditModal from './EditModal'
 type FooterProps = {
   isLogin: boolean
   diaryId: string
+  likeCount: number
+  setLikeCount: Dispatch<SetStateAction<number>>
   isLike: boolean
   setIsLike: Dispatch<SetStateAction<boolean>>
   handleLikeClick: () => void
@@ -35,6 +37,8 @@ type Buttons = FooterButton[]
 export default function Footer({
   isLogin,
   diaryId,
+  likeCount,
+  setLikeCount,
   isLike,
   setIsLike,
   handleLikeClick,
@@ -53,7 +57,7 @@ export default function Footer({
       width: 22,
       height: 22,
       onClick: handleLikeClick,
-      children: <span className="text-[#A6A6A6]">32</span>,
+      children: <span className="text-[#A6A6A6]">{likeCount}</span>,
     },
     {
       name: 'Comment',

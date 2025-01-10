@@ -11,13 +11,14 @@ import usePostLike from '@/hooks/like/usePostLike'
 import LikesModal from './LikesModal'
 
 type LikeProps = {
+  setLikeCount: Dispatch<SetStateAction<number>>
   diaryId: string
   isLike: boolean
   setIsLike: Dispatch<SetStateAction<boolean>>
   isLogin: boolean
 }
 
-export default function Like({ diaryId, isLike, setIsLike, isLogin }: LikeProps) {
+export default function Like({ diaryId, setLikeCount, isLike, setIsLike, isLogin }: LikeProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [likedUsers, setLikedUsers] = useState<[]>([])
   const { mutateAsync: postLike } = usePostLike()
@@ -34,6 +35,13 @@ export default function Like({ diaryId, isLike, setIsLike, isLogin }: LikeProps)
       await postLike({
         diaryId,
       })
+
+      if (isLike) {
+        setLikeCount((prev: number) => prev - 1)
+      } else {
+        setLikeCount((prev: number) => prev + 1)
+      }
+
       setIsLike((prev) => !prev)
     } catch (error) {
       console.error('게시물 등록 중 오류:', error)
