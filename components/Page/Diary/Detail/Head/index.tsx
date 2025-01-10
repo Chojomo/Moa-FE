@@ -12,6 +12,7 @@ type HeadProps = {
 
 export default function Head({ post, isLogin }: HeadProps) {
   const {
+    diaryAuthorId,
     diaryId,
     diaryTitle: title,
     diaryAuthorProfileImage: profile,
@@ -62,7 +63,7 @@ export default function Head({ post, isLogin }: HeadProps) {
               </Button>
             </>
           )}
-          {isLogin && !isDiaryOwner && <FollowButton />}
+          {isLogin && !isDiaryOwner && <FollowButton diaryAuthorId={diaryAuthorId} />}
         </div>
       </div>
     </div>

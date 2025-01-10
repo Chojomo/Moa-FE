@@ -1,10 +1,23 @@
 'use client'
 
 import Button from '@/components/Button'
+import usePostFollow from '@/hooks/follow/useFollow'
 
-export default function FollowButton() {
-  const handleButtonClick = () => {
-    console.log('클릭')
+type FollowButtonProps = {
+  diaryAuthorId: string
+}
+
+export default function FollowButton({ diaryAuthorId }: FollowButtonProps) {
+  const { mutateAsync: postFollow } = usePostFollow()
+
+  const handleButtonClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    e.preventDefault()
+
+    try {
+      await postFollow({ userId: diaryAuthorId })
+    } catch (error) {
+      console.error('팔로우 중 오류:', error)
+    }
   }
   return (
     <Button
