@@ -25,6 +25,7 @@ type CmtProps = {
   isLogin: boolean
   reply: string
   setReply: React.Dispatch<React.SetStateAction<string>>
+  setCommentCount: React.Dispatch<React.SetStateAction<number>>
 }
 
 type CommentProps = {
@@ -45,6 +46,7 @@ function Cmt({
   isLogin,
   reply,
   setReply,
+  setCommentCount,
 }: CmtProps) {
   const [isEdit, setIsEdit] = useState(false)
   const [comment, setComment] = useState(content)
@@ -91,6 +93,7 @@ function Cmt({
               type="button"
               ariaLabel="댓글 삭제 버튼"
               className="p-2 text-[0.9rem] hover:text-main-blue hover:underline"
+              onClick={() => setCommentCount((prev: number) => prev - 1)}
             >
               삭제
             </Button>
@@ -138,7 +141,7 @@ function Cmt({
   )
 }
 
-export default function Comment({ isLogin, diaryId, comment }: CommentProps) {
+export default function Comment({ isLogin, diaryId, comment, setCommentCount }: CommentProps) {
   const [reply, setReply] = useState<string>('')
   const [subreply, setSubreply] = useState<string>('')
   const [isCommentOpen, setIsCommentOpen] = useState<boolean>(false)
