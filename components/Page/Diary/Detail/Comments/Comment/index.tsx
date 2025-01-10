@@ -4,8 +4,11 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Button from '@/components/Button'
 import { Comment as PostComment } from '@/types/diary'
+
 import usePostReply from '@/hooks/comment/usePostReply'
+import usePatchReply from '@/hooks/comment/usePatchReply'
 import usePatchComment from '@/hooks/comment/usePatchComment'
+
 import CommentInput from '../../CommentInput'
 import CommentButton from '../Button'
 
@@ -44,7 +47,9 @@ function Cmt({
   setReply,
 }: CmtProps) {
   const [isEdit, setIsEdit] = useState(false)
+  const [comment, setComment] = useState(content)
   const { mutateAsync: patchComment } = usePatchComment()
+  const { mutateAsync: patchReply } = usePatchReply()
 
   return (
     <>
@@ -78,7 +83,6 @@ function Cmt({
               className="p-2 text-[0.9rem] hover:text-main-blue hover:underline"
               onClick={() => {
                 setIsEdit(true)
-                setReply(content)
               }}
             >
               수정
@@ -93,35 +97,43 @@ function Cmt({
           </div>
         )}
       </div>
-      <p
+      <div
         className={`text-body-tex px-[5px] ${isReply ? 'border-b pt-[3%] pb-[5%] mb-3 text-[0.9rem]' : 'py-[5%] text-[1rem]'}`}
       >
         {!isEdit ? (
-          content
+          comment
         ) : (
           <div className="flex flex-col gap-7">
-            <CommentInput isLogin={isLogin} comment={reply} setComment={setReply} />
+            <CommentInput isLogin={isLogin} comment={comment} setComment={setComment} />
             <div className="flex justify-end gap-[20px]">
-              <CommentButton type="cancel" text="취소" handleClick={() => setIsEdit(false)} />
+              <CommentButton
+                type="cancel"
+                text="취소"
+                handleClick={() => {
+                  setIsEdit(false)
+                  setComment(reply)
+                }}
+              />
               <CommentButton
                 type="edit"
                 text="댓글 수정"
                 handleClick={async () => {
-                  console.log(`diaryId : ${diaryId}`)
-                  console.log(`commentId : ${commentId}`)
-                  console.log(`reply : ${reply}`)
                   try {
-                    await patchComment({ diaryId, commentId, commentContents: reply })
+                    if (!isReply) {
+                      await patchComment({ diaryId, commentId, commentContents: reply })
+                    } else {
+                      await patchReply({ diaryId, replyId: commentId, replyContents: reply })
+                    }
                   } catch (error) {
                     console.error('댓글 수정 중 오류:', error)
                   }
                 }}
               />
             </div>
-            <div className="border w-full my-[20px]" />
+            {!isReply && <div className="border w-full my-[20px]" />}
           </div>
         )}
-      </p>
+      </div>
     </>
   )
 }

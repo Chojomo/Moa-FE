@@ -79,14 +79,14 @@ export async function PATCH(req: NextRequest) {
     const data = await response.json()
 
     if (!response.ok) {
-      throw new Error(data.error || '다이어리 게시 실패')
+      throw new Error(data.error || '대댓글 수정 실패')
     }
 
     return new Response(JSON.stringify(data), {
       status: 200,
     })
   } catch (error) {
-    console.error('댓글 게시 에러:', error)
+    console.error('대댓글 수정 에러:', error)
     return new Response(JSON.stringify({ error: '서버 에러 발생' }), { status: 500 })
   }
 }
