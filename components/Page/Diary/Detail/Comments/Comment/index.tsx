@@ -32,6 +32,7 @@ type CommentProps = {
   isLogin: boolean
   diaryId: string
   comment: PostComment
+  setCommentCount: React.Dispatch<React.SetStateAction<number>>
 }
 
 function Cmt({
@@ -191,6 +192,7 @@ export default function Comment({ isLogin, diaryId, comment, setCommentCount }: 
         isLogin={isLogin}
         reply={reply}
         setReply={setReply}
+        setCommentCount={setCommentCount}
       />
       {(isLogin || (!isLogin && replies && replies.length > 0)) && (
         <div className="self-end flex items-center gap-5">
@@ -225,6 +227,7 @@ export default function Comment({ isLogin, diaryId, comment, setCommentCount }: 
               isLogin={isLogin}
               reply={subreply}
               setReply={setSubreply}
+              setCommentCount={setCommentCount}
             />
           ))}
         {isLogin && (
