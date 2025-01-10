@@ -19,6 +19,7 @@ export default function DiaryDetail({ params }: { params: Params }) {
   const [post, setPost] = useState<Post | null>(null)
   const [comment, setComment] = useState<Comment[] | null>(null)
   const [isLike, setIsLike] = useState<boolean>(false)
+  const [likeCount, setLikeCount] = useState<number>(0)
   const commentPostRef = useRef<HTMLDivElement>(null)
   const likeRef = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -28,7 +29,11 @@ export default function DiaryDetail({ params }: { params: Params }) {
       const { data } = await getDiaryDetail({ diaryId: params.id })
       setPost(data)
       setComment(data.comment.comments)
-      setIsLike(data.isLiked)
+
+      if (isLogin) {
+        setIsLike(data.isLiked)
+        setLikeCount(data.likeCount)
+      }
     }
 
     getPopst()
@@ -73,7 +78,13 @@ export default function DiaryDetail({ params }: { params: Params }) {
         isDiaryPublic={post.isDiaryPublic}
       />
       <div ref={likeRef}>
-        <Like diaryId={post.diaryId} isLike={isLike} setIsLike={setIsLike} isLogin={isLogin} />
+        <Like
+          diaryId={post.diaryId}
+          setLikeCount={setLikeCount}
+          isLike={isLike}
+          setIsLike={setIsLike}
+          isLogin={isLogin}
+        />
       </div>
       <div ref={commentPostRef}>
         <CommentPost
@@ -94,6 +105,8 @@ export default function DiaryDetail({ params }: { params: Params }) {
       <Footer
         isLogin={isLogin}
         diaryId={post.diaryId}
+        likeCount={likeCount}
+        setLikeCount={setLikeCount}
         isLike={isLike}
         setIsLike={setIsLike}
         handleLikeClick={handleLikeClick}
