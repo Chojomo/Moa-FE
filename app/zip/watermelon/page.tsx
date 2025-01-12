@@ -11,7 +11,9 @@ export default function Watermelon() {
     const container = containerRef.current
     const canvas = canvasRef.current
 
-    if (!container || !canvas) return
+    if (!container || !canvas) {
+      return undefined
+    }
 
     const { Engine, Render, World, Bodies } = Matter
     const { clientWidth: width, clientHeight: height } = canvas
@@ -20,12 +22,12 @@ export default function Watermelon() {
 
     const render = Render.create({
       element: container,
-      engine: engine,
-      canvas: canvas,
+      engine,
+      canvas,
       options: {
         wireframes: false,
-        width: width,
-        height: height,
+        width,
+        height,
         background: '#F1E0AC',
       },
     })
@@ -53,7 +55,6 @@ export default function Watermelon() {
     World.add(engine.world, [leftWall, rightWall, ground, topLine])
     Matter.Runner.run(engine)
     Render.run(render)
-
     return () => {
       Matter.Render.stop(render)
       Matter.World.clear(engine.world, false)
@@ -69,7 +70,7 @@ export default function Watermelon() {
           style={{ textAlign: 'center' }}
           className="w-full h-full flex-center"
         >
-          <canvas ref={canvasRef} className="w-full h-full md:w-[40%] md:h-[85%]"></canvas>
+          <canvas ref={canvasRef} className="w-full h-full md:w-[40%] md:h-[85%]" />
         </div>
       </div>
     </div>
