@@ -111,11 +111,8 @@ export default function DiaryDetail({ params }: { params: Params }) {
         isLogin={isLogin}
         diaryId={post.diaryId}
         likeCount={likeCount}
-        setLikeCount={setLikeCount}
         isLike={isLike}
-        setIsLike={setIsLike}
         commentCount={commentCount}
-        setCommentCount={setCommentCount}
         handleLikeClick={handleLikeClick}
         handleCommentClick={handleCommentClick}
         isDiaryOwner={post.isDiaryOwner}
