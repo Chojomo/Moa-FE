@@ -8,7 +8,7 @@ import { getRandomFruitFeature } from '@/helper/suikaGame/getFruitFeature'
 
 export default function SG() {
   const [isStart, setIsStart] = useState<boolean>(true)
-  const [nextItem, setNextItem] = useState<Fruits>(getRandomFruitFeature()?.label as Fruits)
+  const [nextFruit, setNextFruit] = useState<Fruits>(getRandomFruitFeature()?.label as Fruits)
 
   return (
     <div className="w-[100vw] h-[100vh] flex-center overflow-hidden pt-[54px]">
@@ -18,7 +18,7 @@ export default function SG() {
       >
         <div className="w-full h-full pt-[10px] flex-center flex-col overflow-hidden gap-[0.2em] canvas-border">
           {/* header */}
-          <Canvas nextItem={nextItem} setNextItem={setNextItem} />
+          <Canvas nextFruit={nextFruit} setNextFruit={setNextFruit} />
         </div>
       </div>
       {/* intro */}
