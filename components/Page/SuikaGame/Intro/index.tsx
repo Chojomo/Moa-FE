@@ -1,4 +1,4 @@
-import { Fruits } from '@/helper/constants/fruits'
+import { Fruits } from '@/helper/constants/suikaGame/fruits'
 import Image from 'next/image'
 import Button from '@/components/Button'
 
@@ -49,6 +49,8 @@ export default function Intro({ isVisible, handleGameStart }: IntroProps) {
         </li>
       )
     })
+
+  if (!isVisible) return null
 
   return (
     <div className="w-full h-full fixed top-0 left-0 flex-center select-none">
