@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState, useRef } from 'react'
-import { Intro } from '@/components/Page/SuikaGame'
+import { Intro, Canvas } from '@/components/Page/SuikaGame'
 import Matter from 'matter-js'
 
 export default function SG() {
@@ -16,7 +16,7 @@ export default function SG() {
         <div className="w-full h-full flex-center flex-col overflow-hidden gap-[0.2em] canvas-border">
           {/* header */}
           <div />
-          <div id="canvasWrap" className="select-none" />
+          <Canvas />
         </div>
       </div>
       {/* intro */}
