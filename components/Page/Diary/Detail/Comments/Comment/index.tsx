@@ -54,6 +54,8 @@ function Cmt({
   const { mutateAsync: patchComment } = usePatchComment()
   const { mutateAsync: patchReply } = usePatchReply()
 
+  // console.log(setReply)
+
   return (
     <>
       <div className={`flex-center gap-[3%] ${isReply ? '' : ''}`}>

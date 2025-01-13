@@ -51,9 +51,9 @@ export default function LoginModal({ isOpen, handleClose }: LoginModalProps) {
     console.log(isValid)
   }, [])
 
-  const handleReset = () => {
-    setEmail('')
-  }
+  // const handleReset = () => {
+  //   setEmail('')
+  // }
 
   const mutation = useMutation({
     mutationFn: () => login(email, password),

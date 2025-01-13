@@ -34,11 +34,11 @@
     "rehype-sanitize": "^6.0.0",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
-    "tiptap-markdown": "^0.8.10",
     "zustand": "^4.5.4"
   },
   "devDependencies": {
     "@types/dompurify": "^3.0.5",
+    "@types/matter-js": "^0.19.8",
     "@types/node": "^20",
     "@types/prismjs": "^1.26.4",
     "@types/react": "^18",

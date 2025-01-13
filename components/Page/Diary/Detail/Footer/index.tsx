@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, Dispatch, SetStateAction } from 'react'
+import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { isTouchDevice } from '@/utils'
 import { Icon } from '@/components/Icon'
@@ -12,11 +12,8 @@ type FooterProps = {
   isLogin: boolean
   diaryId: string
   likeCount: number
-  setLikeCount: Dispatch<SetStateAction<number>>
   isLike: boolean
-  setIsLike: Dispatch<SetStateAction<boolean>>
   commentCount: number
-  setCommentCount: Dispatch<SetStateAction<number>>
   handleLikeClick: () => void
   handleCommentClick: () => void
   isDiaryOwner: boolean
@@ -40,11 +37,9 @@ export default function Footer({
   isLogin,
   diaryId,
   likeCount,
-  setLikeCount,
   isLike,
-  setIsLike,
   commentCount,
-  setCommentCount,
+
   handleLikeClick,
   handleCommentClick,
   isDiaryOwner,
@@ -97,6 +92,7 @@ export default function Footer({
       height: 20,
       onClick: () => {
         setIsBookmarked((prev) => !prev)
+        console.log(isBookmarked)
       },
     })
 
