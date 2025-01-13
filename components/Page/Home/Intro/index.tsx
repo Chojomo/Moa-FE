@@ -9,8 +9,8 @@ export default function Intro() {
     {
       index: 2,
       src: '/images/pebble/purple-pebble2.png',
-      name: 'Watermelon',
-      href: '/zip/watermelon',
+      name: 'suikaGame',
+      href: '/zip/suikaGame',
     },
   ]
   return (

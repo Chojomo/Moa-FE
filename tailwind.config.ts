@@ -188,6 +188,10 @@ const config: Config = {
           '0%': { maxHeight: '0px', opacity: '0' },
           '100%': { maxHeight: '500px', opacity: '1' },
         },
+        spin: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
       },
       animation: {
         shimmer: 'shimmer 1s linear infinite',
@@ -206,6 +210,8 @@ const config: Config = {
         customBounce: 'customBounce 0.8s ease',
         shake: 'shake 1.5s ease-in-out infinite',
         slideDown: 'slideDown 0.3s ease-in-out',
+        spin: 'spin 50s linear infinite',
+        spinList: 'spin 5s linear infinite',
       },
       boxShadow: {
         tooltip: '2px 6px 12px 0px rgba(0, 0, 0, 0.12), 0px 0px 4px 0px rgba(0, 0, 0, 0.12)',
@@ -215,6 +221,9 @@ const config: Config = {
         '-8': '-8deg',
         '8': '8deg',
       },
+    },
+    backgroundImage: {
+      'gradient-to-b': 'linear-gradient(0deg, #f5f1c4, #cfa76f, #a0633b)',
     },
   },
   plugins: [tailwindcssAnimate, typography],
