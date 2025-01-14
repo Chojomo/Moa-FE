@@ -5,7 +5,7 @@ import { Fruits } from '../constants/suikaGame/fruits'
 
 export type FruitType = keyof typeof Fruits
 
-export const getFruitFeature = (fruit: FruitType) => {
+export const getFruit = (fruit: FruitType) => {
   const width = getWidth()
 
   switch (fruit) {
@@ -38,8 +38,8 @@ export const getFruitFeature = (fruit: FruitType) => {
   }
 }
 
-export const getRandomFruitFeature = () => {
+export const getRandomFruit = () => {
   const fruits = Object.values(Fruits).slice(0, 5)
   const index = Math.floor(Math.random() * fruits.length)
-  return getFruitFeature(fruits[index])
+  return getFruit(fruits[index])
 }
