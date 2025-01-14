@@ -40,6 +40,6 @@ export const getFruitFeature = (fruit: FruitType) => {
 
 export const getRandomFruitFeature = () => {
   const fruits = Object.values(Fruits).slice(0, 5)
-  const randomIndex = Math.floor(Math.random() * fruits.length)
-  return getFruitFeature(fruits[randomIndex])
+  const index = Math.floor(Math.random() * fruits.length)
+  return getFruitFeature(fruits[index])
 }

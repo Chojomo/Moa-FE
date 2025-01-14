@@ -13,7 +13,7 @@ export const GameOverLine = Matter.Bodies.rectangle(
     isStatic: true,
     isSensor: true,
     collisionFilter: { group: -1 },
-    render: { fillStyle: '#ffffff00' },
+    render: { fillStyle: '#5100FF' },
     label: 'GAME_OVER_LINE',
   }
 )
@@ -27,7 +27,7 @@ export const GameOverGuideLine = Matter.Bodies.rectangle(
     isStatic: true,
     isSensor: true,
     collisionFilter: { group: -1 },
-    render: { fillStyle: '#ffffff20' },
+    render: { fillStyle: '#5100FF' },
     label: 'GAME_OVER_GUIDE_LINE',
   }
 )
@@ -41,7 +41,7 @@ export const GuideLine = Matter.Bodies.rectangle(
     isStatic: true,
     isSensor: true,
     collisionFilter: { group: -1 },
-    render: { fillStyle: '#ffffff30' },
+    render: { fillStyle: '#5100FF' },
     label: 'GUIDE_LINE',
   }
 )

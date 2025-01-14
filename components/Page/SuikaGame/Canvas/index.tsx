@@ -12,18 +12,18 @@ const { Engine, Render, World, Bodies, Mouse, MouseConstraint } = Matter
 const FRAME = 1000 / 60
 
 type CanvasProps = {
-  nextItem: Fruits
-  setNextItem: React.Dispatch<SetStateAction<Fruits>>
+  nextFruit: Fruits
+  setNextFruit: React.Dispatch<SetStateAction<Fruits>>
 }
 
-export default function Canvas({ nextItem, setNextItem }: CanvasProps) {
+export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
   const canvasRef = useRef<HTMLDivElement | null>(null)
   const engine = Engine.create({
     gravity: { y: 2.0 },
   })
 
   let render: Matter.Render | null = null
-  let nextFruit: Fruits | null = null
+  // let nextFruit: Fruits | null = null
   let fixedItem: Matter.Body | null = null
   const prevPosition = { x: getWidth() / 2, y: 50 }
   const fixedItemTimeOut: NodeJS.Timeout | null = null
@@ -44,6 +44,8 @@ export default function Canvas({ nextItem, setNextItem }: CanvasProps) {
     const radius = feature?.radius || 1
     const mass = feature?.mass || 1
 
+    console.log(`label : ${label}`)
+
     fixedItem = Bodies.circle(getWidth() / 2, 50, radius, {
       isStatic: true,
       isSensor: true,
@@ -61,9 +63,8 @@ export default function Canvas({ nextItem, setNextItem }: CanvasProps) {
     })
     World.add(engine.world, fixedItem)
 
-    const newNextItem = getRandomFruitFeature()?.label as Fruits
-    nextFruit = newNextItem
-    setNextItem(newNextItem)
+    const newFruit = getRandomFruitFeature()?.label as Fruits
+    setNextFruit(newFruit)
 
     return undefined
   }
@@ -86,16 +87,22 @@ export default function Canvas({ nextItem, setNextItem }: CanvasProps) {
     }
 
     render = Render.create({ element: canvas, engine, options })
-    World.add(engine.world, [...Wall])
-    World.add(engine.world, [GameOverGuideLine, GuideLine])
-    nextFruit = nextItem
+    World.add(engine.world, [...Wall, GameOverGuideLine, GuideLine])
+
     createFixedItem()
 
     return undefined
   }
 
+  const run = () => {
+    if (!render) return
+    // animate(0)
+    Render.run(render)
+  }
+
   useEffect(() => {
     init()
+    run()
   }, [])
 
   return (
