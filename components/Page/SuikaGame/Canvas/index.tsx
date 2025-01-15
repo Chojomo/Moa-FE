@@ -16,7 +16,7 @@ import {
   getGameOverGuideLine,
 } from '@/helper/suikaGame'
 
-const { Runner, Engine, Render, World, Bodies, Mouse, Events, MouseConstraint } = Matter
+const { Runner, Engine, Render, World, Body, Bodies, Mouse, Events, MouseConstraint } = Matter
 const FRAME = 1000 / 60
 
 type CanvasProps = {
@@ -32,7 +32,7 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
 
   const runner = Runner.create()
   const engine = Engine.create({
-    gravity: { y: 2.0 },
+    gravity: { y: 1 },
   })
 
   let render: Matter.Render | null = null
@@ -62,9 +62,9 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
 
     fruit = Bodies.circle(getWidth() / 2, 50, radius, {
       isStatic: true,
-      isSensor: true,
+      isSensor: false,
       label,
-      restitution: 0,
+      restitution: 0.2,
       mass,
       friction: 1,
       render: {
@@ -97,12 +97,12 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
 
     // console.log(fruit.position.y)
 
-    Matter.Body.setPosition(fruit, {
+    Body.setPosition(fruit, {
       x: clamp(event.mouse.position.x, minX, maxX),
       y: fruit.position.y,
     })
 
-    Matter.Body.setPosition(GuideLine, {
+    Body.setPosition(GuideLine, {
       x: clamp(event.mouse.position.x, minX, maxX),
       y: GuideLine.position.y,
     })
@@ -145,6 +145,7 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
     }
 
     const onEnddrag = (event: any) => {
+      console.log(`onEnddrag fruit: ${fruit}`)
       if (!fruit) return undefined
       setPosition(event)
 
@@ -157,21 +158,23 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
       popSound.play()
 
       const { radius = 1, mass = 1 }: { label: Fruits; radius: number; mass: number } = fruitFeature
+      Body.setStatic(fruit, false)
+      // Body.setStatic(fruit, false)
 
-      const newItem = Matter.Bodies.circle(fruit.position.x, fruit.position.y, radius, {
-        isStatic: false,
-        label,
-        restitution: 0,
-        mass,
-        friction: 1,
-        render: {
-          sprite: {
-            texture: getImage(label),
-            xScale: (radius * 2) / 250,
-            yScale: (radius * 2) / 250,
-          },
-        },
-      })
+      // const newItem = Matter.Bodies.circle(fruit.position.x, fruit.position.y, radius, {
+      //   isStatic: false,
+      //   label,
+      //   restitution: 0,
+      //   mass,
+      //   friction: 1,
+      //   render: {
+      //     sprite: {
+      //       texture: getImage(label),
+      //       xScale: (radius * 2) / 250,
+      //       yScale: (radius * 2) / 250,
+      //     },
+      //   },
+      // })
 
       prevPosition.current.x = fruit.position.x
 
@@ -179,11 +182,11 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
       // const GameOverLine = getGameOverGuideLine()
 
       // GuideLine.render.fillStyle = '#ffffff00'
-      World.remove(engine.world, fruit)
+      // World.remove(engine.world, fruit)
       // World.remove(engine.world, GameOverLine)
 
       fruit = null
-      World.add(engine.world, newItem)
+      // World.add(engine.world, newItem)
 
       timerRef.current = setTimeout(() => {
         // GuideLine.render.fillStyle = '#ffffff30'
@@ -230,10 +233,25 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
     return undefined
   }
 
+  let requestAnimation: number | null = null
+  let lastTime = 0
+  const frameInterval = 1000 / 60
+
+  const animate = (currentTime: number) => {
+    requestAnimation = requestAnimationFrame(animate)
+
+    const elapsed = currentTime - lastTime
+
+    if (elapsed > frameInterval) {
+      Engine.update(engine, frameInterval)
+      lastTime = currentTime - (elapsed % frameInterval)
+    }
+  }
+
   const run = () => {
     if (!render) return
-    // animate(0)
     // Runner.run(engine)
+    animate(0)
     Runner.run(runner, engine)
     Render.run(render)
   }
