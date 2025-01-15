@@ -10,14 +10,14 @@ export const getWall = () => {
   const Left = Bodies.rectangle(0, HEIGHT / 2, 1, HEIGHT, {
     label: 'WALL_LEFT',
     isStatic: true,
-    friction: 1,
+    friction: 0,
     render: { fillStyle: '#ff0000' },
   })
 
   const Right = Bodies.rectangle(WIDTH, HEIGHT / 2, 1, HEIGHT, {
     label: 'WALL_RIGHT',
     isStatic: true,
-    friction: 1,
+    friction: 0,
     render: { fillStyle: '#ff0000' },
   })
 
