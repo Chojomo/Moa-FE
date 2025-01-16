@@ -18,6 +18,7 @@ import {
   getFruitYSection,
   getGameOverGuideLine,
 } from '@/helper/suikaGame'
+import { isTouchDevice } from '@/utils'
 
 const { Runner, Engine, Render, World, Body, Bodies, Mouse, Events, MouseConstraint } = Matter
 
@@ -35,6 +36,8 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
   const engine = Engine.create({
     gravity: { x: 0, y: 1 },
   })
+
+  const isMobile = isTouchDevice()
 
   let render: Matter.Render | null = null
   let fruit: Matter.Body | null = null
@@ -94,7 +97,7 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
     const minX = circleRadius || 0
     const maxX = circleRadius ? WIDTH - circleRadius : WIDTH
 
-    const clampedX = clamp(event.mouse.position.x, minX, maxX)
+    const clampedX = clamp(event.mouse.position.x, minX + 1, maxX - 1)
 
     setPositionX([fruit, GuideLine, FruitYSection], clampedX)
     return undefined
@@ -123,15 +126,11 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
       },
     })
 
-    const onStartdrag = (event: any) => {
+    const onMove = (event: any) => {
       if (!fruit) return undefined
 
       setPosition(event)
       return undefined
-    }
-
-    const onMousemove = (event: any) => {
-      setPosition(event)
     }
 
     const onEnddrag = (event: any) => {
@@ -165,9 +164,14 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
       return undefined
     }
 
-    Events.on(mouseConstraint, 'mousemove', onMousemove)
-    Events.on(mouseConstraint, 'startdrag', onStartdrag)
-    Events.on(mouseConstraint, 'enddrag', onEnddrag)
+    Events.on(mouseConstraint, 'mousemove', onMove)
+    if (isMobile) {
+      // Events.on(mouseConstraint, 'touchmove', onMove)
+      Events.on(mouseConstraint, 'startdrag', onMove)
+      Events.on(mouseConstraint, 'enddrag', onEnddrag)
+    } else {
+      Events.on(mouseConstraint, 'mouseup', onEnddrag)
+    }
 
     return undefined
   }

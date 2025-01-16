@@ -11,6 +11,7 @@ export const getWall = () => {
     label: 'WALL_LEFT',
     isStatic: true,
     friction: 0,
+    frictionStatic: 0,
     render: { fillStyle: '#ff0000' },
   })
 
@@ -18,6 +19,7 @@ export const getWall = () => {
     label: 'WALL_RIGHT',
     isStatic: true,
     friction: 0,
+    frictionStatic: 0,
     render: { fillStyle: '#ff0000' },
   })
 
