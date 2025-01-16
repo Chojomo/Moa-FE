@@ -31,7 +31,7 @@ export const getGameOverGuideLine = () => {
 }
 
 export const getGuideLine = () => {
-  return Matter.Bodies.rectangle(getWidth() / 2, getHeight() / 2 + 40, 5, getHeight(), {
+  return Matter.Bodies.rectangle(getWidth() / 2, getHeight() / 2 + 90, 5, getHeight(), {
     isStatic: true,
     isSensor: true,
     collisionFilter: { group: -1 },
