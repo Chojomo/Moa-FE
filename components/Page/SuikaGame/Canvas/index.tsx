@@ -8,16 +8,18 @@ import { Fruits } from '@/helper/constants/suikaGame/fruits'
 import {
   clamp,
   getWall,
+  getImage,
   getFruit,
   getWidth,
   getHeight,
+  setPositionX,
   getRandomFruit,
   getGuideLine,
+  getFruitYSection,
   getGameOverGuideLine,
 } from '@/helper/suikaGame'
 
 const { Runner, Engine, Render, World, Body, Bodies, Mouse, Events, MouseConstraint } = Matter
-const FRAME = 1000 / 60
 
 type CanvasProps = {
   nextFruit: Fruits
@@ -27,29 +29,26 @@ type CanvasProps = {
 export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
   const canvasRef = useRef<HTMLDivElement | null>(null)
   const timerRef = useRef<NodeJS.Timeout | null>(null)
-  const prevPosition = useRef<{ x: number; y: number }>({ x: getWidth() / 2, y: 50 })
   const nextItemRef = useRef<Fruits>(nextFruit)
-
+  const prevPosition = useRef<{ x: number; y: number }>({ x: getWidth() / 2, y: 50 })
   const runner = Runner.create()
   const engine = Engine.create({
-    gravity: { y: 1 },
+    gravity: { x: 0, y: 1 },
   })
 
   let render: Matter.Render | null = null
   let fruit: Matter.Body | null = null
+  let GuideLine: any = null
+  let GameOverLine: any = null
+  let FruitYSection: any = null
 
-  // const fixedItemTimeOut: NodeJS.Timeout | null = null
-
-  const getImage = (label: Fruits) => `/images/fruits/${label}.png`
+  const popSound = new Audio('/sounds/pop.mp3')
 
   const createFruit = () => {
     if (fruit) return undefined
 
     const nextItem = nextItemRef.current
     if (!nextItem) return undefined
-
-    console.log(`fruit: ${fruit}`)
-    console.log(`nextItem: ${nextItem}`)
 
     const fruitFeature = getFruit(nextItem)
     if (!fruitFeature) return undefined
@@ -66,7 +65,8 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
       label,
       restitution: 0.2,
       mass,
-      friction: 1,
+      friction: 0,
+      frictionAir: 0,
       render: {
         sprite: {
           texture: getImage(label),
@@ -89,24 +89,14 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
     if (!fruit) return undefined
 
     const WIDTH = getWidth()
-    const GuideLine = getGuideLine()
     const { circleRadius } = fruit
 
     const minX = circleRadius || 0
     const maxX = circleRadius ? WIDTH - circleRadius : WIDTH
 
-    // console.log(fruit.position.y)
+    const clampedX = clamp(event.mouse.position.x, minX, maxX)
 
-    Body.setPosition(fruit, {
-      x: clamp(event.mouse.position.x, minX, maxX),
-      y: fruit.position.y,
-    })
-
-    Body.setPosition(GuideLine, {
-      x: clamp(event.mouse.position.x, minX, maxX),
-      y: GuideLine.position.y,
-    })
-
+    setPositionX([fruit, GuideLine, FruitYSection], clampedX)
     return undefined
   }
 
@@ -145,7 +135,7 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
     }
 
     const onEnddrag = (event: any) => {
-      console.log(`onEnddrag fruit: ${fruit}`)
+      console.log('zz')
       if (!fruit) return undefined
       setPosition(event)
 
@@ -154,43 +144,21 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
 
       if (!fruitFeature) return undefined
 
-      const popSound = new Audio('/sounds/pop.mp3')
       popSound.play()
 
-      const { radius = 1, mass = 1 }: { label: Fruits; radius: number; mass: number } = fruitFeature
       Body.setStatic(fruit, false)
-      // Body.setStatic(fruit, false)
-
-      // const newItem = Matter.Bodies.circle(fruit.position.x, fruit.position.y, radius, {
-      //   isStatic: false,
-      //   label,
-      //   restitution: 0,
-      //   mass,
-      //   friction: 1,
-      //   render: {
-      //     sprite: {
-      //       texture: getImage(label),
-      //       xScale: (radius * 2) / 250,
-      //       yScale: (radius * 2) / 250,
-      //     },
-      //   },
-      // })
 
       prevPosition.current.x = fruit.position.x
+      const nextItem = nextItemRef.current
+      const newFruitFeature = getFruit(nextItem)
 
-      // const GuideLine = getGuideLine()
-      // const GameOverLine = getGameOverGuideLine()
-
-      // GuideLine.render.fillStyle = '#ffffff00'
-      // World.remove(engine.world, fruit)
-      // World.remove(engine.world, GameOverLine)
+      if (newFruitFeature) {
+        FruitYSection.render.lineWidth = newFruitFeature.radius * 2
+      }
 
       fruit = null
-      // World.add(engine.world, newItem)
 
       timerRef.current = setTimeout(() => {
-        // GuideLine.render.fillStyle = '#ffffff30'
-        // World.add(engine.world, GameOverLine)
         createFruit()
       }, 200)
 
@@ -217,16 +185,19 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
       height: getHeight(),
       wireframes: false,
       background: '#ffffff40',
-      borderRadius: '16px',
     }
 
-    const GuideLine = getGuideLine()
-    const GameOverLine = getGameOverGuideLine()
+    const item = getFruit(nextFruit)
+    FruitYSection = getFruitYSection(item?.radius)
+
+    GameOverLine = getGameOverGuideLine()
 
     render = Render.create({ element: canvas, engine, options })
 
-    const walls = Object.values(getWall())
-    World.add(engine.world, [...walls, GuideLine, GameOverLine])
+    GuideLine = getGuideLine()
+    const { Left, Right, Ground } = getWall()
+    World.add(engine.world, [Left, Right, GuideLine, FruitYSection, GameOverLine])
+    World.add(engine.world, Ground)
 
     createFruit()
 
@@ -250,13 +221,16 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
 
   const run = () => {
     if (!render) return
-    // Runner.run(engine)
+
     animate(0)
     Runner.run(runner, engine)
     Render.run(render)
   }
 
   useEffect(() => {
+    // Dev.
+    // World.clear(engine.world, false)
+
     init()
     run()
     initEvents()
