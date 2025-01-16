@@ -10,7 +10,7 @@ export const getFruit = (fruit: FruitType) => {
 
   switch (fruit) {
     case Fruits.BLUEBERRY:
-      return { radius: width / 24, mass: 0.8, label: Fruits.BLUEBERRY, score: 1 }
+      return { radius: width / 20, mass: 0.8, label: Fruits.BLUEBERRY, score: 1 }
     case Fruits.STRAWBERRY:
       return { radius: width / 18, mass: 1, label: Fruits.STRAWBERRY, score: 3 }
     case Fruits.TANGERINE:
