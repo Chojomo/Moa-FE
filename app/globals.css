@@ -327,7 +327,6 @@
 .canvas-border {
   canvas {
     border: 2px solid #ffffff80;
-    border-radius: 16px;
     user-select: none;
     cursor: pointer;
   }
