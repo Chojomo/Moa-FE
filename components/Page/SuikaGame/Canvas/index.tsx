@@ -44,12 +44,14 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
   let GuideLine: any = null
   let GameOverLine: any = null
   let FruitYSection: any = null
+  let prevMergingFruitIds: number[] = []
 
   let requestAnimation: number | null = null
   let lastTime = 0
   const frameInterval = 1000 / 60
 
   const popSound = new Audio('/sounds/pop.mp3')
+  const popSound2 = new Audio('/sounds/pop2.mp3')
 
   const createFruit = () => {
     if (fruit) return undefined
@@ -168,7 +170,48 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
       return undefined
     }
 
+    const onCollisionStart = (event: any) => {
+      const { pairs } = event
+      pairs.forEach((pair: any) => {
+        const { bodyA } = pair
+        const { bodyB } = pair
+
+        if (bodyA.label === GameOverLine.label || bodyB.label === GameOverLine.label) {
+          // handleGameOver(props)
+          return undefined
+        }
+
+        const midX = (bodyA.position.x + bodyB.position.x) / 2
+        const midY = (bodyA.position.y + bodyB.position.y) / 2
+
+        const labelA = bodyA.label as Fruits
+        const labelB = bodyB.label as Fruits
+
+        console.log(`label : ${labelA}, ${labelB}`)
+
+        if (bodyA.isSensor || bodyB.isSensor) return undefined
+        if (labelA === Fruits.GOLDWATERMELON && labelB === Fruits.GOLDWATERMELON) return undefined
+
+        if (prevMergingFruitIds.includes(bodyA.id) || prevMergingFruitIds.includes(bodyB.id)) {
+          prevMergingFruitIds = []
+          return undefined
+        }
+
+        if (labelA === labelB) {
+          prevMergingFruitIds = [bodyA.id, bodyB.id]
+
+          popSound2.play()
+
+          World.remove(engine.world, bodyA)
+          World.remove(engine.world, bodyB)
+        }
+        return undefined
+      })
+    }
+
     Events.on(mouseConstraint, 'mousemove', onMove)
+    Events.on(engine, 'collisionStart', onCollisionStart)
+
     if (isMobile) {
       // Events.on(mouseConstraint, 'touchmove', onMove)
       Events.on(mouseConstraint, 'startdrag', onMove)
