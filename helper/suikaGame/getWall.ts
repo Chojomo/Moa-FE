@@ -11,6 +11,7 @@ export const getWall = () => {
     label: 'WALL_LEFT',
     isStatic: true,
     friction: 0,
+    frictionStatic: 0,
     render: { fillStyle: '#ff0000' },
   })
 
@@ -18,14 +19,15 @@ export const getWall = () => {
     label: 'WALL_RIGHT',
     isStatic: true,
     friction: 0,
+    frictionStatic: 0,
     render: { fillStyle: '#ff0000' },
   })
 
-  const Bottom = Bodies.rectangle(WIDTH / 2, HEIGHT, WIDTH, 1, {
+  const Ground = Bodies.rectangle(WIDTH / 2, HEIGHT, WIDTH, 1, {
     label: 'WALL_BOTTOM',
     isStatic: true,
     friction: 1,
     render: { fillStyle: '#ff0000' },
   })
-  return { Left, Right, Bottom }
+  return { Left, Right, Ground }
 }

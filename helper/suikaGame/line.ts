@@ -31,11 +31,25 @@ export const getGameOverGuideLine = () => {
 }
 
 export const getGuideLine = () => {
-  return Matter.Bodies.rectangle(getWidth() / 2, getHeight() / 2 + 40, 5, getHeight(), {
+  return Matter.Bodies.rectangle(getWidth() / 2, getHeight() / 2 + 90, 5, getHeight(), {
     isStatic: true,
     isSensor: true,
     collisionFilter: { group: -1 },
     render: { fillStyle: '#5100FF' },
     label: 'GUIDE_LINE',
   })
+}
+
+export const getFruitYSection = (radius: number | undefined) => {
+  if (radius) {
+    return Matter.Bodies.rectangle(getWidth() / 2, getHeight() / 2 + 90, 1, getHeight(), {
+      isStatic: true,
+      isSensor: true,
+      collisionFilter: { group: -1 },
+      render: { fillStyle: '#ffffff', lineWidth: radius * 2 },
+      label: 'GUIDE_LINE',
+    })
+  }
+
+  return undefined
 }
