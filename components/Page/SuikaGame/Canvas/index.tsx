@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { useRef, useEffect, SetStateAction } from 'react'
-import Matter from 'matter-js'
+import Matter, { Composite } from 'matter-js'
 import { Fruits } from '@/helper/constants/suikaGame/fruits'
 import {
   clamp,
@@ -12,6 +12,7 @@ import {
   getFruit,
   getWidth,
   getHeight,
+  getNextFruit,
   setPositionX,
   getRandomFruit,
   getGuideLine,
@@ -34,7 +35,7 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
   const prevPosition = useRef<{ x: number; y: number }>({ x: getWidth() / 2, y: 50 })
   const runner = Runner.create()
   const engine = Engine.create({
-    gravity: { x: 0, y: 0.5 },
+    gravity: { x: 0, y: 2 },
   })
 
   const isMobile = isTouchDevice()
@@ -44,7 +45,7 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
   let GuideLine: any = null
   let GameOverLine: any = null
   let FruitYSection: any = null
-  let prevMergingFruitIds: number[] = []
+  const mergingFruitIds = new Set<number>()
 
   let requestAnimation: number | null = null
   let lastTime = 0
@@ -72,10 +73,12 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
       isStatic: true,
       isSensor: false,
       label,
-      restitution: 0.2,
       mass,
+      inertia: 1e3,
       friction: 0,
-      frictionAir: 0,
+      frictionStatic: 0,
+      frictionAir: 0.01,
+      restitution: 0.1,
       render: {
         sprite: {
           texture: getImage(label),
@@ -187,23 +190,64 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
         const labelA = bodyA.label as Fruits
         const labelB = bodyB.label as Fruits
 
-        console.log(`label : ${labelA}, ${labelB}`)
-
         if (bodyA.isSensor || bodyB.isSensor) return undefined
         if (labelA === Fruits.GOLDWATERMELON && labelB === Fruits.GOLDWATERMELON) return undefined
 
-        if (prevMergingFruitIds.includes(bodyA.id) || prevMergingFruitIds.includes(bodyB.id)) {
-          prevMergingFruitIds = []
+        if (mergingFruitIds.has(bodyA.id) || mergingFruitIds.has(bodyB.id)) {
           return undefined
         }
 
         if (labelA === labelB) {
-          prevMergingFruitIds = [bodyA.id, bodyB.id]
+          mergingFruitIds.add(bodyA.id)
+          mergingFruitIds.add(bodyB.id)
+          console.log(`label : ${labelA}, ${labelB}`)
 
           popSound2.play()
 
+          const bodiesInWorld = Composite.allBodies(engine.world)
+          const isBodyARemoved = !bodiesInWorld.includes(bodyA)
+          const isBodyBRemoved = !bodiesInWorld.includes(bodyB)
+
+          if (isBodyARemoved || isBodyBRemoved) {
+            mergingFruitIds.delete(bodyA.id)
+            mergingFruitIds.delete(bodyB.id)
+            return undefined
+          }
+
+          console.log(getNextFruit(labelA))
+
           World.remove(engine.world, bodyA)
           World.remove(engine.world, bodyB)
+
+          const fruitFeature = getNextFruit(labelA)
+          if (!fruitFeature) return undefined
+
+          const {
+            label,
+            radius = 1,
+            mass = 1,
+            score = 0,
+          }: { label: Fruits; radius: number; mass: number; score: number } = fruitFeature
+
+          const newFruit = Bodies.circle(midX, midY, radius, {
+            isStatic: false,
+            label,
+            mass,
+            friction: 0,
+            frictionStatic: 0,
+            frictionAir: 0.01,
+            inertia: 1e3,
+            restitution: 0.1,
+            render: {
+              sprite: {
+                texture: getImage(label),
+                xScale: (radius * 2) / 250,
+                yScale: (radius * 2) / 250,
+              },
+            },
+          })
+
+          World.add(engine.world, newFruit)
         }
         return undefined
       })
