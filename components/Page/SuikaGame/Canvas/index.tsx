@@ -35,7 +35,7 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
   const prevPosition = useRef<{ x: number; y: number }>({ x: getWidth() / 2, y: 50 })
   const runner = Runner.create()
   const engine = Engine.create({
-    gravity: { x: 0, y: 2 },
+    gravity: { x: 0, y: 0.5 },
   })
 
   const isMobile = isTouchDevice()
@@ -73,12 +73,10 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
       isStatic: true,
       isSensor: false,
       label,
+      restitution: 0.2,
       mass,
-      inertia: 1e3,
       friction: 0,
-      frictionStatic: 0,
-      frictionAir: 0.01,
-      restitution: 0.1,
+      frictionAir: 0,
       render: {
         sprite: {
           texture: getImage(label),
@@ -232,12 +230,12 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
           const newFruit = Bodies.circle(midX, midY, radius, {
             isStatic: false,
             label,
+            restitution: 0,
             mass,
             friction: 0,
             frictionStatic: 0,
             frictionAir: 0.01,
             inertia: 1e3,
-            restitution: 0.1,
             render: {
               sprite: {
                 texture: getImage(label),
