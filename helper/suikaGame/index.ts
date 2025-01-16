@@ -1,5 +1,6 @@
 export { clamp } from './clamp'
 export { getWall } from './getWall'
+export { getImage } from './getImage'
 export { getWidth, getHeight } from './calcSize'
 export { getFruit, getRandomFruit } from './getFruit'
 export { getGuideLine, getGameOverLine, getGameOverGuideLine } from './line'
