@@ -34,7 +34,7 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
   const prevPosition = useRef<{ x: number; y: number }>({ x: getWidth() / 2, y: 50 })
   const runner = Runner.create()
   const engine = Engine.create({
-    gravity: { x: 0, y: 1 },
+    gravity: { x: 0, y: 0.5 },
   })
 
   const isMobile = isTouchDevice()
@@ -44,6 +44,10 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
   let GuideLine: any = null
   let GameOverLine: any = null
   let FruitYSection: any = null
+
+  let requestAnimation: number | null = null
+  let lastTime = 0
+  const frameInterval = 1000 / 60
 
   const popSound = new Audio('/sounds/pop.mp3')
 
@@ -207,10 +211,6 @@ export default function Canvas({ nextFruit, setNextFruit }: CanvasProps) {
 
     return undefined
   }
-
-  let requestAnimation: number | null = null
-  let lastTime = 0
-  const frameInterval = 1000 / 60
 
   const animate = (currentTime: number) => {
     requestAnimation = requestAnimationFrame(animate)
