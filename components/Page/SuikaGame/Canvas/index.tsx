@@ -41,7 +41,7 @@ export default function Canvas() {
   const isMobile = isTouchDevice()
 
   let render: Matter.Render | null = null
-  let fruit: Matter.Body | null = null
+  let item: Matter.Body | null = null
   let GuideLine: any = null
   let GameOverLine: any = null
   let FruitYSection: any = null
@@ -55,7 +55,7 @@ export default function Canvas() {
   const popSound2 = new Audio('/sounds/pop2.mp3')
 
   const createItem = () => {
-    if (fruit) return undefined
+    if (item) return undefined
 
     const nextItem = nextItemRef.current
     if (!nextItem) return undefined
@@ -69,7 +69,7 @@ export default function Canvas() {
       mass = 1,
     }: { label: Items; radius: number; mass: number } = fruitFeature
 
-    fruit = Bodies.circle(getWidth() / 2, 50, radius, {
+    item = Bodies.circle(getWidth() / 2, 50, radius, {
       isSleeping: true,
       label,
       restitution: 0.3,
@@ -83,7 +83,7 @@ export default function Canvas() {
       },
     })
 
-    World.add(engine.world, fruit)
+    World.add(engine.world, item)
 
     const newFruit = getRandomItem()?.label as Items
     nextItemRef.current = newFruit
@@ -92,17 +92,17 @@ export default function Canvas() {
   }
 
   const setPosition = (event: any) => {
-    if (!fruit) return undefined
+    if (!item) return undefined
 
     const WIDTH = getWidth()
-    const { circleRadius } = fruit
+    const { circleRadius } = item
 
     const minX = circleRadius || 0
     const maxX = circleRadius ? WIDTH - circleRadius : WIDTH
 
     const clampedX = clamp(event.mouse.position.x, minX + 1, maxX - 1)
 
-    setPositionX([fruit, GuideLine, FruitYSection], clampedX)
+    setPositionX([item, GuideLine, FruitYSection], clampedX)
     return undefined
   }
 
@@ -130,26 +130,26 @@ export default function Canvas() {
     })
 
     const onMove = (event: any) => {
-      if (!fruit) return undefined
+      if (!item) return undefined
 
       setPosition(event)
       return undefined
     }
 
     const onMoveEnd = (event: any) => {
-      if (!fruit) return undefined
+      if (!item) return undefined
       setPosition(event)
 
-      const label = fruit?.label as Items
+      const label = item?.label as Items
       const fruitFeature = getItem(label)
 
       if (!fruitFeature) return undefined
 
       popSound.play()
 
-      Sleeping.set(fruit, false)
+      Sleeping.set(item, false)
 
-      prevPosition.current.x = fruit.position.x
+      prevPosition.current.x = item.position.x
       const nextItem = nextItemRef.current
       const newFruitFeature = getItem(nextItem)
 
@@ -157,7 +157,7 @@ export default function Canvas() {
         FruitYSection.render.lineWidth = newFruitFeature.radius * 2
       }
 
-      fruit = null
+      item = null
 
       timerRef.current = setTimeout(() => {
         createItem()
@@ -168,6 +168,7 @@ export default function Canvas() {
 
     const onCollisionStart = (event: any) => {
       const { pairs } = event
+
       pairs.forEach((pair: any) => {
         const { bodyA } = pair
         const { bodyB } = pair
@@ -268,8 +269,8 @@ export default function Canvas() {
       background: '#ffffff40',
     }
 
-    const item = getItem(nextItemRef.current)
-    FruitYSection = getFruitYSection(item?.radius)
+    const initItem = getItem(nextItemRef.current)
+    FruitYSection = getFruitYSection(initItem?.radius)
 
     GameOverLine = getGameOverGuideLine()
 
