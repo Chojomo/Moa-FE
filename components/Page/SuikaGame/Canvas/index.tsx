@@ -41,10 +41,12 @@ export default function Canvas() {
   const isMobile = isTouchDevice()
 
   let render: Matter.Render | null = null
+
   let item: Matter.Body | null = null
-  let GuideLine: any = null
-  let GameOverLine: any = null
-  let FruitYSection: any = null
+  let GuideLine: Matter.Body | null = null
+  let GameOverLine: Matter.Body | null | undefined = null
+  let FruitYSection: Matter.Body | null | undefined = null
+
   const mergingFruitIds = new Set<number>()
 
   let requestAnimation: number | null = null
@@ -92,7 +94,7 @@ export default function Canvas() {
   }
 
   const setPosition = (event: any) => {
-    if (!item) return undefined
+    if (!item || !GuideLine || !FruitYSection) return undefined
 
     const WIDTH = getWidth()
     const { circleRadius } = item
@@ -137,7 +139,7 @@ export default function Canvas() {
     }
 
     const onMoveEnd = (event: any) => {
-      if (!item) return undefined
+      if (!item || !FruitYSection) return undefined
       setPosition(event)
 
       const label = item?.label as Items
@@ -170,6 +172,7 @@ export default function Canvas() {
       const { pairs } = event
 
       pairs.forEach((pair: any) => {
+        if (!GameOverLine) return undefined
         const { bodyA } = pair
         const { bodyB } = pair
 
@@ -278,6 +281,9 @@ export default function Canvas() {
 
     GuideLine = getGuideLine()
     const { Left, Right, Ground } = getWall()
+
+    if (!FruitYSection || !GuideLine || !GameOverLine) return undefined
+
     World.add(engine.world, [Left, Right, GuideLine, FruitYSection, GameOverLine])
     World.add(engine.world, Ground)
 
