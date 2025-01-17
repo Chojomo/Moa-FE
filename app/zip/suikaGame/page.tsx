@@ -3,12 +3,11 @@
 import { useEffect, useState, useRef } from 'react'
 import { Intro, Canvas } from '@/components/Page/SuikaGame'
 import Matter from 'matter-js'
-import { Fruits } from '@/helper/constants/suikaGame/fruits'
-import { getRandomFruit } from '@/helper/suikaGame'
+import { Items } from '@/helper/constants/suikaGame/items'
 
 export default function SG() {
   const [isStart, setIsStart] = useState<boolean>(true)
-  const [nextFruit, setNextFruit] = useState<Fruits>(getRandomFruit()?.label as Fruits)
+  // const [nextItem, setNextItem] = useState<Items>(getRandomFruit()?.label as Items)
 
   return (
     <div className="w-[100vw] h-[100vh] flex-center overflow-hidden pt-[54px]">
@@ -18,7 +17,7 @@ export default function SG() {
       >
         <div className="w-full h-full pt-[20px] flex-center flex-col overflow-hidden gap-[0.2em] canvas-border">
           {/* header */}
-          <Canvas nextFruit={nextFruit} setNextFruit={setNextFruit} />
+          <Canvas />
         </div>
       </div>
       {/* intro */}

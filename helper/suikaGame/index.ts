@@ -1,7 +1,0 @@
-export { clamp } from './clamp'
-export { getWall } from './getWall'
-export { getImage } from './getImage'
-export { setPositionX } from './setPosition'
-export { getWidth, getHeight } from './calcSize'
-export { getFruit, getRandomFruit, getNextFruit } from './getFruit'
-export { getGuideLine, getGameOverLine, getGameOverGuideLine, getFruitYSection } from './line'
