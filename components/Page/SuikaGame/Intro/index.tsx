@@ -1,4 +1,4 @@
-import { Fruits } from '@/helper/constants/suikaGame/fruits'
+import { Items } from '@/helper/constants/suikaGame/items'
 import Image from 'next/image'
 import Button from '@/components/Button'
 
@@ -23,8 +23,8 @@ export default function Intro({ isVisible, handleGameStart }: IntroProps) {
     }
   }
 
-  const fruitItemEls = Object.keys(Fruits)
-    .slice(0, Object.keys(Fruits).length - 1)
+  const fruitItemEls = Object.keys(Items)
+    .slice(0, Object.keys(Items).length - 1)
     .map((fruit, index) => {
       const itemPositions = positionCircularly(11, index)
 

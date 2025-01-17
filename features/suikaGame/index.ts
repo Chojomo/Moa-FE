@@ -1,0 +1,14 @@
+export { clamp } from './clamp'
+export { getImage } from './getImage'
+export { setPositionX } from './setPosition'
+
+export { getWidth, getHeight } from './calcSize'
+export { getItem, getRandomItem, getNextItem } from './getItem'
+
+export {
+  getWall,
+  getGuideLine,
+  getGameOverLine,
+  getGameOverGuideLine,
+  getFruitYSection,
+} from './getBody'

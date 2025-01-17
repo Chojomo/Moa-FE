@@ -1,55 +1,81 @@
 import Matter from 'matter-js'
 import { getWidth, getHeight } from './calcSize'
 
-// const LINE_WIDTH = getWidth() * 10
+const { Bodies } = Matter
 const LINE_HEIGHT = 8
 
-export const getGameOverLine = () => {
+const getWall = () => {
+  const WIDTH = getWidth()
+  const HEIGHT = getHeight()
+
+  const Left = Bodies.rectangle(0, HEIGHT / 2, 30, HEIGHT, {
+    label: 'WALL_LEFT',
+    isStatic: true,
+    render: { fillStyle: '#ff0000' },
+  })
+
+  const Right = Bodies.rectangle(WIDTH, HEIGHT / 2, 30, HEIGHT, {
+    label: 'WALL_RIGHT',
+    isStatic: true,
+    render: { fillStyle: '#ff0000' },
+  })
+
+  const Ground = Bodies.rectangle(WIDTH / 2, HEIGHT, WIDTH, 60, {
+    label: 'WALL_BOTTOM',
+    isStatic: true,
+    render: { fillStyle: '#ff0000' },
+  })
+  return { Left, Right, Ground }
+}
+
+const getGameOverLine = () => {
   return Matter.Bodies.rectangle(
     getWidth() / 2,
     getHeight() / 6.5 - 30,
     getWidth() * 10,
     LINE_HEIGHT,
     {
+      label: 'GAME_OVER_LINE',
       isStatic: true,
       isSensor: true,
       collisionFilter: { group: -1 },
       render: { fillStyle: '#5100FF' },
-      label: 'GAME_OVER_LINE',
     }
   )
 }
 
-export const getGameOverGuideLine = () => {
+const getGameOverGuideLine = () => {
   return Matter.Bodies.rectangle(getWidth() / 2, getHeight() / 6.5, getWidth() * 10, LINE_HEIGHT, {
-    isStatic: true,
-    isSensor: true,
-    collisionFilter: { group: -1 },
-    render: { fillStyle: '#5100FF' },
     label: 'GAME_OVER_GUIDE_LINE',
-  })
-}
-
-export const getGuideLine = () => {
-  return Matter.Bodies.rectangle(getWidth() / 2, getHeight() / 2 + 90, 5, getHeight(), {
     isStatic: true,
     isSensor: true,
     collisionFilter: { group: -1 },
     render: { fillStyle: '#5100FF' },
-    label: 'GUIDE_LINE',
   })
 }
 
-export const getFruitYSection = (radius: number | undefined) => {
+const getGuideLine = () => {
+  return Matter.Bodies.rectangle(getWidth() / 2, getHeight() / 2 + 90, 5, getHeight(), {
+    label: 'GUIDE_LINE',
+    isStatic: true,
+    isSensor: true,
+    collisionFilter: { group: -1 },
+    render: { fillStyle: '#5100FF' },
+  })
+}
+
+const getFruitYSection = (radius: number | undefined) => {
   if (radius) {
     return Matter.Bodies.rectangle(getWidth() / 2, getHeight() / 2 + 90, 1, getHeight(), {
+      label: 'GUIDE_LINE',
       isStatic: true,
       isSensor: true,
       collisionFilter: { group: -1 },
-      render: { fillStyle: '#ffffff', lineWidth: radius * 2 },
-      label: 'GUIDE_LINE',
+      render: { lineWidth: radius * 2 },
     })
   }
 
   return undefined
 }
+
+export { getWall, getGameOverLine, getGameOverGuideLine, getGuideLine, getFruitYSection }
