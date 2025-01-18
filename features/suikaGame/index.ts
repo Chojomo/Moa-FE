@@ -10,5 +10,5 @@ export {
   getGuideLine,
   getGameOverLine,
   getGameOverGuideLine,
-  getFruitYSection,
+  getBodyYSection,
 } from './getBody'

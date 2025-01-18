@@ -64,7 +64,7 @@ const getGuideLine = () => {
   })
 }
 
-const getFruitYSection = (radius: number | undefined) => {
+const getBodyYSection = (radius: number | undefined) => {
   if (radius) {
     return Matter.Bodies.rectangle(getWidth() / 2, getHeight() / 2 + 90, 1, getHeight(), {
       label: 'GUIDE_LINE',
@@ -78,4 +78,4 @@ const getFruitYSection = (radius: number | undefined) => {
   return undefined
 }
 
-export { getWall, getGameOverLine, getGameOverGuideLine, getGuideLine, getFruitYSection }
+export { getWall, getGameOverLine, getGameOverGuideLine, getGuideLine, getBodyYSection }
