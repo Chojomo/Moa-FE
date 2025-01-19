@@ -1,9 +1,9 @@
 'use client'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { useRef, useEffect, Dispatch, SetStateAction } from 'react'
 import Matter, { Composite } from 'matter-js'
+import confetti from 'canvas-confetti'
 
 import { isTouchDevice } from '@/utils'
 import { Items } from '@/helper/constants/suikaGame/items'
@@ -20,15 +20,17 @@ import {
   getNextItem,
   getRandomItem,
   setPositionX,
+  getGameOverLine,
   getGameOverGuideLine,
 } from '@/features/suikaGame'
 
 type CanvasProps = {
   setNextItem: Dispatch<SetStateAction<Items>>
   setScore: Dispatch<SetStateAction<number>>
+  setIsGameOver: Dispatch<SetStateAction<boolean>>
 }
 
-export default function Canvas({ setNextItem, setScore }: CanvasProps) {
+export default function Canvas({ setNextItem, setScore, setIsGameOver }: CanvasProps) {
   const canvasRef = useRef<HTMLDivElement | null>(null)
   const isMobile = isTouchDevice()
 
@@ -44,14 +46,90 @@ export default function Canvas({ setNextItem, setScore }: CanvasProps) {
   let nextItemLabel = getRandomItem()?.label as Items
 
   let GameOverLine: Matter.Body | null | undefined = null
+  let GameOverGuideLine: Matter.Body | null | undefined = null
 
   const mergingItemIds = new Set<number>()
 
   let lastTime = 0
+  let requestAnimation: number | null = null
   const frameInterval = 1000 / 60
 
   const popSound = new Audio('/sounds/pop.mp3')
   const popSound2 = new Audio('/sounds/pop2.mp3')
+
+  const useConfetti = () => {
+    const fireConfetti = () => {
+      const count = 200
+      const defaults = {
+        origin: { y: 1 },
+      }
+
+      function fire(particleRatio: number, opts: confetti.Options) {
+        confetti({
+          ...defaults,
+          ...opts,
+          particleCount: Math.floor(count * particleRatio),
+        })
+      }
+
+      fire(0.25, {
+        spread: 90,
+        startVelocity: 55,
+      })
+      fire(0.2, {
+        spread: 90,
+      })
+      fire(0.35, {
+        spread: 90,
+        startVelocity: 75,
+        decay: 0.91,
+        scalar: 0.8,
+      })
+      fire(0.1, {
+        spread: 90,
+        startVelocity: 55,
+        decay: 0.92,
+        scalar: 1.2,
+      })
+      fire(0.1, {
+        spread: 90,
+        startVelocity: 75,
+      })
+    }
+
+    const fireRapidStarConfetti = () => {
+      const end = Date.now() + 5 * 1000
+      const colors = ['#bb0000', '#ffffff']
+
+      ;(function frame() {
+        confetti({
+          particleCount: 2,
+          angle: 80,
+          spread: 55,
+          origin: { x: 0, y: 0.8 },
+          colors,
+        })
+        confetti({
+          particleCount: 2,
+          angle: 100,
+          spread: 55,
+          origin: { x: 1, y: 0.8 },
+          colors,
+        })
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame)
+        }
+      })()
+    }
+
+    return {
+      fireConfetti,
+      fireRapidStarConfetti,
+    }
+  }
+
+  // const { fireConfetti, fireRapidStarConfetti }: { fireConfetti: () => void } = useConfetti()
 
   const createItem = () => {
     if (item || !nextItemLabel) return undefined
@@ -164,15 +242,30 @@ export default function Canvas({ setNextItem, setScore }: CanvasProps) {
       })
 
       World.remove(engine.world, item)
-      item = null
+
+      if (GameOverLine) {
+        item = null
+        World.remove(engine.world, GameOverLine)
+      }
 
       World.add(engine.world, newItem)
 
       setTimeout(() => {
         createItem()
+        if (GameOverLine) {
+          World.add(engine.world, GameOverLine)
+        }
       }, 200)
 
       return undefined
+    }
+
+    const handleGameOver = () => {
+      setIsGameOver(true)
+
+      if (requestAnimation) {
+        cancelAnimationFrame(requestAnimation)
+      }
     }
 
     const onCollisionStart = (event: any) => {
@@ -183,6 +276,9 @@ export default function Canvas({ setNextItem, setScore }: CanvasProps) {
         const { bodyA, bodyB } = pair
 
         if (bodyA.label === GameOverLine.label || bodyB.label === GameOverLine.label) {
+          console.log(`bodyA: ${bodyA.label}`)
+          console.log('게임오버')
+          handleGameOver()
           return undefined
         }
 
@@ -216,8 +312,6 @@ export default function Canvas({ setNextItem, setScore }: CanvasProps) {
             return undefined
           }
 
-          console.log(labelA)
-
           World.remove(engine.world, bodyA)
           World.remove(engine.world, bodyB)
 
@@ -247,6 +341,9 @@ export default function Canvas({ setNextItem, setScore }: CanvasProps) {
             },
           })
 
+          // fireConfetti()
+          // fireRapidStarConfetti()
+
           World.add(engine.world, body)
           setScore((prev) => prev + currentItemScore)
         }
@@ -256,13 +353,10 @@ export default function Canvas({ setNextItem, setScore }: CanvasProps) {
 
     Events.on(mouseConstraint, 'mousemove', onMove)
     Events.on(engine, 'collisionStart', onCollisionStart)
+    Events.on(mouseConstraint, 'mouseup', onMoveEnd)
 
     if (isMobile) {
-      // Events.on(mouseConstraint, 'touchmove', onMove)
       Events.on(mouseConstraint, 'startdrag', onMove)
-      Events.on(mouseConstraint, 'enddrag', onMoveEnd)
-    } else {
-      Events.on(mouseConstraint, 'mouseup', onMoveEnd)
     }
 
     return undefined
@@ -283,14 +377,15 @@ export default function Canvas({ setNextItem, setScore }: CanvasProps) {
       background: '#ffffff40',
     }
 
-    GameOverLine = getGameOverGuideLine()
+    GameOverLine = getGameOverLine()
+    GameOverGuideLine = getGameOverGuideLine()
 
     render = Render.create({ element: canvas, engine, options })
     const { Left, Right, Ground } = getWall()
 
-    if (!GameOverLine) return undefined
+    if (!GameOverGuideLine) return undefined
 
-    World.add(engine.world, [Left, Right, GameOverLine])
+    World.add(engine.world, [Left, Right, GameOverGuideLine])
     World.add(engine.world, Ground)
 
     createItem()
@@ -299,7 +394,7 @@ export default function Canvas({ setNextItem, setScore }: CanvasProps) {
   }
 
   const animate = (currentTime: number) => {
-    requestAnimationFrame(animate)
+    requestAnimation = requestAnimationFrame(animate)
 
     const elapsed = currentTime - lastTime
 
