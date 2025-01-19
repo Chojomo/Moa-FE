@@ -1,13 +1,16 @@
 'use client'
 
 import { useEffect, useState, useRef } from 'react'
+import Image from 'next/image'
 import { Intro, Canvas } from '@/components/Page/SuikaGame'
 import Matter from 'matter-js'
 import { Items } from '@/helper/constants/suikaGame/items'
+import { getImage, getRandomItem } from '@/features/suikaGame'
 
 export default function SG() {
   const [isStart, setIsStart] = useState<boolean>(true)
-  // const [nextItem, setNextItem] = useState<Items>(getRandomFruit()?.label as Items)
+  const [score, setScore] = useState<number>(0)
+  const [nextItem, setNextItem] = useState<Items>(getRandomItem()?.label as Items)
 
   return (
     <div className="w-[100vw] h-[100vh] flex-center overflow-hidden pt-[54px]">
@@ -17,7 +20,19 @@ export default function SG() {
       >
         <div className="w-full h-full pt-[20px] flex-center flex-col overflow-hidden gap-[0.2em] canvas-border">
           {/* header */}
-          <Canvas />
+          <div className="flex-center gap-[50px]">
+            <Image
+              src={getImage(nextItem)}
+              alt="다음 과일"
+              width={40}
+              height={40}
+              quality={75}
+              loading="lazy"
+              draggable="false"
+            />
+            <p>Score: {score}</p>
+          </div>
+          <Canvas setNextItem={setNextItem} setScore={setScore} />
         </div>
       </div>
       {/* intro */}

@@ -2,7 +2,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, Dispatch, SetStateAction } from 'react'
 import Matter, { Composite } from 'matter-js'
 
 import { isTouchDevice } from '@/utils'
@@ -23,12 +23,16 @@ import {
   getGameOverGuideLine,
 } from '@/features/suikaGame'
 
-const { Runner, Engine, Render, World, Bodies, Body, Mouse, Events, Sleeping, MouseConstraint } =
-  Matter
+type CanvasProps = {
+  setNextItem: Dispatch<SetStateAction<Items>>
+  setScore: Dispatch<SetStateAction<number>>
+}
 
-export default function Canvas() {
+export default function Canvas({ setNextItem, setScore }: CanvasProps) {
   const canvasRef = useRef<HTMLDivElement | null>(null)
   const isMobile = isTouchDevice()
+
+  const { Runner, Engine, Render, World, Bodies, Mouse, Events, MouseConstraint } = Matter
 
   const runner = Runner.create()
   const engine = Engine.create({
@@ -37,10 +41,6 @@ export default function Canvas() {
 
   let render: Matter.Render | null = null
   let item: Matter.Body | null = null
-  // let nextItem: Matter.Body | null = null
-
-  let timer: NodeJS.Timeout | null = null
-  let currentItemLabel: keyof typeof Items | null = null
   let nextItemLabel = getRandomItem()?.label as Items
 
   let GameOverLine: Matter.Body | null | undefined = null
@@ -80,10 +80,10 @@ export default function Canvas() {
     })
 
     World.add(engine.world, item)
-    currentItemLabel = label
 
     const newItemLabel = getRandomItem()?.label as Items
     nextItemLabel = newItemLabel
+    setNextItem(newItemLabel)
 
     return undefined
   }
@@ -168,7 +168,7 @@ export default function Canvas() {
 
       World.add(engine.world, newItem)
 
-      timer = setTimeout(() => {
+      setTimeout(() => {
         createItem()
       }, 200)
 
@@ -216,11 +216,15 @@ export default function Canvas() {
             return undefined
           }
 
+          console.log(labelA)
+
           World.remove(engine.world, bodyA)
           World.remove(engine.world, bodyB)
 
           const newItem = getNextItem(labelA)
           if (!newItem) return undefined
+
+          const { score: currentItemScore } = getItem(labelA)
 
           const {
             label,
@@ -244,6 +248,7 @@ export default function Canvas() {
           })
 
           World.add(engine.world, body)
+          setScore((prev) => prev + currentItemScore)
         }
         return undefined
       })
