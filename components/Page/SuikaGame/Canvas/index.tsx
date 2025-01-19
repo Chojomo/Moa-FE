@@ -20,12 +20,11 @@ import {
   getNextItem,
   getRandomItem,
   setPositionX,
-  getGuideLine,
-  getBodyYSection,
   getGameOverGuideLine,
 } from '@/features/suikaGame'
 
-const { Runner, Engine, Render, World, Bodies, Mouse, Events, Sleeping, MouseConstraint } = Matter
+const { Runner, Engine, Render, World, Bodies, Body, Mouse, Events, Sleeping, MouseConstraint } =
+  Matter
 
 export default function Canvas() {
   const canvasRef = useRef<HTMLDivElement | null>(null)
@@ -41,15 +40,13 @@ export default function Canvas() {
   // let nextItem: Matter.Body | null = null
 
   let timer: NodeJS.Timeout | null = null
+  let currentItemLabel: keyof typeof Items | null = null
   let nextItemLabel = getRandomItem()?.label as Items
 
-  let GuideLine: Matter.Body | null = null
   let GameOverLine: Matter.Body | null | undefined = null
-  let BodyYSection: Matter.Body | null | undefined = null
 
   const mergingItemIds = new Set<number>()
 
-  let requestAnimation: number | null = null
   let lastTime = 0
   const frameInterval = 1000 / 60
 
@@ -69,7 +66,7 @@ export default function Canvas() {
     }: { label: Items; radius: number; mass: number } = nextItemFeature
 
     item = Bodies.circle(getWidth() / 2, 50, radius, {
-      isSleeping: true,
+      isStatic: true,
       label,
       restitution: 0.3,
       mass,
@@ -83,6 +80,7 @@ export default function Canvas() {
     })
 
     World.add(engine.world, item)
+    currentItemLabel = label
 
     const newItemLabel = getRandomItem()?.label as Items
     nextItemLabel = newItemLabel
@@ -91,7 +89,7 @@ export default function Canvas() {
   }
 
   const setPosition = (event: any) => {
-    if (!item || !GuideLine || !BodyYSection) return undefined
+    if (!item) return undefined
 
     const WIDTH = getWidth()
     const { circleRadius } = item
@@ -101,7 +99,7 @@ export default function Canvas() {
 
     const clampedX = clamp(event.mouse.position.x, minX + 1, maxX - 1)
 
-    setPositionX([item, GuideLine, BodyYSection], clampedX)
+    setPositionX([item], clampedX)
     return undefined
   }
 
@@ -136,19 +134,39 @@ export default function Canvas() {
     }
 
     const onMoveEnd = (event: any) => {
-      if (!item || !BodyYSection) return undefined
+      if (!item) return undefined
       setPosition(event)
 
       popSound.play()
-      Sleeping.set(item, false)
 
-      const newItemFeature = getItem(nextItemLabel)
+      const {
+        label,
+        mass,
+        position,
+      }: {
+        label: Items | string
+        mass: number
+        position: { x: number; y: number }
+      } = item
+      const radius = item.circleRadius as number
 
-      if (newItemFeature) {
-        BodyYSection.render.lineWidth = newItemFeature.radius * 2
-      }
+      const newItem = Bodies.circle(position.x, position.y, radius, {
+        label,
+        restitution: 0.3,
+        mass,
+        render: {
+          sprite: {
+            texture: getImage(label as Items),
+            xScale: (radius * 2) / 250,
+            yScale: (radius * 2) / 250,
+          },
+        },
+      })
 
+      World.remove(engine.world, item)
       item = null
+
+      World.add(engine.world, newItem)
 
       timer = setTimeout(() => {
         createItem()
@@ -260,19 +278,14 @@ export default function Canvas() {
       background: '#ffffff40',
     }
 
-    const initItem = getItem(nextItemLabel)
-    BodyYSection = getBodyYSection(initItem?.radius)
-
     GameOverLine = getGameOverGuideLine()
 
     render = Render.create({ element: canvas, engine, options })
-
-    GuideLine = getGuideLine()
     const { Left, Right, Ground } = getWall()
 
-    if (!BodyYSection || !GuideLine || !GameOverLine) return undefined
+    if (!GameOverLine) return undefined
 
-    World.add(engine.world, [Left, Right, GuideLine, BodyYSection, GameOverLine])
+    World.add(engine.world, [Left, Right, GameOverLine])
     World.add(engine.world, Ground)
 
     createItem()
@@ -281,7 +294,7 @@ export default function Canvas() {
   }
 
   const animate = (currentTime: number) => {
-    requestAnimation = requestAnimationFrame(animate)
+    requestAnimationFrame(animate)
 
     const elapsed = currentTime - lastTime
 
