@@ -31,7 +31,7 @@ const getWall = () => {
 const getGameOverLine = () => {
   return Matter.Bodies.rectangle(
     getWidth() / 2,
-    getHeight() / 6.5 - 30,
+    getHeight() / 6.5 - 16,
     getWidth() * 10,
     LINE_HEIGHT,
     {
