@@ -44,11 +44,13 @@ export default function Canvas({ setNextItem, setScore, setIsGameOver }: CanvasP
   let render: Matter.Render | null = null
   let item: Matter.Body | null = null
   let nextItemLabel = getRandomItem()?.label as Items
+  let disableAction: boolean = false
 
   let GameOverLine: Matter.Body | null | undefined = null
   let GameOverGuideLine: Matter.Body | null | undefined = null
 
   const mergingItemIds = new Set<number>()
+  const mergedItemIds = new Set<number>()
 
   let lastTime = 0
   let requestAnimation: number | null = null
@@ -212,7 +214,7 @@ export default function Canvas({ setNextItem, setScore, setIsGameOver }: CanvasP
     }
 
     const onMoveEnd = (event: any) => {
-      if (!item) return undefined
+      if (!item || disableAction) return undefined
       setPosition(event)
 
       popSound.play()
@@ -249,11 +251,16 @@ export default function Canvas({ setNextItem, setScore, setIsGameOver }: CanvasP
       }
 
       World.add(engine.world, newItem)
+      disableAction = true
 
       setTimeout(() => {
         createItem()
         if (GameOverLine) {
           World.add(engine.world, GameOverLine)
+          disableAction = false
+
+          // setTimeout(() => {
+          // }, 200)
         }
       }, 200)
 
@@ -275,20 +282,16 @@ export default function Canvas({ setNextItem, setScore, setIsGameOver }: CanvasP
         if (!GameOverLine) return undefined
         const { bodyA, bodyB } = pair
 
-        if (bodyA.label === GameOverLine.label || bodyB.label === GameOverLine.label) {
-          console.log(`bodyA: ${bodyA.label}`)
-          console.log('게임오버')
-          handleGameOver()
-          return undefined
-        }
-
-        const midX = (bodyA.position.x + bodyB.position.x) / 2
-        const midY = (bodyA.position.y + bodyB.position.y) / 2
+        // if (bodyA.label === GameOverLine.label || bodyB.label === GameOverLine.label) {
+        //   console.log(`bodyA: ${bodyA.label}`)
+        //   console.log('게임오버')
+        //   handleGameOver()
+        //   return undefined
+        // }
 
         const { id: idA, label: labelA, isSensor: isSensorA } = bodyA
         const { id: idB, label: labelB, isSensor: isSensorB } = bodyB
 
-        if (isSensorA || isSensorB) return undefined
         if (labelA === Items.GOLDWATERMELON && labelB === Items.GOLDWATERMELON) return undefined
 
         if (mergingItemIds.has(idA) || mergingItemIds.has(idB)) {
@@ -296,8 +299,15 @@ export default function Canvas({ setNextItem, setScore, setIsGameOver }: CanvasP
         }
 
         if (labelA === labelB) {
+          if (isSensorA || isSensorB) return undefined
+
+          const midX = (bodyA.position.x + bodyB.position.x) / 2
+          const midY = (bodyA.position.y + bodyB.position.y) / 2
           mergingItemIds.add(idA)
           mergingItemIds.add(idB)
+
+          mergedItemIds.add(idA)
+          mergedItemIds.add(idB)
 
           popSound2.play()
 
@@ -341,11 +351,22 @@ export default function Canvas({ setNextItem, setScore, setIsGameOver }: CanvasP
             },
           })
 
-          // fireConfetti()
-          // fireRapidStarConfetti()
-
           World.add(engine.world, body)
           setScore((prev) => prev + currentItemScore)
+        }
+
+        if (
+          !disableAction &&
+          (bodyA.label === 'GAME_OVER_LINE' || bodyB.label === 'GAME_OVER_LINE')
+        ) {
+          handleGameOver()
+        }
+
+        if (
+          !disableAction &&
+          (bodyA.label === 'GAME_OVER_LINE' || bodyB.label === 'GAME_OVER_LINE')
+        ) {
+          handleGameOver()
         }
         return undefined
       })
