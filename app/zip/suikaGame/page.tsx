@@ -13,7 +13,7 @@ export default function SG() {
   const [isStart, setIsStart] = useState<boolean>(true)
   const [isRestart, setIsRestart] = useState<boolean>(false)
   const [isGameOver, setIsGameOver] = useState<boolean>(false)
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
   const [nextItem, setNextItem] = useState<Items>(getRandomItem()?.label as Items)
 
   const handleRestart = () => {
@@ -35,19 +35,22 @@ export default function SG() {
             </Button>
           </>
         )}
-        <div className="w-full h-full pt-[20px] flex-center flex-col overflow-hidden gap-[0.2em] canvas-border">
+        <div className="w-full h-full flex-center flex-col overflow-hidden gap-[20px] canvas-border">
           {/* header */}
-          <div className="flex-center gap-[50px]">
-            <Image
-              src={getImage(nextItem)}
-              alt="다음 과일"
-              width={40}
-              height={40}
-              quality={75}
-              loading="lazy"
-              draggable="false"
-            />
-            <p>Score: {score}</p>
+          <div className="max-w-[270px] w-[100%] h-[75px] flex justify-between items-end">
+            <p className="text-[2rem] text-background font-black pl-[10px] stroke">{score}</p>
+            <div className="flex flex-col justify-center items-center gap-4">
+              <p className="font-bold">Next</p>
+              <Image
+                src={getImage(nextItem)}
+                alt="다음 아이템"
+                width={35}
+                height={35}
+                quality={75}
+                loading="lazy"
+                draggable="false"
+              />
+            </div>
           </div>
           <Canvas
             setNextItem={setNextItem}
@@ -62,6 +65,7 @@ export default function SG() {
       <Intro isVisible={!isStart} handleGameStart={() => setIsStart(true)} />
       <GameModal
         isOpen={isModalOpen}
+        score={score}
         handleClose={() => setIsModalOpen(false)}
         handleRestart={handleRestart}
       />
