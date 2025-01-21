@@ -28,16 +28,26 @@ type CanvasProps = {
   setNextItem: Dispatch<SetStateAction<Items>>
   setScore: Dispatch<SetStateAction<number>>
   setIsGameOver: Dispatch<SetStateAction<boolean>>
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>
+  isRestart: boolean
+  setIsRestart: Dispatch<SetStateAction<boolean>>
 }
 
-export default function Canvas({ setNextItem, setScore, setIsGameOver }: CanvasProps) {
+export default function Canvas({
+  setNextItem,
+  setScore,
+  setIsGameOver,
+  setIsModalOpen,
+  isRestart,
+  setIsRestart,
+}: CanvasProps) {
   const canvasRef = useRef<HTMLDivElement | null>(null)
   const isMobile = isTouchDevice()
 
   const { Runner, Engine, Render, World, Bodies, Mouse, Events, MouseConstraint } = Matter
 
   const runner = Runner.create()
-  const engine = Engine.create({
+  let engine = Engine.create({
     gravity: { x: 0, y: 0.5 },
   })
 
@@ -58,6 +68,17 @@ export default function Canvas({ setNextItem, setScore, setIsGameOver }: CanvasP
 
   const popSound = new Audio('/sounds/pop.mp3')
   const popSound2 = new Audio('/sounds/pop2.mp3')
+
+  useEffect(() => {
+    // ? clear
+    if (isRestart) {
+      item = null
+      engine = Engine.create()
+      init()
+      run()
+      setIsRestart(false)
+    }
+  }, [isRestart])
 
   const useConfetti = () => {
     const fireConfetti = () => {
@@ -130,8 +151,6 @@ export default function Canvas({ setNextItem, setScore, setIsGameOver }: CanvasP
       fireRapidStarConfetti,
     }
   }
-
-  // const { fireConfetti, fireRapidStarConfetti }: { fireConfetti: () => void } = useConfetti()
 
   const createItem = () => {
     if (item || !nextItemLabel) return undefined
@@ -258,9 +277,6 @@ export default function Canvas({ setNextItem, setScore, setIsGameOver }: CanvasP
         if (GameOverLine) {
           World.add(engine.world, GameOverLine)
           disableAction = false
-
-          // setTimeout(() => {
-          // }, 200)
         }
       }, 200)
 
@@ -269,6 +285,7 @@ export default function Canvas({ setNextItem, setScore, setIsGameOver }: CanvasP
 
     const handleGameOver = () => {
       setIsGameOver(true)
+      setIsModalOpen(true)
 
       if (requestAnimation) {
         cancelAnimationFrame(requestAnimation)
@@ -281,13 +298,6 @@ export default function Canvas({ setNextItem, setScore, setIsGameOver }: CanvasP
       pairs.forEach((pair: any) => {
         if (!GameOverLine) return undefined
         const { bodyA, bodyB } = pair
-
-        // if (bodyA.label === GameOverLine.label || bodyB.label === GameOverLine.label) {
-        //   console.log(`bodyA: ${bodyA.label}`)
-        //   console.log('게임오버')
-        //   handleGameOver()
-        //   return undefined
-        // }
 
         const { id: idA, label: labelA, isSensor: isSensorA } = bodyA
         const { id: idB, label: labelB, isSensor: isSensorB } = bodyB
@@ -334,7 +344,6 @@ export default function Canvas({ setNextItem, setScore, setIsGameOver }: CanvasP
             label,
             radius = 1,
             mass = 1,
-            score = 0,
           }: { label: Items; radius: number; mass: number; score: number } = newItem
 
           const body = Bodies.circle(midX, midY, radius, {
@@ -362,12 +371,6 @@ export default function Canvas({ setNextItem, setScore, setIsGameOver }: CanvasP
           handleGameOver()
         }
 
-        if (
-          !disableAction &&
-          (bodyA.label === 'GAME_OVER_LINE' || bodyB.label === 'GAME_OVER_LINE')
-        ) {
-          handleGameOver()
-        }
         return undefined
       })
     }
