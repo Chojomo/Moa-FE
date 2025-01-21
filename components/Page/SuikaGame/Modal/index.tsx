@@ -22,7 +22,7 @@ export default function GameModal({ isOpen, score, handleClose, handleRestart }:
       isOpen={isOpen}
       onRequestClose={handleClose}
       contentLabel="카테고리 모달"
-      className="max-w-[400px] w-[90%] md:w-[50%] h-[290px] flex flex-col justify-between items-center bg-modal-bg border border-none animate-fade rounded font-mono py-[35px]"
+      className="max-w-[400px] w-[90%] md:w-[50%] h-[290px] flex flex-col justify-between items-center bg-background border border-border animate-fade rounded font-mono py-[35px]"
       overlayClassName="modal-overlay-transparent"
     >
       <div className="text-center flex flex-col gap-5">

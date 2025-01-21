@@ -10,10 +10,10 @@ import Button from '@/components/Button'
 
 export default function SG() {
   const [score, setScore] = useState<number>(0)
-  const [isStart, setIsStart] = useState<boolean>(false)
+  const [isStart, setIsStart] = useState<boolean>(true)
   const [isRestart, setIsRestart] = useState<boolean>(false)
   const [isGameOver, setIsGameOver] = useState<boolean>(false)
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
   const [nextItem, setNextItem] = useState<Items>(getRandomItem()?.label as Items)
 
   const handleRestart = () => {
@@ -29,9 +29,9 @@ export default function SG() {
       >
         <div className="w-full h-full bg-background flex-center flex-col overflow-hidden gap-[20px] canvas-border">
           <div className="max-w-[270px] w-[100%] h-[75px] flex justify-between items-end">
-            <p className="text-[2rem] text-[#4C2515] font-black pl-[10px]">{score}</p>
+            <p className="text-[2rem] text-[#A6A6A6] font-black pl-[10px]">{score}</p>
             <div className="flex flex-col justify-center items-center gap-4">
-              <p className="text-[1.2rem] font-extrabold text-[#4C2515]">Next</p>
+              <p className="text-[1.2rem] font-extrabold text-[#A6A6A6]">Next</p>
               <Image
                 src={getImage(nextItem)}
                 alt="다음 아이템"

@@ -11,19 +11,19 @@ const getWall = () => {
   const Left = Bodies.rectangle(0, HEIGHT / 2, 15, HEIGHT, {
     label: 'WALL_LEFT',
     isStatic: true,
-    render: { fillStyle: '#EFBABA' },
+    render: { fillStyle: '#A6A6A6' },
   })
 
   const Right = Bodies.rectangle(WIDTH, HEIGHT / 2, 15, HEIGHT, {
     label: 'WALL_RIGHT',
     isStatic: true,
-    render: { fillStyle: '#EFBABA' },
+    render: { fillStyle: '#A6A6A6' },
   })
 
   const Ground = Bodies.rectangle(WIDTH / 2, HEIGHT, WIDTH, 15, {
     label: 'WALL_BOTTOM',
     isStatic: true,
-    render: { fillStyle: '#EFBABA' },
+    render: { fillStyle: '#A6A6A6' },
   })
   return { Left, Right, Ground }
 }
@@ -50,7 +50,7 @@ const getGameOverGuideLine = () => {
     isStatic: true,
     isSensor: true,
     collisionFilter: { group: -1 },
-    render: { fillStyle: '#EFBABA' },
+    render: { fillStyle: '#A6A6A6' },
   })
 }
 
