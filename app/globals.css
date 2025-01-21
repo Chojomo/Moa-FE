@@ -326,10 +326,13 @@
 
 .canvas-border {
   canvas {
-    border: 2px solid #ffffff80;
     user-select: none;
     cursor: pointer;
   }
+}
+
+.stroke {
+  -webkit-text-stroke: 2px var(--inverse);
 }
 
 @layer base {
