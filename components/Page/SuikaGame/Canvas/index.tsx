@@ -446,6 +446,12 @@ export default function Canvas({
   }, [])
 
   return (
-    <div ref={canvasRef} id="canvas-container" className="w-full h-full select-none flex-center" />
+    <>
+      <div ref={canvasRef} className="select-none flex-center" />
+      <div
+        id="container-box"
+        className="absolute w-full h-full flex-center z-0 pointer-events-none"
+      />
+    </>
   )
 }
