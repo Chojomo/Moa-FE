@@ -89,6 +89,12 @@ const config: Config = {
         tooltip: {
           bg: 'var(--tooltip-bg)',
         },
+        suika: {
+          bg: 'var(--suika-bg)',
+        },
+        canvas: {
+          bg: 'var(--canvas-bg)',
+        },
       },
       keyframes: {
         shimmer: {

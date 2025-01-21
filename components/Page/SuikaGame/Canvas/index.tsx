@@ -47,7 +47,7 @@ export default function Canvas({
   const { Runner, Engine, Render, World, Bodies, Mouse, Events, MouseConstraint } = Matter
 
   const runner = Runner.create()
-  let engine = Engine.create({
+  const engine = Engine.create({
     gravity: { x: 0, y: 0.5 },
   })
 
@@ -69,16 +69,16 @@ export default function Canvas({
   const popSound = new Audio('/sounds/pop.mp3')
   const popSound2 = new Audio('/sounds/pop2.mp3')
 
-  useEffect(() => {
-    // ? clear
-    if (isRestart) {
-      item = null
-      engine = Engine.create()
-      init()
-      run()
-      setIsRestart(false)
-    }
-  }, [isRestart])
+  // useEffect(() => {
+  //   // ? clear
+  //   if (isRestart) {
+  //     item = null
+  //     engine = Engine.create()
+  //     init()
+  //     run()
+  //     setIsRestart(false)
+  //   }
+  // }, [isRestart])
 
   const useConfetti = () => {
     const fireConfetti = () => {
@@ -196,7 +196,7 @@ export default function Canvas({
     const minX = circleRadius || 0
     const maxX = circleRadius ? WIDTH - circleRadius : WIDTH
 
-    const clampedX = clamp(event.mouse.position.x, minX + 1, maxX - 1)
+    const clampedX = clamp(event.mouse.position.x, minX + 8, maxX - 8)
 
     setPositionX([item], clampedX)
     return undefined
@@ -278,7 +278,7 @@ export default function Canvas({
           World.add(engine.world, GameOverLine)
           disableAction = false
         }
-      }, 200)
+      }, 400)
 
       return undefined
     }
@@ -368,6 +368,8 @@ export default function Canvas({
           !disableAction &&
           (bodyA.label === 'GAME_OVER_LINE' || bodyB.label === 'GAME_OVER_LINE')
         ) {
+          console.log(bodyA.label)
+          console.log(bodyB.label)
           handleGameOver()
         }
 
@@ -398,7 +400,7 @@ export default function Canvas({
       width: getWidth(),
       height: getHeight(),
       wireframes: false,
-      background: '#ffffff40',
+      // background: '#ffffff40',
     }
 
     GameOverLine = getGameOverLine()

@@ -10,10 +10,10 @@ import Button from '@/components/Button'
 
 export default function SG() {
   const [score, setScore] = useState<number>(0)
-  const [isStart, setIsStart] = useState<boolean>(true)
+  const [isStart, setIsStart] = useState<boolean>(false)
   const [isRestart, setIsRestart] = useState<boolean>(false)
   const [isGameOver, setIsGameOver] = useState<boolean>(false)
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [nextItem, setNextItem] = useState<Items>(getRandomItem()?.label as Items)
 
   const handleRestart = () => {
@@ -27,26 +27,16 @@ export default function SG() {
       <div
         className={`w-full h-full relative top-0 flex-center flex-col  gap-[8px] ${isStart ? 'visible' : 'invisible'}`}
       >
-        {isGameOver && (
-          <>
-            <p className="text-heading-text">게임 오버</p>
-            <Button type="button" ariaLabel="다시 시작하기 버튼">
-              다시하기
-            </Button>
-          </>
-        )}
-        <div className="w-full h-full flex-center flex-col overflow-hidden gap-[20px] canvas-border">
-          {/* header */}
+        <div className="w-full h-full bg-background flex-center flex-col overflow-hidden gap-[20px] canvas-border">
           <div className="max-w-[270px] w-[100%] h-[75px] flex justify-between items-end">
-            <p className="text-[2rem] text-background font-black pl-[10px] stroke">{score}</p>
+            <p className="text-[2rem] text-[#4C2515] font-black pl-[10px]">{score}</p>
             <div className="flex flex-col justify-center items-center gap-4">
-              <p className="font-bold">Next</p>
+              <p className="text-[1.2rem] font-extrabold text-[#4C2515]">Next</p>
               <Image
                 src={getImage(nextItem)}
                 alt="다음 아이템"
                 width={35}
                 height={35}
-                quality={75}
                 loading="lazy"
                 draggable="false"
               />
