@@ -7,6 +7,7 @@ export { getItem, getRandomItem, getNextItem } from './getItem'
 
 export {
   getWall,
+  getGround,
   getGuideLine,
   getGameOverLine,
   getGameOverGuideLine,

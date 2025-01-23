@@ -13,6 +13,7 @@ import { Items } from '@/helper/constants/suikaGame/items'
 import {
   clamp,
   getWall,
+  getGround,
   getImage,
   getWidth,
   getHeight,
@@ -21,7 +22,6 @@ import {
   getRandomItem,
   setPositionX,
   getGameOverLine,
-  getGameOverGuideLine,
 } from '@/features/suikaGame'
 
 type CanvasProps = {
@@ -57,7 +57,7 @@ export default function Canvas({
   let disableAction: boolean = false
 
   let GameOverLine: Matter.Body | null | undefined = null
-  let GameOverGuideLine: Matter.Body | null | undefined = null
+  const GameOverGuideLine: Matter.Body | null | undefined = null
 
   const mergingItemIds = new Set<number>()
   const mergedItemIds = new Set<number>()
@@ -402,28 +402,16 @@ export default function Canvas({
       wireframes: false,
     }
 
+    const Ground = getGround()
+    const walls = [...Object.values(getWall())]
     GameOverLine = getGameOverLine()
-    GameOverGuideLine = getGameOverGuideLine()
 
     render = Render.create({ element: canvas, engine, options })
-    const { Top, Left, LeftBack, SideLeft, Right, RightBack, SideRight, Ground, Bottom } = getWall()
 
-    if (!GameOverGuideLine) return undefined
-
-    World.add(engine.world, [
-      Top,
-      Left,
-      LeftBack,
-      SideLeft,
-      Right,
-      RightBack,
-      SideRight,
-      Bottom,
-      GameOverGuideLine,
-    ])
+    World.add(engine.world, [...walls])
     World.add(engine.world, Ground)
 
-    createItem()
+    setTimeout(createItem, 200)
 
     return undefined
   }
@@ -458,11 +446,13 @@ export default function Canvas({
 
   return (
     <>
-      <div ref={canvasRef} className="select-none flex-center" />
+      <div ref={canvasRef} className="relative select-none flex-center" />
       <div
         id="container-box"
         className="absolute w-full h-full flex-center z-0 pointer-events-none"
-      />
+      >
+        {/* <div className="absolute top-[30%] w-full h-2 border-t-2 border-dotted border-main-blue pointer-events-none z-1" /> */}
+      </div>
     </>
   )
 }

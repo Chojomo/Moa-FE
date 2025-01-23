@@ -11,26 +11,22 @@ const getWall = () => {
   const WIDTH = getWidth()
   const HEIGHT = getHeight()
 
-  const Top = Bodies.rectangle(WIDTH / 2, 43, WIDTH - 63, 8, {
-    label: 'Top',
-    isStatic: true,
-    isSensor: true,
-    collisionFilter: { group: -1 },
-    render: { fillStyle: COLOR },
-  })
-
-  const leftVertices = [
-    { x: 0, y: 20 }, // 앞 왼
-    { x: 10, y: 20 }, // 앞 오른
-    { x: 78, y: -53 }, // 뒤 오른
-    { x: 90, y: -53 }, // 뒤 왼
+  const vertices = [
+    { x: 0, y: -30 }, // 앞 왼
+    { x: WIDTH, y: -30 }, // 앞 오른
+    { x: WIDTH - 35, y: -60 }, // 뒤 오른
+    { x: 35, y: -60 }, // 뒤 왼
   ]
 
-  const SideLeft = Bodies.fromVertices(0, 75, [leftVertices], {
-    label: 'SLANTED_LEFT',
+  const Top = Bodies.fromVertices(WIDTH / 2, HEIGHT / 6.5 - 16, [vertices], {
+    label: 'TOP',
     isStatic: true,
     isSensor: true,
-    render: { fillStyle: COLOR },
+    render: {
+      lineWidth: 8,
+      strokeStyle: COLOR,
+      fillStyle: 'transparent',
+    },
   })
 
   const Left = Bodies.rectangle(0, HEIGHT, 15, HEIGHT * 1.7, {
@@ -43,20 +39,6 @@ const getWall = () => {
     label: 'WALL_LEFT_BACK',
     isSensor: true,
     isStatic: true,
-    render: { fillStyle: COLOR },
-  })
-
-  const rightVertices = [
-    { x: WIDTH, y: 20 }, // 앞 왼
-    { x: WIDTH - 10, y: 20 }, // 앞 오른
-    { x: WIDTH - 78, y: -53 }, // 뒤 오른
-    { x: WIDTH - 90, y: -53 }, // 뒤 왼
-  ]
-
-  const SideRight = Bodies.fromVertices(WIDTH, 75, [rightVertices], {
-    label: 'SLANTED_LEFT',
-    isStatic: true,
-    isSensor: true,
     render: { fillStyle: COLOR },
   })
 
@@ -77,8 +59,9 @@ const getWall = () => {
     { x: WIDTH * 0.12, y: 0 }, // 앞 왼
     { x: WIDTH * 0.88, y: 0 }, // 앞 오른
     { x: WIDTH, y: 20 }, // 뒤 오른
-    { x: 0, y: 20 }, // 뒤 왼
+    { x: 0, y: 20 }, // 뒤 왼쪽
   ]
+
   const Bottom = Bodies.fromVertices(WIDTH / 2, HEIGHT - 16, [bottomVertices], {
     label: 'BOTTOM',
     isSensor: true,
@@ -86,12 +69,15 @@ const getWall = () => {
     render: { fillStyle: COLOR },
   })
 
-  const Ground = Bodies.rectangle(WIDTH / 2, HEIGHT, WIDTH, 15, {
+  return { Top, Left, LeftBack, Right, RightBack, Bottom }
+}
+
+const getGround = () => {
+  return Bodies.rectangle(getWidth() / 2, getHeight(), getWidth(), 15, {
     label: 'WALL_BOTTOM',
     isStatic: true,
     render: { fillStyle: COLOR },
   })
-  return { Top, Left, LeftBack, SideLeft, Right, RightBack, SideRight, Ground, Bottom }
 }
 
 const getGameOverLine = () => {
@@ -108,16 +94,6 @@ const getGameOverLine = () => {
       render: { visible: false },
     }
   )
-}
-
-const getGameOverGuideLine = () => {
-  return Matter.Bodies.rectangle(getWidth() / 2, getHeight() / 6.5, getWidth() * 10, LINE_HEIGHT, {
-    label: 'GAME_OVER_GUIDE_LINE',
-    isStatic: true,
-    isSensor: true,
-    collisionFilter: { group: -1 },
-    render: { fillStyle: COLOR },
-  })
 }
 
 const getGuideLine = () => {
@@ -144,4 +120,4 @@ const getBodyYSection = (radius: number | undefined) => {
   return undefined
 }
 
-export { getWall, getGameOverLine, getGameOverGuideLine, getGuideLine, getBodyYSection }
+export { getWall, getGround, getGameOverLine, getGuideLine, getBodyYSection }
