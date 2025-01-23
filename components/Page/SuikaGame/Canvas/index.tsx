@@ -164,7 +164,7 @@ export default function Canvas({
       mass = 1,
     }: { label: Items; radius: number; mass: number } = nextItemFeature
 
-    item = Bodies.circle(getWidth() / 2, 50, radius, {
+    item = Bodies.circle(getWidth() / 2, 40, radius, {
       isStatic: true,
       label,
       restitution: 0.3,
@@ -400,18 +400,27 @@ export default function Canvas({
       width: getWidth(),
       height: getHeight(),
       wireframes: false,
-      // background: '#ffffff40',
     }
 
     GameOverLine = getGameOverLine()
     GameOverGuideLine = getGameOverGuideLine()
 
     render = Render.create({ element: canvas, engine, options })
-    const { Left, Right, Ground } = getWall()
+    const { Top, Left, LeftBack, SideLeft, Right, RightBack, SideRight, Ground, Bottom } = getWall()
 
     if (!GameOverGuideLine) return undefined
 
-    World.add(engine.world, [Left, Right, GameOverGuideLine])
+    World.add(engine.world, [
+      Top,
+      Left,
+      LeftBack,
+      SideLeft,
+      Right,
+      RightBack,
+      SideRight,
+      Bottom,
+      GameOverGuideLine,
+    ])
     World.add(engine.world, Ground)
 
     createItem()
