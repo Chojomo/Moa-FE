@@ -337,7 +337,7 @@
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     cursor: pointer;
-    background-color: var(--background) !important;
+    background-color: #ffdcc8 !important;
   }
 }
 

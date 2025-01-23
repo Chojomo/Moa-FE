@@ -8,11 +8,10 @@ import confetti from 'canvas-confetti'
 import { isTouchDevice } from '@/utils'
 import { Items } from '@/helper/constants/suikaGame/items'
 
-// import * as SuikaGame from '@/features/suikaGame'
-
 import {
   clamp,
   getWall,
+  getGround,
   getImage,
   getWidth,
   getHeight,
@@ -21,13 +20,17 @@ import {
   getRandomItem,
   setPositionX,
   getGameOverLine,
-  getGameOverGuideLine,
 } from '@/features/suikaGame'
+import GameModal from '../Modal'
+
+// import * as SuikaGame from '@/features/suikaGame'
 
 type CanvasProps = {
   setNextItem: Dispatch<SetStateAction<Items>>
+  score: number
   setScore: Dispatch<SetStateAction<number>>
   setIsGameOver: Dispatch<SetStateAction<boolean>>
+  isModalOpen: boolean
   setIsModalOpen: Dispatch<SetStateAction<boolean>>
   isRestart: boolean
   setIsRestart: Dispatch<SetStateAction<boolean>>
@@ -35,8 +38,10 @@ type CanvasProps = {
 
 export default function Canvas({
   setNextItem,
+  score,
   setScore,
   setIsGameOver,
+  isModalOpen,
   setIsModalOpen,
   isRestart,
   setIsRestart,
@@ -57,7 +62,7 @@ export default function Canvas({
   let disableAction: boolean = false
 
   let GameOverLine: Matter.Body | null | undefined = null
-  let GameOverGuideLine: Matter.Body | null | undefined = null
+  const GameOverGuideLine: Matter.Body | null | undefined = null
 
   const mergingItemIds = new Set<number>()
   const mergedItemIds = new Set<number>()
@@ -69,16 +74,20 @@ export default function Canvas({
   const popSound = new Audio('/sounds/pop.mp3')
   const popSound2 = new Audio('/sounds/pop2.mp3')
 
-  // useEffect(() => {
-  //   // ? clear
-  //   if (isRestart) {
-  //     item = null
-  //     engine = Engine.create()
-  //     init()
-  //     run()
-  //     setIsRestart(false)
-  //   }
-  // }, [isRestart])
+  const handleRestart = () => {
+    setIsModalOpen(false)
+    setIsGameOver(false)
+    setIsRestart(true)
+    setScore(0)
+
+    item = null
+    Engine.clear(engine)
+    World.clear(engine.world, false)
+
+    init()
+    run()
+    initEvents()
+  }
 
   const useConfetti = () => {
     const fireConfetti = () => {
@@ -164,7 +173,7 @@ export default function Canvas({
       mass = 1,
     }: { label: Items; radius: number; mass: number } = nextItemFeature
 
-    item = Bodies.circle(getWidth() / 2, 50, radius, {
+    item = Bodies.circle(getWidth() / 2, 40, radius, {
       isStatic: true,
       label,
       restitution: 0.3,
@@ -400,21 +409,18 @@ export default function Canvas({
       width: getWidth(),
       height: getHeight(),
       wireframes: false,
-      // background: '#ffffff40',
     }
 
+    const Ground = getGround()
+    const walls = [...Object.values(getWall())]
     GameOverLine = getGameOverLine()
-    GameOverGuideLine = getGameOverGuideLine()
 
     render = Render.create({ element: canvas, engine, options })
-    const { Left, Right, Ground } = getWall()
 
-    if (!GameOverGuideLine) return undefined
-
-    World.add(engine.world, [Left, Right, GameOverGuideLine])
+    World.add(engine.world, [...walls])
     World.add(engine.world, Ground)
 
-    createItem()
+    setTimeout(createItem, 200)
 
     return undefined
   }
@@ -449,10 +455,16 @@ export default function Canvas({
 
   return (
     <>
-      <div ref={canvasRef} className="select-none flex-center" />
+      <div ref={canvasRef} className="relative select-none flex-center" />
       <div
         id="container-box"
         className="absolute w-full h-full flex-center z-0 pointer-events-none"
+      />
+      <GameModal
+        isOpen={isModalOpen}
+        score={score}
+        handleClose={() => setIsModalOpen(false)}
+        handleRestart={handleRestart}
       />
     </>
   )

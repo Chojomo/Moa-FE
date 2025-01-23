@@ -8,7 +8,7 @@ export const getHeight = () => {
   const { clientWidth, clientHeight } = wapper
 
   if (isTouchDevice()) {
-    return wapper.clientHeight
+    return wapper.clientHeight - 120
   }
   const maxHeight = Math.min(clientHeight - 150, 600)
   const screenHeight = clientHeight
@@ -28,7 +28,7 @@ export const getWidth = () => {
   if (!wapper) return 0
 
   if (isTouchDevice()) {
-    return wapper.clientWidth
+    return wapper.clientWidth - 40
   }
 
   return (getHeight() * 4) / 7
