@@ -10,18 +10,12 @@ export default function SG() {
   const [score, setScore] = useState<number>(0)
   const [isStart, setIsStart] = useState<boolean>(true)
   const [isRestart, setIsRestart] = useState<boolean>(false)
-  const [isGameOver, setIsGameOver] = useState<boolean>(false)
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [isGameOver, setIsGameOver] = useState<boolean>(true)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
   const [nextItem, setNextItem] = useState<Items>(getRandomItem()?.label as Items)
 
-  const handleRestart = () => {
-    setIsModalOpen(false)
-    setIsGameOver(false)
-    setIsRestart(true)
-  }
-
   return (
-    <div className="w-[100vw] h-[100vh] flex-center overflow-hidden pt-[74px]">
+    <div className="w-[100dvw] h-[100dvh] flex-center overflow-hidden pt-[74px]">
       <div
         className={`w-full h-full relative top-0 flex-center flex-col  gap-[8px] ${isStart ? 'visible' : 'invisible'}`}
       >
@@ -29,8 +23,10 @@ export default function SG() {
           <HUD score={score} nextItem={nextItem} />
           <Canvas
             setNextItem={setNextItem}
+            score={score}
             setScore={setScore}
             setIsGameOver={setIsGameOver}
+            isModalOpen={isModalOpen}
             setIsModalOpen={setIsModalOpen}
             isRestart={isRestart}
             setIsRestart={setIsRestart}
@@ -38,12 +34,6 @@ export default function SG() {
         </div>
       </div>
       <Intro isVisible={!isStart} handleGameStart={() => setIsStart(true)} />
-      <GameModal
-        isOpen={isModalOpen}
-        score={score}
-        handleClose={() => setIsModalOpen(false)}
-        handleRestart={handleRestart}
-      />
     </div>
   )
 }

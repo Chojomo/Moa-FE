@@ -8,8 +8,6 @@ import confetti from 'canvas-confetti'
 import { isTouchDevice } from '@/utils'
 import { Items } from '@/helper/constants/suikaGame/items'
 
-// import * as SuikaGame from '@/features/suikaGame'
-
 import {
   clamp,
   getWall,
@@ -23,11 +21,16 @@ import {
   setPositionX,
   getGameOverLine,
 } from '@/features/suikaGame'
+import GameModal from '../Modal'
+
+// import * as SuikaGame from '@/features/suikaGame'
 
 type CanvasProps = {
   setNextItem: Dispatch<SetStateAction<Items>>
+  score: number
   setScore: Dispatch<SetStateAction<number>>
   setIsGameOver: Dispatch<SetStateAction<boolean>>
+  isModalOpen: boolean
   setIsModalOpen: Dispatch<SetStateAction<boolean>>
   isRestart: boolean
   setIsRestart: Dispatch<SetStateAction<boolean>>
@@ -35,8 +38,10 @@ type CanvasProps = {
 
 export default function Canvas({
   setNextItem,
+  score,
   setScore,
   setIsGameOver,
+  isModalOpen,
   setIsModalOpen,
   isRestart,
   setIsRestart,
@@ -69,16 +74,20 @@ export default function Canvas({
   const popSound = new Audio('/sounds/pop.mp3')
   const popSound2 = new Audio('/sounds/pop2.mp3')
 
-  // useEffect(() => {
-  //   // ? clear
-  //   if (isRestart) {
-  //     item = null
-  //     engine = Engine.create()
-  //     init()
-  //     run()
-  //     setIsRestart(false)
-  //   }
-  // }, [isRestart])
+  const handleRestart = () => {
+    setIsModalOpen(false)
+    setIsGameOver(false)
+    setIsRestart(true)
+    setScore(0)
+
+    item = null
+    Engine.clear(engine)
+    World.clear(engine.world, false)
+
+    init()
+    run()
+    initEvents()
+  }
 
   const useConfetti = () => {
     const fireConfetti = () => {
@@ -450,9 +459,13 @@ export default function Canvas({
       <div
         id="container-box"
         className="absolute w-full h-full flex-center z-0 pointer-events-none"
-      >
-        {/* <div className="absolute top-[30%] w-full h-2 border-t-2 border-dotted border-main-blue pointer-events-none z-1" /> */}
-      </div>
+      />
+      <GameModal
+        isOpen={isModalOpen}
+        score={score}
+        handleClose={() => setIsModalOpen(false)}
+        handleRestart={handleRestart}
+      />
     </>
   )
 }
