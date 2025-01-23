@@ -3,7 +3,6 @@ import { getWidth, getHeight } from './calcSize'
 
 const { Bodies } = Matter
 const LINE_HEIGHT = 8
-const LINE_WIDTH = 15
 
 const COLOR = '#6F4927'
 

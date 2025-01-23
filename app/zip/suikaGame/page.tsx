@@ -1,12 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
-import { Intro, Canvas } from '@/components/Page/SuikaGame'
+import { HUD, Intro, Canvas } from '@/components/Page/SuikaGame'
 import { Items } from '@/helper/constants/suikaGame/items'
-import { getImage, getRandomItem } from '@/features/suikaGame'
+import { getRandomItem } from '@/features/suikaGame'
 import GameModal from '@/components/Page/SuikaGame/Modal'
-import Button from '@/components/Button'
 
 export default function SG() {
   const [score, setScore] = useState<number>(0)
@@ -28,20 +26,7 @@ export default function SG() {
         className={`w-full h-full relative top-0 flex-center flex-col  gap-[8px] ${isStart ? 'visible' : 'invisible'}`}
       >
         <div className="w-full h-full bg-[#FFDCC8] flex-center flex-col overflow-hidden gap-[20px] canvas-border">
-          <div className="max-w-[270px] w-[100%] h-[75px] flex justify-between items-end">
-            <p className="text-[2rem] text-[#6F4927] font-black pl-[10px]">{score}</p>
-            <div className="flex flex-col justify-center items-center gap-4">
-              <p className="text-[1.2rem] font-extrabold text-[#6F4927]">Next</p>
-              <Image
-                src={getImage(nextItem)}
-                alt="다음 아이템"
-                width={35}
-                height={35}
-                loading="lazy"
-                draggable="false"
-              />
-            </div>
-          </div>
+          <HUD score={score} nextItem={nextItem} />
           <Canvas
             setNextItem={setNextItem}
             setScore={setScore}
