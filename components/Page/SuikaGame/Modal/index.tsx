@@ -1,5 +1,6 @@
 import Modal from 'react-modal'
 import Button from '@/components/Button'
+import { toast } from 'react-toastify'
 
 type GameModalProps = {
   isOpen: boolean
@@ -14,7 +15,7 @@ export default function GameModal({ isOpen, score, handleClose, handleRestart }:
   const handleShare = async () => {
     const url = window.location.href
     await navigator.clipboard.writeText(url)
-    // toast.success('링크가 복사되었습니다.')
+    toast.success('링크가 복사되었습니다.')
   }
 
   return (
