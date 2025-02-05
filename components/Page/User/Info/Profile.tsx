@@ -17,7 +17,7 @@ type ProfileProps = {
 export default function Profile({ user }: ProfileProps) {
   const { profile: src, nickName: name, dio, follows, followers } = user
   return (
-    <div className="w-full h-full flex flex-col gap-[20px]">
+    <div className="w-full flex flex-col gap-[20px]">
       <div className="relative w-[120px] h-[120px] rounded-md overflow-hidden bg-background">
         <Image
           src={src}

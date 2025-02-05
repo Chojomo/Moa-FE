@@ -6,8 +6,10 @@ export default function ProFileLayout({
   children: React.ReactNode
 }>) {
   return (
-    <div className="w-full h-full pt-[10%]">
+    <div className="w-full h-full pt-[10%] flex flex-col overflow-y-scroll">
       <UserInfo />
+      <Tap />
+      {/* <div cla>d</div> */}
       {/* {children} */}
     </div>
   )

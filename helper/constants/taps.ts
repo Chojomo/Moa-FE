@@ -1,18 +1,17 @@
-export const taps = [
+export const TAPS = [
   {
-    name: '소개',
-    href: 'about',
+    name: '글',
+    href: 'posts',
+    path: '/user/posts',
   },
   {
-    name: '다이어리',
-    href: 'diaries',
-  },
-  {
-    name: '작성한 댓글',
+    name: '댓글',
     href: 'comments',
+    path: '/user/comments',
   },
   {
     name: '좋아요',
     href: 'likes',
+    path: '/user/likes',
   },
 ]

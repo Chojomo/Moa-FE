@@ -1,23 +1,23 @@
 'use client'
 
-import { taps } from '@/helper/constants/taps'
+import { TAPS } from '@/helper/constants/taps'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 export default function Tap() {
   const pathname = usePathname()
 
+  console.log(pathname)
+
   return (
-    <div
-      className={`w-full h-[60px] flex-center ${pathname === '/user/setting' ? 'hidden' : ''} my-[40px] md:my-[30px]`}
-    >
-      <ul className="w-full h-full flex-center gap-5 md:gap-[10%] border-b border-border text-[14px] md:text-[15px] font-semibold">
-        {taps.map(({ name, href }) => (
-          <li
-            key={name}
-            className={`h-full flex-center ${pathname.includes(href) ? 'border-b-[3px] border-main-blue' : ''}`}
-          >
-            <Link href={href} className="px-4 py-3">
+    <div className="w-full h-[60px] mt-[50px] flex-center border-b border-border">
+      <ul className="w-full flex items-start gap-6 text-[1.1rem] text-nonActive-text">
+        {TAPS.map(({ name, href, path }) => (
+          <li key={name}>
+            <Link
+              href={href}
+              className={`${pathname === path && 'text-heading-text font-bold'} pr-5 py-5`}
+            >
               {name}
             </Link>
           </li>
