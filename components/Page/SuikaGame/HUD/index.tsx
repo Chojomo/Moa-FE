@@ -13,7 +13,7 @@ export default function HUD({ score, nextItem }: HUDProps) {
       <p className="w-full h-1/3 bg-[#FFDCC8] text-[#6F4927] text-end text-[1.2rem] font-extrabold pr-[10px]">
         Next
       </p>
-      <div className="w-full h-2/3 flex justify-between items-center bg-[#6F4927] pl-[2px] pr-[10px]">
+      <div className="w-full flex justify-between items-center bg-[#6F4927] pl-[2px] pr-[10px]">
         <p className="text-[2rem] text-[#FFDCC8] font-black pl-[10px]">{score}</p>
         <Image
           src={getImage(nextItem)}

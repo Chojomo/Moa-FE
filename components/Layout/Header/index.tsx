@@ -21,7 +21,9 @@ export default function Header() {
   if (pathname.includes('/diary/post')) return null
 
   return (
-    <header className="z-30 fixed top-0 left-0 bg-background w-full py-[12px] px-[5%] flex items-center justify-between">
+    <header
+      className={`z-30 fixed top-0 left-0 ${pathname.includes('user') ? '' : 'bg-background'} w-full py-[12px] px-[5%] flex items-center justify-between`}
+    >
       <Logo />
       <div className="flex items-center gap-[7px]">
         {isLogin && (

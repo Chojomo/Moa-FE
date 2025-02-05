@@ -5,6 +5,7 @@ import Link from 'next/link'
 type User = {
   profile: string
   nickName: string
+  dio: string
   follows: number
   followers: number
 }
@@ -14,41 +15,29 @@ type ProfileProps = {
 }
 
 export default function Profile({ user }: ProfileProps) {
-  const { profile: src, nickName: name, follows, followers } = user
+  const { profile: src, nickName: name, dio, follows, followers } = user
   return (
-    <div className="w-full h-full flex-center gap-[5%]">
-      <div className="relative w-[75px] h-[75px] md:w-[90px] md:h-[90px] rounded-full border border-border overflow-hidden">
+    <div className="w-full h-full flex flex-col gap-[20px]">
+      <div className="relative w-[120px] h-[120px] rounded-md overflow-hidden bg-background">
         <Image
           src={src}
           alt="유저 프로필 사진"
+          quality={75}
           layout="fill"
           objectFit="contain"
-          quality={75}
           loading="lazy"
           draggable="false"
         />
       </div>
-      <div className="flex-grow flex flex-col gap-5">
-        <Link href="/user/about" className="font-semibold text-[20px] text-main-blue">
-          {name}
-        </Link>
-        <div className="flex gap-20">
-          <p className="font-bold">
-            팔로우 <span className="ml-3">{follows}</span>
-          </p>
-          <p className="font-bold">
-            팔로워 <span className="ml-3">{followers}</span>
-          </p>
-        </div>
-      </div>
-      {/* 팔로우 돼 있으면 Unfollow로 연결 */}
-      <div className="flex-center gap-3">
-        {/* <Button type="button" ariaLabel="팔로우 추가 버튼" className="">
-          <Icon name="Follow" width={30} height={30} />
-        </Button> */}
-        <Link href="/user/setting" className="p-3 relative bottom-8">
-          <Icon name="Setting" width={30} height={30} />
-        </Link>
+      <p className="text-heading-text text-[2.5rem] font-serif font-semibold">{name}</p>
+      <p>{dio}</p>
+      <div className="flex gap-7 pt-3 text-[0.9rem] text-nonActive-text">
+        <p>
+          <span className="text-heading-text font-semibold pr-3">{follows}</span> 팔로우
+        </p>
+        <p>
+          <span className="text-heading-text font-semibold pr-3">{followers}</span> 팔로워
+        </p>
       </div>
     </div>
   )

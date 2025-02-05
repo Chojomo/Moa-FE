@@ -8,10 +8,10 @@ import GameModal from '@/components/Page/SuikaGame/Modal'
 
 export default function SG() {
   const [score, setScore] = useState<number>(0)
-  const [isStart, setIsStart] = useState<boolean>(true)
+  const [isStart, setIsStart] = useState<boolean>(false)
   const [isRestart, setIsRestart] = useState<boolean>(false)
   const [isGameOver, setIsGameOver] = useState<boolean>(true)
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(true)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [nextItem, setNextItem] = useState<Items>(getRandomItem()?.label as Items)
 
   return (
