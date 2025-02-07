@@ -31,7 +31,7 @@ export default function NavModal({ isOpen, handleClose }: NavModalProps) {
       overlayClassName="modal-overlay-transparent"
     >
       <IconLink
-        href="/user/about"
+        href="/user/posts"
         iconName="User"
         iconColor="modal-text"
         hoverColor="background"

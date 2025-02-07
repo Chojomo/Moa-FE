@@ -1,16 +1,13 @@
-import { UserInfo, Tap } from '@/components/Page/User'
-
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
   return (
-    <div className="w-[100vw] h-[100vh] flex flex-col items-center animate-fadeIn">
-      <div className="w-[90%] md:w-[70%] h-full flex flex-col">
-        <UserInfo />
-        <Tap />
-        {children}
+    <div>
+      <div className="w-[100vw] h-[100vh] flex-center overflow-scroll">
+        <div className="z-10 w-[90%] md:w-[60%] h-full pt-[74px] flex flex-col">{children}</div>
+        <div className="absolute top-0 w-full h-1/2 bg-[linear-gradient(0deg,#FFFFFF,#e9e9e9)] dark:bg-[linear-gradient(0deg,#000000,#2a2a2a)]" />
       </div>
     </div>
   )
