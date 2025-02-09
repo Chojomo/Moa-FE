@@ -3,40 +3,30 @@ import { useState } from 'react'
 import Button from '@/components/Button'
 import { Icon } from '@/components/Icon'
 
-export default function Nickname() {
+export default function Bio() {
   const [isEdit, setIsEdit] = useState<boolean>(false)
-  const [nickname, setNickname] = useState<string>('ichubtou')
-  const [tempNickname, setTempNickname] = useState<string>(nickname)
+  const [bio, setBio] = useState<string>('안녕하세요. 반갑습니다.')
+  const [tempBio, setTempBio] = useState<string>(bio)
 
-  const handleNicknameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTempNickname(event.target.value)
+  const handleBioChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTempBio(event.target.value)
   }
 
   const handleCancleClick = () => {
-    setNickname(nickname)
+    setBio(bio)
     setIsEdit(false)
   }
 
   const handleSaveClick = () => {
-    setNickname(tempNickname)
+    setBio(tempBio)
     setIsEdit(false)
   }
 
   return (
-    <div className="pt-[40px] pb-[20px] flex items-center gap-5 border-b border-border">
-      {isEdit ? (
-        <>
-          <input
-            id="nickname"
-            type="nickname"
-            name="nickname"
-            aria-label="닉네임"
-            placeholder="닉네임"
-            autoComplete="nickname"
-            value={tempNickname}
-            onChange={handleNicknameChange}
-            className="input-reset max-w-[200px] autofull-text rounded border border-[#cfcfcf] dark:border-[#505050] px-[15px] py-[18px] placeholder:font-light placeholder:text-[0.8rem] autofill:text-black autofill:shadow-none"
-          />
+    <div className="pt-[40px] pb-[20px] flex flex-col justify-center border-b border-border">
+      <div className="flex items-center gap-5 pb-[20px]">
+        <p className="text-[1.5rem] text-heading-text font-semibold">소개글 변경</p>
+        {isEdit ? (
           <div className="flex-center gap-5 text-[0.8rem]">
             <Button
               type="button"
@@ -55,10 +45,7 @@ export default function Nickname() {
               변경
             </Button>
           </div>
-        </>
-      ) : (
-        <>
-          <p className="text-[2rem] text-heading-text font-semibold">{nickname}</p>
+        ) : (
           <Button
             type="button"
             ariaLabel="닉네임 수정 아이콘 버튼"
@@ -72,8 +59,24 @@ export default function Nickname() {
               className="text-[#636363] group-hover:text-[#404040] dark:text-[#b2b2b2] dark:group-hover:text-[#e8e8e8] transition-colors"
             />
           </Button>
-        </>
-      )}
+        )}
+      </div>
+      <div>
+        {isEdit ? (
+          <textarea
+            id="about"
+            name="about"
+            rows={4}
+            className="w-full h-[200px] bg-container-bg p-5 rounded-md text-[14px] focus:outline-none resize-none"
+            placeholder="등록된 소개글이 없습니다."
+            aria-label="유저 소개글 입력 폼"
+            value={tempBio}
+            onChange={handleBioChange}
+          />
+        ) : (
+          <p className="text-nonActive-text">{bio}</p>
+        )}
+      </div>
     </div>
   )
 }

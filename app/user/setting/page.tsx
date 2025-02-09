@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Button from '@/components/Button'
 import Toggle from '@/components/UI/Toggle'
 
-import { Nickname } from '@/components/Page/User/Setting'
+import { Nickname, Bio } from '@/components/Page/User/Setting'
 
 export default function Setting() {
   const fileInputRef = useRef<HTMLInputElement>(null)
@@ -126,6 +126,7 @@ export default function Setting() {
         </div>
       </div>
       <Nickname />
+      <Bio />
     </div>
   )
 }
