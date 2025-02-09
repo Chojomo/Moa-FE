@@ -23,7 +23,7 @@ export default function Nickname() {
   }
 
   return (
-    <div className="pt-[40px] pb-[20px] flex items-center gap-5 border-b border-border">
+    <div className="w-full pt-[40px] pb-[20px] flex items-center gap-5 border-b border-border">
       {isEdit ? (
         <>
           <input

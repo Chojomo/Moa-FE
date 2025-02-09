@@ -23,7 +23,7 @@ export default function Bio() {
   }
 
   return (
-    <div className="pt-[40px] pb-[20px] flex flex-col justify-center border-b border-border">
+    <div className="w-full pt-[10px] pb-[30px] flex flex-col justify-center border-b border-border">
       <div className="flex items-center gap-5 pb-[20px]">
         <p className="text-[1.5rem] text-heading-text font-semibold">소개글 변경</p>
         {isEdit ? (

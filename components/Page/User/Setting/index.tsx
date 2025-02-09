@@ -1,3 +1,6 @@
+export { default as Profile } from './Profile'
 export { default as Nickname } from './Nickname'
 export { default as Bio } from './Bio'
 export { default as Notification } from './Notification'
+export { default as Password } from './Password'
+export { default as DeleteAccount } from './DeleteAccount'
