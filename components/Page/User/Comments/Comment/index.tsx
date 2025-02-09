@@ -14,7 +14,7 @@ export default function Comment({ comment }: CommentProps) {
 
   return (
     <div className="w-full flex flex-col justify-center items-start gap-3 pb-[30px] border-b border-border">
-      <p className="font-semibold text-heading-text">{commentText}</p>
+      <p className="text-[1.2rem] font-semibold text-heading-text">{commentText}</p>
       <div className="flex-center gap-3 text-[0.7rem] text-[#9e9e9e] dark:text-[#5b5b5b]">
         <div className="border border-[#eeeeee] dark:border-[#242424] px-[5px] py-[2px] rounded-sm">
           <p>원문</p>
