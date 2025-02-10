@@ -76,3 +76,30 @@ export const findPassword = async (email: string) => {
     throw new Error('next 서버 요청 중 에러 발생')
   }
 }
+
+export const getCheckEmail = async (email: string) => {
+  if (!email) {
+    throw new Error('이메일을 입력해 주세요.')
+  }
+
+  const apiUrl = `/api/signup?email=${email}`
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      throw new Error(data.error)
+    }
+
+    return data
+  } catch (error) {
+    return new Response(JSON.stringify({ message: (error as Error).message }), { status: 500 })
+  }
+}
