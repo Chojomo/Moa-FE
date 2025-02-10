@@ -103,3 +103,39 @@ export const getCheckEmail = async (email: string) => {
     return new Response(JSON.stringify({ message: (error as Error).message }), { status: 500 })
   }
 }
+
+export const changePassword = async (
+  currentPassword: string,
+  newPassword: string,
+  confirmNewPassword: string
+) => {
+  try {
+    const apiUrl = '/api/auth/change/password'
+    const token = localStorage.getItem('authToken')
+
+    if (!token) {
+      throw new Error('로그인 상태를 확인하세요.')
+    }
+
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token,
+      },
+      body: JSON.stringify({ currentPassword, newPassword, confirmNewPassword }),
+    })
+
+    const data = await response.json()
+
+    console.log(data)
+
+    if (!response.ok) {
+      throw new Error(data.error || '비밀번호 변경 실패')
+    } else {
+      return data.message
+    }
+  } catch (error) {
+    throw new Error('next 서버 요청 중 에러 발생')
+  }
+}
