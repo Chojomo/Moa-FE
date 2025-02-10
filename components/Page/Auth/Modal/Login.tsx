@@ -57,13 +57,24 @@ export default function LoginModal({ isOpen, handleClose }: LoginModalProps) {
 
   const mutation = useMutation({
     mutationFn: () => login(email, password),
-    onSuccess: () => {
-      const { href } = window.location
+    onSuccess: (data) => {
+      console.log(data)
 
+      const { userId, userNickname, userProfileImage } = data
+
+      localStorage.setItem(
+        'userInfo',
+        JSON.stringify({
+          userId,
+          nickname: userNickname,
+          profile: userProfileImage,
+        })
+      )
+
+      const { href } = window.location
       if (/sign(in|up)/.test(href)) {
         router.push('/')
       }
-
       setLogin()
       setEmail('')
       setPassword('')

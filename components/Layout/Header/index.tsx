@@ -20,6 +20,11 @@ export default function Header() {
 
   if (pathname.includes('/diary/post')) return null
 
+  const getUserProfile = () => {
+    const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}')
+    return userInfo.profile
+  }
+
   return (
     <header className="z-30 fixed top-0 left-0 bg-background w-full py-[12px] px-[5%] flex items-center justify-between">
       <Logo />
@@ -51,7 +56,7 @@ export default function Header() {
         {isLogin ? (
           <Button type="button" ariaLabel="zz" onClick={() => setIsNavModalOpen((prev) => !prev)}>
             <Image
-              src="/images/dfsfs.jpeg"
+              src={getUserProfile()}
               alt="user profile"
               width={50}
               height={50}
