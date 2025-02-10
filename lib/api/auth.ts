@@ -43,7 +43,7 @@ export const login = async (userEmail: string, userPassword: string) => {
         localStorage.setItem('authToken', token)
       }
 
-      return data
+      return data.data
     }
   } catch (error) {
     throw new Error('next 서버 요청 중 에러 발생')
