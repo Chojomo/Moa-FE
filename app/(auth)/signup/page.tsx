@@ -5,7 +5,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useAppStore } from '@/store/useApp'
 import { useRouter } from 'next/navigation'
 
-import { signup } from '@/lib/api/auth'
+import { signup, getCheckEmail } from '@/lib/api/auth'
 import { validateEmail, validateChars, validateLength } from '@/helper/validate'
 
 import { Icon } from '@/components/Icon'
@@ -92,6 +92,27 @@ export default function Signup() {
     setIsPasswordMatched(false)
   }
 
+  const checkEmail = async () => {
+    console.log(`email: ${email}`)
+    const { data } = await getCheckEmail(email)
+
+    return data
+  }
+
+  const handleConfirmEmail = async () => {
+    const res = await getCheckEmail(email)
+
+    // 이메일 중복하는 경우
+    if (!res.ok) {
+      const { message } = await res.json()
+
+      // 팝업 띄우기
+      console.log(`message : ${message}`)
+    } else {
+      setStep(1)
+    }
+  }
+
   return (
     <div className="w-full h-full flex flex-col justify-center items-center gap-[30px] overflow-y-auto pt-[70px] md:pt-[100px] pb-[50px]">
       <h1 className="text-main-blue text-[1.5rem] font-semibold">회원가입</h1>
@@ -124,7 +145,7 @@ export default function Signup() {
               type="button"
               ariaLabel="이메일 인증 전송 버튼"
               className={`mt-[20px] relative rounded max-w-[380px] w-[80%] md:w-[50%] flex-center text-[1.1rem] text-[#fff] ${!isValidEmail ? 'bg-gray-400 cursor-not-allowed' : 'bg-main-blue'} py-[10px]`}
-              onClick={() => setStep(1)}
+              onClick={handleConfirmEmail}
             >
               비밀번호 설정하기
             </Button>
@@ -164,6 +185,7 @@ export default function Signup() {
               handleChange={handleConfirmPasswordChange}
               handleReset={() => setConfirmPassword('')}
               handleVisible={() => setIsVisibleConfirmPassword(!isVisibleConfirmPassword)}
+              isSignup
             />
             <SubmitButton
               type="회원가입"

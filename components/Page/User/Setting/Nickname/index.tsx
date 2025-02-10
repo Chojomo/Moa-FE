@@ -1,4 +1,5 @@
 'use client'
+
 import { useState } from 'react'
 import Button from '@/components/Button'
 import { Icon } from '@/components/Icon'
@@ -35,7 +36,7 @@ export default function Nickname() {
             autoComplete="nickname"
             value={tempNickname}
             onChange={handleNicknameChange}
-            className="input-reset max-w-[200px] autofull-text rounded border border-[#cfcfcf] dark:border-[#505050] px-[15px] py-[18px] placeholder:font-light placeholder:text-[0.8rem] autofill:text-black autofill:shadow-none"
+            className="input-reset max-w-[200px] autofull-text rounded border border-[#7f7f7f] dark:border-[#c7c7c7] px-[15px] py-[18px] placeholder:font-light placeholder:text-[0.8rem] autofill:text-black autofill:shadow-none"
           />
           <div className="flex-center gap-5 text-[0.8rem]">
             <Button

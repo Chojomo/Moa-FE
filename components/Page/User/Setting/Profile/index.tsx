@@ -1,13 +1,15 @@
-import { useState, useCallback, useRef } from 'react'
+import { useState, useRef } from 'react'
 import Image from 'next/image'
 import Button from '@/components/Button'
+import Link from 'next/link'
+import { Icon } from '@/components/Icon'
 
 export default function Profile() {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [profile, setProfile] = useState<null | string>(null)
 
   return (
-    <div className="w-full">
+    <div className="w-full relative">
       <p className="text-[1.5rem] font-semibold text-heading-text pb-[30px]">프로필 변경</p>
       <div className="flex items-center gap-8">
         <div className="relative w-[120px] h-[120px] rounded-md overflow-hidden bg-background">
@@ -38,6 +40,14 @@ export default function Profile() {
           </Button>
         </div>
       </div>
+      <Link href="/user/posts" className="absolute top-[10px] right-[20px] group p-2">
+        <Icon
+          name="Cancel"
+          width={30}
+          height={30}
+          className="text-[#636363] group-hover:text-[#404040] dark:text-[#b2b2b2] dark:group-hover:text-[#e8e8e8] transition-colors"
+        />
+      </Link>
     </div>
   )
 }

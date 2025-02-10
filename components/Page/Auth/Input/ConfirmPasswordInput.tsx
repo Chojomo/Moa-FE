@@ -9,6 +9,7 @@ type ConfirmPasswordInputProps = {
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleReset: () => void
   handleVisible: () => void
+  isSignup?: boolean
 }
 
 export default function ConfirmPasswordInput({
@@ -18,6 +19,7 @@ export default function ConfirmPasswordInput({
   handleChange,
   handleReset,
   handleVisible,
+  isSignup,
 }: ConfirmPasswordInputProps) {
   return (
     <>
@@ -46,7 +48,7 @@ export default function ConfirmPasswordInput({
         </Button>
       </Input>
       <span
-        className={`relative bottom-[20px] right-[85px] flex items-center gap-2 text-[12px] font-bold text-[#D44444] ${!confirmPassword.length || isMatched ? 'opacity-0 hidden' : 'opacity-100 block'}`}
+        className={`relative ${isSignup ? 'bottom-[20px] right-[85px]' : 'left-[13px]'} flex items-center gap-2 text-[12px] font-bold text-[#D44444] ${!confirmPassword.length || isMatched ? 'opacity-0 hidden' : 'opacity-100 block'}`}
       >
         <Icon name="Cancel2" width={24} height={24} /> 비밀번호가 일치하지 않습니다.
       </span>

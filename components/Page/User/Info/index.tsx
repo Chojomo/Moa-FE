@@ -33,7 +33,7 @@ export default function UserInfo() {
         <Button
           type="button"
           ariaLabel="팔로우 버튼"
-          className="absolute top-[5s0px] right-[20px] px-[18px] py-[5px] bg-main-blue hover:bg-[#3878d7] rounded-full text-white font-semibold"
+          className="absolute top-[20px] right-[20px] px-[18px] py-[5px] bg-main-blue hover:bg-[#3878d7] rounded-full text-white font-semibold"
         >
           팔로우
         </Button>

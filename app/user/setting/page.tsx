@@ -11,7 +11,7 @@ import {
 
 export default function Setting() {
   return (
-    <div className="relative w-full pt-[5%] flex flex-col pb-[5%] gap-[20px]">
+    <div className="relative w-full pt-[10%] flex flex-col pb-[5%] gap-[20px]">
       <Profile />
       <Nickname />
       <Bio />
