@@ -56,7 +56,7 @@ export const findPassword = async (email: string) => {
   }
 
   try {
-    const apiUrl = 'api/signin/find/password'
+    const apiUrl = '/api/signin/find/password'
     const response = await fetch(apiUrl, {
       method: 'POST',
       headers: {
