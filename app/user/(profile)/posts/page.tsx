@@ -12,7 +12,7 @@ type PostType = {
 
 export default function Posts() {
   return (
-    <div className="w-full h-full animate-fadeIn flex flex-wrap justify-center gap-10  pt-[5%] ">
+    <div className="w-full animate-fadeIn flex flex-wrap justify-center gap-10 pt-[5%] pb-[10%]">
       {POSTS.map((post: PostType) => (
         <Post key={post.index} post={post} />
       ))}
