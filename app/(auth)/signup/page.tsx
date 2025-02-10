@@ -164,6 +164,7 @@ export default function Signup() {
               handleChange={handleConfirmPasswordChange}
               handleReset={() => setConfirmPassword('')}
               handleVisible={() => setIsVisibleConfirmPassword(!isVisibleConfirmPassword)}
+              isSignup
             />
             <SubmitButton
               type="회원가입"
