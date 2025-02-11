@@ -9,7 +9,7 @@ import { useMutation } from '@tanstack/react-query'
 import { useAuthStore } from '@/store/useAuth'
 
 import { login } from '@/lib/api/auth'
-import { validateEmail, validatePassword } from '@/helper/validate'
+import { validateEmail } from '@/helper/validate'
 
 import { Icon } from '@/components/Icon'
 import Button from '@/components/Button'
@@ -27,7 +27,6 @@ export default function LoginModal({ isOpen, handleClose }: LoginModalProps) {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const [isValidEmail, setIsValidEmail] = useState<boolean>(false)
-  const [isValidPassword, setIsValidPassword] = useState<boolean>(false)
   const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false)
 
   Modal.setAppElement('#__next')
@@ -43,12 +42,7 @@ export default function LoginModal({ isOpen, handleClose }: LoginModalProps) {
 
   const handlePasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
-    const isValid = validatePassword(value)
-
     setPassword(value)
-    setIsValidPassword(isValid)
-
-    console.log(isValid)
   }, [])
 
   // const handleReset = () => {
@@ -160,8 +154,8 @@ export default function LoginModal({ isOpen, handleClose }: LoginModalProps) {
           <Button
             type="submit"
             ariaLabel="로그인 버튼"
-            disabled={!isValidEmail && !isValidPassword}
-            className={`text-[1.1rem] py-4 w-full max-h-[60px] rounded text-white ${!isValidEmail || !isValidPassword ? 'bg-gray-400 cursor-not-allowed' : 'bg-main-blue'}`}
+            disabled={!isValidEmail && !password}
+            className={`text-[1.1rem] py-4 w-full max-h-[60px] rounded text-white ${!isValidEmail || !password ? 'bg-gray-400 cursor-not-allowed' : 'bg-main-blue'}`}
           >
             로그인
           </Button>

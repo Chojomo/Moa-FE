@@ -4,7 +4,9 @@ import Button from '@/components/Button'
 import Input from './Input'
 
 type PasswordInputProps = {
+  id: string
   password: string
+  placeholder?: string
   isVisible: boolean
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void
   handleReset: () => void
@@ -12,7 +14,9 @@ type PasswordInputProps = {
 }
 
 export default function PasswordInput({
+  id,
   password,
+  placeholder = '비밀번호를 입력해 주세요',
   isVisible,
   handleChange,
   handleReset,
@@ -21,9 +25,9 @@ export default function PasswordInput({
   return (
     <>
       <Input
-        id="password"
+        id={id}
         type={isVisible ? 'text' : 'password'}
-        placeholder="비밀번호를 입력해 주세요"
+        placeholder={placeholder}
         value={password}
         handleChange={handleChange}
       >

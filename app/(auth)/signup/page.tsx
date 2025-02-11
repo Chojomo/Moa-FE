@@ -159,6 +159,7 @@ export default function Signup() {
           <>
             <div className="w-full flex flex-center flex-col gap-2">
               <PasswordInput
+                id="password"
                 password={password}
                 isVisible={isVisiblePassword}
                 handleChange={handlePasswordChange}

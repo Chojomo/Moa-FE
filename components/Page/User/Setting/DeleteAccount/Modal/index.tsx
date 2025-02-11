@@ -9,18 +9,21 @@ type DeleteAccountModalProps = {
 export default function DeleteAccountModal({ isOpen, handleClose }: DeleteAccountModalProps) {
   Modal.setAppElement('#__next')
 
+  const handleClick = () => {}
+
   return (
     <Modal
       isOpen={isOpen}
       onRequestClose={handleClose}
       contentLabel="카테고리 모달"
-      className="modal-content animate-fadeIn bg-modal-bg flex flex-col items-center gap-5 p-[30px]"
+      className="modal-content animate-fadeIn bg-modal-bg flex flex-col items-center gap-5 p-[30px] border border-border"
       overlayClassName="modal-overlay-transparent"
     >
       <Button
         type="button"
         ariaLabel="회원 탈퇴 버튼"
-        className="max-w-[200px] bg-main-blue px-4 py-2 rounded-full font-semibold"
+        className="max-w-[200px] bg-main-blue text-white px-4 py-2 rounded-full font-semibold"
+        onClick={handleClick}
       >
         탈퇴하기
       </Button>

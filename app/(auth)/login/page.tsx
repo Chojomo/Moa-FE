@@ -62,6 +62,7 @@ export default function Login() {
     <form className="animate-fadeIn w-[100vw] flex-center flex-col" onSubmit={handleLogin}>
       <EmailInput email={email} handleChange={handleEmailChange} handleReset={() => setEmail('')} />
       <PasswordInput
+        id="password"
         password={password}
         isVisible={isVisiblePassword}
         handleChange={handlePasswordChange}
