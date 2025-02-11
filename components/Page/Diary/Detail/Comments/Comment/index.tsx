@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Button from '@/components/Button'
-import { Comment as PostComment } from '@/types/diary'
+import { Comment as PostComment, Replies } from '@/types/diary'
 
 import usePostReply from '@/hooks/comment/usePostReply'
 import usePatchReply from '@/hooks/comment/usePatchReply'
@@ -145,11 +145,6 @@ function Cmt({
 }
 
 export default function Comment({ isLogin, diaryId, comment, setCommentCount }: CommentProps) {
-  const [reply, setReply] = useState<string>('')
-  const [subreply, setSubreply] = useState<string>('')
-  const [isCommentOpen, setIsCommentOpen] = useState<boolean>(false)
-  const { mutateAsync: postReply } = usePostReply()
-
   const {
     diaryAuthorNickname,
     commentContents,
@@ -158,8 +153,14 @@ export default function Comment({ isLogin, diaryId, comment, setCommentCount }: 
     diaryAuthorProfileImage,
     commentAuthorProfileImage,
     isCommentOwner,
-    replies,
+    replies: subReplies,
   } = comment
+
+  const [replies, setReplies] = useState<Replies>(subReplies || [])
+  const [reply, setReply] = useState<string>('')
+  const [subreply, setSubreply] = useState<string>('')
+  const [isCommentOpen, setIsCommentOpen] = useState<boolean>(false)
+  const { mutateAsync: postReply } = usePostReply()
 
   const handleButtonClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
@@ -170,10 +171,17 @@ export default function Comment({ isLogin, diaryId, comment, setCommentCount }: 
     }
 
     try {
-      await postReply({
+      const { data: newReply } = await postReply({
         diaryId,
         commentId,
         replyContents: subreply,
+      })
+
+      setReplies((prev: Replies | null) => {
+        if (prev) {
+          return [...prev, newReply]
+        }
+        return [newReply]
       })
 
       setReply('')
