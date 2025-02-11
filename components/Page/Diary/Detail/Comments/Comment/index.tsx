@@ -54,8 +54,6 @@ function Cmt({
   const { mutateAsync: patchComment } = usePatchComment()
   const { mutateAsync: patchReply } = usePatchReply()
 
-  // console.log(setReply)
-
   return (
     <>
       <div className={`flex-center gap-[3%] ${isReply ? '' : ''}`}>
@@ -104,7 +102,7 @@ function Cmt({
         )}
       </div>
       <div
-        className={`text-body-tex px-[5px] ${isReply ? 'border-b pt-[3%] pb-[5%] mb-3 text-[0.9rem]' : 'py-[5%] text-[1rem]'}`}
+        className={`text-body-text px-[5px] ${isReply ? 'border-b pt-[3%] pb-[5%] mb-3 text-[0.9rem]' : 'py-[5%] text-[1rem]'}`}
       >
         {!isEdit ? (
           comment
@@ -117,7 +115,7 @@ function Cmt({
                 text="취소"
                 handleClick={() => {
                   setIsEdit(false)
-                  setComment(reply)
+                  setComment(content)
                 }}
               />
               <CommentButton
@@ -126,9 +124,11 @@ function Cmt({
                 handleClick={async () => {
                   try {
                     if (!isReply) {
-                      await patchComment({ diaryId, commentId, commentContents: reply })
+                      await patchComment({ diaryId, commentId, commentContents: comment })
+                      setComment(comment)
+                      setIsEdit(false)
                     } else {
-                      await patchReply({ diaryId, replyId: commentId, replyContents: reply })
+                      await patchReply({ diaryId, replyId: commentId, replyContents: comment })
                     }
                   } catch (error) {
                     console.error('댓글 수정 중 오류:', error)
@@ -156,6 +156,7 @@ export default function Comment({ isLogin, diaryId, comment, setCommentCount }: 
     commentId,
     createdAt,
     diaryAuthorProfileImage,
+    commentAuthorProfileImage,
     isCommentOwner,
     replies,
   } = comment
@@ -163,7 +164,7 @@ export default function Comment({ isLogin, diaryId, comment, setCommentCount }: 
   const handleButtonClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
 
-    if (!reply.trim()) {
+    if (!subreply.trim()) {
       toast.error('댓글을 입력하세요!')
       return
     }
@@ -172,7 +173,7 @@ export default function Comment({ isLogin, diaryId, comment, setCommentCount }: 
       await postReply({
         diaryId,
         commentId,
-        replyContents: reply,
+        replyContents: subreply,
       })
 
       setReply('')
@@ -187,7 +188,7 @@ export default function Comment({ isLogin, diaryId, comment, setCommentCount }: 
         diaryId={diaryId}
         commentId={commentId}
         isOwner={isCommentOwner}
-        profile={diaryAuthorProfileImage}
+        profile={diaryAuthorProfileImage ?? commentAuthorProfileImage}
         name={diaryAuthorNickname}
         createdAt={createdAt}
         content={commentContents}
