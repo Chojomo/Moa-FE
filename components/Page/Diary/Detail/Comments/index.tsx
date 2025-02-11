@@ -4,17 +4,19 @@ import Comment from './Comment'
 type CommentsProps = {
   isLogin: boolean
   diaryId: string
+  comments: PostComment[] | null
+  handleDeleteComment: (commentId: string) => void
   commentCount: number
   setCommentCount: React.Dispatch<React.SetStateAction<number>>
-  comments: PostComment[] | null
 }
 
 export default function Comments({
   isLogin,
   diaryId,
+  comments,
+  handleDeleteComment,
   commentCount,
   setCommentCount,
-  comments,
 }: CommentsProps) {
   return (
     <div className="w-full pb-[10%]">
@@ -27,6 +29,7 @@ export default function Comments({
           isLogin={isLogin}
           diaryId={diaryId}
           comment={c}
+          handleDeleteComment={handleDeleteComment}
           setCommentCount={setCommentCount}
         />
       ))}

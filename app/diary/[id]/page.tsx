@@ -17,7 +17,7 @@ type Params = {
 export default function DiaryDetail({ params }: { params: Params }) {
   const { isLogin } = useAuthStore()
   const [post, setPost] = useState<Post | null>(null)
-  const [comment, setComment] = useState<Comment[] | null>(null)
+  const [comment, setComment] = useState<Comment[] | []>([])
   const [commentCount, setCommentCount] = useState<number>(0)
   const [isLike, setIsLike] = useState<boolean>(false)
   const [likeCount, setLikeCount] = useState<number>(0)
@@ -64,6 +64,33 @@ export default function DiaryDetail({ params }: { params: Params }) {
     }
   }
 
+  const handleDeleteComment = (commentId: string) => {
+    // comment count는 댓글 - 대댓글 안의 수까지 취급 -> 댓글의 대댓글 수 저장
+    // console.log(comment.replies.length)
+
+    const commentToDelete = comment.find((c) => c.commentId === commentId)
+
+    console.log(commentToDelete)
+
+    if (commentToDelete) {
+      // 댓글이 가진 대댓글 수까지 합산하여 총 댓글에서 뺌
+      const deleteCommentCount = commentToDelete.replies?.length || 0
+      setCommentCount((prev) => prev - deleteCommentCount)
+    }
+
+    // setComment((prev) =>
+    //   prev.filter((c) => {
+    //     if (c.commentId === commentId) {
+    //       console.log(c)
+    //       count += c.replies?.length || 0
+    //       console.log(count)
+    //     }
+    //     // return c.commentId !== commantId
+    //     return c
+    //   })
+    // )
+  }
+
   return (
     <div className="relative w-[100vw] h-[100vh] flex flex-col pt-[100px] md:pt-[140px] overflow-auto px-[5%] md:px-[20%] pb-[60px]">
       <ToastContainer
@@ -103,6 +130,7 @@ export default function DiaryDetail({ params }: { params: Params }) {
         isLogin={isLogin}
         diaryId={post.diaryId}
         comments={comment}
+        handleDeleteComment={handleDeleteComment}
         commentCount={commentCount}
         setCommentCount={setCommentCount}
       />

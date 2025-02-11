@@ -24,15 +24,15 @@ type CmtProps = {
   createdAt: string
   content: string
   isLogin: boolean
-  reply: string
-  setReply: React.Dispatch<React.SetStateAction<string>>
   setCommentCount: React.Dispatch<React.SetStateAction<number>>
+  handleDeleteComment: (commentId: string) => void
 }
 
 type CommentProps = {
   isLogin: boolean
   diaryId: string
   comment: PostComment
+  handleDeleteComment: (commentId: string) => void
   setCommentCount: React.Dispatch<React.SetStateAction<number>>
 }
 
@@ -46,9 +46,8 @@ function Cmt({
   createdAt,
   content,
   isLogin,
-  reply,
-  setReply,
   setCommentCount,
+  handleDeleteComment,
 }: CmtProps) {
   const [isEdit, setIsEdit] = useState(false)
   const [comment, setComment] = useState(content)
@@ -56,11 +55,14 @@ function Cmt({
   const { mutateAsync: patchReply } = usePatchReply()
   const { mutateAsync: deleteComment } = useDeleteComment()
 
-  const handleDeleteComment = async () => {
+  const handleDelete = async () => {
     setCommentCount((prev: number) => prev - 1)
 
     try {
-      await deleteComment({ diaryId, commentId })
+      // await deleteComment({ diaryId, commentId })
+      // if (isReply) {
+      // }
+      handleDeleteComment(commentId)
     } catch (error) {
       console.error('댓글 삭제 중 오류:', error)
     }
@@ -106,7 +108,7 @@ function Cmt({
               type="button"
               ariaLabel="댓글 삭제 버튼"
               className="p-2 text-[0.9rem] hover:text-main-blue hover:underline"
-              onClick={handleDeleteComment}
+              onClick={handleDelete}
             >
               삭제
             </Button>
@@ -157,7 +159,13 @@ function Cmt({
   )
 }
 
-export default function Comment({ isLogin, diaryId, comment, setCommentCount }: CommentProps) {
+export default function Comment({
+  isLogin,
+  diaryId,
+  comment,
+  handleDeleteComment,
+  setCommentCount,
+}: CommentProps) {
   const {
     diaryAuthorNickname,
     commentContents,
@@ -171,14 +179,13 @@ export default function Comment({ isLogin, diaryId, comment, setCommentCount }: 
 
   const [replies, setReplies] = useState<Replies>(subReplies || [])
   const [reply, setReply] = useState<string>('')
-  const [subreply, setSubreply] = useState<string>('')
   const [isCommentOpen, setIsCommentOpen] = useState<boolean>(false)
   const { mutateAsync: postReply } = usePostReply()
 
   const handleButtonClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
 
-    if (!subreply.trim()) {
+    if (!reply.trim()) {
       toast.error('댓글을 입력하세요!')
       return
     }
@@ -187,7 +194,7 @@ export default function Comment({ isLogin, diaryId, comment, setCommentCount }: 
       const { data: newReply } = await postReply({
         diaryId,
         commentId,
-        replyContents: subreply,
+        replyContents: reply,
       })
 
       setReplies((prev: Replies | null) => {
@@ -197,7 +204,7 @@ export default function Comment({ isLogin, diaryId, comment, setCommentCount }: 
         return [newReply]
       })
 
-      setSubreply('')
+      setReply('')
       setCommentCount((prev: number) => prev + 1)
     } catch (error) {
       console.error('대댓글 등록 중 오류:', error)
@@ -215,9 +222,8 @@ export default function Comment({ isLogin, diaryId, comment, setCommentCount }: 
         createdAt={createdAt}
         content={commentContents}
         isLogin={isLogin}
-        reply={reply}
-        setReply={setReply}
         setCommentCount={setCommentCount}
+        handleDeleteComment={handleDeleteComment}
       />
       {(isLogin || (!isLogin && replies && replies.length > 0)) && (
         <div className="self-end flex items-center gap-5">
@@ -250,15 +256,14 @@ export default function Comment({ isLogin, diaryId, comment, setCommentCount }: 
               createdAt={re.createdAt}
               content={re.replyContents}
               isLogin={isLogin}
-              reply={subreply}
-              setReply={setSubreply}
               setCommentCount={setCommentCount}
+              handleDeleteComment={handleDeleteComment}
             />
           ))}
         {isLogin && (
           <div className="flex gap-7">
             <div className="w-[20px] h-[20px] border-l-2 border-b-2" />
-            <CommentInput isLogin={isLogin} comment={subreply} setComment={setSubreply} />
+            <CommentInput isLogin={isLogin} comment={reply} setComment={setReply} />
           </div>
         )}
         <div className="flex justify-end gap-[20px]">

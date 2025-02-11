@@ -9,10 +9,10 @@ import { toast } from 'react-toastify'
 import CommentInput from '../CommentInput'
 
 type CommentPostProps = {
-  isLogin: boolean
   diaryId: string
   profile: string
-  setComment: Dispatch<SetStateAction<Comment[] | null>>
+  isLogin: boolean
+  setComment: Dispatch<SetStateAction<Comment[] | []>>
   setCommentCount: Dispatch<SetStateAction<number>>
   handleCommentsUpdate: () => void
 }
