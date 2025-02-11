@@ -14,7 +14,7 @@ export default function FollowButton({ diaryAuthorId }: FollowButtonProps) {
     e.preventDefault()
 
     try {
-      await postFollow({ userId: diaryAuthorId })
+      await postFollow(diaryAuthorId)
     } catch (error) {
       console.error('팔로우 중 오류:', error)
     }
