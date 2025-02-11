@@ -3,6 +3,7 @@ import { NextRequest } from 'next/server'
 export async function POST(req: NextRequest) {
   const { searchParams } = new URL(req.url)
   const userId = searchParams.get('userId')
+
   const apiUrl = `${process.env.API_URL}/api/v1/follow/${userId}`
   const token = req.headers.get('authorization')
 

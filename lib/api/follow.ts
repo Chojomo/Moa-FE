@@ -1,9 +1,5 @@
-type Follow = {
-  userId: string
-}
-
-export const postFollow = async ({ userId = '' }: Follow) => {
-  const apiUrl = `${process.env.NEXT_PUBLIC_NEXT_API_URL}/api/follow?diaryId=${userId}`
+export const postFollow = async (userId: string) => {
+  const apiUrl = `${process.env.NEXT_PUBLIC_NEXT_API_URL}/api/follow?userId=${userId}`
   const token = localStorage.getItem('authToken')
 
   if (!token) {
