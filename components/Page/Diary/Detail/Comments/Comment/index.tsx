@@ -125,11 +125,12 @@ function Cmt({
                   try {
                     if (!isReply) {
                       await patchComment({ diaryId, commentId, commentContents: comment })
-                      setComment(comment)
-                      setIsEdit(false)
                     } else {
                       await patchReply({ diaryId, replyId: commentId, replyContents: comment })
                     }
+
+                    setComment(comment)
+                    setIsEdit(false)
                   } catch (error) {
                     console.error('댓글 수정 중 오류:', error)
                   }
