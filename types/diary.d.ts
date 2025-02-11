@@ -17,6 +17,7 @@ export type Comment = {
   createdAt: string
   diaryAuthorNickname: string
   diaryAuthorProfileImage: string
+  commentAuthorProfileImage?: string
   isCommentOwner: boolean
   isLiked?: boolean
   likeCount?: number
