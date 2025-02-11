@@ -186,6 +186,7 @@ export default function Comment({ isLogin, diaryId, comment, setCommentCount }: 
       })
 
       setSubreply('')
+      setCommentCount((prev: number) => prev + 1)
     } catch (error) {
       console.error('대댓글 등록 중 오류:', error)
     }

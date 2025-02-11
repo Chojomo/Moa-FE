@@ -103,7 +103,7 @@ export default function DiaryDetail({ params }: { params: Params }) {
         isLogin={isLogin}
         diaryId={post.diaryId}
         comments={comment}
-        commentCount={post.commentCount}
+        commentCount={commentCount}
         setCommentCount={setCommentCount}
       />
       <div ref={scrollRef} />
