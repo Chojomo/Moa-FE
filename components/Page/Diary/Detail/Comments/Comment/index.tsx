@@ -185,7 +185,7 @@ export default function Comment({ isLogin, diaryId, comment, setCommentCount }: 
         return [newReply]
       })
 
-      setReply('')
+      setSubreply('')
     } catch (error) {
       console.error('대댓글 등록 중 오류:', error)
     }
