@@ -16,9 +16,12 @@ export default function Head({ post, isLogin }: HeadProps) {
     diaryId,
     diaryTitle: title,
     diaryAuthorProfileImage: profile,
+    diaryAuthorNickname: nickname,
     diaryPublishedAt: publishedAt,
     isDiaryOwner,
   } = post
+
+  console.log(post)
 
   return (
     <div className="w-full flex flex-col pb-[30px] border-b">
@@ -40,7 +43,7 @@ export default function Head({ post, isLogin }: HeadProps) {
           />
           <div>
             <p className="text-main-blue text-[16px] md:text-[19px] font-semibold mb-[5px]">
-              ichubtou
+              {nickname}
             </p>
             <p className="text-[11px] md:text-[13px]">{publishedAt.split('T')[0]}</p>
           </div>
