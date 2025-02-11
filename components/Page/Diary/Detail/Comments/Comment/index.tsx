@@ -8,6 +8,7 @@ import { Comment as PostComment, Replies } from '@/types/diary'
 import usePostReply from '@/hooks/comment/usePostReply'
 import usePatchReply from '@/hooks/comment/usePatchReply'
 import usePatchComment from '@/hooks/comment/usePatchComment'
+import useDeleteComment from '@/hooks/comment/useDeleteComment'
 
 import { toast } from 'react-toastify'
 import CommentInput from '../../CommentInput'
@@ -53,6 +54,17 @@ function Cmt({
   const [comment, setComment] = useState(content)
   const { mutateAsync: patchComment } = usePatchComment()
   const { mutateAsync: patchReply } = usePatchReply()
+  const { mutateAsync: deleteComment } = useDeleteComment()
+
+  const handleDeleteComment = async () => {
+    setCommentCount((prev: number) => prev - 1)
+
+    try {
+      await deleteComment({ diaryId, commentId })
+    } catch (error) {
+      console.error('댓글 삭제 중 오류:', error)
+    }
+  }
 
   return (
     <>
@@ -94,7 +106,7 @@ function Cmt({
               type="button"
               ariaLabel="댓글 삭제 버튼"
               className="p-2 text-[0.9rem] hover:text-main-blue hover:underline"
-              onClick={() => setCommentCount((prev: number) => prev - 1)}
+              onClick={handleDeleteComment}
             >
               삭제
             </Button>
