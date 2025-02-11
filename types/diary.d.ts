@@ -28,7 +28,6 @@ export type Reply = {
   createdAt: string
   isLiked: boolean
   isReplyOwner: boolean
-  likeCount: number
   replyAuthorId: string
   replyAuthorNickname: string
   replyAuthorProfileImage: string
