@@ -65,30 +65,15 @@ export default function DiaryDetail({ params }: { params: Params }) {
   }
 
   const handleDeleteComment = (commentId: string) => {
-    // comment count는 댓글 - 대댓글 안의 수까지 취급 -> 댓글의 대댓글 수 저장
-    // console.log(comment.replies.length)
-
     const commentToDelete = comment.find((c) => c.commentId === commentId)
 
-    console.log(commentToDelete)
-
     if (commentToDelete) {
-      // 댓글이 가진 대댓글 수까지 합산하여 총 댓글에서 뺌
+      // 댓글이 가진 대댓글 수 count 계산
       const deleteCommentCount = commentToDelete.replies?.length || 0
       setCommentCount((prev) => prev - deleteCommentCount)
     }
 
-    // setComment((prev) =>
-    //   prev.filter((c) => {
-    //     if (c.commentId === commentId) {
-    //       console.log(c)
-    //       count += c.replies?.length || 0
-    //       console.log(count)
-    //     }
-    //     // return c.commentId !== commantId
-    //     return c
-    //   })
-    // )
+    setComment((prev) => prev.filter((c) => c.commentId !== commentId))
   }
 
   return (
