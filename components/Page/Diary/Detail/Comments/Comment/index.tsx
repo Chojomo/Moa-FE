@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Link from 'next/link'
 import Image from 'next/image'
 import Button from '@/components/Button'
 import { Comment as PostComment, Reply } from '@/types/diary'
@@ -18,6 +19,7 @@ type CmtProps = {
   isReply?: boolean
   diaryId: string
   commentId: string
+  commentAuthorId: string
   isOwner: boolean
   profile: string
   name: string
@@ -41,6 +43,7 @@ function Cmt({
   isReply = false,
   diaryId,
   commentId,
+  commentAuthorId,
   isOwner,
   profile,
   name,
@@ -70,23 +73,28 @@ function Cmt({
   return (
     <>
       <div className={`flex-center gap-[3%] ${isReply ? '' : ''}`}>
-        <Image
-          src={profile}
-          alt="user profile"
-          width={isReply ? 50 : 60}
-          height={isReply ? 50 : 60}
-          quality={75}
-          loading="lazy"
-          draggable="false"
-          objectFit="cover"
-          className={`${isReply ? 'w-[40px] h-[40px] md:w-[50px] md:h-[50px]' : 'w-[50px] h-[50px] md:w-[60px] md:h-[60px]'} rounded-full border border-border`}
-        />
+        <Link href={`/user/${commentAuthorId}/posts`}>
+          <Image
+            src={profile}
+            alt="user profile"
+            width={isReply ? 50 : 60}
+            height={isReply ? 50 : 60}
+            quality={75}
+            loading="lazy"
+            draggable="false"
+            objectFit="cover"
+            className={`${isReply ? 'w-[40px] h-[40px] md:w-[50px] md:h-[50px]' : 'w-[50px] h-[50px] md:w-[60px] md:h-[60px]'} rounded-full border border-border`}
+          />
+        </Link>
         <div className="flex-grow flex flex-col gap-[3px]">
-          <p className={`${isReply ? 'text-[1rem]' : 'text-[1.1rem]'} text-main-blue font-bold`}>
+          <Link
+            href={`/user/${commentAuthorId}/posts`}
+            className={`${isReply ? 'text-[1rem]' : 'text-[1.1rem]'} text-main-blue font-bold`}
+          >
             {name}
-          </p>
+          </Link>
           <p
-            className={`${isReply ? 'text-[0.8rem]' : 'text-[0.8rem] md:text-[0.9rem]'} text-[#999999]`}
+            className={`${isReply ? 'text-[0.8rem]' : 'text-[0.8rem] md:text-[0.9rem]'} text-[#999999] pointer-events-none`}
           >
             {createdAt.split('T')[0]}
           </p>
@@ -171,6 +179,7 @@ export default function Comment({
     commentAuthorNickname,
     commentContents,
     commentId,
+    commentAuthorId,
     createdAt,
     diaryAuthorProfileImage,
     commentAuthorProfileImage,
@@ -211,6 +220,7 @@ export default function Comment({
       <Cmt
         diaryId={diaryId}
         commentId={commentId}
+        commentAuthorId={commentAuthorId}
         isOwner={isCommentOwner}
         profile={commentAuthorProfileImage ?? diaryAuthorProfileImage}
         name={commentAuthorNickname ?? diaryAuthorNickname}
@@ -245,6 +255,7 @@ export default function Comment({
               isReply
               diaryId={diaryId}
               commentId={re.replyId}
+              commentAuthorId={re.replyAuthorId}
               isOwner={re.isReplyOwner}
               profile={re.replyAuthorProfileImage}
               name={re.replyAuthorNickname}

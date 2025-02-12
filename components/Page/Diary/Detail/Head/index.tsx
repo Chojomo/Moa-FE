@@ -42,22 +42,29 @@ export default function Head({ post, isLogin }: HeadProps) {
       </h1>
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-[15px]">
-          <Image
-            src={profile}
-            alt="user profile"
-            width={55}
-            height={55}
-            quality={75}
-            loading="lazy"
-            draggable="false"
-            objectFit="cover"
-            className="rounded-full border border-border"
-          />
-          <div>
-            <p className="text-main-blue text-[16px] md:text-[19px] font-semibold mb-[5px]">
+          <Link href={`/user/${diaryAuthorId}/posts`}>
+            <Image
+              src={profile}
+              alt="user profile"
+              width={55}
+              height={55}
+              quality={75}
+              loading="lazy"
+              draggable="false"
+              objectFit="cover"
+              className="rounded-full border border-border"
+            />
+          </Link>
+          <div className="flex flex-col gap-1">
+            <Link
+              href={`/user/${diaryAuthorId}/posts`}
+              className="text-main-blue text-[18px] md:text-[19px] font-semibold"
+            >
               {nickname}
+            </Link>
+            <p className="text-[11px] md:text-[13px] pointer-events-none">
+              {publishedAt.split('T')[0]}
             </p>
-            <p className="text-[11px] md:text-[13px]">{publishedAt.split('T')[0]}</p>
           </div>
         </div>
         <div className="flex items-center gap-1 md:gap-3">
