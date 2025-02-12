@@ -264,3 +264,39 @@ export const getDiaryDetail = async ({ diaryId }: { diaryId: string }) => {
     throw new Error('next 서버 요청 중 에러 발생')
   }
 }
+
+export const deletleDiary = async ({ diaryId }: { diaryId: string }) => {
+  const apiUrl = `${process.env.NEXT_PUBLIC_NEXT_API_URL}/api/diary`
+  const token = localStorage.getItem('authToken')
+
+  if (!token) {
+    throw new Error('로그인 상태를 확인하세요.')
+  }
+
+  if (!diaryId) {
+    throw new Error('다이어리가 존재하지 않습니다.')
+  }
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: token,
+      },
+      body: JSON.stringify({
+        diaryId,
+      }),
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      throw new Error(data.error || '다이어리 삭제 실패')
+    }
+
+    return data.data
+  } catch (error) {
+    throw new Error('next 서버 요청 중 에러 발생')
+  }
+}

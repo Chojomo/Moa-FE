@@ -1,7 +1,9 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Post } from '@/types/diary'
+import { useRouter } from 'next/navigation'
+import useDeleteDiary from '@/hooks/comment/useDeleteDiary'
 
+import { Post } from '@/types/diary'
 import Button from '@/components/Button'
 import { FollowButton } from './Button'
 
@@ -11,6 +13,8 @@ type HeadProps = {
 }
 
 export default function Head({ post, isLogin }: HeadProps) {
+  const router = useRouter()
+
   const {
     diaryAuthorId,
     diaryId,
@@ -20,6 +24,16 @@ export default function Head({ post, isLogin }: HeadProps) {
     diaryPublishedAt: publishedAt,
     isDiaryOwner,
   } = post
+  const { mutateAsync: deleteDiary } = useDeleteDiary()
+
+  const handleDeleteDiary = async () => {
+    try {
+      await deleteDiary({ diaryId })
+      router.push('/diary')
+    } catch (error) {
+      console.error('다이어리  삭제 중 오류:', error)
+    }
+  }
 
   return (
     <div className="w-full flex flex-col pb-[30px] border-b">
@@ -59,6 +73,7 @@ export default function Head({ post, isLogin }: HeadProps) {
                 type="button"
                 ariaLabel="삭제 버튼"
                 className="mr-1 md:mr-3 p-2 text-[0.8rem] md:text-[1rem] hover:text-[#000000] dark:hover:text-[#f5f5f5]"
+                onClick={handleDeleteDiary}
               >
                 삭제
               </Button>
