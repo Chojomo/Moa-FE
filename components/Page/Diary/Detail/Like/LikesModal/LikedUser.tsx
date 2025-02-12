@@ -1,13 +1,15 @@
+import Link from 'next/link'
 import Image from 'next/image'
 
 type LikedUserProps = {
+  userId: string
   username: string
   imgSrc: string
 }
 
-export default function LikedUser({ username, imgSrc }: LikedUserProps) {
+export default function LikedUser({ userId, username, imgSrc }: LikedUserProps) {
   return (
-    <div className="flex items-center gap-5 animate-fadeIn">
+    <Link href={`/user/${userId}/posts`} className="flex items-center gap-5 animate-fadeIn">
       <Image
         src={imgSrc}
         alt="user profile"
@@ -20,6 +22,6 @@ export default function LikedUser({ username, imgSrc }: LikedUserProps) {
         className="w-[45px] h-[45px] rounded-full border border-border"
       />
       <p className="text-[1rem] text-body-text">{username}</p>
-    </div>
+    </Link>
   )
 }
