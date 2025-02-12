@@ -41,7 +41,12 @@ export default function LikesModal({ isOpen, handleClose, likedUsers }: LikesMod
       </p>
       <div className="flex flex-col gap-[25px] overflow-y-auto scrollbar-none">
         {likedUsers?.map(({ userId, userNickname, userProfileImage }) => (
-          <LikedUser key={userId} username={userNickname} imgSrc={userProfileImage} />
+          <LikedUser
+            key={userId}
+            userId={userId}
+            username={userNickname}
+            imgSrc={userProfileImage}
+          />
         ))}
       </div>
     </Modal>
