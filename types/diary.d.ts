@@ -12,6 +12,7 @@ export type Diary = {
 
 export type Comment = {
   commentAuthorId: string
+  commentAuthorNickname?: string
   commentContents: string
   commentId: stringå
   createdAt: string

@@ -25,15 +25,14 @@ type CmtProps = {
   content: string
   isLogin: boolean
   setCommentCount: React.Dispatch<React.SetStateAction<number>>
-  handleDeleteComment: (commentId: string) => void
-  handleDeleteReply: (replytId: string) => void
+  handleDeleteComment: (commentId: string, isReply?: boolean) => void
 }
 
 type CommentProps = {
   isLogin: boolean
   diaryId: string
   comment: PostComment
-  handleDeleteComment: (commentId: string) => void
+  handleDeleteComment: (commentId: string, isReply?: boolean) => void
   setCommentCount: React.Dispatch<React.SetStateAction<number>>
 }
 
@@ -49,7 +48,6 @@ function Cmt({
   isLogin,
   setCommentCount,
   handleDeleteComment,
-  handleDeleteReply,
 }: CmtProps) {
   const [isEdit, setIsEdit] = useState(false)
   const [comment, setComment] = useState(content)
@@ -61,12 +59,8 @@ function Cmt({
     setCommentCount((prev: number) => prev - 1)
 
     try {
-      if (isReply) {
-        handleDeleteReply(commentId)
-      } else {
-        handleDeleteComment(commentId)
-      }
-      await deleteComment({ diaryId, commentId })
+      handleDeleteComment(commentId, isReply)
+      // await deleteComment({ diaryId, commentId })
     } catch (error) {
       console.error('댓글 삭제 중 오류:', error)
     }
@@ -172,6 +166,7 @@ export default function Comment({
 }: CommentProps) {
   const {
     diaryAuthorNickname,
+    commentAuthorNickname,
     commentContents,
     commentId,
     createdAt,
@@ -225,14 +220,13 @@ export default function Comment({
         diaryId={diaryId}
         commentId={commentId}
         isOwner={isCommentOwner}
-        profile={diaryAuthorProfileImage ?? commentAuthorProfileImage}
-        name={diaryAuthorNickname}
+        profile={commentAuthorProfileImage ?? diaryAuthorProfileImage}
+        name={commentAuthorNickname ?? diaryAuthorNickname}
         createdAt={createdAt}
         content={commentContents}
         isLogin={isLogin}
         setCommentCount={setCommentCount}
         handleDeleteComment={handleDeleteComment}
-        handleDeleteReply={handleDeleteReply}
       />
       {(isLogin || (!isLogin && replies && replies.length > 0)) && (
         <div className="self-end flex items-center gap-5">
@@ -267,7 +261,6 @@ export default function Comment({
               isLogin={isLogin}
               setCommentCount={setCommentCount}
               handleDeleteComment={handleDeleteComment}
-              handleDeleteReply={handleDeleteReply}
             />
           ))}
         {isLogin && (
