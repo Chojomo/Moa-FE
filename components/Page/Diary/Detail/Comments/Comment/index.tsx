@@ -66,7 +66,7 @@ function Cmt({
       } else {
         handleDeleteComment(commentId)
       }
-      // await deleteComment({ diaryId, commentId })
+      await deleteComment({ diaryId, commentId })
     } catch (error) {
       console.error('댓글 삭제 중 오류:', error)
     }
