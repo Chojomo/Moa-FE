@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Button from '@/components/Button'
-import { Comment as PostComment, Replies } from '@/types/diary'
+import { Comment as PostComment, Reply } from '@/types/diary'
 
 import usePostReply from '@/hooks/comment/usePostReply'
 import usePatchReply from '@/hooks/comment/usePatchReply'
@@ -32,6 +32,7 @@ type CommentProps = {
   isLogin: boolean
   diaryId: string
   comment: PostComment
+  handleAddReply: (commentId: string, newReply: Reply) => void
   handleDeleteComment: (commentId: string, isReply?: boolean) => void
   setCommentCount: React.Dispatch<React.SetStateAction<number>>
 }
@@ -60,7 +61,7 @@ function Cmt({
 
     try {
       handleDeleteComment(commentId, isReply)
-      // await deleteComment({ diaryId, commentId })
+      await deleteComment({ diaryId, commentId })
     } catch (error) {
       console.error('댓글 삭제 중 오류:', error)
     }
@@ -161,6 +162,7 @@ export default function Comment({
   isLogin,
   diaryId,
   comment,
+  handleAddReply,
   handleDeleteComment,
   setCommentCount,
 }: CommentProps) {
@@ -173,17 +175,12 @@ export default function Comment({
     diaryAuthorProfileImage,
     commentAuthorProfileImage,
     isCommentOwner,
-    replies: subReplies,
+    replies,
   } = comment
 
-  const [replies, setReplies] = useState<Replies>(subReplies || [])
   const [reply, setReply] = useState<string>('')
   const [isCommentOpen, setIsCommentOpen] = useState<boolean>(false)
   const { mutateAsync: postReply } = usePostReply()
-
-  const handleDeleteReply = (replytId: string) => {
-    setReplies((prev) => prev.filter((c) => c.replyId !== replytId))
-  }
 
   const handleButtonClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
@@ -200,12 +197,7 @@ export default function Comment({
         replyContents: reply,
       })
 
-      setReplies((prev: Replies | null) => {
-        if (prev) {
-          return [...prev, newReply]
-        }
-        return [newReply]
-      })
+      handleAddReply(commentId, newReply)
 
       setReply('')
       setCommentCount((prev: number) => prev + 1)

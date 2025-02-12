@@ -5,7 +5,7 @@ import { useAuthStore } from '@/store/useAuth'
 import { Head, Content, Like, CommentPost, Comments, Footer } from '@/components/Page/Diary/Detail'
 import { getDiaryDetail } from '@/lib/api/diary'
 import { isTouchDevice } from '@/utils'
-import { Post, Comment } from '@/types/diary'
+import { Post, Comment, Reply } from '@/types/diary'
 
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -64,16 +64,39 @@ export default function DiaryDetail({ params }: { params: Params }) {
     }
   }
 
-  const handleDeleteComment = (commentId: string) => {
-    const commentToDelete = comment.find((c) => c.commentId === commentId)
+  const handleAddReply = (commentId: string, newReply: Reply) => {
+    setComment((prev: Comment[]) =>
+      prev.map((c) =>
+        c.commentId === commentId
+          ? {
+              ...c,
+              replies: c.replies ? [...c.replies, newReply] : [newReply],
+            }
+          : c
+      )
+    )
+  }
 
-    if (commentToDelete) {
-      // 댓글이 가진 대댓글 수 count 계산
-      const deleteCommentCount = commentToDelete.replies?.length || 0
-      setCommentCount((prev) => prev - deleteCommentCount)
+  const handleDeleteComment = (commentId: string, isReply: boolean = false) => {
+    if (!isReply) {
+      const commentToDelete = comment.find((c) => c.commentId === commentId)
+
+      if (commentToDelete) {
+        const deleteCommentCount = commentToDelete.replies?.length || 0
+        setCommentCount((prev) => prev - deleteCommentCount)
+      }
+
+      setComment((prev) => prev.filter((c) => c.commentId !== commentId))
+    } else {
+      setComment((prev: Comment[]) => {
+        const newComment = prev.map((c) => ({
+          ...c,
+          replies: c.replies?.filter((r: Reply) => r.replyId !== commentId),
+        }))
+
+        return newComment
+      })
     }
-
-    setComment((prev) => prev.filter((c) => c.commentId !== commentId))
   }
 
   return (
@@ -115,6 +138,7 @@ export default function DiaryDetail({ params }: { params: Params }) {
         isLogin={isLogin}
         diaryId={post.diaryId}
         comments={comment}
+        handleAddReply={handleAddReply}
         handleDeleteComment={handleDeleteComment}
         commentCount={commentCount}
         setCommentCount={setCommentCount}
