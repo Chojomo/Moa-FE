@@ -3,11 +3,12 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import Button from '@/components/Button'
-import { Comment as PostComment, Replies } from '@/types/diary'
+import { Comment as PostComment, Reply } from '@/types/diary'
 
 import usePostReply from '@/hooks/comment/usePostReply'
 import usePatchReply from '@/hooks/comment/usePatchReply'
 import usePatchComment from '@/hooks/comment/usePatchComment'
+import useDeleteComment from '@/hooks/comment/useDeleteComment'
 
 import { toast } from 'react-toastify'
 import CommentInput from '../../CommentInput'
@@ -23,15 +24,16 @@ type CmtProps = {
   createdAt: string
   content: string
   isLogin: boolean
-  reply: string
-  setReply: React.Dispatch<React.SetStateAction<string>>
   setCommentCount: React.Dispatch<React.SetStateAction<number>>
+  handleDeleteComment: (commentId: string, isReply?: boolean) => void
 }
 
 type CommentProps = {
   isLogin: boolean
   diaryId: string
   comment: PostComment
+  handleAddReply: (commentId: string, newReply: Reply) => void
+  handleDeleteComment: (commentId: string, isReply?: boolean) => void
   setCommentCount: React.Dispatch<React.SetStateAction<number>>
 }
 
@@ -45,14 +47,25 @@ function Cmt({
   createdAt,
   content,
   isLogin,
-  reply,
-  setReply,
   setCommentCount,
+  handleDeleteComment,
 }: CmtProps) {
   const [isEdit, setIsEdit] = useState(false)
   const [comment, setComment] = useState(content)
   const { mutateAsync: patchComment } = usePatchComment()
   const { mutateAsync: patchReply } = usePatchReply()
+  const { mutateAsync: deleteComment } = useDeleteComment()
+
+  const handleDelete = async () => {
+    setCommentCount((prev: number) => prev - 1)
+
+    try {
+      handleDeleteComment(commentId, isReply)
+      await deleteComment({ diaryId, commentId })
+    } catch (error) {
+      console.error('댓글 삭제 중 오류:', error)
+    }
+  }
 
   return (
     <>
@@ -94,7 +107,7 @@ function Cmt({
               type="button"
               ariaLabel="댓글 삭제 버튼"
               className="p-2 text-[0.9rem] hover:text-main-blue hover:underline"
-              onClick={() => setCommentCount((prev: number) => prev - 1)}
+              onClick={handleDelete}
             >
               삭제
             </Button>
@@ -145,28 +158,34 @@ function Cmt({
   )
 }
 
-export default function Comment({ isLogin, diaryId, comment, setCommentCount }: CommentProps) {
+export default function Comment({
+  isLogin,
+  diaryId,
+  comment,
+  handleAddReply,
+  handleDeleteComment,
+  setCommentCount,
+}: CommentProps) {
   const {
     diaryAuthorNickname,
+    commentAuthorNickname,
     commentContents,
     commentId,
     createdAt,
     diaryAuthorProfileImage,
     commentAuthorProfileImage,
     isCommentOwner,
-    replies: subReplies,
+    replies,
   } = comment
 
-  const [replies, setReplies] = useState<Replies>(subReplies || [])
   const [reply, setReply] = useState<string>('')
-  const [subreply, setSubreply] = useState<string>('')
   const [isCommentOpen, setIsCommentOpen] = useState<boolean>(false)
   const { mutateAsync: postReply } = usePostReply()
 
   const handleButtonClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
 
-    if (!subreply.trim()) {
+    if (!reply.trim()) {
       toast.error('댓글을 입력하세요!')
       return
     }
@@ -175,17 +194,12 @@ export default function Comment({ isLogin, diaryId, comment, setCommentCount }: 
       const { data: newReply } = await postReply({
         diaryId,
         commentId,
-        replyContents: subreply,
+        replyContents: reply,
       })
 
-      setReplies((prev: Replies | null) => {
-        if (prev) {
-          return [...prev, newReply]
-        }
-        return [newReply]
-      })
+      handleAddReply(commentId, newReply)
 
-      setSubreply('')
+      setReply('')
       setCommentCount((prev: number) => prev + 1)
     } catch (error) {
       console.error('대댓글 등록 중 오류:', error)
@@ -198,14 +212,13 @@ export default function Comment({ isLogin, diaryId, comment, setCommentCount }: 
         diaryId={diaryId}
         commentId={commentId}
         isOwner={isCommentOwner}
-        profile={diaryAuthorProfileImage ?? commentAuthorProfileImage}
-        name={diaryAuthorNickname}
+        profile={commentAuthorProfileImage ?? diaryAuthorProfileImage}
+        name={commentAuthorNickname ?? diaryAuthorNickname}
         createdAt={createdAt}
         content={commentContents}
         isLogin={isLogin}
-        reply={reply}
-        setReply={setReply}
         setCommentCount={setCommentCount}
+        handleDeleteComment={handleDeleteComment}
       />
       {(isLogin || (!isLogin && replies && replies.length > 0)) && (
         <div className="self-end flex items-center gap-5">
@@ -238,15 +251,14 @@ export default function Comment({ isLogin, diaryId, comment, setCommentCount }: 
               createdAt={re.createdAt}
               content={re.replyContents}
               isLogin={isLogin}
-              reply={subreply}
-              setReply={setSubreply}
               setCommentCount={setCommentCount}
+              handleDeleteComment={handleDeleteComment}
             />
           ))}
         {isLogin && (
           <div className="flex gap-7">
             <div className="w-[20px] h-[20px] border-l-2 border-b-2" />
-            <CommentInput isLogin={isLogin} comment={subreply} setComment={setSubreply} />
+            <CommentInput isLogin={isLogin} comment={reply} setComment={setReply} />
           </div>
         )}
         <div className="flex justify-end gap-[20px]">

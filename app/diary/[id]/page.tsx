@@ -5,7 +5,7 @@ import { useAuthStore } from '@/store/useAuth'
 import { Head, Content, Like, CommentPost, Comments, Footer } from '@/components/Page/Diary/Detail'
 import { getDiaryDetail } from '@/lib/api/diary'
 import { isTouchDevice } from '@/utils'
-import { Post, Comment } from '@/types/diary'
+import { Post, Comment, Reply } from '@/types/diary'
 
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -17,7 +17,7 @@ type Params = {
 export default function DiaryDetail({ params }: { params: Params }) {
   const { isLogin } = useAuthStore()
   const [post, setPost] = useState<Post | null>(null)
-  const [comment, setComment] = useState<Comment[] | null>(null)
+  const [comment, setComment] = useState<Comment[] | []>([])
   const [commentCount, setCommentCount] = useState<number>(0)
   const [isLike, setIsLike] = useState<boolean>(false)
   const [likeCount, setLikeCount] = useState<number>(0)
@@ -64,6 +64,41 @@ export default function DiaryDetail({ params }: { params: Params }) {
     }
   }
 
+  const handleAddReply = (commentId: string, newReply: Reply) => {
+    setComment((prev: Comment[]) =>
+      prev.map((c) =>
+        c.commentId === commentId
+          ? {
+              ...c,
+              replies: c.replies ? [...c.replies, newReply] : [newReply],
+            }
+          : c
+      )
+    )
+  }
+
+  const handleDeleteComment = (commentId: string, isReply: boolean = false) => {
+    if (!isReply) {
+      const commentToDelete = comment.find((c) => c.commentId === commentId)
+
+      if (commentToDelete) {
+        const deleteCommentCount = commentToDelete.replies?.length || 0
+        setCommentCount((prev) => prev - deleteCommentCount)
+      }
+
+      setComment((prev) => prev.filter((c) => c.commentId !== commentId))
+    } else {
+      setComment((prev: Comment[]) => {
+        const newComment = prev.map((c) => ({
+          ...c,
+          replies: c.replies?.filter((r: Reply) => r.replyId !== commentId),
+        }))
+
+        return newComment
+      })
+    }
+  }
+
   return (
     <div className="relative w-[100vw] h-[100vh] flex flex-col pt-[100px] md:pt-[140px] overflow-auto px-[5%] md:px-[20%] pb-[60px]">
       <ToastContainer
@@ -103,6 +138,8 @@ export default function DiaryDetail({ params }: { params: Params }) {
         isLogin={isLogin}
         diaryId={post.diaryId}
         comments={comment}
+        handleAddReply={handleAddReply}
+        handleDeleteComment={handleDeleteComment}
         commentCount={commentCount}
         setCommentCount={setCommentCount}
       />

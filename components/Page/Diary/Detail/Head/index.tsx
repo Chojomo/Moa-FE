@@ -21,8 +21,6 @@ export default function Head({ post, isLogin }: HeadProps) {
     isDiaryOwner,
   } = post
 
-  console.log(post)
-
   return (
     <div className="w-full flex flex-col pb-[30px] border-b">
       <h1 className="w-full break-words text-[24px] md:text-[32px] text-heading-text font-bold mb-[35px]">
