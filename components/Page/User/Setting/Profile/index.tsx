@@ -8,6 +8,9 @@ export default function Profile() {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [profile, setProfile] = useState<null | string>(null)
 
+  console.log(fileInputRef)
+  console.log(setProfile)
+
   return (
     <div className="w-full relative">
       <p className="text-[1.5rem] font-semibold text-heading-text pb-[30px]">프로필 변경</p>

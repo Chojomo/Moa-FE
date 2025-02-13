@@ -1,6 +1,4 @@
 import Image from 'next/image'
-import { Icon } from '@/components/Icon'
-import Link from 'next/link'
 
 type User = {
   profile: string

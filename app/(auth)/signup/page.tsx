@@ -92,13 +92,6 @@ export default function Signup() {
     setIsPasswordMatched(false)
   }
 
-  const checkEmail = async () => {
-    console.log(`email: ${email}`)
-    const { data } = await getCheckEmail(email)
-
-    return data
-  }
-
   const handleConfirmEmail = async () => {
     const res = await getCheckEmail(email)
 
