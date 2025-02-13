@@ -238,7 +238,7 @@ export const getDiaryDetail = async ({ diaryId }: { diaryId: string }) => {
   }
 
   const token = localStorage.getItem('authToken')
-  const apiUrl = `${process.env.NEXT_PUBLIC_NEXT_API_URL}/api/diary/detail?diaryId=${diaryId}`
+  const apiUrl = `/api/diary/detail?diaryId=${diaryId}`
 
   try {
     const headers: Record<string, string> = {
@@ -268,7 +268,7 @@ export const getDiaryDetail = async ({ diaryId }: { diaryId: string }) => {
 }
 
 export const deletleDiary = async ({ diaryId }: { diaryId: string }) => {
-  const apiUrl = `${process.env.NEXT_PUBLIC_NEXT_API_URL}/api/diary`
+  const apiUrl = `/api/diary`
   const token = localStorage.getItem('authToken')
 
   if (!token) {
