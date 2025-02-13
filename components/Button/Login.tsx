@@ -13,7 +13,7 @@ export default function LoginButton() {
   return (
     <Button
       type="button"
-      className="fixed left-[20px] bottom-[20px] bg-btn-bg rounded-full py-5 px-5"
+      className="fixed left-[20px] bottom-[20px] bg-btn-bg rounded-full py-5 px-5 z-20"
       onClick={handleLogin}
       aria-label="login"
     >

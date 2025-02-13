@@ -1,51 +1,29 @@
-import Image from 'next/image'
-import IntroTip from '@/components/Tooltip/IntroTip'
-import { shapes } from '@/helper/constants/shapes'
-import Button from '@/components/Button'
-import { animation } from '@/helper/constants/animation'
+import Border from './Border'
 import Marquee from './Marquee'
-import IntroImage from './IntroImage'
+import Favorite from './Favorite'
+import AddButton from './AddButton'
 
 export default function Intro() {
+  const favorites = [
+    { index: 1, src: '/images/pebble/blue-pebble.png', name: 'Diary', href: '/diary' },
+    {
+      index: 2,
+      src: '/images/pebble/purple-pebble2.png',
+      name: 'suikaGame',
+      href: '/zip/suikaGame',
+    },
+  ]
   return (
-    <div className="w-[100vw] h-[100vh] lg:flex-center lg:flex-row flex flex-col justify-center items-center lg:gap-[50px] px-[30px]">
-      <div className="relative flex lg:flex-col lg:items-end lg:justify-center justify-between items-center flex-1 w-[100%] h-[100%] z-10 lg:px-[0%] px-[10%]">
-        {shapes.left.map(({ color, src, alt }, index: number) => (
-          <Image
-            key={color}
-            className={`lg:w-[51%] md:w-[25%] w-[30%] relative ${color === 'green' ? 'lg:right-[90px]' : 'lg:left-[40px] lg:top-[0px] top-[30px]'} ${animation[index]}`}
-            width={0}
-            height={0}
-            src={src}
-            alt={alt}
-            sizes="100vw"
-          />
-        ))}
-      </div>
-      <div className="flex-1 flex-center flex-col">
-        <IntroTip>좋아하고, 하고 싶은 모든 것을 모아 봐!</IntroTip>
-        <IntroImage />
-        <Button
-          type="button"
-          ariaLabel="start button"
-          className="z-10 bg-accent-normal text-[#fff] font-bold px-[63px] py-[15px] rounded-[50px] shadow-lg transform hover:scale-[1.1] transition-transform duration-200"
-        >
-          Gather it!
-        </Button>
-      </div>
-      <div className="flex lg:flex-col lg:items-start lg:justify-center justify-between items-center flex-1 w-[100%] h-[100%] z-10 lg:px-[0%] px-[10%]">
-        {shapes.right.map(({ color, src, alt }, index: number) => (
-          <Image
-            key={color}
-            className={`lg:w-[51%] md:w-[25%] w-[30%] animate-float relative ${color === 'red' ? 'lg:left-[90px]' : 'lg:right-[40px] lg:bottom-[0px] bottom-[40px]'} ${animation[index + 3]}`}
-            width={0}
-            height={0}
-            src={src}
-            alt={alt}
-            sizes="100vw"
-          />
-        ))}
-      </div>
+    <div className="w-[100vw] h-[100vh] py-[74px] flex-center">
+      <section className="z-10 relative w-[90%] h-[100%] bg-container-bg rounded-2xl mt-[10px] px-[6%] py-[13%] md:py-[6%] overflow-hidden">
+        <div className="flex gap-[35px] md:gap-[55px]">
+          {favorites.map(({ index, src, name, href }) => (
+            <Favorite key={index} src={src} name={name} href={href} />
+          ))}
+          <AddButton />
+        </div>
+        <Border />
+      </section>
       <Marquee />
     </div>
   )

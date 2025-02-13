@@ -1,87 +1,85 @@
 'use client'
 
-import { useState, useCallback, useMemo } from 'react'
-import Link from 'next/link'
-import { Icon } from '@/components/Icon'
-import Button from '@/components/Button'
-import ThemeToggle from '@/components/Themes/Toggle'
-import { tincolorIcon } from '@/helper/constants/tintcolor'
-import { isLoginNav, notLoginNav } from '@/helper/constants/nav'
+import { useState } from 'react'
+import { usePathname } from 'next/navigation'
 import { useAuthStore } from '@/store/useAuth'
-
-type IconType = {
-  name: string
-  width: number
-  height: number
-}
-
-type NavItem = {
-  index: number
-  type: string
-  href?: string
-  minW?: string
-  styles?: string
-  script?: JSX.Element
-  icon?: IconType
-}
+import Button from '@/components/Button'
+import Image from 'next/image'
+import ThemeToggle from '@/components/Themes/Toggle'
+import { LoginModal } from '@/components/Page/Auth/Modal'
+import { useAppStore } from '@/store/useApp'
+import Logo from './Logo'
+import NavModal from './NavModal'
+import IconLink from './IconLink'
 
 export default function Header() {
-  const [activeIndex, setActiveIndex] = useState<number>(0)
+  const { isLoginModalOpen, loginModalOpen, loginModalClose } = useAppStore()
+  const [isNavModalOpen, setIsNavModalOpen] = useState<boolean>(false)
   const { isLogin } = useAuthStore()
+  const pathname = usePathname()
 
-  const handleActive = (index: number) => {
-    if (activeIndex === index) {
-      return 'border-white-active text-white-active'
-    }
-    return 'border-nav-border text-icon-normal'
+  if (pathname.includes('/diary/post')) return null
+
+  const getUserProfile = () => {
+    const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}')
+    return userInfo.profile
   }
 
-  const handleClick = useCallback((index: number) => {
-    setActiveIndex(index)
-  }, [])
-
-  const navList = useMemo(
-    () => (isLogin ? isLoginNav(activeIndex) : notLoginNav(activeIndex)),
-    [isLogin, activeIndex]
-  )
-
   return (
-    <header className="w-[100vw] h-[52px] flex-center fixed top-[10px] z-30">
-      <nav className="bg-nav-bg h-[100%] px-[10px] rounded-full flex-center">
-        <ul className="flex-center gap-[10px]">
-          {navList.map((item: NavItem) => (
-            <li key={item.index}>
-              {item.type === 'link' ? (
-                <Link
-                  className={`min-w-[${item.minW}] nav-item gap-[28px] ${handleActive(item.index)}`}
-                  href={item.href || ''}
-                  onClick={() => handleClick(item.index)}
-                >
-                  {item.script}
-                </Link>
-              ) : (
-                <Button
-                  className={`nav-item ${handleActive(item.index)}`}
-                  onClick={() => handleClick(item.index)}
-                  style={{ minWidth: item.minW }}
-                  type="button"
-                  aria-label={item.icon?.name}
-                >
-                  {item.icon && (
-                    <Icon
-                      name={item.icon.name}
-                      width={item.icon.width}
-                      height={item.icon?.height}
-                      fill={tincolorIcon(activeIndex, item.index)}
-                    />
-                  )}
-                </Button>
-              )}
-            </li>
-          ))}
-          <ThemeToggle />
-        </ul>
-      </nav>
+    <header className="z-30 fixed top-0 left-0 bg-background w-full py-[12px] px-[5%] flex items-center justify-between">
+      <Logo />
+      <div className="flex items-center gap-[7px]">
+        {isLogin && (
+          <IconLink
+            href="/notifications"
+            iconName="Bell"
+            iconColor="inverse"
+            hoverColor="[#888888]"
+            iconSize={17}
+          />
+        )}
+        <IconLink
+          href="/search"
+          iconName="Search"
+          iconColor="inverse"
+          hoverColor="main-blue"
+          iconSize={17}
+        />
+        <IconLink
+          href="/zip"
+          iconName="Zip"
+          iconColor="inverse"
+          hoverColor="accent"
+          iconSize={17}
+        />
+        <ThemeToggle />
+        {isLogin ? (
+          <Button type="button" ariaLabel="zz" onClick={() => setIsNavModalOpen((prev) => !prev)}>
+            <Image
+              src={getUserProfile()}
+              alt="user profile"
+              width={50}
+              height={50}
+              quality={75}
+              loading="lazy"
+              draggable="false"
+              objectFit="cover"
+              className="w-[40px] h-[40px] rounded-full border border-border ml-[7px]"
+            />
+          </Button>
+        ) : (
+          <Button
+            type="button"
+            ariaLabel="로그인 버튼"
+            className="bg-inverse px-[14px] py-[5px] rounded-full text-background text-[0.9rem] font-semibold ml-[7px]"
+            onClick={loginModalOpen}
+          >
+            로그인
+          </Button>
+        )}
+      </div>
+      <NavModal isOpen={isNavModalOpen} handleClose={() => setIsNavModalOpen(false)} />
+      <LoginModal isOpen={isLoginModalOpen} handleClose={loginModalClose} />
     </header>
   )
 }

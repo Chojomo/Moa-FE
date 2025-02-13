@@ -34,7 +34,7 @@ export default function ArrowTip({ children }: ArrowTipProps) {
 
   if (!isVisible) return null
 
-  const baseStyle = `absolute bottom-[70px] left-[7px] rounded-[4px] text-[12px] text-[#fff] bg-[#333333f1] animate-float3 px-[12px] py-[10px]`
+  const baseStyle = `absolute bottom-[80px] left-[7px] rounded-[4px] text-[12px] text-[#fff] bg-[#333333f1] animate-floatL1 px-[12px] py-[10px]`
 
   const fadeOutStyle = {
     transition: 'opacity 1s ease-in-out',

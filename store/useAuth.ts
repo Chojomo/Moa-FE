@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-interface AuthStore {
+type AuthStore = {
   isLogin: boolean
   login: () => void
   logout: () => void
@@ -9,5 +9,8 @@ interface AuthStore {
 export const useAuthStore = create<AuthStore>((set) => ({
   isLogin: false,
   login: () => set({ isLogin: true }),
-  logout: () => set({ isLogin: false }),
+  logout: () => {
+    set({ isLogin: false })
+    localStorage.removeItem('authToken')
+  },
 }))

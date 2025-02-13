@@ -19,7 +19,7 @@ export default function Tooltip({
   children,
 }: TooltipProps) {
   const baseStyle =
-    'z-10 tooltip top-[5px] right-[10px] rounded-[4px] text-[12px] text-[#ffffff] bg-[#333333]'
+    'tooltip top-[5px] right-[10px] rounded-[4px] text-[12px] text-[#ffffff] bg-[#333333]'
 
   const positionClasses = `
     ${position.top ? `top-[${position.top}]` : ''}

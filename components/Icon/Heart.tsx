@@ -1,7 +1,7 @@
 import { IconProps } from '@/types'
 import { Svg } from './index'
 
-export default function Heart({ className, width, height, fill = '#FF4040' }: IconProps) {
+export default function Heart({ className, width, height, fill = '#ef4444' }: IconProps) {
   return (
     <Svg
       width={width || 25}

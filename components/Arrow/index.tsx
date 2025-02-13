@@ -2,9 +2,12 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { Icon } from '../Icon'
-import { ArrowTip } from '../Tooltip'
 
-export default function Arrow() {
+type ArrowProps = {
+  selector: string
+}
+
+export default function Arrow({ selector }: ArrowProps) {
   const lastY = useRef<number>(0)
   const isWheeling = useRef<boolean>(false)
   const [arrow, setArrow] = useState<string>('Next')
@@ -12,7 +15,7 @@ export default function Arrow() {
   const COOLDOWN = 800
 
   useEffect(() => {
-    const ele = document.querySelector('#scroller') as HTMLElement | null
+    const ele = document.querySelector(selector) as HTMLElement | null
 
     if (!ele) {
       return undefined
@@ -49,7 +52,7 @@ export default function Arrow() {
     return () => {
       ele.removeEventListener('wheel', handleWheel as EventListener)
     }
-  }, [])
+  }, [selector])
 
   const handleClick = () => {
     const ele = document.querySelector('#scroller') as HTMLElement | null
@@ -67,12 +70,11 @@ export default function Arrow() {
   }
 
   return (
-    <div className="fixed left-1/2 bottom-[10px] transform -translate-x-1/2">
-      <ArrowTip>더 탐색하기</ArrowTip>
+    <div className="z-30 fixed left-1/2 bottom-0 transform -translate-x-1/2">
       <button
         type="button"
         aria-label="next"
-        className="relative animate-float p-[20px] z-30"
+        className="relative animate-float p-[20px]"
         onClick={handleClick}
       >
         <Icon name={arrow} width={53} height={26} />

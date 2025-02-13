@@ -2,8 +2,8 @@
 import ThemeProvider from '@/components/Themes/Theme-provider'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import Providers from '@/components/Providers'
 import { Header } from '@/components/Layout'
-import LoginButton from '@/components/Button/Login'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,17 +19,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <Header />
-          {children}
-          <LoginButton />
-        </ThemeProvider>
+      <body className={inter.className} id="__next">
+        <Providers>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <Header />
+            {children}
+          </ThemeProvider>
+        </Providers>
       </body>
     </html>
   )

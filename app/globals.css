@@ -2,8 +2,124 @@
 @tailwind components;
 @tailwind utilities;
 
+.w-md-editor-toolbar-child .undefined {
+  background-color: var(--icon-bg) !important;
+  padding: 10px 20px !important;
+}
+
+.w-md-editor {
+  background-color: var(--background) !important;
+
+  box-shadow:
+    0px -1px 0px 0px var(--border),
+    0px 1px 0px 0px var(--border) !important;
+}
+
+.w-md-editor-input,
+.wmde-markdown {
+  background-color: var(--background) !important;
+  color: var(--body-text) !important;
+  font-size: 1rem !important;
+}
+
+.w-md-editor-text {
+  min-height: 100% !important;
+}
+
+.wmde-markdown blockquote {
+  color: var(--body-text) !important;
+  background-color: var(--preview-blockquote) !important;
+  padding: 30px !important;
+  display: flex;
+  border-left: 4px solid rgb(137, 179, 242) !important;
+}
+
+.wmde-markdown pre > code {
+  background: var(--preview-blockquote) !important;
+}
+
+.wmde-markdown ul {
+  list-style-type: disc !important;
+  padding-left: 30px !important;
+  line-height: 1.2 !important;
+}
+
+.wmde-markdown ol {
+  list-style-type: decimal !important;
+  line-height: 1.2 !important;
+}
+
+.wmde-markdown hr {
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.w-md-editor-content div {
+  color: var(--body-text) !important;
+}
+
+/* 툴팁바 */
+.w-md-editor-toolbar {
+  padding: 0 25px !important;
+  background-color: var(--container-bg) !important;
+  height: 100px !important;
+  box-shadow: 0px 1px 0px 0px var(--border);
+}
+
+/* 툴팁 아이콘 */
+.w-md-editor-toolbar svg {
+  width: 22px !important;
+  height: 22px !important;
+}
+
+.w-md-editor-preview,
+.w-md-editor-input {
+  padding: 30px 30px !important;
+}
+
+.w-md-editor-toolbar > ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 13px !important;
+}
+
+.custom-editor .w-md-editor-toolbar-divider {
+  margin: 5px 20px 0 !important;
+  border: none !important;
+  background: var(--border) !important;
+}
+
+.w-md-editor-preview {
+  box-shadow: -1px 0px 0px 0px var(--border) !important;
+}
+
+.custom-editor * {
+  border: none !important;
+  background: none !important;
+  background-color: none !important;
+}
+
+.custom-editor *::selection {
+  background: var(--border) !important;
+}
+
+.wmde-markdown table {
+  all: unset !important;
+}
+
+.custom-editor .w-md-editor-toolbar {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
 @layer base {
   :root {
+    --inverse: rgb(0, 0, 0);
+    --white: rgb(255, 255, 255);
+    --black: rgb(0, 0, 0);
+
     --background: rgb(255, 255, 255);
     --foreground: rgb(8, 8, 8);
 
@@ -13,12 +129,19 @@
     --btn-bg: rgba(32, 32, 32, 0.8);
     --btn-red: rgb(212, 59, 59);
 
-    --nav-bg: rgba(32, 32, 32, 0.9);
+    --nav-bg: rgba(16, 16, 16, 0.9);
     --nav-border: rgba(238, 238, 238, 0.5);
 
-    --heading-text: rgb(105, 94, 94);
+    --container-bg: rgba(224, 224, 224, 0.34);
+    --modal-bg: rgba(255, 255, 255, 0.776);
+    --modal-input: rgb(234, 234, 234);
+    --modal-button: rgb(255, 255, 255);
+    --modal-text: rgb(245, 245, 245);
+
+    --heading-text: rgba(0, 0, 0, 0.9);
     --heading-bg: rgba(0, 0, 0, 0.7);
-    --body-text: rgba(32, 32, 32, 0.8);
+    --body-text: rgba(0, 0, 0, 0.75);
+    --nonActive-text: rgba(0, 0, 0, 0.4);
 
     --accent: rgb(128, 176, 162);
     --accent-normal: rgb(67, 216, 170);
@@ -27,9 +150,27 @@
 
     --main-blue: rgb(44, 114, 220);
     --white-active: rgb(255, 255, 255);
+
+    --preview-bg: rgb(247, 247, 247);
+    --preview-nav: rgb(238, 238, 238);
+    --preview-heading: rgb(46, 46, 46);
+    --preview-blockquote: rgba(239, 239, 239, 0.339);
+
+    --toggle-bg: rgb(205, 205, 205);
+    --banner-bg: rgba(0, 0, 0, 0.8);
+    --sort-bg: rgb(69, 69, 69);
+    --soft-bg: rgba(0, 0, 0, 0.75);
+    --tooltip-bg: rgb(67, 67, 67);
+
+    --suika-bg: rgb(239, 186, 186);
+    --canvas-bg: rgb(58, 32, 32);
   }
 
   .dark {
+    --inverse: rgb(255, 255, 255);
+    --white: rgb(255, 255, 255);
+    --black: rgb(0, 0, 0);
+
     --background: rgb(0, 0, 0);
     --foreground: rgb(250, 250, 250);
 
@@ -42,9 +183,16 @@
     --nav-bg: rgba(32, 32, 32, 0.8);
     --nav-border: rgba(238, 238, 238, 0.5);
 
-    --heading-text: rgb(224, 224, 224);
+    --container-bg: rgba(224, 224, 224, 0.15);
+    --modal-bg: rgba(41, 41, 41, 0.937);
+    --modal-input: rgba(0, 0, 0, 0.265);
+    --modal-button: rgba(224, 224, 224, 0);
+    --modal-text: rgb(67, 67, 67);
+
+    --heading-text: rgba(255, 255, 255, 0.9);
     --heading-bg: rgba(255, 255, 255, 0.3);
-    --body-text: rgba(207, 207, 207, 0.8);
+    --body-text: rgba(255, 255, 255, 0.75);
+    --nonActive-text: rgba(255, 255, 255, 0.4);
 
     --accent: rgb(128, 176, 162);
     --accent-normal: rgb(67, 216, 170);
@@ -53,6 +201,20 @@
 
     --main-blue: rgb(44, 114, 220);
     --white-active: rgb(255, 255, 255);
+
+    --preview-bg: rgb(18, 18, 18);
+    --preview-nav: rgb(236, 236, 236);
+    --preview-heading: rgb(242, 242, 242);
+    --preview-blockquote: rgb(36, 36, 36);
+
+    --toggle-bg: rgb(93, 93, 93);
+    --banner-bg: rgba(255, 255, 255, 0.1);
+    --sort-bg: rgba(255, 255, 255, 0.1);
+    --soft-bg: rgba(255, 255, 255, 0.2);
+    --tooltip-bg: rgb(245, 245, 245);
+
+    --suika-bg: rgba(0, 0, 0, 0.434);
+    --canvas-bg: rgb(58, 32, 32);
   }
 
   .flex-center {
@@ -63,8 +225,48 @@
     @apply h-[39px] rounded-full flex-center border px-[12px] py-[10px];
   }
 
+  .nav-li {
+    @apply min-w-[188px] md:min-w-[55px] h-[39px] rounded-full flex-center border border-nav-border px-[12px] py-[10px];
+  }
+
+  .input-reset {
+    @apply inline-block focus:outline-none bg-transparent;
+  }
+
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.19);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-overlay-transparent {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 30;
+  }
+
+  .modal-content {
+    position: relative;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    outline: none;
+  }
+
   .tooltip {
-    @apply z-20 w-max px-[6px] py-[8px] leading-[18px] shadow-tooltip cursor-pointer pointer-events-auto;
+    @apply w-max px-[6px] py-[8px] leading-[18px] shadow-tooltip cursor-pointer pointer-events-auto;
   }
 
   .tooltip-arrow::after {
@@ -77,6 +279,26 @@
     border-color: #333 transparent transparent transparent;
   }
 
+  .tooltip-arrow-top::after {
+    content: '';
+    position: absolute;
+    border-width: 5px;
+    border-style: solid;
+    right: 15px;
+    bottom: 100%;
+    border-color: transparent transparent var(--tooltip-bg) transparent;
+  }
+
+  .tooltip-arrow-bottom::after {
+    content: '';
+    position: absolute;
+    border-width: 5px;
+    border-style: solid;
+    right: 10px;
+    top: 100%;
+    border-color: var(--tooltip-bg) transparent transparent transparent;
+  }
+
   .tooltip-intro::after {
     content: '';
     position: absolute;
@@ -86,6 +308,41 @@
     top: 100%;
     border-color: rgb(44, 114, 220) transparent transparent transparent;
   }
+
+  .text-shadow {
+    text-shadow:
+      0px 0px 5px #000000d2,
+      0px 0px 2px #0000008d,
+      0px 0px 1px #0000007d;
+  }
+
+  .scrollbar-none {
+    -ms-overflex-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.placeholder-pre-line::placeholder {
+  white-space: pre-line;
+}
+
+.canvas-border {
+  canvas {
+    overflow: hidden;
+    user-select: none;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    cursor: pointer;
+    background-color: #ffdcc8 !important;
+  }
+}
+
+.stroke {
+  -webkit-text-stroke: 2px #4c2515;
 }
 
 @layer base {
@@ -94,5 +351,22 @@
   }
   body {
     @apply bg-background text-body-text;
+  }
+
+  input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px var(--background) inset;
+  }
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px transparent inset !important;
+    background-color: transparent !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+
+  .autofull-text:-webkit-autofill {
+    -webkit-text-fill-color: var(--background);
+    -webkit-text-fill-color: var(--background) !important;
   }
 }

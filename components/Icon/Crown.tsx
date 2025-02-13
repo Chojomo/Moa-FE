@@ -4,9 +4,9 @@ import { Svg } from './index'
 export default function Crown({ className, width, height, fill = '#EDDB3A' }: IconProps) {
   return (
     <Svg
-      width={width || 25}
-      height={height || 25}
-      viewBox={[0, 0, 25, 25]}
+      width={width || 36}
+      height={height || 34}
+      viewBox={[0, 0, 36, 34]}
       className={className || ''}
     >
       <path
