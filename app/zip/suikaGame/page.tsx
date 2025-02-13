@@ -10,10 +10,11 @@ import 'react-toastify/dist/ReactToastify.css'
 export default function SG() {
   const [score, setScore] = useState<number>(0)
   const [isStart, setIsStart] = useState<boolean>(false)
-  const [isRestart, setIsRestart] = useState<boolean>(false)
   const [isGameOver, setIsGameOver] = useState<boolean>(true)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [nextItem, setNextItem] = useState<Items>(getRandomItem()?.label as Items)
+
+  console.log(isGameOver)
 
   return (
     <div className="w-[100dvw] h-[100dvh] flex-center overflow-hidden pt-[74px]">
@@ -30,8 +31,6 @@ export default function SG() {
             setIsGameOver={setIsGameOver}
             isModalOpen={isModalOpen}
             setIsModalOpen={setIsModalOpen}
-            isRestart={isRestart}
-            setIsRestart={setIsRestart}
           />
         </div>
       </div>

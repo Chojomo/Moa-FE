@@ -10,6 +10,8 @@ import Profile from './Profile'
 export default function UserInfo() {
   const [isMyPage, setIsMyPage] = useState<boolean>(true)
 
+  console.log(setIsMyPage)
+
   const ghost = {
     profile: '/images/pebble/purple-pebble2.png',
     nickName: 'ichubtou',

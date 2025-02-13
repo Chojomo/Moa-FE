@@ -3,7 +3,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useRef, useEffect, Dispatch, SetStateAction } from 'react'
 import Matter, { Composite } from 'matter-js'
-import confetti from 'canvas-confetti'
 
 import { isTouchDevice } from '@/utils'
 import { Items } from '@/helper/constants/suikaGame/items'
@@ -32,8 +31,6 @@ type CanvasProps = {
   setIsGameOver: Dispatch<SetStateAction<boolean>>
   isModalOpen: boolean
   setIsModalOpen: Dispatch<SetStateAction<boolean>>
-  isRestart: boolean
-  setIsRestart: Dispatch<SetStateAction<boolean>>
 }
 
 export default function Canvas({
@@ -43,8 +40,6 @@ export default function Canvas({
   setIsGameOver,
   isModalOpen,
   setIsModalOpen,
-  isRestart,
-  setIsRestart,
 }: CanvasProps) {
   const canvasRef = useRef<HTMLDivElement | null>(null)
   const isMobile = isTouchDevice()
@@ -62,7 +57,6 @@ export default function Canvas({
   let disableAction: boolean = false
 
   let GameOverLine: Matter.Body | null | undefined = null
-  const GameOverGuideLine: Matter.Body | null | undefined = null
 
   const mergingItemIds = new Set<number>()
   const mergedItemIds = new Set<number>()
@@ -77,7 +71,6 @@ export default function Canvas({
   const handleRestart = () => {
     setIsModalOpen(false)
     setIsGameOver(false)
-    setIsRestart(true)
     setScore(0)
 
     item = null
@@ -87,78 +80,6 @@ export default function Canvas({
     init()
     run()
     initEvents()
-  }
-
-  const useConfetti = () => {
-    const fireConfetti = () => {
-      const count = 200
-      const defaults = {
-        origin: { y: 1 },
-      }
-
-      function fire(particleRatio: number, opts: confetti.Options) {
-        confetti({
-          ...defaults,
-          ...opts,
-          particleCount: Math.floor(count * particleRatio),
-        })
-      }
-
-      fire(0.25, {
-        spread: 90,
-        startVelocity: 55,
-      })
-      fire(0.2, {
-        spread: 90,
-      })
-      fire(0.35, {
-        spread: 90,
-        startVelocity: 75,
-        decay: 0.91,
-        scalar: 0.8,
-      })
-      fire(0.1, {
-        spread: 90,
-        startVelocity: 55,
-        decay: 0.92,
-        scalar: 1.2,
-      })
-      fire(0.1, {
-        spread: 90,
-        startVelocity: 75,
-      })
-    }
-
-    const fireRapidStarConfetti = () => {
-      const end = Date.now() + 5 * 1000
-      const colors = ['#bb0000', '#ffffff']
-
-      ;(function frame() {
-        confetti({
-          particleCount: 2,
-          angle: 80,
-          spread: 55,
-          origin: { x: 0, y: 0.8 },
-          colors,
-        })
-        confetti({
-          particleCount: 2,
-          angle: 100,
-          spread: 55,
-          origin: { x: 1, y: 0.8 },
-          colors,
-        })
-
-        if (Date.now() < end) {
-          requestAnimationFrame(frame)
-        }
-      })()
-    }
-
-    return {
-      fireConfetti,
-      fireRapidStarConfetti,
-    }
   }
 
   const createItem = () => {
@@ -451,6 +372,8 @@ export default function Canvas({
     init()
     run()
     initEvents()
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

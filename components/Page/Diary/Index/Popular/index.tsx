@@ -15,8 +15,10 @@ export default function PopularPost({ post }: PopularPostProps) {
     diaryPublishedAt,
     diaryThumbnail,
     diaryTitle,
-    totalLikes,
+    likeCount,
   } = post
+
+  console.log(post)
 
   let content = diaryContents.replace(/!\[Image\][^]*?-->/, '')
 
@@ -50,7 +52,7 @@ export default function PopularPost({ post }: PopularPostProps) {
           <div className="text-[10px] font-bold flex items-center gap-3">
             <div className="flex gap-2">
               <Icon name="Heart" width={15} height={15} />
-              <span>{totalLikes}</span>
+              <span>{likeCount}</span>
             </div>
             <div className="flex gap-2">
               <Icon name="Comment" width={17} height={17} className="text-[#43D8AA]" />

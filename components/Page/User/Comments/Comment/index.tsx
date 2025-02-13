@@ -10,7 +10,7 @@ type CommentProps = {
 }
 
 export default function Comment({ comment }: CommentProps) {
-  const { index, comment: commentText, diary, date } = comment
+  const { comment: commentText, diary, date } = comment
 
   return (
     <div className="w-full flex flex-col justify-center items-start gap-3 pb-[30px] border-b border-border">

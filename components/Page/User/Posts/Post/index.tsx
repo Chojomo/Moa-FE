@@ -14,7 +14,7 @@ type PostProps = {
 }
 
 export default function Post({ post }: PostProps) {
-  const { index, src, writer, title, description } = post
+  const { src, title, description } = post
   return (
     <div className="w-[90%] md:max-w-[45%] xl:max-w-[30%] h-[420px] flex flex-col gap-4 group">
       <div className="relative w-full h-[60%] rounded-lg overflow-hidden border border-[#eeeeee] dark:border-[#242424]">

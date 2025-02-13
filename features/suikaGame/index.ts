@@ -5,11 +5,4 @@ export { setPositionX } from './setPosition'
 export { getWidth, getHeight } from './calcSize'
 export { getItem, getRandomItem, getNextItem } from './getItem'
 
-export {
-  getWall,
-  getGround,
-  getGuideLine,
-  getGameOverLine,
-  getGameOverGuideLine,
-  getBodyYSection,
-} from './getBody'
+export { getWall, getGround, getGuideLine, getGameOverLine, getBodyYSection } from './getBody'
