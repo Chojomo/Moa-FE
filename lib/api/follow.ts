@@ -1,5 +1,5 @@
 export const postFollow = async (userId: string) => {
-  const apiUrl = `${process.env.NEXT_PUBLIC_NEXT_API_URL}/api/follow?userId=${userId}`
+  const apiUrl = `/api/follow?userId=${userId}`
   const token = localStorage.getItem('authToken')
 
   if (!token) {
