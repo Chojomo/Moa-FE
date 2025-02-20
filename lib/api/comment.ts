@@ -5,7 +5,7 @@ export const postComment = async ({
   diaryId: string
   commentContents: string
 }) => {
-  const apiUrl = `${process.env.NEXT_PUBLIC_NEXT_API_URL}/api/diary/comment?diaryId=${diaryId}`
+  const apiUrl = `/api/diary/comment?diaryId=${diaryId}`
   const token = localStorage.getItem('authToken')
 
   if (!token) {
@@ -49,7 +49,7 @@ export const patchComment = async ({
   commentId: string
   commentContents: string
 }) => {
-  const apiUrl = `${process.env.NEXT_PUBLIC_NEXT_API_URL}/api/diary/comment?diaryId=${diaryId}&commentId=${commentId}`
+  const apiUrl = `/api/diary/comment?diaryId=${diaryId}&commentId=${commentId}`
   const token = localStorage.getItem('authToken')
 
   if (!token) {
@@ -97,7 +97,7 @@ export const postReply = async ({
   commentId: string
   replyContents: string
 }) => {
-  const apiUrl = `${process.env.NEXT_PUBLIC_NEXT_API_URL}/api/diary/comment/replies?diaryId=${diaryId}&commentId=${commentId}`
+  const apiUrl = `/api/diary/comment/replies?diaryId=${diaryId}&commentId=${commentId}`
   const token = localStorage.getItem('authToken')
 
   if (!token) {
@@ -145,7 +145,7 @@ export const patchReply = async ({
   replyId: string
   replyContents: string
 }) => {
-  const apiUrl = `${process.env.NEXT_PUBLIC_NEXT_API_URL}/api/diary/comment/replies?diaryId=${diaryId}&replyId=${replyId}`
+  const apiUrl = `/api/diary/comment/replies?diaryId=${diaryId}&replyId=${replyId}`
   const token = localStorage.getItem('authToken')
 
   if (!token) {
@@ -191,7 +191,7 @@ export const deletleComment = async ({
   diaryId: string
   commentId: string
 }) => {
-  const apiUrl = `${process.env.NEXT_PUBLIC_NEXT_API_URL}/api/diary/comment`
+  const apiUrl = `/api/diary/comment`
   const token = localStorage.getItem('authToken')
 
   if (!token) {

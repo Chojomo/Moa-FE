@@ -1,5 +1,5 @@
 export const postLike = async ({ diaryId }: { diaryId: string }) => {
-  const apiUrl = `${process.env.NEXT_PUBLIC_NEXT_API_URL}/api/diary/like?diaryId=${diaryId}`
+  const apiUrl = `/api/diary/like?diaryId=${diaryId}`
   const token = localStorage.getItem('authToken')
 
   if (!token) {
@@ -32,7 +32,7 @@ export const postLike = async ({ diaryId }: { diaryId: string }) => {
 }
 
 export const getLikes = async ({ diaryId }: { diaryId: string }) => {
-  const apiUrl = `${process.env.NEXT_PUBLIC_NEXT_API_URL}/api/diary/like?diaryId=${diaryId}`
+  const apiUrl = `/api/diary/like?diaryId=${diaryId}`
 
   if (!diaryId) {
     throw new Error('다이어리가 존재하지 않습니다.')
