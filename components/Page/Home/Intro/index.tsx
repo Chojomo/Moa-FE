@@ -5,7 +5,7 @@ import AddButton from './AddButton'
 
 export default function Intro() {
   const favorites = [
-    { index: 1, src: '/images/pebble/blue-pebble.png', name: 'Diary', href: '/diary' },
+    { index: 1, src: '/images/pebble/blue-pebble.png', name: 'Diary', href: '/diaries/viewCount' },
     {
       index: 2,
       src: '/images/pebble/purple-pebble2.png',

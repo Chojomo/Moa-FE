@@ -17,7 +17,7 @@ export default function Banner() {
       const data = await getDiarys({ pageParam: 0, sortType: 'viewCount' })
       const diarys = data?.data?.diaryPreviewList
 
-      console.log(diarys)
+      // console.log(diarys)
 
       setPosts(diarys)
     }
