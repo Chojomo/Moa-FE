@@ -13,7 +13,12 @@ type PostsProps = {
 export default function Posts({ sort }: PostsProps) {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
     queryKey: ['diaries', sort],
-    queryFn: ({ pageParam = 1 }) => getDiarys({ pageParam, sortType: sort }),
+    queryFn: ({ pageParam = 1 }) => {
+      const isDesktop = window.innerHeight >= 1000
+      return isDesktop
+        ? getDiarys({ pageParam, pageSize: 8, sortType: sort })
+        : getDiarys({ pageParam, pageSize: 4, sortType: sort })
+    },
     getNextPageParam: (lastPage) => {
       const nextPage = lastPage?.pageInfo.isLast ? undefined : lastPage.pageInfo.page
       return nextPage
