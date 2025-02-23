@@ -7,7 +7,7 @@ export default function DiaryLayout({
   children: React.ReactNode
 }>) {
   return (
-    <div className="relative w-[100vw] h-[100vh] flex flex-col pt-[74px]">
+    <div className="relative w-full h-[100vh] flex flex-col pt-[74px]">
       <Banner />
       <Sort />
       {children}
