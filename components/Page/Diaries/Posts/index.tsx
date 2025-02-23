@@ -1,15 +1,16 @@
 'use client'
 
-import { useEffect, useState, useCallback } from 'react'
+import { useEffect, useCallback } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { getDiarys } from '@/lib/api/diary'
 import { Diary } from '@/types/diary'
-import Sort from '../Sort'
 import Post from './Post'
 
-export default function Posts() {
-  const [sort, setSort] = useState('viewCount')
+type PostsProps = {
+  sort: string
+}
 
+export default function Posts({ sort }: PostsProps) {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
     queryKey: ['diaries', sort],
     queryFn: ({ pageParam = 1 }) => getDiarys({ pageParam, sortType: sort }),
@@ -38,7 +39,6 @@ export default function Posts() {
 
   return (
     <div className="w-full flex-grow flex flex-col bg-background">
-      <Sort sort={sort} setSort={setSort} />
       <div className="w-full flex flex-col flex-grow px-[10%] gap-[40px] sm:gap-[0px] mb-[95px]">
         {data?.pages.flatMap((page) =>
           page.data.diaryPreviewList.map((post: Diary, index: number) => (

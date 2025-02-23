@@ -1,14 +1,14 @@
 'use client'
 
-import { Dispatch, SetStateAction } from 'react'
-import Button from '@/components/Button'
+import Link from 'next/link'
+import { useState } from 'react'
+import { usePathname } from 'next/navigation'
 
-type SortProps = {
-  sort: string
-  setSort: Dispatch<SetStateAction<string>>
-}
+export default function Sort() {
+  const pathname = usePathname()
+  console.log(pathname.split('/').at(-1))
+  const [sort, setSort] = useState(pathname.split('/').at(-1))
 
-export default function Sort({ sort, setSort }: SortProps) {
   const buttons = [
     { type: 'publishedAt', text: '최신' },
     { type: 'viewCount', text: '조회' },
@@ -20,15 +20,14 @@ export default function Sort({ sort, setSort }: SortProps) {
     <div className="w-full h-[50px] flex-center my-[45px]">
       <div className="relative bg-sort-bg w-[320px] h-[50px] rounded-full flex justify-between px-2 text-black font-semibold">
         {buttons.map(({ type, text }) => (
-          <Button
+          <Link
             key={type}
-            type="button"
-            ariaLabel={`sort ${type} button`}
-            className={`flex-1 z-10 ${sort !== type ? 'text-white transition-all duration-700 delay-100' : ''}`}
+            href={`/diaries/${type}`}
+            className={`flex-1 flex-center z-10 ${sort !== type ? 'text-white transition-all duration-700 delay-100' : ''}`}
             onClick={() => setSort(type)}
           >
             {text}
-          </Button>
+          </Link>
         ))}
         <div
           className="absolute top-[5px] bg-white w-[74px] h-[40px] rounded-full transition-all duration-700"
