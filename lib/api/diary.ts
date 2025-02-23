@@ -218,8 +218,6 @@ export const getDiarys = async ({ pageParam = 0, sortType = 'viewCount' }) => {
       },
     })
 
-    console.log(apiUrl)
-
     const data = await response.json()
 
     if (!response.ok) {

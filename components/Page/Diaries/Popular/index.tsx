@@ -18,7 +18,7 @@ export default function PopularPost({ post }: PopularPostProps) {
     likeCount,
   } = post
 
-  console.log(post)
+  // console.log(post)
 
   let content = diaryContents.replace(/!\[Image\][^]*?-->/, '')
 
