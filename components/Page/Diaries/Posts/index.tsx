@@ -44,7 +44,7 @@ export default function Posts({ sort }: PostsProps) {
 
   return (
     <div className="w-full flex-grow flex flex-col bg-background">
-      <div className="w-full flex flex-col flex-grow px-[10%] gap-[40px] sm:gap-[0px] mb-[95px]">
+      <div className="w-full flex flex-col flex-grow diaries-padding gap-[40px] sm:gap-[0px] mb-[95px]">
         {data?.pages.flatMap((page) =>
           page.data.diaryPreviewList.map((post: Diary, index: number) => (
             <Post key={post.diaryId} index={index} post={post} />
