@@ -32,7 +32,7 @@ export default function Post({ index, post }: PostProps) {
     }
 
     if (index % 2 === 1) {
-      return 'sm:self-end sm:flex-row-reverse'
+      return 'self-start sm:self-end sm:flex-row-reverse'
     }
 
     return ''
