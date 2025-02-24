@@ -257,6 +257,22 @@
     }
   }
 
+  .diary-padding {
+    padding: 0 5%;
+
+    @media screen and (min-width: 768px) {
+      padding: 0 10%;
+    }
+
+    @media screen and (min-width: 1800px) {
+      padding: 0 15%;
+    }
+
+    @media screen and (min-width: 2400px) {
+      padding: 0 25%;
+    }
+  }
+
   .banner-arrow-left {
     left: 2%;
 

@@ -100,7 +100,7 @@ export default function DiaryDetail({ params }: { params: Params }) {
   }
 
   return (
-    <div className="relative w-[100vw] h-[100vh] flex flex-col pt-[100px] md:pt-[140px] overflow-auto px-[5%] md:px-[20%] pb-[60px]">
+    <div className="relative w-[100vw] h-[100vh] flex flex-col pt-[100px] md:pt-[140px] overflow-auto diary-padding pb-[60px]">
       <ToastContainer
         position={`${isTouchDevice() ? 'top-right' : 'top-right'}`}
         autoClose={3000}
