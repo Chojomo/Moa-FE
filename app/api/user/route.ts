@@ -9,13 +9,20 @@ export async function GET(req: NextRequest) {
   }
 
   const apiUrl = `${process.env.API_URL}/api/v1/users/my-page/${userId}`
+  const token = req.headers.get('authorization')
 
   try {
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json',
+    }
+
+    if (token) {
+      headers.Authorization = token
+    }
+
     const response = await fetch(apiUrl, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers,
     })
     const data = await response.json()
 
