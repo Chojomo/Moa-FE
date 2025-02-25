@@ -42,18 +42,11 @@ export const getUserDiaries = async ({ userId }: { userId: string }) => {
     throw new Error('유저가 존재하지 않습니다.')
   }
 
-  const token = localStorage.getItem('authToken')
-
-  if (!token) {
-    throw new Error('로그인 상태를 확인하세요.')
-  }
-
   try {
     const response = await fetch(apiUrl, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: token,
       },
     })
 

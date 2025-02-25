@@ -9,20 +9,12 @@ export async function GET(req: NextRequest) {
   }
 
   const apiUrl = `/api/v1/diaries/users/${userId}`
-  const token = req.headers.get('authorization')
-
-  if (!token) {
-    throw new Error('인증 헤더가 없습니다.')
-  }
-
-  // 다른 유저의 게시물 리스트를 조회하는 데에도 인증 헤더가 필요해야 하는 건지?
 
   try {
     const response = await fetch(apiUrl, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: token,
       },
     })
     const data = await response.json()
