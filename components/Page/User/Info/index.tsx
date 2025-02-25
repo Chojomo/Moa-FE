@@ -1,28 +1,31 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
 import { Icon } from '@/components/Icon'
 
+import { useQuery } from '@tanstack/react-query'
+import { getUser } from '@/lib/api/user'
+
 import Button from '@/components/Button'
+import { User } from '@/types/user'
 import Profile from './Profile'
 
-export default function UserInfo() {
-  const [isMyPage, setIsMyPage] = useState<boolean>(true)
+type UserInfoProps = {
+  userId: string
+  initialData: User
+}
 
-  console.log(setIsMyPage)
+export default function UserInfo({ userId, initialData }: UserInfoProps) {
+  const { data: user } = useQuery({
+    queryKey: ['user'],
+    queryFn: () => getUser({ userId }),
+    initialData,
+  })
 
-  const ghost = {
-    profile: '/images/pebble/purple-pebble2.png',
-    nickName: 'ichubtou',
-    dio: '안녕하세요. 반갑습니다.',
-    follows: 3,
-    followers: 2,
-  }
   return (
     <div className="w-full relative">
-      <Profile user={ghost} />
-      {isMyPage ? (
+      <Profile user={user} />
+      {user?.isMyPage ? (
         <Link href="/user/setting" className="absolute top-[10px] right-[20px] group p-2">
           <Icon
             name="Setting"
