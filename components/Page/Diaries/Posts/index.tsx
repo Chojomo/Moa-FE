@@ -1,9 +1,9 @@
 'use client'
 
-import { useEffect, useCallback } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { getDiarys } from '@/lib/api/diary'
 import { Diary } from '@/types/diary'
+import { useInfiniteScroll } from '@/hooks/useInfiniteScroll'
 import Post from './Post'
 
 type PostsProps = {
@@ -13,7 +13,7 @@ type PostsProps = {
 export default function Posts({ sort }: PostsProps) {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
     queryKey: ['diaries', sort],
-    queryFn: ({ pageParam = 1 }) => {
+    queryFn: ({ pageParam = 0 }) => {
       const isDesktop = window.innerHeight >= 1000
       return isDesktop
         ? getDiarys({ pageParam, pageSize: 8, sortType: sort })
@@ -26,21 +26,7 @@ export default function Posts({ sort }: PostsProps) {
     initialPageParam: 0,
   })
 
-  const handleScroll = useCallback(() => {
-    const scrollOffset = 100
-    const scrolledToBottom =
-      Math.abs(window.innerHeight + window.scrollY - document.documentElement.scrollHeight) <
-      scrollOffset
-
-    if (scrolledToBottom && hasNextPage && !isFetchingNextPage) {
-      fetchNextPage()
-    }
-  }, [hasNextPage, isFetchingNextPage, fetchNextPage])
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [handleScroll])
+  useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage })
 
   return (
     <div className="w-full flex-grow flex flex-col bg-background">
