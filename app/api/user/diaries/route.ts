@@ -3,12 +3,14 @@ import { NextRequest } from 'next/server'
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
   const userId = searchParams.get('userId')
+  const pageNumber = searchParams.get('pageNumber') || 0
+  const pageSize = searchParams.get('pageSize') || 10
 
   if (!userId) {
     throw new Error('유저가 존재하지 않습니다.')
   }
 
-  const apiUrl = `/api/v1/diaries/users/${userId}`
+  const apiUrl = `${process.env.API_URL}/api/v1/diaries/users/${userId}?pageNumber=${pageNumber}&pageSize=${pageSize}`
 
   try {
     const response = await fetch(apiUrl, {
