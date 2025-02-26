@@ -3,26 +3,20 @@ import { NextRequest } from 'next/server'
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
   const userId = searchParams.get('userId')
+  const pageNumber = searchParams.get('pageNumber') || 0
+  const pageSize = searchParams.get('pageSize') || 10
 
   if (!userId) {
     throw new Error('유저가 존재하지 않습니다.')
   }
 
-  const apiUrl = `/api/v1/diaries/users/${userId}`
-  const token = req.headers.get('authorization')
-
-  if (!token) {
-    throw new Error('인증 헤더가 없습니다.')
-  }
-
-  // 다른 유저의 게시물 리스트를 조회하는 데에도 인증 헤더가 필요해야 하는 건지?
+  const apiUrl = `${process.env.API_URL}/api/v1/diaries/users/${userId}?pageNumber=${pageNumber}&pageSize=${pageSize}`
 
   try {
     const response = await fetch(apiUrl, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: token,
       },
     })
     const data = await response.json()
