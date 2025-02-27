@@ -65,7 +65,42 @@ export const getUserDiaries = async ({
       throw new Error(data.error || '유저 작성 다이어리 리스트 가져오기 실패')
     }
 
-    // console.log(data.data)
+    return data
+  } catch (error) {
+    throw new Error('next 서버 요청 중 에러 발생')
+  }
+}
+
+export const getUserComments = async ({
+  userId,
+  pageParam = 0,
+  pageSize = 10,
+}: {
+  userId: string
+  pageParam: number
+  pageSize: number
+}) => {
+  const apiUrl = `/api/user/comments?userId=${userId}&pageNumber=${pageParam}&pageSize=${pageSize}`
+
+  if (!userId) {
+    throw new Error('유저가 존재하지 않습니다.')
+  }
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      console.log(data.error)
+      throw new Error(data.error || '유저 작성 댓글 리스트 가져오기 실패')
+    }
+
     return data
   } catch (error) {
     throw new Error('next 서버 요청 중 에러 발생')
