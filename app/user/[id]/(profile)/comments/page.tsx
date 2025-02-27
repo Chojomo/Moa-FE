@@ -23,7 +23,7 @@ export default function Comments({ params }: CommentsProps) {
   const { id: userId } = params
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
-    queryKey: ['dfsf'],
+    queryKey: ['comments'],
     queryFn: ({ pageParam = 0 }) => {
       const isDesktop = window.innerHeight >= 1000
       return isDesktop
@@ -43,9 +43,11 @@ export default function Comments({ params }: CommentsProps) {
 
   return (
     <div className="w-full animate-fadeIn flex flex-wrap justify-center gap-10 pt-[5%] pb-[10%]">
-      {data?.pages[0].data.map((comment: CommentType) => (
-        <Comment key={comment.commentId} comment={comment} />
-      ))}
+      {data?.pages.flatMap((page) =>
+        page.data.map((comment: CommentType) => (
+          <Comment key={comment.commentId} comment={comment} />
+        ))
+      )}
 
       <div className="flex justify-center items-center p-4">
         {isFetchingNextPage && <p>로드 중...</p>}
