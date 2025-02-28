@@ -34,22 +34,12 @@ export default function Likes({ params }: LikesProps) {
     },
     getNextPageParam: (lastPage) => {
       const nextPage = lastPage?.pageInfo.isLast ? undefined : lastPage.pageInfo.page
-
-      console.log(nextPage)
       return nextPage
     },
     initialPageParam: 0,
   })
 
   useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage })
-
-  console.log(
-    data?.pages.flatMap((page) => {
-      console.log(page.data)
-
-      return null
-    })
-  )
 
   return (
     <div className="w-full animate-fadeIn flex flex-wrap justify-center gap-10 pt-[5%] pb-[10%]">
