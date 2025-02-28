@@ -142,3 +142,41 @@ export const getUserLikes = async ({
     throw new Error('next 서버 요청 중 에러 발생')
   }
 }
+
+export const getUserFollow = async ({
+  userId,
+  type,
+}: {
+  userId: string
+  type: 'following' | 'follower'
+}) => {
+  const apiUrl = `${process.env.NEXT_PUBLIC_NEXT_API_URL}/api/user/follow/?userId=${userId}&type=${type}`
+
+  if (!userId) {
+    throw new Error('유저가 존재하지 않습니다.')
+  }
+
+  if (!type) {
+    throw new Error('팔로우 타입이 존재하지 않습니다.')
+  }
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      console.log(data.error)
+      throw new Error(data.error || '유저 팔로우 리스트 가져오기 실패')
+    }
+
+    return data
+  } catch (error) {
+    throw new Error('next 서버 요청 중 에러 발생')
+  }
+}
