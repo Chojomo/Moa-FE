@@ -8,7 +8,7 @@ import { getLikes } from '@/lib/api/like'
 import Button from '@/components/Button'
 import usePostLike from '@/hooks/like/usePostLike'
 
-import LikesModal from './LikesModal'
+import ListModal from '@/components/UI/Modal/ListModal'
 
 type LikeProps = {
   setLikeCount: Dispatch<SetStateAction<number>>
@@ -77,10 +77,11 @@ export default function Like({ diaryId, setLikeCount, isLike, setIsLike, isLogin
       >
         이 포스트를 좋아하는 사람들 &#62;
       </Button>
-      <LikesModal
+      <ListModal
         isOpen={isModalOpen}
         handleClose={() => setIsModalOpen(false)}
-        likedUsers={likedUsers}
+        list={likedUsers}
+        title="이 포스트에 공감하고 있어요!"
       />
     </div>
   )

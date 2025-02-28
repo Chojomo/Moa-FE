@@ -1,13 +1,13 @@
 import Link from 'next/link'
 import Image from 'next/image'
 
-type LikedUserProps = {
+type ListItemProps = {
   userId: string
   username: string
   imgSrc: string
 }
 
-export default function LikedUser({ userId, username, imgSrc }: LikedUserProps) {
+export default function listItem({ userId, username, imgSrc }: ListItemProps) {
   return (
     <Link href={`/user/${userId}/posts`} className="flex items-center gap-5 animate-fadeIn">
       <Image

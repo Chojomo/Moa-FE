@@ -1,19 +1,19 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { useInfiniteQuery } from '@tanstack/react-query'
-import { POSTS } from '@/helper/constants/posts'
-import { Post } from '@/components/Page/User/Posts'
-import { getUserDiaries } from '@/lib/api/user'
 import { useInfiniteScroll } from '@/hooks/useInfiniteScroll'
 
-// 임시 타입
+import { getUserDiaries } from '@/lib/api/user'
+import { Post } from '@/components/Page/User/Posts'
+
 type PostType = {
-  index: number
-  src: string
-  writer: string
-  title: string
-  description: string
+  commentCount: number
+  diaryContents: string
+  diaryId: string
+  diaryPublishedAt: string
+  diaryThumbnail: null | string
+  diaryTitle: string
+  likeCount: number
 }
 
 type PostsProps = {
@@ -32,7 +32,6 @@ export default function Posts({ params }: PostsProps) {
         : getUserDiaries({ userId, pageParam, pageSize: 4 })
     },
     getNextPageParam: (lastPage) => {
-      console.log(lastPage?.pageInfo.isLast)
       const nextPage = lastPage?.pageInfo.isLast ? undefined : lastPage.pageInfo.page
       return nextPage
     },
@@ -41,13 +40,9 @@ export default function Posts({ params }: PostsProps) {
 
   useInfiniteScroll({ hasNextPage, isFetchingNextPage, fetchNextPage })
 
-  console.log(data?.pages[0].data)
-
   return (
-    <div className="w-full animate-fadeIn flex flex-wrap justify-center gap-10 pt-[5%] pb-[10%]">
-      {POSTS.map((post: PostType) => (
-        <Post key={post.index} post={post} />
-      ))}
+    <div className="w-full animate-fadeIn flex flex-wrap justify-center gap-10 pt-[10%] pb-[100px]">
+      {data?.pages[0].data.map((post: PostType) => <Post key={post.diaryId} post={post} />)}
     </div>
   )
 }
