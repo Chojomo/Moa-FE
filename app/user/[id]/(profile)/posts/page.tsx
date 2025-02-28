@@ -32,7 +32,6 @@ export default function Posts({ params }: PostsProps) {
         : getUserDiaries({ userId, pageParam, pageSize: 4 })
     },
     getNextPageParam: (lastPage) => {
-      console.log(lastPage?.pageInfo.isLast)
       const nextPage = lastPage?.pageInfo.isLast ? undefined : lastPage.pageInfo.page
       return nextPage
     },
