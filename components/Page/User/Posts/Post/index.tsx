@@ -32,10 +32,26 @@ export default function Post({ post }: PostProps) {
   return (
     <Link
       href={`/diary/${diaryId}`}
-      className={`w-[90%] md:max-w-[45%] xl:max-w-[30%] ${src ? 'h-[420px]' : ''} flex flex-col gap-4 group cursor-pointer`}
+      className="w-full flex justify-between gap-4 pt-[10px] pb-[20px] group cursor-pointer border-b border-border"
     >
+      <div className="flex flex-col flex-1">
+        <p className="text-[1.5rem] font-semibold text-[##212529] dark:text-[#ececec] group-hover:text-[#494949] dark:group-hover:text-[#d5d5d5]">
+          {title.slice(0, 12)}
+        </p>
+        <p className="pl-[5px] pt-[10px] flex-1 text-[#495057] dark:text-[#acacac]">
+          {content.slice(0, 30)}
+        </p>
+        <div className="flex items-center gap-[10px] py-[10px] text-[0.8rem] text-[#bebebe] dark:text-[#595959]">
+          <p>{formatDate(diaryPublishedAt)}</p>
+          <div className="w-[3px] h-[3px] rounded-full bg-[#a4a4a4]" />
+          <p>{commentCount}개의 댓글</p>
+          <div className="w-[3px] h-[3px] rounded-full bg-[#a4a4a4]" />
+          <Icon name="Heart" width={15} height={20} />
+          <p>{likeCount}</p>
+        </div>
+      </div>
       {src && (
-        <div className="relative w-full h-[60%] rounded-lg overflow-hidden border border-[#eeeeee] dark:border-[#242424]">
+        <div className="relative w-[150px] h-[150px] overflow-hidden rounded-lg border border-[#eeeeee] dark:border-[#242424]">
           <Image
             src={src}
             alt="게시물 썸네일"
@@ -47,22 +63,6 @@ export default function Post({ post }: PostProps) {
           />
         </div>
       )}
-      <div className="pl-[5px] flex flex-col flex-1 ">
-        <p className="text-[2rem] font-semibold text-heading-text dark:text-[#333333] group-hover:text-[#494949] dark:group-hover:text-[#d5d5d5]">
-          {title.slice(0, 12)}
-        </p>
-        <p className="pl-[5px] pt-[10px] h-[40%] flex-1 text-[#495057] dark:text-[#3a3a3a]">
-          {content.slice(0, 60)}
-        </p>
-        <div className="flex items-center gap-[10px] py-[10px] text-[0.8rem] text-[#bebebe] dark:text-[#3a3a3a]">
-          <p>{formatDate(diaryPublishedAt)}</p>
-          <div className="w-[3px] h-[3px] rounded-full bg-[#a4a4a4]" />
-          <p>{commentCount}개의 댓글</p>
-          <div className="w-[3px] h-[3px] rounded-full bg-[#a4a4a4]" />
-          <Icon name="Heart" width={15} height={20} />
-          <p>{likeCount}</p>
-        </div>
-      </div>
     </Link>
   )
 }
