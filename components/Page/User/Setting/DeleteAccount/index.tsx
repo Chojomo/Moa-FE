@@ -1,5 +1,7 @@
-import Button from '@/components/Button'
+'use client'
+
 import { useState } from 'react'
+import Button from '@/components/Button'
 import DeleteAccountModal from './Modal'
 
 export default function DeleteAccount() {

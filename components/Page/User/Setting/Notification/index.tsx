@@ -1,3 +1,5 @@
+'use client'
+
 import Toggle from '@/components/UI/Toggle'
 
 export default function Notification() {
