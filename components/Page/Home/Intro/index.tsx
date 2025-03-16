@@ -9,8 +9,14 @@ export default function Intro() {
     {
       index: 2,
       src: '/images/pebble/purple-pebble2.png',
-      name: 'suikaGame',
+      name: 'SuikaGame',
       href: '/zip/suikaGame',
+    },
+    {
+      index: 3,
+      src: '/images/pebble/red-pebble2.png',
+      name: 'Chat',
+      href: '/zip/chat',
     },
   ]
   return (
