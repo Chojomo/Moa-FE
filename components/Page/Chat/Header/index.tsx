@@ -6,7 +6,7 @@ export default function Header() {
   const router = useRouter()
 
   return (
-    <header className="fixed top-0 w-full h-[64px] bg-background flex justify-between items-center pl-[5px] pr-[15px]">
+    <header className="sticky top-0 w-full h-[64px] bg-background flex justify-between items-center pl-[5px] pr-[15px]">
       <div className="flex-center">
         <Button
           type="button"
@@ -23,7 +23,6 @@ export default function Header() {
           type="button"
           ariaLabel="검색 버튼"
           className="flex-center p-2 font-bold text-heading-text text-[18px]"
-          onClick={() => router.back()}
         >
           <Icon name="Search" width={18} height={18} />
         </Button>
@@ -31,7 +30,6 @@ export default function Header() {
           type="button"
           ariaLabel="메뉴 버튼"
           className="flex-center p-2 font-bold text-heading-text text-[18px]"
-          onClick={() => router.back()}
         >
           <Icon name="Menu" width={18} height={18} />
         </Button>
