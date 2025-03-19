@@ -95,12 +95,12 @@ export const getCheckEmail = async (email: string) => {
     const data = await response.json()
 
     if (!response.ok) {
-      throw new Error(data.error)
+      return { ok: false, message: data.error }
     }
 
-    return data
+    return { ok: true, message: '유효 이메일' }
   } catch (error) {
-    return new Response(JSON.stringify({ message: (error as Error).message }), { status: 500 })
+    return { ok: false, message: error }
   }
 }
 
