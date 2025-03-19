@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import { Header, ChatList } from '@/components/Page/Chat'
 
 export default function Chat() {

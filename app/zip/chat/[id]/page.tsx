@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, FormEvent } from 'react'
+import { useState, useEffect, FormEvent } from 'react'
 import { ChatRoomBody, ChatRoomHeader, ChatRoomInput } from '@/components/Page/Chat/ChatRoom'
 import { BASE_PROFILE } from '@/helper/constants'
+import { useWebSocketStore } from '@/store/useSocket'
 
 type Params = {
   id: string
@@ -121,10 +122,29 @@ const MESSAGES = [
 export default function ChatRoom({ params }: { params: Params }) {
   const [messages, setMessages] = useState<[] | Message[]>(MESSAGES)
   const [message, setMessage] = useState<string>('')
+  const { socket, isConnected } = useWebSocketStore()
   const { id } = params
 
   const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}')
   const { userId, nickname } = userInfo
+
+  useEffect(() => {
+    if (socket) {
+      socket.on('sendMessage', () => {
+        console.log('sendMessage')
+      })
+    }
+
+    return () => {
+      socket?.off('sendMessage')
+    }
+  }, [socket])
+
+  const sendMessage = () => {
+    if (socket && isConnected) {
+      socket.emit('sendMessage', { userId, message })
+    }
+  }
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
@@ -144,6 +164,7 @@ export default function ChatRoom({ params }: { params: Params }) {
         }).format(new Date()),
       }
 
+      sendMessage()
       setMessages((prev: Message[]) => [...prev, newMessage])
     }
   }
