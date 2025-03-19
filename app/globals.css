@@ -441,6 +441,19 @@
   -webkit-text-stroke: 2px #4c2515;
 }
 
+.chat-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-scroll::-webkit-scrollbar-thumb {
+  background-color: #a1a1a1;
+  border-radius: 10px;
+}
+
+.chat-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
 @layer base {
   * {
     @apply border-border;
