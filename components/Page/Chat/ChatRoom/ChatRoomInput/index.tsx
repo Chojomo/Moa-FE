@@ -6,22 +6,15 @@ import { isTouchDevice } from '@/utils'
 type ChatRoomInputProps = {
   message: string
   setMessage: Dispatch<SetStateAction<string>>
+  handleSubmit: (e: FormEvent) => void
 }
 
-export default function ChatRoomInput({ message, setMessage }: ChatRoomInputProps) {
+export default function ChatRoomInput({ message, setMessage, handleSubmit }: ChatRoomInputProps) {
   const isMobile = isTouchDevice()
   const handleMessageChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
     setMessage(value)
   }, [])
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault()
-
-    if (message.trim() !== '') {
-      setMessage('')
-    }
-  }
 
   return (
     <form
@@ -43,7 +36,7 @@ export default function ChatRoomInput({ message, setMessage }: ChatRoomInputProp
           className="input-reset w-[96%] h-[75%] autofull-text border border-border rounded-full pl-[20px] pr-[64px] text-[1rem] sm:text-[1.2rem]"
         />
         <Button
-          type="button"
+          type="submit"
           ariaLabel="메시지 전송 버튼"
           className="absolute right-4 bg-main-blue p-2 rounded-full hover:bg-[#2a6ed3]"
         >

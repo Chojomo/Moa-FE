@@ -1,7 +1,6 @@
 import Image from 'next/image'
 
 type Message = {
-  index: number
   userId: string
   username: string
   avatar: string
