@@ -1,16 +1,23 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, FormEvent } from 'react'
 import { ChatRoomBody, ChatRoomHeader, ChatRoomInput } from '@/components/Page/Chat/ChatRoom'
 import { BASE_PROFILE } from '@/helper/constants'
+import { useWebSocketStore } from '@/store/useSocket'
 
 type Params = {
   id: string
 }
+type Message = {
+  userId: string
+  username: string
+  avatar: string
+  message: string
+  timestamp: string
+}
 
-const messages = [
+const MESSAGES = [
   {
-    index: 0,
     userId: '822b934e-0439-4cf0-b9ae-d25a14756ffq',
     username: '김철수',
     avatar: BASE_PROFILE,
@@ -22,7 +29,6 @@ const messages = [
     }).format(new Date()),
   },
   {
-    index: 1,
     userId: '822b934e-0439-4cf0-b9ae-d25a14756ffe',
     username: '나',
     avatar: BASE_PROFILE,
@@ -34,7 +40,6 @@ const messages = [
     }).format(new Date()),
   },
   {
-    index: 3,
     userId: '822b934e-0439-4cf0-b9ae-d25a14756ffq',
     username: '김철수',
     avatar: BASE_PROFILE,
@@ -46,7 +51,6 @@ const messages = [
     }).format(new Date()),
   },
   {
-    index: 4,
     userId: '822b934e-0439-4cf0-b9ae-d25a14756ffe',
     username: '나',
     avatar: BASE_PROFILE,
@@ -58,7 +62,6 @@ const messages = [
     }).format(new Date()),
   },
   {
-    index: 5,
     userId: '822b934e-0439-4cf0-b9ae-d25a14756ffq',
     username: '김철수',
     avatar: BASE_PROFILE,
@@ -70,7 +73,6 @@ const messages = [
     }).format(new Date()),
   },
   {
-    index: 6,
     userId: '822b934e-0439-4cf0-b9ae-d25a14756ffq',
     username: '김철수',
     avatar: BASE_PROFILE,
@@ -82,7 +84,6 @@ const messages = [
     }).format(new Date()),
   },
   {
-    index: 7,
     userId: '822b934e-0439-4cf0-b9ae-d25a14756ffq',
     username: '김철수',
     avatar: BASE_PROFILE,
@@ -95,7 +96,6 @@ const messages = [
     }).format(new Date()),
   },
   {
-    index: 8,
     userId: '822b934e-0439-4cf0-b9ae-d25a14756ffe',
     username: '나',
     avatar: BASE_PROFILE,
@@ -107,7 +107,6 @@ const messages = [
     }).format(new Date()),
   },
   {
-    index: 9,
     userId: '822b934e-0439-4cf0-b9ae-d25a14756ffe',
     username: '나',
     avatar: BASE_PROFILE,
@@ -121,14 +120,60 @@ const messages = [
 ]
 
 export default function ChatRoom({ params }: { params: Params }) {
+  const [messages, setMessages] = useState<[] | Message[]>(MESSAGES)
   const [message, setMessage] = useState<string>('')
+  const { socket, isConnected } = useWebSocketStore()
   const { id } = params
+
+  const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}')
+  const { userId, nickname } = userInfo
+
+  useEffect(() => {
+    if (socket) {
+      socket.on('sendMessage', () => {
+        console.log('sendMessage')
+      })
+    }
+
+    return () => {
+      socket?.off('sendMessage')
+    }
+  }, [socket])
+
+  const sendMessage = () => {
+    if (socket && isConnected) {
+      socket.emit('sendMessage', { userId, message })
+    }
+  }
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault()
+
+    if (message.trim() !== '') {
+      setMessage('')
+
+      const newMessage = {
+        userId,
+        username: nickname,
+        avatar: BASE_PROFILE,
+        message,
+        timestamp: new Intl.DateTimeFormat('ko-KR', {
+          hour: 'numeric',
+          minute: 'numeric',
+          hour12: true,
+        }).format(new Date()),
+      }
+
+      sendMessage()
+      setMessages((prev: Message[]) => [...prev, newMessage])
+    }
+  }
 
   return (
     <div className="w-[100%] h-[100%] flex flex-col overflow-hidden">
       <ChatRoomHeader />
       <ChatRoomBody messages={messages} />
-      <ChatRoomInput message={message} setMessage={setMessage} />
+      <ChatRoomInput message={message} setMessage={setMessage} handleSubmit={handleSubmit} />
     </div>
   )
 }
