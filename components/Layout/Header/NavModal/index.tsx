@@ -14,6 +14,8 @@ type NavModalProps = {
 
 export default function NavModal({ isOpen, handleClose }: NavModalProps) {
   const { logout } = useAuthStore()
+  const userInfoString = localStorage.getItem('userInfo')
+  const userInfo = userInfoString && JSON.parse(userInfoString)
 
   const handleLogout = useCallback(() => {
     logout()
@@ -31,7 +33,7 @@ export default function NavModal({ isOpen, handleClose }: NavModalProps) {
       overlayClassName="modal-overlay-transparent"
     >
       <IconLink
-        href="/user/posts"
+        href={`/user/${userInfo?.userId}/posts`}
         iconName="User"
         iconColor="modal-text"
         hoverColor="background"

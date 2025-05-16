@@ -1,29 +1,18 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Diary } from '@/types/diary'
-import { getDiarys } from '@/lib/api/diary'
 import Arrow from './Arrow'
 import Progress from './Progress'
 import PopularPost from '../Popular'
 
-export default function Banner() {
-  const [posts, setPosts] = useState<Diary[] | null>(null)
+type BannerProps = {
+  posts: Diary[] | null
+}
+
+export default function Banner({ posts }: BannerProps) {
   const [step, setStep] = useState(1)
   const postIndex = step - 1 || 0
-
-  useEffect(() => {
-    const getPosts = async () => {
-      const data = await getDiarys({ pageParam: 0, sortType: 'viewCount' })
-      const diarys = data?.data?.diaryPreviewList
-
-      // console.log(diarys)
-
-      setPosts(diarys)
-    }
-
-    getPosts()
-  }, [])
 
   return (
     <section className="w-full h-[450px] md:h-[270px] flex-center flex-col-reverse md:flex-center md:flex-row gap-[10%] bg-banner-bg py-[20px] md:py-[40px]">

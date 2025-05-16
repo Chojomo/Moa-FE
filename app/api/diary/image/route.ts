@@ -8,11 +8,6 @@ export async function POST(req: NextRequest) {
   const apiUrl = `${process.env.API_URL}/api/v1/diaries/${diaryId}/image`
   const token = req.headers.get('authorization')
 
-  console.log(`POST formData: ${formData}`)
-  console.log(`image: ${image}`)
-  console.log(`apiUrl: ${apiUrl}`)
-  console.log(`token: ${token}`)
-
   if (!token) {
     throw new Error('인증 헤더가 없습니다.')
   }

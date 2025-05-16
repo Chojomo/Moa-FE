@@ -19,7 +19,7 @@ export default function Arrow({ setStep }: ArrowProps) {
       <Button
         type="button"
         ariaLabel="인기 게시물 이전 버튼"
-        className="absolute left-[2%] md:left-[5%] lg:left-[15%] p-5 transform transition-transform duration-300 ease-in-out hover:scale-150 active:scale-150"
+        className="absolute banner-arrow-left p-5 transform transition-transform duration-300 ease-in-out hover:scale-150 active:scale-150"
         onClick={handlePrevClick}
       >
         <Icon name="BannerPrev" width={15} height={15} />
@@ -27,7 +27,7 @@ export default function Arrow({ setStep }: ArrowProps) {
       <Button
         type="button"
         ariaLabel="인기 게시물 다음 버튼"
-        className="absolute right-[2%] md:right-[5%] lg:right-[15%] p-5 transform transition-transform duration-300 ease-in-out hover:scale-150 active:scale-150"
+        className="absolute banner-arrow-right p-5 transform transition-transform duration-300 ease-in-out hover:scale-150 active:scale-150"
         onClick={handleNextClick}
       >
         <Icon name="BannerNext" width={15} height={15} />

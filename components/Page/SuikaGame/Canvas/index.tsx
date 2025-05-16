@@ -298,8 +298,6 @@ export default function Canvas({
           !disableAction &&
           (bodyA.label === 'GAME_OVER_LINE' || bodyB.label === 'GAME_OVER_LINE')
         ) {
-          console.log(bodyA.label)
-          console.log(bodyB.label)
           handleGameOver()
         }
 

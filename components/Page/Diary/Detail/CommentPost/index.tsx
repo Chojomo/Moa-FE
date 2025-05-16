@@ -6,6 +6,7 @@ import Button from '@/components/Button'
 import usePostComment from '@/hooks/comment/usePostComment'
 import { Comment } from '@/types/diary'
 import { toast } from 'react-toastify'
+import { BASE_PROFILE } from '@/helper/constants'
 import CommentInput from '../CommentInput'
 
 type CommentPostProps = {
@@ -65,7 +66,7 @@ export default function CommentPost({
   return (
     <div className="w-full flex-center border-y px-[16px] py-[50px] gap-[25px]">
       <Image
-        src={profile}
+        src={profile || BASE_PROFILE}
         alt="user profile"
         width={55}
         height={60}

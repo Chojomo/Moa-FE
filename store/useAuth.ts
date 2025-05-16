@@ -12,5 +12,6 @@ export const useAuthStore = create<AuthStore>((set) => ({
   logout: () => {
     set({ isLogin: false })
     localStorage.removeItem('authToken')
+    localStorage.removeItem('userInfo')
   },
 }))

@@ -1,3 +1,5 @@
+'use client'
+
 import { useCallback, useState, FormEvent } from 'react'
 import Button from '@/components/Button'
 import { PasswordInput, ConfirmPasswordInput } from '@/components/Page/Auth/Input'

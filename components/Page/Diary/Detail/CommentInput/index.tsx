@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect, Dispatch, SetStateAction } from 'react'
-import { toast } from 'react-toastify'
 
 type CommentInputProps = {
   isLogin: boolean
@@ -36,14 +35,6 @@ export default function CommentInput({ isLogin, comment, setComment }: CommentIn
       placeholder={placeholder}
       value={comment}
       onChange={(e) => setComment(e.target.value)}
-      onClick={(e) => {
-        e.stopPropagation()
-
-        if (!isLogin) {
-          toast.info('로그인 후 이용하실 수 있습니다.')
-        }
-      }}
-      disabled={!isLogin}
       className="flex-grow flex items-center min-h-[80px] text-[13px] rounded-[10px] focus:outline-none focus:ring-0 px-4 py-2 md:py-5 border placeholder-pre-line"
     />
   )

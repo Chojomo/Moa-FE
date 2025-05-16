@@ -77,8 +77,6 @@ export default function Footer({
         const url = window.location.href
         await navigator.clipboard.writeText(url)
         toast.success('링크가 복사되었습니다.')
-
-        console.log(isTouchDevice())
       },
     },
   ]
@@ -92,7 +90,6 @@ export default function Footer({
       height: 20,
       onClick: () => {
         setIsBookmarked((prev) => !prev)
-        console.log(isBookmarked)
       },
     })
 

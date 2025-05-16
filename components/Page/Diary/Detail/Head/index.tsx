@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import useDeleteDiary from '@/hooks/comment/useDeleteDiary'
 
+import { formatDate } from '@/helper/formatDate'
 import { Post } from '@/types/diary'
 import Button from '@/components/Button'
 import { FollowButton } from './Button'
@@ -63,7 +64,7 @@ export default function Head({ post, isLogin }: HeadProps) {
               {nickname}
             </Link>
             <p className="text-[11px] md:text-[13px] pointer-events-none">
-              {publishedAt.split('T')[0]}
+              {formatDate(publishedAt)}
             </p>
           </div>
         </div>

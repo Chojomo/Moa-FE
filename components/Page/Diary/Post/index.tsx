@@ -36,7 +36,6 @@ export default function Post({ diaryId }: { diaryId?: string }) {
 
   const handleResize = () => {
     setPriview(window.innerWidth > 1000 ? 'live' : 'edit')
-    console.log(window.innerWidth > 1000 ? 'live' : 'edit')
   }
 
   useEffect(() => {

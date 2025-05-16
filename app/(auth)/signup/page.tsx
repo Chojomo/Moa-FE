@@ -14,6 +14,10 @@ import Button from '@/components/Button'
 import OAuth from '@/components/Page/Auth/OAuth'
 import SubmitButton from '@/components/Page/Auth/Button/SubmitButton'
 import { EmailInput, PasswordInput, ConfirmPasswordInput } from '@/components/Page/Auth/Input'
+import { isTouchDevice } from '@/utils'
+
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function Signup() {
   const router = useRouter()
@@ -57,17 +61,14 @@ export default function Signup() {
 
   const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
-    console.log(value)
+
     setConfirmPassword(value)
     setIsPasswordMatched(value === password)
   }
 
   const mutation = useMutation({
     mutationFn: () => signup(email, password),
-    onSuccess: (data) => {
-      console.log('회원가입 성공:', data)
-      router.push('/login')
-    },
+    onSuccess: (data) => {},
     onError: (error: unknown) => {
       if (error instanceof Error) {
         console.error('회원가입 실패:', error.message)
@@ -97,10 +98,7 @@ export default function Signup() {
 
     // 이메일 중복하는 경우
     if (!res.ok) {
-      const { message } = await res.json()
-
-      // 팝업 띄우기
-      console.log(`message : ${message}`)
+      toast.error(res.message)
     } else {
       setStep(1)
     }
@@ -108,6 +106,14 @@ export default function Signup() {
 
   return (
     <div className="w-full h-full flex flex-col justify-center items-center gap-[30px] overflow-y-auto pt-[70px] md:pt-[100px] pb-[50px]">
+      <ToastContainer
+        position={`${isTouchDevice() ? 'top-right' : 'top-right'}`}
+        autoClose={3000}
+        hideProgressBar={false}
+        style={{
+          top: 74,
+        }}
+      />
       <h1 className="text-main-blue text-[1.5rem] font-semibold">회원가입</h1>
       <form
         className="animate-fadeIn w-[100vw] flex-center flex-col gap-[40px]"
