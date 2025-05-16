@@ -5,6 +5,7 @@ type Item = {
   index: number
   avatar: string
   username: string
+  userId: string
   lastMessage: string
   isRead: boolean
   timestamp: string
@@ -17,7 +18,7 @@ type ChatItemProps = {
 export default function ChatItem({ chat }: ChatItemProps) {
   const { index, avatar, username, lastMessage, isRead, timestamp } = chat
   return (
-    <Link href={`/zip/chat/${index}`} className="flex-center py-[20px] border-t border-border">
+    <Link href={`/zip/chat/${username}`} className="flex-center py-[20px] border-t border-border">
       <Image
         src={avatar}
         alt="user profile"

@@ -10,7 +10,7 @@ export default function Chat() {
   return (
     <div className="w-full">
       <Header />
-      <ChatList />
+      <ChatList userId={userId} />
     </div>
   )
 }

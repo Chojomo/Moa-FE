@@ -18,7 +18,7 @@ type Message = {
 
 const MESSAGES = [
   {
-    userId: '822b934e-0439-4cf0-b9ae-d25a14756ffq',
+    userId: 'd4e5883f-c5bd-4fa9-993d-c7e3cb012678',
     username: '김철수',
     avatar: BASE_PROFILE,
     message: '안녕하세요! 점심 먹었어요?',
@@ -51,7 +51,7 @@ const MESSAGES = [
     }).format(new Date()),
   },
   {
-    userId: '822b934e-0439-4cf0-b9ae-d25a14756ffe',
+    userId: 'd4e5883f-c5bd-4fa9-993d-c7e3cb012678',
     username: '나',
     avatar: BASE_PROFILE,
     message: '좋네요! 어디서 만날까요?',
@@ -130,19 +130,29 @@ export default function ChatRoom({ params }: { params: Params }) {
 
   useEffect(() => {
     if (socket) {
-      socket.on('sendMessage', () => {
-        console.log('sendMessage')
+      socket.on('newMessage', (data) => {
+        console.log('newMessage data:', data)
       })
     }
 
     return () => {
-      socket?.off('sendMessage')
+      socket?.off('newMessage')
     }
   }, [socket])
 
   const sendMessage = () => {
     if (socket && isConnected) {
-      socket.emit('sendMessage', { userId, message })
+      socket.emit('sendMessage', {
+        sender: { userId, username: nickname },
+        receiver: {
+          userId:
+            userId === 'd4e5883f-c5bd-4fa9-993d-c7e3cb012678'
+              ? 'd4e5883f-c5bd-4fa9-993d-c7e3cb012678'
+              : '822b934e-0439-4cf0-b9ae-d25a14756ffe',
+          username: 'test02',
+        },
+        message,
+      })
     }
   }
 
