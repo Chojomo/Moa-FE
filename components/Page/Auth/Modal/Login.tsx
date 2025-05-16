@@ -37,7 +37,6 @@ export default function LoginModal({ isOpen, handleClose }: LoginModalProps) {
 
     setEmail(value)
     setIsValidEmail(isValid)
-    console.log(isValid)
   }, [])
 
   const handlePasswordChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {

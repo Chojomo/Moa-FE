@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation'
 
 export default function Sort() {
   const pathname = usePathname()
-  console.log(pathname.split('/').at(-1))
   const [sort, setSort] = useState(pathname.split('/').at(-1))
 
   const buttons = [

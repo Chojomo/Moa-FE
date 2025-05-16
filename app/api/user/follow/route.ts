@@ -5,8 +5,6 @@ export async function GET(req: NextRequest) {
   const userId = searchParams.get('userId')
   const type = searchParams.get('type')
 
-  console.log('zz')
-
   if (!userId) {
     throw new Error('유저가 존재하지 않습니다.')
   }

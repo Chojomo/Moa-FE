@@ -49,9 +49,6 @@ export const uploadImage = async (image: File) => {
       formData.append('diaryId', diaryId)
     }
 
-    console.log(`diaryId: ${diaryId}`)
-    console.log(`uploadImage formData: ${formData}`)
-
     const response = await fetch(apiUrl, {
       method: 'POST',
       headers: {

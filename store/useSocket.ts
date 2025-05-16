@@ -17,13 +17,11 @@ export const useWebSocketStore = create<WebSocketStore>((set) => ({
     const ws = io(url, { transports: ['websocket'] })
 
     ws.on('connect', () => {
-      console.log('✅ connected')
       ws.emit('setUser', userId)
       set({ socket: ws, isConnected: true })
     })
 
     ws.on('disconnect', () => {
-      console.log('❌ Disconnected')
       set({ socket: null, isConnected: false })
     })
 

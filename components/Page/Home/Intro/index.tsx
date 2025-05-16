@@ -1,7 +1,7 @@
 import Border from './Border'
 import Marquee from './Marquee'
 import Favorite from './Favorite'
-import AddButton from './AddButton'
+// import AddButton from './AddButton'
 
 export default function Intro() {
   const favorites = [
@@ -12,12 +12,12 @@ export default function Intro() {
       name: 'SuikaGame',
       href: '/zip/suikaGame',
     },
-    {
-      index: 3,
-      src: '/images/pebble/red-pebble2.png',
-      name: 'Chat',
-      href: '/zip/chat',
-    },
+    // {
+    //   index: 3,
+    //   src: '/images/pebble/red-pebble2.png',
+    //   name: 'Chat',
+    //   href: '/zip/chat',
+    // },
   ]
   return (
     <div className="w-[100vw] h-[100vh] py-[74px] flex-center">
@@ -26,7 +26,7 @@ export default function Intro() {
           {favorites.map(({ index, src, name, href }) => (
             <Favorite key={index} src={src} name={name} href={href} />
           ))}
-          <AddButton />
+          {/* <AddButton /> */}
         </div>
         <Border />
       </section>

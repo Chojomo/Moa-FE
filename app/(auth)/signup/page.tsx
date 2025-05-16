@@ -61,16 +61,14 @@ export default function Signup() {
 
   const handleConfirmPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
-    console.log(value)
+
     setConfirmPassword(value)
     setIsPasswordMatched(value === password)
   }
 
   const mutation = useMutation({
     mutationFn: () => signup(email, password),
-    onSuccess: (data) => {
-      console.log('회원가입 성공:', data)
-    },
+    onSuccess: (data) => {},
     onError: (error: unknown) => {
       if (error instanceof Error) {
         console.error('회원가입 실패:', error.message)

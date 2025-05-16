@@ -150,9 +150,6 @@ export default function ChatList({ userId }: ChatListProps) {
   useEffect(() => {
     const getFollow = async () => {
       const { data } = await getUserFollow({ userId, type: 'following' })
-
-      console.log('zz')
-      console.log(data)
       setFollowing(data)
     }
 

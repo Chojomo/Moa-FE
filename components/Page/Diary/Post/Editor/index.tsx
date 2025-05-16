@@ -42,7 +42,6 @@ export default function PostEditor({ value, onChange, preview }: PostEditorProps
       if (imgApi) {
         imgApi.replaceSelection(markdownImage)
       } else {
-        console.log(markdownImage)
         onChange((value || '') + markdownImage)
       }
     },
