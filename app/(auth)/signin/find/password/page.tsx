@@ -26,7 +26,6 @@ export default function FindPassword() {
 
   // 임시로 Post 요청 연결
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    console.log('전송함')
     e.preventDefault()
 
     if (!email || !isValidEmail) {

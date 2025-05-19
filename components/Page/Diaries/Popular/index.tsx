@@ -18,8 +18,6 @@ export default function PopularPost({ post }: PopularPostProps) {
     likeCount,
   } = post
 
-  // console.log(post)
-
   let content = diaryContents.replace(/!\[Image\][^]*?-->/, '')
 
   if (content.length > 100) {
@@ -29,11 +27,11 @@ export default function PopularPost({ post }: PopularPostProps) {
   return (
     <Link
       href={`/diary/${diaryId}`}
-      className="relative w-[250px] h-[200px] rounded-[10px] overflow-hidden"
+      className="relative w-[250px] h-[200px] rounded-[10px] overflow-hidden bg-white"
     >
       <div className="w-[250px] h-[200]">
         <Image
-          src={diaryThumbnail || '/images/ewtq.jpeg'}
+          src={diaryThumbnail || '/images/base.jpg'}
           alt="popular post"
           quality={75}
           layout="fill"

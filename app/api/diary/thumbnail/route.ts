@@ -34,8 +34,6 @@ export async function POST(req: NextRequest) {
 
     const data = await response.json()
 
-    console.log(response)
-
     if (!response.ok) {
       throw new Error(data.error || '다이어리 썸네일 업로드 실패')
     }

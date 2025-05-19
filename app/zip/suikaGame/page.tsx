@@ -14,8 +14,6 @@ export default function SG() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [nextItem, setNextItem] = useState<Items>(getRandomItem()?.label as Items)
 
-  console.log(isGameOver)
-
   return (
     <div className="w-[100dvw] h-[100dvh] flex-center overflow-hidden pt-[74px]">
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />

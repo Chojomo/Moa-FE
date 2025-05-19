@@ -5,9 +5,10 @@ import { Icon } from '@/components/Icon'
 type ProgressProps = {
   step: number
   setStep: Dispatch<SetStateAction<number>>
+  maxStep: number
 }
 
-export default function Progress({ step, setStep }: ProgressProps) {
+export default function Progress({ step, setStep, maxStep }: ProgressProps) {
   const [progress, setProgress] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
 
@@ -23,7 +24,7 @@ export default function Progress({ step, setStep }: ProgressProps) {
         setProgress(100)
 
         setTimeout(() => {
-          setStep((prevStep) => (prevStep >= 4 ? 1 : prevStep + 1))
+          setStep((prevStep) => (prevStep >= maxStep ? 1 : prevStep + 1))
           setProgress(0)
           setIsPaused(false)
         }, 500)
@@ -43,7 +44,7 @@ export default function Progress({ step, setStep }: ProgressProps) {
     <div className="w-full flex flex-col gap-2">
       <div className="w-full flex justify-between items-center">
         <p className="text-gray-200 text-xs">
-          <span className="text-white">{step}</span> / 4
+          <span className="text-white">{step}</span> / {maxStep}
         </p>
         <Button
           type="button"

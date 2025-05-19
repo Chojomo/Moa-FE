@@ -18,7 +18,7 @@ export default function Header() {
   const { isLogin } = useAuthStore()
   const pathname = usePathname()
 
-  if (pathname.includes('/diary/post')) return null
+  if (pathname.includes('/diary/post') || pathname.includes('/zip/chat')) return null
 
   const getUserProfile = () => {
     const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}')

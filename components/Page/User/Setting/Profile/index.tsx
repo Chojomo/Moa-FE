@@ -1,15 +1,18 @@
+'use client'
+
 import { useState, useRef } from 'react'
 import Image from 'next/image'
 import Button from '@/components/Button'
 import Link from 'next/link'
 import { Icon } from '@/components/Icon'
 
-export default function Profile() {
+type ProfileProps = {
+  userId: string
+}
+
+export default function Profile({ userId }: ProfileProps) {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [profile, setProfile] = useState<null | string>(null)
-
-  console.log(fileInputRef)
-  console.log(setProfile)
 
   return (
     <div className="w-full relative">
@@ -43,7 +46,7 @@ export default function Profile() {
           </Button>
         </div>
       </div>
-      <Link href="/user/posts" className="absolute top-[10px] right-[20px] group p-2">
+      <Link href={`/user/${userId}/posts`} className="absolute top-[10px] right-[20px] group p-2">
         <Icon
           name="Cancel"
           width={30}
