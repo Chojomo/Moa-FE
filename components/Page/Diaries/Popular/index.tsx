@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { Icon } from '@/components/Icon'
 import { Diary } from '@/types/diary'
 import Link from 'next/link'
+import { stripMarkdown } from '@/utils'
 
 type PopularPostProps = {
   post: Diary
@@ -18,7 +19,7 @@ export default function PopularPost({ post }: PopularPostProps) {
     likeCount,
   } = post
 
-  let content = diaryContents.replace(/!\[Image\][^]*?-->/, '')
+  let content = stripMarkdown(diaryContents.replace(/!\[Image\][^]*?-->/, ''))
 
   if (content.length > 100) {
     content = content.substring(0, 30)
