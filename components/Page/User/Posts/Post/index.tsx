@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Icon } from '@/components/Icon'
 import { formatDate } from '@/helper/formatDate'
+import { stripMarkdown } from '@/utils'
 
 // 임시 타입
 type PostType = {
@@ -23,11 +24,13 @@ export default function Post({ post }: PostProps) {
     diaryId,
     diaryThumbnail: src,
     diaryTitle: title,
-    diaryContents: content,
+    diaryContents,
     diaryPublishedAt,
     commentCount,
     likeCount,
   } = post
+
+  const content = stripMarkdown(diaryContents.replace(/!\[Image\][^]*?-->/, ''))
 
   return (
     <Link

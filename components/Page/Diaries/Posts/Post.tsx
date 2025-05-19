@@ -3,6 +3,7 @@ import { Diary } from '@/types/diary'
 import Image from 'next/image'
 import Entry from '@/components/Entry'
 import Link from 'next/link'
+import { stripMarkdown } from '@/utils'
 
 type PostProps = {
   post: Diary
@@ -20,7 +21,7 @@ export default function Post({ index, post }: PostProps) {
     commentCount,
   } = post
 
-  let content = diaryContents.replace(/!\[Image\][^]*?-->/, '')
+  let content = stripMarkdown(diaryContents.replace(/!\[Image\][^]*?-->/, ''))
 
   if (content.length > 100) {
     content = content.substring(0, 30)
