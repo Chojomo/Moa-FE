@@ -4,14 +4,15 @@ import { Icon } from '@/components/Icon'
 
 type ArrowProps = {
   setStep: Dispatch<SetStateAction<number>>
+  maxStep: number
 }
 
-export default function Arrow({ setStep }: ArrowProps) {
+export default function Arrow({ setStep, maxStep }: ArrowProps) {
   const handlePrevClick = () => {
-    setStep((prev) => (prev === 1 ? 4 : prev - 1))
+    setStep((prev) => (prev === 1 ? maxStep : prev - 1))
   }
   const handleNextClick = () => {
-    setStep((prev) => (prev === 4 ? 1 : prev + 1))
+    setStep((prev) => (prev === maxStep ? 1 : prev + 1))
   }
 
   return (
