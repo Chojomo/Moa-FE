@@ -23,10 +23,10 @@ export default function Banner({ posts }: BannerProps) {
             현재 최고 인기 있는 게시물을 살펴 보세요
           </p>
         </div>
-        <Progress step={step} setStep={setStep} />
+        {posts && <Progress step={step} setStep={setStep} maxStep={Math.min(posts.length, 4)} />}
       </div>
       {posts && <PopularPost key={postIndex} post={posts[step - 1]} />}
-      <Arrow setStep={setStep} />
+      {posts && <Arrow setStep={setStep} maxStep={Math.min(posts.length, 4)} />}
     </section>
   )
 }

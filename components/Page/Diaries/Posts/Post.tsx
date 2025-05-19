@@ -3,6 +3,7 @@ import { Diary } from '@/types/diary'
 import Image from 'next/image'
 import Entry from '@/components/Entry'
 import Link from 'next/link'
+import { stripMarkdown } from '@/utils'
 
 type PostProps = {
   post: Diary
@@ -20,7 +21,7 @@ export default function Post({ index, post }: PostProps) {
     commentCount,
   } = post
 
-  let content = diaryContents.replace(/!\[Image\][^]*?-->/, '')
+  let content = stripMarkdown(diaryContents.replace(/!\[Image\][^]*?-->/, ''))
 
   if (content.length > 100) {
     content = content.substring(0, 30)
@@ -44,7 +45,7 @@ export default function Post({ index, post }: PostProps) {
         <Entry size="small" />
         <Link href={`/diary/${diaryId}`} className="w-[120px] h-[120px]">
           <Image
-            src={diaryThumbnail || '/images/dfsfs.jpeg'}
+            src={diaryThumbnail || '/images/base.jpg'}
             alt="post image"
             quality={75}
             layout="fill"
