@@ -118,7 +118,7 @@ export default function Post({ diaryId }: { diaryId?: string }) {
 
       setTitle('')
       setContent('')
-      router.push(isEditMode ? `/diary/${diaryId}` : '/diary')
+      router.push(isEditMode ? `/diary/${diaryId}` : '/diaries/viewCount')
     } catch (error) {
       console.error('게시물 등록 중 오류:', error)
       toast.error('게시물 등록 실패')
