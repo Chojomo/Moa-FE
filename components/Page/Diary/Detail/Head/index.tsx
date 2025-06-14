@@ -30,7 +30,7 @@ export default function Head({ post, isLogin }: HeadProps) {
   const handleDeleteDiary = async () => {
     try {
       await deleteDiary({ diaryId })
-      router.push('/diary')
+      router.push('/diaries/viewCount')
     } catch (error) {
       console.error('다이어리  삭제 중 오류:', error)
     }
