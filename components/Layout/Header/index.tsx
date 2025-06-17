@@ -38,7 +38,7 @@ export default function Header() {
             iconSize={17}
           />
         )}
-        <IconLink
+{/*         <IconLink
           href="/search"
           iconName="Search"
           iconColor="inverse"
@@ -51,7 +51,7 @@ export default function Header() {
           iconColor="inverse"
           hoverColor="accent"
           iconSize={17}
-        />
+        /> */}
         <ThemeToggle />
         {isLogin ? (
           <Button type="button" ariaLabel="zz" onClick={() => setIsNavModalOpen((prev) => !prev)}>
