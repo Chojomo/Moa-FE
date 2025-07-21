@@ -9,17 +9,12 @@ export default function ChatLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const { connect, disconnect } = useWebSocketStore()
+  const { disconnect } = useWebSocketStore()
   const isMobile = isTouchDevice()
 
-  const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}')
-  const { userId, nickname } = userInfo
-
   useEffect(() => {
-    connect(`${process.env.NEXT_PUBLIC_SOCKET_URL}`, userId)
-
     return () => disconnect()
-  }, [connect, disconnect])
+  }, [disconnect])
 
   return (
     <div className="bg-background w-[100dvw] h-[100dvh] flex-center overflow-x-hidden">
