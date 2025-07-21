@@ -6,7 +6,7 @@ import { isTouchDevice } from '@/utils'
 type ChatRoomInputProps = {
   message: string
   setMessage: Dispatch<SetStateAction<string>>
-  handleSubmit: (e: FormEvent) => void
+  handleSubmit: (e: FormEvent<HTMLFormElement>) => void
 }
 
 export default function ChatRoomInput({ message, setMessage, handleSubmit }: ChatRoomInputProps) {
