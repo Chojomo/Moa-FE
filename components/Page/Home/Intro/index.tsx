@@ -12,12 +12,12 @@ export default function Intro() {
       name: 'SuikaGame',
       href: '/zip/suikaGame',
     },
-    // {
-    //   index: 3,
-    //   src: '/images/pebble/red-pebble2.png',
-    //   name: 'Chat',
-    //   href: '/zip/chat',
-    // },
+    {
+      index: 3,
+      src: '/images/pebble/red-pebble2.png',
+      name: 'Chat',
+      href: '/zip/chat',
+    },
   ]
   return (
     <div className="w-[100vw] h-[100vh] py-[74px] flex-center">
