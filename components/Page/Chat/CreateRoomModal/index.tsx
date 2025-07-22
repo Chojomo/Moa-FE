@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Modal from 'react-modal'
 
@@ -22,8 +22,13 @@ export default function CreateRoomModal({ isOpen, handleClose }: CreateRoomModal
 
   const { mutate: createRoom } = useCreateRoom()
 
+  useEffect(() => {
+    Modal.setAppElement('#__next')
+  }, [])
+
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+
     if (!roomName.trim() || !nickname) return
 
     createRoom(
