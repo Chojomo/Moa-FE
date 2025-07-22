@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef, FormEvent } from 'react'
 import { useParams } from 'next/navigation'
 import { useWebSocketStore } from '@/store/useSocket'
-import { ChatRoomInput } from '@/components/Page/Chat/ChatRoom'
+import { ChatRoomInput, ChatRoomBody } from '@/components/Page/Chat/ChatRoom'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 
 type Room = {
@@ -60,15 +60,20 @@ export default function ChatRoom() {
   })
 
   useEffect(() => {
-    if (!socket || !id || !nickname || hasJoined.current) {
+    if (!socket || !id || !nickname) {
       return () => {}
     }
 
-    socket.emit('joinRoom', { roomId: id, nickname })
-    hasJoined.current = true
+    console.log({
+      socket,
+      id,
+      nickname,
+    })
 
     const handleNewMessage = (newMessage: Message) => {
-      queryClient.setQueryData<Message[]>(['messages', id], (old = []) => [...old, newMessage])
+      queryClient.setQueryData<Message[]>(['messages', id], (old) => {
+        return [...(old ?? []), newMessage]
+      })
     }
 
     const handleUserJoined = ({ nickname: joinedUser }: { nickname: string }) => {
@@ -80,33 +85,23 @@ export default function ChatRoom() {
         timestamp: new Date().toISOString(),
       }
 
-      queryClient.setQueryData<Message[]>(['messages', id], (old = []) => [...old, systemMessage])
+      console.log(systemMessage)
+
+      queryClient.setQueryData<Message[]>(['messages', id], (old) => [
+        ...(old ?? []),
+        systemMessage,
+      ])
     }
 
     socket.on('newMessage', handleNewMessage)
     socket.on('userJoined', handleUserJoined)
+    socket.emit('joinRoom', { roomId: id, nickname })
 
     return () => {
       socket.off('newMessage', handleNewMessage)
       socket.off('userJoined', handleUserJoined)
     }
   }, [socket, id, nickname, queryClient])
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const formData = new FormData(e.currentTarget)
-    const messageContent = formData.get('message') as string
-
-    if (messageContent.trim() !== '' && socket && nickname && id) {
-      socket.emit('sendMessage', {
-        roomId: id,
-        message: messageContent,
-        nickname,
-      })
-
-      setMessage('')
-    }
-  }
 
   if (isLoading || isRoomLoading) return <div>로딩중...</div>
   if (roomError) return <div>채팅방 정보를 불러오지 못했습니다.</div>
@@ -115,24 +110,23 @@ export default function ChatRoom() {
 
   return (
     <div className="flex flex-col w-full h-full">
-      <h1 className="w-full text-center text-2xl px-4 py-4 font-bold text-inverse border-b border-border">
+      <h1 className="w-full bg-background text-center text-2xl px-4 py-4 font-bold text-inverse border-b border-border z-10">
         {room?.name}
       </h1>
-      <div className="pt-5 flex-1 space-y-2">
-        <div className="flex flex-col px-5">
-          {messages.map((msg) => (
-            <div
-              key={msg.timestamp}
-              className="flex"
-              // className={msg.nickname === nickname ? 'text-gray-500 italic' : ''}
-            >
-              <p className={`${msg.nickname === nickname ? 't' : ''} `}>{msg.nickname}</p>
-              {msg.message}
-            </div>
-          ))}
-        </div>
-        <ChatRoomInput message={message} setMessage={setMessage} handleSubmit={handleSubmit} />
-      </div>
+      <ChatRoomBody messages={messages} />
+      <ChatRoomInput
+        message={message}
+        setMessage={setMessage}
+        onSubmit={(msg) => {
+          if (socket && nickname && id) {
+            socket.emit('sendMessage', {
+              roomId: id,
+              message: msg,
+              nickname,
+            })
+          }
+        }}
+      />
     </div>
   )
 }
