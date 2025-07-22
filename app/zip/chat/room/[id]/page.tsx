@@ -30,13 +30,13 @@ export default function ChatRoom() {
   const queryClient = useQueryClient()
 
   const fetchRoom = async (roomId: string) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SOCKET_URL}/api/chat/rooms/${roomId}`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SOCKET_URL}/api/rooms/${roomId}`)
     if (!res.ok) throw new Error('채팅방 정보 조회 실패')
     return res.json()
   }
 
   const fetchMessages = async (roomId: string) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SOCKET_URL}/api/chat/messages/${roomId}`)
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SOCKET_URL}/api/rooms/${roomId}/messages`)
 
     console.log(res)
     if (!res.ok) throw new Error('메시지 조회 실패')

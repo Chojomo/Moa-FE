@@ -16,7 +16,7 @@ type CreateRoomResponse = {
 export const useCreateRoom = () => {
   return useMutation({
     mutationFn: async ({ roomName, nickname }: CreateRoomPayload) => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SOCKET_URL}/api/chat/create`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SOCKET_URL}/api/rooms`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ roomName, nickname }),
