@@ -2,11 +2,13 @@ import { useEffect, useRef } from 'react'
 import ChatItem from '../ChatItem'
 
 type Message = {
-  userId: string
-  username: string
-  avatar: string
+  _id?: string
+  userId?: string
+  nickname: string
   message: string
+  roomId: string
   timestamp: string
+  __v?: number
 }
 
 type ChatRoomBodyProps = {
@@ -15,6 +17,8 @@ type ChatRoomBodyProps = {
 
 export default function ChatRoomBody({ messages }: ChatRoomBodyProps) {
   const chatContainerRef = useRef<HTMLDivElement>(null)
+
+  console.log(messages)
 
   useEffect(() => {
     const chatContainer = chatContainerRef.current
@@ -33,11 +37,10 @@ export default function ChatRoomBody({ messages }: ChatRoomBodyProps) {
   return (
     <div
       ref={chatContainerRef}
-      className="flex-1 px-[15px] py-[30px] flex flex-col gap-[30px] sm:gap-[40px] mb-[84px] overflow-y-auto scrollbar-hide chat-scroll "
+      className="flex-1 px-[15px] py-[30px] flex flex-col gap-[30px] overflow-y-auto scrollbar-hide chat-scroll"
     >
-      {messages.map((message, index) => (
-        // eslint-disable-next-line react/no-array-index-key
-        <ChatItem key={index} message={message} />
+      {messages.map((message, i) => (
+        <ChatItem key={`${message.timestamp}-${i}`} message={message} />
       ))}
     </div>
   )
