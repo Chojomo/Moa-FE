@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useRef, FormEvent } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { useParams } from 'next/navigation'
 import { useWebSocketStore } from '@/store/useSocket'
 import { ChatRoomInput, ChatRoomBody } from '@/components/Page/Chat/ChatRoom'
@@ -28,6 +28,8 @@ export default function ChatRoom() {
   const [message, setMessage] = useState('')
   const hasJoined = useRef(false)
   const queryClient = useQueryClient()
+
+  console.log('테스트')
 
   const fetchRoom = async (roomId: string) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_SOCKET_URL}/api/rooms/${roomId}`)
