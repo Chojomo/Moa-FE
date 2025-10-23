@@ -29,7 +29,7 @@ export default function ChatRoom() {
   const hasJoined = useRef(false)
   const queryClient = useQueryClient()
 
-  console.log('테스트')
+  console.log('테스트1')
 
   const fetchRoom = async (roomId: string) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_SOCKET_URL}/api/rooms/${roomId}`)
